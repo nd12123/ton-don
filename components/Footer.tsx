@@ -2,7 +2,10 @@ import { Mail, MessageCircle, HelpCircle } from "lucide-react";
 
 export default function Footer() {
     return (
-      <footer className="w-full mt-20 border-t border-gray-200 py-6 px-4 text-center text-sm text-gray-500">
+      <footer className="
+      bg-gray-100 text-gray-700 
+      dark:bg-gray-900 dark:text-gray-200 
+      py-6">
         <div className="flex flex-col sm:flex-row justify-between items-center max-w-6xl mx-auto gap-2">
           <span>&copy; {new Date().getFullYear()} TON Stake. Все права защищены.</span>
           <div className="flex gap-4 items-center text-gray-600">

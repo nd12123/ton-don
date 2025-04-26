@@ -16,8 +16,7 @@ export function StakeModal({
   amount: number;
   validator: string;
 }) {
-  
-  console.log("modal open?", open);
+  //console.log("modal open?", open);
   return (
     <Transition appear show={open} as={Fragment}>
       <Dialog as="div" className="relative z-[99]" onClose={onClose}>

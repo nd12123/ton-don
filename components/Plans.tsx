@@ -2,7 +2,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-
+// hover animation on cards, can be added later whileTap={{ scale: 0.98 }}
 export type Plan = { name: string; apr: number; range: string };
 
 export default function Plans({
@@ -19,6 +19,8 @@ export default function Plans({
       className="py-16 bg-gray-50"
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
+      
+
       transition={{ duration: 0.6 }}
       viewport={{ once: true }}
     >

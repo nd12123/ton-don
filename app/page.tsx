@@ -55,20 +55,11 @@ const rewardTotal = (deposit * apr * (duration / 12)).toFixed(2);
 
 
 //Header connected={connected} onConnect={() => setConnected(true)}
+
   return (
-<main className="min-h-screen bg-white text-black flex flex-col items-center">
+<main className="min-h-screen bg-white text-black flex flex-col items-center dark:bg-gray-800">
 <Header />
 
-      <motion.h1
-        className="text-4xl md:text-6xl font-bold mb-6 text-center"
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8 }}
-      >
-        Stake TON Easily
-      </motion.h1>
-
-      
 
 
       <Hero />
@@ -92,7 +83,9 @@ const rewardTotal = (deposit * apr * (duration / 12)).toFixed(2);
 
         <div className="mt-4 flex items-center justify-between">
           <span className="text-blue-600 font-bold">{opt.apr} APR</span>
-          <Button className="text-white bg-blue-500 hover:bg-blue-600 text-sm px-4 py-2 rounded-lg">
+          
+          <Button
+           className="text-white bg-blue-500 hover:bg-blue-600 text-sm px-4 py-2 rounded-lg">
             Stake
           </Button>
         </div>
@@ -100,6 +93,10 @@ const rewardTotal = (deposit * apr * (duration / 12)).toFixed(2);
     ))}
   </div>
 </section>
+
+
+
+
 <motion.section
   className="w-full max-w-xl bg-white rounded-2xl shadow-md p-6 mt-10 border border-gray-200"
   initial={{ opacity: 0, y: 20 }}
@@ -149,7 +146,7 @@ const rewardTotal = (deposit * apr * (duration / 12)).toFixed(2);
 
 
 
-<section className="w-full max-w-6xl mt-14 px-4 flex flex-col lg:flex-row gap-8">
+<section className="w-full max-w-6xl mt-14 px-4 flex flex-col lg:flex-row gap-8 ">
   {/* Валидаторы */}
   <div className="flex-1">
     <h3 className="text-lg font-semibold mb-4">Choose Validator</h3>
@@ -194,10 +191,8 @@ const rewardTotal = (deposit * apr * (duration / 12)).toFixed(2);
     </li>
   </ul>
 </div>
-
-
 </section>
-<section className="w-full max-w-3xl mt-20 px-4">
+<section className="w-full max-w-3xl mt-20 px-4 dark:bg-gray-800">
  
 <FAQSection />
 </section>
@@ -222,4 +217,15 @@ const rewardTotal = (deposit * apr * (duration / 12)).toFixed(2);
 
       <WalletConnect />
       </motion.div>
+
+
+      
+      <motion.h1
+        className="text-4xl md:text-6xl font-bold mb-6 text-center"
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8 }}
+      >
+        Stake TON Easily
+      </motion.h1>
 */

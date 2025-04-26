@@ -18,24 +18,9 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <ThemeProvider attribute="class">
       <div className="min-h-screen flex bg-white text-black dark:bg-gray-900 dark:text-gray-100">
-        {/* Сайдбар */}
-        <aside className="hidden md:flex flex-col w-64 border-r border-gray-200 dark:border-gray-700 p-6 space-y-4">
-          <h2 className="text-lg font-bold">TON Stake</h2>
-          {menu.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              className={`text-sm font-medium ${
-                pathname === item.href
-                  ? "text-blue-600 dark:text-blue-400"
-                  : "text-gray-600 dark:text-gray-400 hover:text-blue-500"
-              }`}
-            >
-              {item.name}
-            </Link>
-          ))}
-        </aside>
-
+        {/* Сайдбар не нужен, он в МобилЛейаут */}
+        
+{/* Нужно кнопку с кошельком добавить наверх */}
         {/* Контент */}
         <div className="flex-1 flex flex-col">
           {/* Верхний бар */}
