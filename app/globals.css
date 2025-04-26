@@ -2,6 +2,17 @@
 @tailwind components;
 @tailwind utilities;
 
+/* better typography */
+h1, h2, h3, h4 {
+  @apply text-gray-900;
+}
+p, li, span {
+  @apply leading-relaxed;
+}
+a { @apply text-blue-600 hover:text-blue-800; }
+button { @apply transition-colors duration-200; }
+
+
 body {
   @apply bg-white text-black;
 }

@@ -2,8 +2,10 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Button } from "@/components/ui/button";
-import WalletConnect from "@/components/WalletConnect";
+import ThemeToggle from "@/components/ThemeToggle";
+import  WalletConnect from "@/components/WalletConnect";
+
+//import GetStartedButton from "@/components/GetStartedButton"; <GetStartedButton />
 
 const navLinks = [
   { name: "Home", href: "/" },
@@ -12,19 +14,21 @@ const navLinks = [
   { name: "Support", href: "/support" },
 ];
 
-export function Header({
-  onConnect,
-  connected,
-}: {
-  onConnect?: () => void;
-  connected?: boolean;
-}) {
+
+  
+
+export default function Header() {
   const pathname = usePathname();
 
   return (
     <header className="w-full max-w-6xl mx-auto px-4 md:px-8 py-6 flex items-center justify-between">
-      <div className="text-xl font-bold tracking-wide">TON Stake</div>
+      {/* Лого */}
+      <Link 
+      href="/"
+        className="text-xl font-bold tracking-wide">TON Stake
+      </Link>
 
+      {/* Навигация */}
       <nav className="hidden sm:flex gap-6 text-sm">
         {navLinks.map((link) => (
           <Link
@@ -41,18 +45,12 @@ export function Header({
         ))}
       </nav>
 
-
-      <WalletConnect />
-
-
-      {onConnect && (
-        <Button
-          onClick={onConnect}
-          className="bg-blue-500 hover:bg-blue-600 text-white"
-        >
-          {connected ? "Connected" : "Connect Wallet"}
-        </Button>
-      )}
+      {/* Центральная CTA-кнопка */}
+      <div className="flex items-center space-x-4">
+        <ThemeToggle />
+        
+        <WalletConnect />
+      </div>
     </header>
   );
 }

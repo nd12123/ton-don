@@ -1,12 +1,16 @@
 import { create } from "zustand";
 
-export type StakeRecord = {
+export interface StakeRecord {
   id: number;
   validator: string;
   amount: number;
+  apr: number;        // добавляем APR
+  duration: number;   // и длительность
+  reward: number;     // и поле для результата
   date: string;
   status: "Active" | "Completed";
-};
+}
+
 
 type StakeStore = {
   history: StakeRecord[];

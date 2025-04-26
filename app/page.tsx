@@ -4,22 +4,30 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { Header } from "@/components/header";
+import Header from "@/components/header";
+//import WalletConnect from "@/components/WalletConnect";
+import Hero from "@/components/Hero";
+
+import FAQSection from "@/components/FAQSection";
 
 export default function Page() {
-  const [connected, setConnected] = useState(false);
 
   const [duration, setDuration] = useState(12); // месяцев
   const [deposit, setDeposit] = useState(1000); // TON
 
   const reward = ((deposit * 0.065) * (duration / 12)).toFixed(2);
 
-
+/*
+  const [connected, setConnected] = useState(false);
   const handleConnect = () => {
     // Здесь позже добавим TonConnect
     setConnected(true);
   };
-
+  <p className= "text-blue-600">
+          {connected ? "Wallet Connected ✅" : "Connect your wallet to start staking."}
+        </p>
+        
+*/
   
 
   const stakeOptions = [
@@ -46,10 +54,10 @@ const rewardYear = (deposit * apr).toFixed(2);
 const rewardTotal = (deposit * apr * (duration / 12)).toFixed(2);
 
 
-
+//Header connected={connected} onConnect={() => setConnected(true)}
   return (
 <main className="min-h-screen bg-white text-black flex flex-col items-center">
-<Header connected={connected} onConnect={() => setConnected(true)} />
+<Header />
 
       <motion.h1
         className="text-4xl md:text-6xl font-bold mb-6 text-center"
@@ -60,25 +68,10 @@ const rewardTotal = (deposit * apr * (duration / 12)).toFixed(2);
         Stake TON Easily
       </motion.h1>
 
-      <motion.div
-        className="bg-[#1c2733] p-8 rounded-2xl shadow-lg max-w-md w-full"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.4, duration: 0.8 }}
-      >
-        <p className= "text-blue-600">
-          {connected ? "Wallet Connected ✅" : "Connect your wallet to start staking."}
-        </p>
+      
 
-        <Button
-          className="w-full"
-          onClick={handleConnect}
-          disabled={connected}
-        >
-          {connected ? "Connected" : "Connect Wallet"}
-        </Button>
-      </motion.div>
 
+      <Hero />
       
   <section className="w-full max-w-6xl mt-12 px-4">
   <h3 className="text-xl font-semibold mb-6">Choose a Plan</h3>
@@ -155,6 +148,7 @@ const rewardTotal = (deposit * apr * (duration / 12)).toFixed(2);
 </motion.section>
 
 
+
 <section className="w-full max-w-6xl mt-14 px-4 flex flex-col lg:flex-row gap-8">
   {/* Валидаторы */}
   <div className="flex-1">
@@ -201,34 +195,12 @@ const rewardTotal = (deposit * apr * (duration / 12)).toFixed(2);
   </ul>
 </div>
 
+
 </section>
 <section className="w-full max-w-3xl mt-20 px-4">
-  <h3 className="text-2xl font-semibold text-center mb-8">FAQ</h3>
-
-  <div className="space-y-6">
-    <div>
-      <h4 className="text-lg font-bold mb-1">What is staking?</h4>
-      <p className="text-sm text-gray-600">
-        Staking is the process of locking your TON tokens to support network security and earn rewards.
-      </p>
-    </div>
-
-    <div>
-      <h4 className="text-lg font-bold mb-1">Can I withdraw anytime?</h4>
-      <p className="text-sm text-gray-600">
-        It depends on the validator. Some pools lock funds for a fixed term. Always check the terms before staking.
-      </p>
-    </div>
-
-    <div>
-      <h4 className="text-lg font-bold mb-1">What wallet do I need?</h4>
-      <p className="text-sm text-gray-600">
-        We recommend Tonkeeper, but other TON-compatible wallets also work.
-      </p>
-    </div>
-  </div>
+ 
+<FAQSection />
 </section>
-
 
 
 
@@ -238,3 +210,16 @@ const rewardTotal = (deposit * apr * (duration / 12)).toFixed(2);
   );
 }
 
+
+/*
+<motion.div
+        className="bg-[#1c2733] p-8 rounded-2xl shadow-lg max-w-md w-full"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.4, duration: 0.8 }}
+      >
+        
+
+      <WalletConnect />
+      </motion.div>
+*/
