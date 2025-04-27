@@ -14,6 +14,7 @@ const menu = [
   { name: "Стейкинг", href: "/staking" },
   { name: "История", href: "/history" },
   { name: "Поддержка", href: "/support" },
+  { name: "Кабинет", href: "/profile" },
 ];
 
 export default function Layout({ children }: { children: React.ReactNode }) {

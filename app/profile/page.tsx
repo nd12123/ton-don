@@ -1,14 +1,25 @@
 "use client";
 
-import { useMemo } from "react";
+import { useMemo, useState, useEffect } from "react";
 import { useStakeStore } from "@/lib/store";
 import { InfoCard } from "@/components/InfoCard";
 import { Table, Thead, Tbody, Tr, Th, Td } from "@/components/ui/table";
 import { motion } from "framer-motion";
 import { Clock, Trophy } from "lucide-react";
+import AllocationChart from "@/components/AllocationChart";
+import Skeleton from "@/components/ui/Skeleton";
+
 
 export default function ProfilePage() {
   const history = useStakeStore((s) => s.history);
+
+  const [chartLoading, setChartLoading] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setChartLoading(false), 1500);
+    return () => clearTimeout(timer);
+  }, []);
+
 
   const totalStaked = useMemo(
     () => history.reduce((sum, item) => sum + item.amount, 0),
@@ -80,6 +91,12 @@ export default function ProfilePage() {
           </Table>
         )}
       </section>
+
+      {/* Диаграмма с skeleton */}
+            <section className="mt-10">
+              <h2 className="text-2xl font-bold mb-4">Распределение фонда</h2>
+              {chartLoading ? <Skeleton style={{ width: "100%", height: "16rem" }} /> : <AllocationChart />}
+            </section>
     </main>
   );
 }

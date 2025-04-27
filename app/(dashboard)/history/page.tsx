@@ -1,11 +1,9 @@
 // app/(dashboard)/history/page.tsx
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState,  } from "react";
 import { useStakeStore } from "@/lib/store";
 import { motion } from "framer-motion";
-import AllocationChart from "@/components/AllocationChart";
-import Skeleton from "@/components/ui/Skeleton";
 
 type Filter = "all" | "active" | "completed";
 
@@ -13,12 +11,6 @@ export default function HistoryPage() {
   const history = useStakeStore((s) => s.history);
   const [filter, setFilter] = useState<Filter>("all");
   const [search, setSearch] = useState("");
-  const [chartLoading, setChartLoading] = useState(true);
-
-  useEffect(() => {
-    const timer = setTimeout(() => setChartLoading(false), 1500);
-    return () => clearTimeout(timer);
-  }, []);
 
   const filtered = history
     .filter((item) =>
@@ -101,11 +93,6 @@ export default function HistoryPage() {
         </div>
       )}
 
-      {/* Диаграмма с skeleton */}
-      <section className="mt-10">
-        <h2 className="text-2xl font-bold mb-4">Распределение фонда</h2>
-        {chartLoading ? <Skeleton style={{ width: "100%", height: "16rem" }} /> : <AllocationChart />}
-      </section>
     </motion.main>
   );
 }

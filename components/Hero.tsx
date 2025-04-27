@@ -27,7 +27,7 @@ export default function Hero() {
         backgroundPosition: "center",
       }}
       className="relative flex flex-col items-center justify-center
-                 text-center h-[80vh] overflow-hidden"
+                 text-center h-[50vh] sm:h-[70vh] md:h-[80vh] overflow-hidden"//Hero block size on mobile corrected
     >
       {/* затемняющая накладка */}
       <div className="absolute inset-0 bg-black/30" />

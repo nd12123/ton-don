@@ -7,7 +7,6 @@ import {Toaster} from "react-hot-toast"
 import TonProviderWrapper from "@/components/TonProviderWrapper";
 import ThemeProviderWrapper from "@/components/ThemeProviderWrapper";
 
-import Layout from "@/components/MobileLayout";
 
 const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
 const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
@@ -26,7 +25,7 @@ export default function RootLayout({
       <html lang="en" suppressHydrationWarning>
       <body
         className={`
-          flex flex-col min-h-screen
+          container mx-auto px-4 py-10 flex flex-col min-h-screen 
           bg-white text-black
           dark:bg-gray-900 dark:text-gray-100
           ${geistSans.variable} ${geistMono.variable}
@@ -45,9 +44,9 @@ export default function RootLayout({
                 error:   { iconTheme: { primary: '#EF4444', secondary: '#ffffff' } },
               }}
             />
-          <Layout>
+            {/* menu on the left: 
+          <MobileLayout></MobileLayout> */}
             <main className="flex-grow">{children}</main>
-            </Layout>
           </TonProviderWrapper>
         </ThemeProviderWrapper>
       </body>

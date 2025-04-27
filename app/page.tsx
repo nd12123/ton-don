@@ -55,9 +55,9 @@ const rewardTotal = (deposit * apr * (duration / 12)).toFixed(2);
 
 
 //Header connected={connected} onConnect={() => setConnected(true)}
-
+//<main className="container mx-auto px-4 py-10"></main>
   return (
-<main className="min-h-screen bg-white text-black flex flex-col items-center dark:bg-gray-800">
+<main className="min-h-screen bg-white text-black flex flex-col items-center dark:bg-gray-800"> 
 <Header />
 
 
@@ -201,7 +201,6 @@ const rewardTotal = (deposit * apr * (duration / 12)).toFixed(2);
 
     </main>
 
-    
   );
 }
 
