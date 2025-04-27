@@ -6,6 +6,8 @@ import {Toaster} from "react-hot-toast"
 //import Footer from "@/components/Footer";
 import TonProviderWrapper from "@/components/TonProviderWrapper";
 import ThemeProviderWrapper from "@/components/ThemeProviderWrapper";
+//import { TonConnectUIProvider } from "@tonconnect/ui-react";
+//import Footer from "@/components/Footer"
 
 
 const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });

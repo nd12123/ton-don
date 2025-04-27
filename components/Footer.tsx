@@ -4,7 +4,7 @@ export default function Footer() {
     return (
       <footer className="
       bg-gray-100 text-gray-700 
-      dark:bg-gray-900 dark:text-gray-200 
+      dark:bg-gray-800 dark:text-gray-200 
       py-6">
         <div className="flex flex-col sm:flex-row justify-between items-center max-w-6xl mx-auto gap-2">
           <span>&copy; {new Date().getFullYear()} TON Stake. Все права защищены.</span>

@@ -12,7 +12,7 @@ const COLORS = ["#3B82F6", "#6B7280", "#FBBF24"];
 
 export default function AllocationChart() {
   return (
-    <section className="py-16 bg-white">
+    <section className="py-16 bg-gray-50">
       <h2 className="text-2xl font-bold text-center mb-6">Fund Allocation</h2>
       <div className="max-w-2xl mx-auto h-64">
         <ResponsiveContainer width="100%" height="100%">

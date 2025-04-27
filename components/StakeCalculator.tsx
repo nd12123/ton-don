@@ -20,7 +20,7 @@ export default function StakeCalculator({
     ((stakeAmount * (apr / 100)) / 365) * days;
 
   return (
-    <div className="border p-6 rounded-xl shadow-sm bg-background-light dark:bg-background-dark text-text-light dark:text-text-dark">
+    <div className="border p-6 rounded-xl shadow-sm bg-background-light dark:bg-backgroung-grey text-text-light dark:text-text-dark">
       <h3 className="text-lg font-semibold">APR: {apr}%</h3>
 
       {/* Ввод суммы */}

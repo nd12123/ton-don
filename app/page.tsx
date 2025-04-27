@@ -7,8 +7,11 @@ import { Button } from "@/components/ui/button";
 import Header from "@/components/header";
 //import WalletConnect from "@/components/WalletConnect";
 import Hero from "@/components/Hero";
-
+import Footer from "@/components/Footer"
+import Reveal from "@/components/ui/Reveal";
+//import WhyUs from "@/components/WhyUs";
 import FAQSection from "@/components/FAQSection";
+import WhyUs from "@/components/WhyUs";
 
 export default function Page() {
 
@@ -29,12 +32,6 @@ export default function Page() {
         
 */
   
-
-  const stakeOptions = [
-    { name: "Validator One", apr: "6.5%", description: "Safe & Reliable" },
-    { name: "Validator Two", apr: "7.1%", description: "High Yield" },
-    { name: "Validator Three", apr: "5.8%", description: "Low Fees" },
-  ];
 /*
   const apr = 0.065; // Fixed value*/
 
@@ -57,48 +54,20 @@ const rewardTotal = (deposit * apr * (duration / 12)).toFixed(2);
 //Header connected={connected} onConnect={() => setConnected(true)}
 //<main className="container mx-auto px-4 py-10"></main>
   return (
-<main className="min-h-screen bg-white text-black flex flex-col items-center dark:bg-gray-800"> 
+<main className="min-h-screen bg-gray-50 text-black flex flex-col items-center dark:bg-gray-800"> 
 <Header />
 
 
 
       <Hero />
-      
-  <section className="w-full max-w-6xl mt-12 px-4">
-  <h3 className="text-xl font-semibold mb-6">Choose a Plan</h3>
-
-  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-    {stakeOptions.map((opt, i) => (
-      <motion.div
-        key={i}
-        className="bg-white border border-gray-200 rounded-xl p-6 shadow-md flex flex-col justify-between"
-        initial={{ opacity: 0, y: 10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.1 * i, duration: 0.5 }}
-      >
-        <div>
-          <h4 className="text-lg font-semibold">{opt.name}</h4>
-          <p className="text-sm text-gray-500">{opt.description}</p>
-        </div>
-
-        <div className="mt-4 flex items-center justify-between">
-          <span className="text-blue-600 font-bold">{opt.apr} APR</span>
-          
-          <Button
-           className="text-white bg-blue-500 hover:bg-blue-600 text-sm px-4 py-2 rounded-lg">
-            Stake
-          </Button>
-        </div>
-      </motion.div>
-    ))}
-  </div>
-</section>
-
+      <Reveal className="mt-16">
+        <WhyUs/>
+</Reveal>
 
 
 
 <motion.section
-  className="w-full max-w-xl bg-white rounded-2xl shadow-md p-6 mt-10 border border-gray-200"
+  className="w-full max-w-xl bg-gray-50 rounded-2xl shadow-md p-6 mt-10 border border-gray-200"
   initial={{ opacity: 0, y: 20 }}
   animate={{ opacity: 1, y: 0 }}
   transition={{ delay: 0.1, duration: 0.6 }}
@@ -159,7 +128,7 @@ const rewardTotal = (deposit * apr * (duration / 12)).toFixed(2);
       key={i}
       onClick={() => setSelectedValidator(v)}
       className={`min-w-[200px] flex-shrink-0 border rounded-xl p-4 shadow-sm cursor-pointer transition-all
-        ${isSelected ? "bg-blue-50 border-blue-500" : "bg-white border-gray-200"}
+        ${isSelected ? "bg-blue-50 border-blue-500" : "bg-gray-50 border-gray-200"}
       `}
     >
       <h4 className="text-base font-bold">{v.name}</h4>
@@ -180,7 +149,7 @@ const rewardTotal = (deposit * apr * (duration / 12)).toFixed(2);
   </div>
 
   {/* Доходность */}
-  <div className="w-full lg:w-64 bg-white border border-gray-200 rounded-xl p-6 shadow-sm">
+  <div className="w-full lg:w-64 bg-gray-50 border border-gray-200 rounded-xl p-6 shadow-sm">
   <h4 className="text-lg font-semibold mb-4">Estimated Earnings</h4>
   <ul className="text-sm text-gray-700 space-y-2">
     <li><strong>1 week:</strong> ≈ {rewardWeek} TON</li>
@@ -191,14 +160,19 @@ const rewardTotal = (deposit * apr * (duration / 12)).toFixed(2);
     </li>
   </ul>
 </div>
+
 </section>
+
+
+
 <section className="w-full max-w-3xl mt-20 px-4 dark:bg-gray-800">
- 
+<Reveal className="mt-16">
 <FAQSection />
+</Reveal>
 </section>
 
 
-
+<Footer />
     </main>
 
   );
@@ -227,4 +201,47 @@ const rewardTotal = (deposit * apr * (duration / 12)).toFixed(2);
       >
         Stake TON Easily
       </motion.h1>
+*/
+
+/*
+
+
+
+  const stakeOptions = [
+    { name: "Validator One", apr: "6.5%", description: "Safe & Reliable" },
+    { name: "Validator Two", apr: "7.1%", description: "High Yield" },
+    { name: "Validator Three", apr: "5.8%", description: "Low Fees" },
+  ];
+
+  
+  <section className="w-full max-w-6xl mt-12 px-4">
+  <h3 className="text-xl font-semibold mb-6">Choose a Plan</h3>
+
+  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+    {stakeOptions.map((opt, i) => (
+      <motion.div
+        key={i}
+        className="bg-gray-50 border border-gray-200 rounded-xl p-6 shadow-md flex flex-col justify-between"
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.1 * i, duration: 0.5 }}
+      >
+        <div>
+          <h4 className="text-lg font-semibold">{opt.name}</h4>
+          <p className="text-sm text-gray-500">{opt.description}</p>
+        </div>
+
+        <div className="mt-4 flex items-center justify-between">
+          <span className="text-blue-600 font-bold">{opt.apr} APR</span>
+          
+          <Button
+           className="text-white bg-blue-500 hover:bg-blue-600 text-sm px-4 py-2 rounded-lg">
+            Stake
+          </Button>
+        </div>
+      </motion.div>
+    ))}
+  </div>
+</section>
+
 */

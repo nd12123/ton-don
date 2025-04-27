@@ -32,7 +32,7 @@ export default function Plans({
             <motion.div
               key={p.name}
               onClick={() => onSelect(p.name)}
-              className={`cursor-pointer bg-white border rounded-xl p-6 shadow transition-shadow ${
+              className={`cursor-pointer bg-gray-50 border rounded-xl p-6 shadow transition-shadow ${
                 isActive
                   ? "border-blue-500 shadow-md"
                   : "border-gray-200 hover:shadow-lg"

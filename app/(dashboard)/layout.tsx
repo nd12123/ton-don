@@ -5,7 +5,7 @@ import ThemeToggle from "@/components/ThemeToggle";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import MobileLayout from "@/components/MobileLayout";
-
+//import Footer from "@/components/Footer";
 const menu = [
   { name: "Главная", href: "/" },
   { name: "Стейкинг", href: "/staking" },
@@ -19,14 +19,14 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
   return (
     <ThemeProvider attribute="class">
-      <div className="min-h-screen flex bg-white text-black dark:bg-gray-900 dark:text-gray-100">
+      <div className="min-h-screen flex bg-gray-50 text-black dark:bg-gray-900 dark:text-gray-100">
         {/* Сайдбар не нужен, он в МобилЛейаут */}
         
 {/* Нужно кнопку с кошельком добавить наверх */}
         {/* Контент */}
         <div className="flex-1 flex flex-col">
           {/* Верхний бар */}
-          <div className="container mx-auto px-4 py-10 border-b border-gray-200 dark:border-gray-700">
+          <div className="container mx-auto px-4  md:px-6 py-4 border-b border-gray-200 dark:border-gray-700">
             <div className="flex items-center justify-between px-6 py-4">
               <nav className="flex gap-6 text-sm">
                 {menu.map((item) => (
@@ -50,7 +50,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           </div>
 
           {/* Основной контент */}
-          <MobileLayout><main className="p-6">{children}</main></MobileLayout>
+          <MobileLayout><main className="p-6">{children}</main>
+          </MobileLayout>
           
         </div>
       </div>

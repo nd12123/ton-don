@@ -28,7 +28,7 @@ export default function Page() {
       <h1 className="text-2xl font-bold">FAQ</h1>
       <div className="space-y-4">
         {faqs.map((faq, i) => (
-          <details key={i} className="border border-gray-200 p-4 rounded-lg bg-white">
+          <details key={i} className="border border-gray-200 p-4 rounded-lg bg-gray-50">
             <summary className="font-medium cursor-pointer">{faq.question}</summary>
             <p className="text-sm text-gray-700 mt-2">{faq.answer}</p>
           </details>

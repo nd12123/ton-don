@@ -27,7 +27,7 @@ export default function StakingPage() {
   const [modalOpen, setModalOpen] = useState(false);
 
   return (
-    <main className="min-h-screen bg-white text-black px-4 py-10 flex flex-col items-center">
+    <main className="min-h-screen bg-gray-50 text-black px-4 py-10 flex flex-col items-center">
       {/* Заголовок */}
       <h1 className="text-3xl font-bold mb-6">Staking Plans</h1>
 
@@ -39,7 +39,7 @@ export default function StakingPage() {
       />
 
       {/* 2) Сам стейкинг */}
-      <section className="w-full max-w-5xl mt-8 grid grid-cols-1 lg:grid-cols-2 gap-8">
+      <section className="w-full max-w-5xl mt-8 grid grid-cols-1 lg:grid-cols-2 gap-8 ">
         {/* Левый столбец: калькулятор */}
         <StakeCalculator
           stakeAmount={stakeAmount}
@@ -61,7 +61,7 @@ export default function StakingPage() {
             />
           </div>
 
-          <div className="bg-white border border-gray-200 p-6 rounded-xl shadow-sm">
+          <div className="bg-gray-50 border border-gray-200 p-6 rounded-xl shadow-sm">
             <h2 className="text-xl font-semibold mb-4">
               Подтвердите стейк
             </h2>

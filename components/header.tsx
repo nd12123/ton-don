@@ -12,6 +12,7 @@ const navLinks = [
   { name: "Staking", href: "/staking" },
   { name: "History", href: "/history" },
   { name: "Support", href: "/support" },
+  { name: "Profile", href: "/profile" },
 ];
 
 

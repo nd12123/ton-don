@@ -2,7 +2,7 @@
 //import GetStartedButton from "@/components/GetStartedButton"; <GetStartedButton />
 import { MotionButton } from "@/components/ui/MotionButton";
 // /images/image-ton-contribute.jpg
-
+import TestTx from "@/components/TestTx"
 import { useState } from "react";
 
 
@@ -27,12 +27,12 @@ export default function Hero() {
         backgroundPosition: "center",
       }}
       className="relative flex flex-col items-center justify-center
-                 text-center h-[50vh] sm:h-[70vh] md:h-[80vh] overflow-hidden"//Hero block size on mobile corrected
+                 text-center h-[50vh] sm:h-[70vh] lg:h-[60vh] overflow-hidden"//Hero block size on mobile corrected
     >
       {/* затемняющая накладка */}
       <div className="absolute inset-0 bg-black/30" />
 
-      <h1 className="relative z-10 text-5xl md:text-6xl font-extrabold
+      <h1 className="relative z-10 text-4xl sm:text-5xl lg:text-6xl font-extrabold
                      text-white max-w-3xl px-4">
         Stake TON Easily & Securely
       </h1>
@@ -55,6 +55,10 @@ export default function Hero() {
 <p className= "text-white-600 dark:text-gray-800">
           {connected ? "Wallet Connected ✅" : "Connect your wallet to start staking."}
 </p>
+    <section className="mt-12">
+        <h2 className="text-xl font-semibold">Тестовая транзакция</h2>
+        <TestTx />
+      </section>
       </div>
     </section>
   );

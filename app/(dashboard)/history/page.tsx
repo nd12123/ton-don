@@ -69,7 +69,7 @@ export default function HistoryPage() {
           {filtered.map((r) => (
             <div
               key={r.id}
-              className="border border-gray-200 rounded-xl p-4 bg-white shadow-sm dark:bg-gray-800 dark:border-gray-700"
+              className="border border-gray-200 rounded-xl p-4 bg-gray-50 shadow-sm dark:bg-gray-800 dark:border-gray-700"
             >
               <div className="flex justify-between items-center">
                 <div className="text-sm font-medium dark:text-gray-100">
@@ -112,7 +112,7 @@ function FilterButton({
       className={`px-3 py-1 rounded-md border text-sm transition-colors ${
         active
           ? "bg-blue-500 text-white border-blue-500"
-          : "bg-white text-gray-700 border-gray-300 hover:bg-gray-50 dark:bg-gray-800 dark:text-gray-300 dark:border-gray-700 dark:hover:bg-gray-700"
+          : "bg-gray-50 text-gray-700 border-gray-300 hover:bg-gray-50 dark:bg-gray-800 dark:text-gray-300 dark:border-gray-700 dark:hover:bg-gray-700"
       }`}
     >
       {label}

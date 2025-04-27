@@ -23,7 +23,7 @@ const faqs = [
 export default function FAQSection() {
   return (
     <motion.section
-      className="py-16 bg-gray-50"
+      className="py-16 bg-gray-50 rounded-3xl"
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
@@ -34,7 +34,7 @@ export default function FAQSection() {
         {faqs.map((faq, idx) => (
           <details
             key={idx}
-            className="border border-gray-200 rounded-xl p-4 bg-white"
+            className="border border-gray-200 rounded-xl p-4 bg-gray-50"
           >
             <summary className="cursor-pointer font-medium">
               {faq.question}
