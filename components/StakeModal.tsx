@@ -2,7 +2,7 @@
 
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment } from "react";
-
+import toast from "react-hot-toast"
 export function StakeModal({
   open,
   onClose,
@@ -46,8 +46,14 @@ export function StakeModal({
               </button>
               <button
                 onClick={() => {
-                  onConfirm();
-                  onClose();
+                  try {
+                    onConfirm();     // ваш код добавления в стор / отправки транзакции
+                    onClose();
+                    toast.success('Stake успешно отправлен!');
+                  } catch (err) {
+                    console.error(err);
+                    toast.error('Ошибка при стейке. Попробуйте ещё раз.');
+                  }
                 }}
                 className="px-4 py-2 text-sm text-white bg-blue-500 hover:bg-blue-600 rounded"
               >
@@ -61,3 +67,18 @@ export function StakeModal({
   );
   
 }
+
+
+/*
+//Варианты: toast.success, toast.error, toast.loading → мгновенный фидбек.
+onClick={async () => {
+  onClose();
+  const notif = toast.loading('Отправка транзакции…');
+  try {
+    await sendStakeTx(amount, validator);
+    toast.success('Стейк подтверждён!', { id: notif });
+  } catch (e) {
+    toast.error('Транзакция не удалась', { id: notif });
+  }
+}}
+*/

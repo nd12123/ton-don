@@ -2,7 +2,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-
+import {Toaster} from "react-hot-toast"
 //import Footer from "@/components/Footer";
 import TonProviderWrapper from "@/components/TonProviderWrapper";
 import ThemeProviderWrapper from "@/components/ThemeProviderWrapper";
@@ -35,6 +35,16 @@ export default function RootLayout({
       >
         <ThemeProviderWrapper>
           <TonProviderWrapper>
+            {/* глобальный контейнер для тостов */}
+            <Toaster
+              position="top-right"
+              toastOptions={{
+                duration: 3000,
+                style: { borderRadius: '0.5rem', padding: '0.75rem', fontSize: '0.9rem' },
+                success: { iconTheme: { primary: '#10B981', secondary: '#ffffff' } },
+                error:   { iconTheme: { primary: '#EF4444', secondary: '#ffffff' } },
+              }}
+            />
           <Layout>
             <main className="flex-grow">{children}</main>
             </Layout>
