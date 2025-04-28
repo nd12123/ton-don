@@ -1,5 +1,5 @@
-import HistoryWrapper from "@/components/HistoryWrapper";
+import HistoryClient from "@/components/HistoryClient";
 
 export default function Page() {
-  return <HistoryWrapper />;
+  return <HistoryClient />;
 }
