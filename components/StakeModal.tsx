@@ -48,6 +48,12 @@ export function StakeModal({
                 onClick={() => {
                   try {
                     onConfirm();     // ваш код добавления в стор / отправки транзакции
+
+                    //await addStake({ wallet: addr, amount, duration, apr });
+                    //await completeStake(newId, txHash);
+
+
+
                     onClose();
                     toast.success('Stake успешно отправлен!');
                   } catch (err) {

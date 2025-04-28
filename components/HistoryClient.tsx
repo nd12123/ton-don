@@ -1,0 +1,127 @@
+// components/HistoryClient.tsx
+"use client";
+
+import { useEffect, useState } from "react";
+import { useStakeStore } from "@/lib/store"; //StakeRecord
+import { motion } from "framer-motion";
+import Skeleton from "@/components/ui/Skeleton";
+import { useSyncOnChain } from "@/lib/hooks/useSyncOnChain";
+
+type Filter = "all" | "active" | "completed";
+
+export default function HistoryClient() {
+    // 1) Синхронизируем on-chain статусы
+    useSyncOnChain(30000);
+  const { history, loading, fetchHistory } = useStakeStore((s) => ({
+    history: s.history,
+    loading: s.loading,
+    fetchHistory: s.fetchHistory,
+  }));
+
+  console.log("where 0")
+  const [filter, setFilter] = useState<Filter>("all");
+  const [search, setSearch] = useState("");
+
+  // загружаем данные один раз
+  useEffect(() => {
+    fetchHistory();
+  }, [fetchHistory]);
+
+  if (loading && history.length === 0) {
+    // пока нет данных — показываем скелетоны
+    return (
+      <div className="max-w-4xl mx-auto px-4 py-10 space-y-4">
+        {[1, 2, 3].map((i) => (
+          <Skeleton key={i} className="h-16 w-full" />
+        ))}
+      </div>
+    );
+  }
+
+  // применяем фильтры и поиск
+  const filtered = history
+    .filter((r) => {
+      if (filter === "active")   return r.status === "active";
+      if (filter === "completed") return r.status === "completed";
+      return true;
+    })
+    .filter((r) =>
+      r.validator.toLowerCase().includes(search.trim().toLowerCase())
+    );
+
+  return (
+    <motion.main
+      initial={{ opacity: 0, y: 10 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.4 }}
+      className="max-w-4xl mx-auto px-4 py-10 space-y-8"
+    >
+      <h1 className="text-2xl font-bold">История стейков</h1>
+
+      {/* Поиск */}
+      <input
+        type="text"
+        placeholder="Поиск валидатора..."
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
+        className="w-full max-w-sm px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-100"
+      />
+
+      {/* Фильтры */}
+      <div className="flex gap-3 text-sm">
+        {(
+          [
+            ["all", "Все"],
+            ["active", "Активные"],
+            ["completed", "Завершённые"],
+          ] as [Filter, string][]
+        ).map(([key, label]) => (
+          <button
+            key={key}
+            onClick={() => setFilter(key)}
+            className={`px-3 py-1 rounded-md border transition-colors ${
+              filter === key
+                ? "bg-blue-500 text-white border-blue-500"
+                : "bg-gray-50 text-gray-700 border-gray-300 hover:bg-gray-100 dark:bg-gray-800 dark:text-gray-300 dark:border-gray-700 dark:hover:bg-gray-700"
+            }`}
+          >
+            {label}
+          </button>
+        ))}
+      </div>
+
+      {/* Сами записи */}
+      {filtered.length === 0 ? (
+        <p className="text-gray-500 text-sm">Ничего не найдено.</p>
+      ) : (
+        <div className="grid grid-cols-1 gap-4">
+          {filtered.map((r) => (
+            <div
+              key={r.id}
+              className="border border-gray-200 rounded-xl p-4 bg-gray-50 shadow-sm dark:bg-gray-800 dark:border-gray-700"
+            >
+              <div className="flex justify-between items-center">
+                <div className="text-sm font-medium dark:text-gray-100">
+                  {r.validator}
+                </div>
+                <span
+                  className={`px-2 py-1 text-xs rounded-full ${
+                    r.status === "active"
+                      ? "bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-300"
+                      : "bg-gray-100 text-gray-500 dark:bg-gray-700 dark:text-gray-300"
+                  }`}
+                >
+                  {r.status === "active" ? "Активен" : "Завершён"}
+                </span>
+              </div>
+              <div className="text-sm text-gray-600 dark:text-gray-400 mt-1">
+                {r.amount} TON •{" "}
+                {new Date(r.created_at).toLocaleDateString()}
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+    </motion.main>
+  );
+}
