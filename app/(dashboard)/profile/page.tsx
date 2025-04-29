@@ -1,37 +1,32 @@
+// app/(dashboard)/profile/page.tsx
 "use client";
 
-import { useMemo, useState, useEffect } from "react";
+import { useMemo } from "react";
 import { useStakeStore } from "@/lib/store";
 import { InfoCard } from "@/components/InfoCard";
-import { Table, Thead, Tbody, Tr, Th, Td } from "@/components/ui/table";
+import { Table, Tbody, Td, Th, Thead, Tr } from "@/components/ui/table";
 import { motion } from "framer-motion";
-import { Clock, Trophy } from "lucide-react";
-import AllocationChart from "@/components/AllocationChart";
-import Skeleton from "@/components/ui/Skeleton";
-
+import { Award } from "lucide-react";
 
 export default function ProfilePage() {
   const history = useStakeStore((s) => s.history);
 
-  const [chartLoading, setChartLoading] = useState(true);
-
-  useEffect(() => {
-    const timer = setTimeout(() => setChartLoading(false), 1500);
-    return () => clearTimeout(timer);
-  }, []);
-
-
+  // 1) Всего застейкано
   const totalStaked = useMemo(
     () => history.reduce((sum, item) => sum + item.amount, 0),
     [history]
   );
-  const totalRewards = useMemo(
-    () =>
-      history
-        .filter((h) => h.status === "Completed")
-        .reduce((sum, item) => sum + (item.reward || 0), 0),
-    [history]
-  );
+
+  // 2) Считаем награды всех COMPLETED
+  const totalRewards = useMemo(() => {
+    return history
+      .filter((h) => h.status === "completed")
+      .reduce((sum, h) => {
+        // APR в процентах, duration в днях
+        const reward = h.amount * (h.apr / 100) * (h.duration / 365);
+        return sum + reward;
+      }, 0);
+  }, [history]);
 
   return (
     <main className="max-w-4xl mx-auto px-4 py-10 space-y-8">
@@ -45,16 +40,8 @@ export default function ProfilePage() {
 
       {/* Статистика */}
       <section className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-        <InfoCard
-          title="Всего застейкано"
-          value={`${totalStaked} TON`}
-          Icon={Clock}
-        />
-        <InfoCard
-          title="Награды получены"
-          value={`${totalRewards.toFixed(2)} TON`}
-          Icon={Trophy}
-        />
+        <InfoCard title="Всего застейкано" value={`${totalStaked.toFixed(2)} TON`} Icon={Award} />
+        <InfoCard title="Награды получены" value={`${totalRewards.toFixed(2)} TON`} Icon={Award} />
       </section>
 
       {/* Таблица истории */}
@@ -73,30 +60,30 @@ export default function ProfilePage() {
               </Tr>
             </Thead>
             <Tbody>
-              {history.map((h) => (
-                <Tr key={h.id}>
-                  <Td>{h.validator}</Td>
-                  <Td>{h.amount} TON</Td>
-                  <Td>{h.date}</Td>
-                  <Td
-                    className={
-                      h.status === "Active" ? "text-green-600" : "text-gray-500"
-                    }
-                  >
-                    {h.status === "Active" ? "Активен" : "Завершён"}
-                  </Td>
-                </Tr>
-              ))}
+              {history.map((h) => {
+                // для каждой записи можно вычислить reward, если нужно
+                const date = new Date(h.created_at).toLocaleDateString();
+                return (
+                  <Tr key={h.id}>
+                    <Td>{h.validator}</Td>
+                    <Td>{h.amount.toFixed(2)} TON</Td>
+                    <Td>{date}</Td>
+                    <Td
+                      className={
+                        h.status === "active"
+                          ? "text-green-600"
+                          : "text-gray-500"
+                      }
+                    >
+                      {h.status === "active" ? "Активен" : "Завершён"}
+                    </Td>
+                  </Tr>
+                );
+              })}
             </Tbody>
           </Table>
         )}
       </section>
-
-      {/* Диаграмма с skeleton */}
-            <section className="mt-10">
-              <h2 className="text-2xl font-bold mb-4">Распределение фонда</h2>
-              {chartLoading ? <Skeleton style={{ width: "100%", height: "16rem" }} /> : <AllocationChart />}
-            </section>
     </main>
   );
 }

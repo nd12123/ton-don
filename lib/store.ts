@@ -1,16 +1,16 @@
 // lib/store.ts
-import { create } from "zustand";
+import {create} from "zustand";
 import { supabase } from "@/lib/supabase";
 
 export interface StakeRecord {
-  id: string;                 // UUID из Supabase
+  id: string;
   validator: string;
   amount: number;
   apr: number;
   duration: number;
   status: "active" | "completed";
   txHash?: string;
-  created_at: string;         // timestamptz
+  created_at: string;
 }
 
 interface AddStakeParams {
@@ -26,7 +26,7 @@ interface StakeStore {
   error?: string;
   fetchHistory: () => Promise<void>;
   addStake: (params: AddStakeParams) => Promise<void>;
-  completeStake: (id: string, txHash: string) => Promise<void>;
+  completeStake: (id: string, txHash?: string) => Promise<void>; //id: string???
 }
 
 export const useStakeStore = create<StakeStore>((set) => ({
@@ -69,9 +69,16 @@ export const useStakeStore = create<StakeStore>((set) => ({
   // Обновить статус и txHash
   completeStake: async (id, txHash) => {
     set({ loading: true, error: undefined });
-    const res = await supabase
-      .from("stakes")
-      .update({ status: "completed", txHash })
+
+
+    const updateObj: Partial<StakeRecord> = { status: "completed" };
+        if (txHash) updateObj.txHash = txHash;
+    
+        const res = await supabase
+          .from("stakes")
+          .update(updateObj)
+
+
       .eq("id", id)
       .select();
     if (res.error) {
@@ -79,9 +86,7 @@ export const useStakeStore = create<StakeStore>((set) => ({
     } else {
       const upd = (res.data as StakeRecord[])[0];
       set((state) => ({
-        history: state.history.map((r) =>
-          r.id === id ? upd : r
-        ),
+        history: state.history.map((r) => (r.id === id ? upd : r)),
         loading: false,
       }));
     }

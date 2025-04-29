@@ -94,13 +94,13 @@ addStake({
   amount: stakeAmount,
   apr: selectedPlan.apr,
   duration,           // shorthand for duration: duration
-  reward: 0,          // initial reward
+  //reward: 0,          // initial reward
 });
 
           setStakeAmount(0);
           setModalOpen(false);
           setTimeout(
-            () => completeStake(useStakeStore.getState().history.length),
+            () => completeStake(String(useStakeStore.getState().history.length)), // String() is added by me cos of the bug
             5000
           );
         }}

@@ -2,33 +2,65 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useStakeStore } from "@/lib/store"; //StakeRecord
 import { motion } from "framer-motion";
+import {
+    RealtimePostgresChangesPayload,
+  RealtimeChannel,
+} from "@supabase/supabase-js";
+import { supabase } from "@/lib/supabase";
+import { useStakeStore, StakeRecord } from "@/lib/store";
 import Skeleton from "@/components/ui/Skeleton";
-import { useSyncOnChain } from "@/lib/hooks/useSyncOnChain";
 
 type Filter = "all" | "active" | "completed";
 
 export default function HistoryClient() {
-    // 1) Синхронизируем on-chain статусы
-    useSyncOnChain(30000);
-  const { history, loading, fetchHistory } = useStakeStore((s) => ({
-    history: s.history,
-    loading: s.loading,
-    fetchHistory: s.fetchHistory,
-  }));
+  const history      = useStakeStore((s) => s.history);
+  const loading      = useStakeStore((s) => s.loading);
+  const fetchHistory = useStakeStore((s) => s.fetchHistory);
 
-  console.log("where 0")
   const [filter, setFilter] = useState<Filter>("all");
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState<string>("");
 
-  // загружаем данные один раз
   useEffect(() => {
+    // 1) первоначальный дамп
     fetchHistory();
+
+    // 2) создаём канал для real-time
+    const channel: RealtimeChannel = supabase
+      .channel("public:stakes") // схема "public", таблица "stakes"
+      .on<StakeRecord>(
+        "postgres_changes",
+        { event: "INSERT", schema: "public", table: "stakes" },
+        (payload: RealtimePostgresChangesPayload<StakeRecord>) => {
+                 // приведение к нужному типу
+                     const rec = payload.new as StakeRecord;
+                     useStakeStore.setState((state) => ({
+                       history: [rec, ...state.history],
+         }));
+        }
+      )
+      .on<StakeRecord>(
+        "postgres_changes",
+        { event: "UPDATE", schema: "public", table: "stakes" },
+        (payload: RealtimePostgresChangesPayload<StakeRecord>) => {
+                     const rec = payload.new as StakeRecord;
+                     useStakeStore.setState((state) => ({
+                       history: state.history.map((r) =>
+                         r.id === rec.id ? rec : r
+                       ),
+                     }));
+                    }
+      )
+      .subscribe();
+
+    // 3) отписка при размонтировании
+    return () => {
+      channel.unsubscribe();
+    };
   }, [fetchHistory]);
 
+  // Скелетоны, пока идёт первая загрузка
   if (loading && history.length === 0) {
-    // пока нет данных — показываем скелетоны
     return (
       <div className="max-w-4xl mx-auto px-4 py-10 space-y-4">
         {[1, 2, 3].map((i) => (
@@ -38,10 +70,10 @@ export default function HistoryClient() {
     );
   }
 
-  // применяем фильтры и поиск
+  // Фильтрация по статусу и поиску
   const filtered = history
     .filter((r) => {
-      if (filter === "active")   return r.status === "active";
+      if (filter === "active") return r.status === "active";
       if (filter === "completed") return r.status === "completed";
       return true;
     })
@@ -58,7 +90,6 @@ export default function HistoryClient() {
     >
       <h1 className="text-2xl font-bold">История стейков</h1>
 
-      {/* Поиск */}
       <input
         type="text"
         placeholder="Поиск валидатора..."
@@ -67,7 +98,6 @@ export default function HistoryClient() {
         className="w-full max-w-sm px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-100"
       />
 
-      {/* Фильтры */}
       <div className="flex gap-3 text-sm">
         {(
           [
@@ -90,12 +120,11 @@ export default function HistoryClient() {
         ))}
       </div>
 
-      {/* Сами записи */}
       {filtered.length === 0 ? (
         <p className="text-gray-500 text-sm">Ничего не найдено.</p>
       ) : (
         <div className="grid grid-cols-1 gap-4">
-          {filtered.map((r) => (
+          {filtered.map((r: StakeRecord) => (
             <div
               key={r.id}
               className="border border-gray-200 rounded-xl p-4 bg-gray-50 shadow-sm dark:bg-gray-800 dark:border-gray-700"
@@ -115,8 +144,7 @@ export default function HistoryClient() {
                 </span>
               </div>
               <div className="text-sm text-gray-600 dark:text-gray-400 mt-1">
-                {r.amount} TON •{" "}
-                {new Date(r.created_at).toLocaleDateString()}
+                {r.amount} TON • {new Date(r.created_at).toLocaleDateString()}
               </div>
             </div>
           ))}

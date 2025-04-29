@@ -1,77 +1,91 @@
+
+// components/StakeModal.tsx
 "use client";
 
+import React, { useEffect } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment } from "react";
-import toast from "react-hot-toast"
+import toast from "react-hot-toast";
+
+import { useStakeStore } from "@/lib/store";
+
+interface StakeModalProps {
+  open: boolean;
+  onClose: () => void;
+  onConfirm: () => void;
+  amount: number;
+  validator: string;
+}
+
 export function StakeModal({
   open,
   onClose,
   onConfirm,
   amount,
   validator,
-}: {
-  open: boolean;
-  onClose: () => void;
-  onConfirm: () => void;
-  amount: number;
-  validator: string;
-}) {
-  //console.log("modal open?", open);
+}: StakeModalProps) {
+  // Берём из zustand статус загрузки и последнюю ошибку
+  const loading = useStakeStore((s) => s.loading);
+  const error   = useStakeStore((s) => s.error);
+
+  // При появлении ошибки покажем toast (react-hot-toast)
+  useEffect(() => {
+    if (error) {
+      toast.error(error);
+    }
+  }, [error]);
+
   return (
-    <Transition appear show={open} as={Fragment}>
-      <Dialog as="div" className="relative z-[99]" onClose={onClose}>
-        <div className="fixed inset-0 bg-black/40" aria-hidden="true" />
-  
-        <div className="fixed inset-0 flex items-center justify-center p-4">
-          <div
-            className="w-full max-w-md rounded-xl bg-gray-50 p-6 shadow-xl"
-            role="dialog"
-            aria-modal="true"
-          >
-            <h2 className="text-lg font-bold mb-4">
-              Подтвердите стейк
-            </h2>
-  
-            <p className="text-sm text-gray-700 mb-6">
-              Вы уверены, что хотите застейкать <strong>{amount} TON</strong> у{" "}
-              <strong>{validator}</strong>?
-            </p>
-  
-            <div className="flex justify-end gap-3">
-              <button
-                onClick={onClose}
-                className="px-4 py-2 text-sm text-gray-600 border border-gray-300 rounded hover:bg-gray-100"
-              >
-                Отмена
-              </button>
-              <button
-                onClick={() => {
-                  try {
-                    onConfirm();     // ваш код добавления в стор / отправки транзакции
+    <>
+      {/* Должен быть один <Toaster/> в вашем приложении, лучше в layout */}
+   
 
-                    //await addStake({ wallet: addr, amount, duration, apr });
-                    //await completeStake(newId, txHash);
+      <Transition appear show={open} as={Fragment}>
+        <Dialog
+          as="div"
+          className="relative z-50"
+          onClose={onClose}
+        >
+          {/* затемнённый фон */}
+          <div className="fixed inset-0 bg-black/40" aria-hidden="true" />
+          <div className="fixed inset-0 flex items-center justify-center p-4">
+            <Dialog.Panel className="w-full max-w-md rounded-xl bg-white p-6 shadow-xl">
+              <Dialog.Title className="text-lg font-bold mb-4">
+                Подтвердите стейк
+              </Dialog.Title>
 
+              <p className="text-sm text-gray-700 mb-6">
+                Вы уверены, что хотите застейкать{" "}
+                <strong>{amount} TON</strong> у{" "}
+                <strong>{validator}</strong>?
+              </p>
 
-
-                    onClose();
-                    toast.success('Stake успешно отправлен!');
-                  } catch (err) {
-                    console.error(err);
-                    toast.error('Ошибка при стейке. Попробуйте ещё раз.');
-                  }
-                }}
-                className="px-4 py-2 text-sm text-white bg-blue-500 hover:bg-blue-600 rounded"
-              >
-                Подтвердить
-              </button>
-            </div>
+              <div className="flex justify-end gap-3">
+                <button
+                  onClick={onClose}
+                  className="px-4 py-2 text-sm text-gray-600 border border-gray-300 rounded hover:bg-gray-100"
+                >
+                  Отмена
+                </button>
+                <button
+                  onClick={onConfirm}
+                  disabled={loading}
+                  className="px-4 py-2 text-sm text-white bg-blue-500 hover:bg-blue-600 rounded disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  {loading ? (
+                    <span className="inline-block animate-spin h-4 w-4 
+                                     border-2 border-white border-t-transparent rounded-full" />
+                  ) : (
+                    "Подтвердить"
+                  )}
+                </button>
+              </div>
+            </Dialog.Panel>
           </div>
-        </div>
-      </Dialog>
-    </Transition>
+        </Dialog>
+      </Transition>
+    </>
   );
-  
 }
 
 
@@ -88,3 +102,25 @@ onClick={async () => {
   }
 }}
 */
+
+/**
+               * 
+              <button
+                onClick={() => {
+                  try {
+                    onConfirm();     // ваш код добавления в стор / отправки транзакции
+                    //await addStake({ wallet: addr, amount, duration, apr });
+                    //await completeStake(newId, txHash);
+                    onClose();
+                    toast.success('Stake успешно отправлен!');
+                  } catch (err) {
+                    console.error(err);
+                    toast.error('Ошибка при стейке. Попробуйте ещё раз.');
+                  }
+                }}
+                className="px-4 py-2 text-sm text-white bg-blue-500 hover:bg-blue-600 rounded"
+              >
+                Подтвердить
+              </button>
+               * 
+               */
