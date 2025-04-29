@@ -4,6 +4,7 @@ import { supabase } from "@/lib/supabase";
 
 export interface StakeRecord {
   id: string;
+  wallet: string;
   validator: string;
   amount: number;
   apr: number;
@@ -14,6 +15,7 @@ export interface StakeRecord {
 }
 
 interface AddStakeParams {
+  wallet: string;
   validator: string;
   amount: number;
   apr: number;
@@ -49,11 +51,11 @@ export const useStakeStore = create<StakeStore>((set) => ({
   },
 
   // Вставить новую запись
-  addStake: async ({ validator, amount, apr, duration }) => {
+  addStake: async ({ wallet, validator, amount, apr, duration }) => {
     set({ loading: true, error: undefined });
     const res = await supabase
       .from("stakes")
-      .insert([{ validator, amount, apr, duration }])
+      .insert([{ wallet, validator, amount, apr, duration }])
       .select();
     if (res.error) {
       set({ error: res.error.message, loading: false });

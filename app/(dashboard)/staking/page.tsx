@@ -9,9 +9,13 @@ import { StakeModal } from "@/components/StakeModal";
 import { Button } from "@/components/ui/button";
 import { Database, Archive, Award } from "lucide-react";
 
+import { useTonAddress } from "@tonconnect/ui-react";
+
 export default function StakingPage() {
+  const address = useTonAddress(); // строка вида "EQCx…"
+
   const addStake = useStakeStore((s) => s.addStake);
-  const completeStake = useStakeStore((s) => s.completeStake);
+  //const completeStake = useStakeStore((s) => s.completeStake);
 
   const plansList: Plan[] = [
     { name: "Basic", apr: 4, range: "10–899 TON" },
@@ -89,20 +93,15 @@ export default function StakingPage() {
         onClose={() => setModalOpen(false)}
         onConfirm={() => {
           // after
-addStake({
-  validator: selectedPlan.name,
-  amount: stakeAmount,
-  apr: selectedPlan.apr,
-  duration,           // shorthand for duration: duration
-  //reward: 0,          // initial reward
-});
-
-          setStakeAmount(0);
-          setModalOpen(false);
-          setTimeout(
-            () => completeStake(String(useStakeStore.getState().history.length)), // String() is added by me cos of the bug
-            5000
-          );
+          addStake({
+                  validator: selectedPlan.name,
+                  wallet: address,
+                  amount: stakeAmount,
+                  apr: selectedPlan.apr,
+                  duration,
+                });
+                setStakeAmount(0);
+                setModalOpen(false);
         }}
         amount={stakeAmount}
         validator={selectedPlan.name}
