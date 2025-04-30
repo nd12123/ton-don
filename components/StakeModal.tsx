@@ -49,12 +49,12 @@ export function StakeModal({
           {/* затемнённый фон */}
           <div className="fixed inset-0 bg-black/40" aria-hidden="true" />
           <div className="fixed inset-0 flex items-center justify-center p-4">
-            <Dialog.Panel className="w-full max-w-md rounded-xl bg-white p-6 shadow-xl">
-              <Dialog.Title className="text-lg font-bold mb-4">
+            <Dialog.Panel className="w-full max-w-md rounded-xl bg-white dark:bg-gray-800 p-6 shadow-xl">
+              <Dialog.Title className="text-lg font-bold mb-4 dark:text-gray-300">
                 Подтвердите стейк
               </Dialog.Title>
 
-              <p className="text-sm text-gray-700 mb-6">
+              <p className="text-sm text-gray-700 dark:text-blue-300 mb-6">
                 Вы уверены, что хотите застейкать{" "}
                 <strong>{amount} TON</strong> у{" "}
                 <strong>{validator}</strong>?

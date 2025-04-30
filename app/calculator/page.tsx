@@ -9,7 +9,7 @@ export default function CalculatorPage() {
   const reward = amount ? (amount * 0.065).toFixed(2) : null;
 
   return (
-    <main className="min-h-screen bg-gray-50 text-black flex flex-col items-center px-4">
+    <main className="min-h-screen bg-gray-50 dark:bg-gray-900 text-black flex flex-col items-center px-4">
       <motion.header
         className="w-full max-w-6xl px-4 md:px-8 py-6 flex items-center justify-between"
         initial={{ opacity: 0, y: -10 }}
@@ -20,7 +20,7 @@ export default function CalculatorPage() {
       </motion.header>
 
       <motion.section
-        className="w-full max-w-xl bg-gray-50 rounded-2xl shadow-lg p-8 mt-10 border border-gray-200"
+        className="w-full max-w-xl bg-gray-50 dark:bg-gray-900 rounded-2xl shadow-lg p-8 mt-10 border border-gray-200"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.2, duration: 0.8 }}

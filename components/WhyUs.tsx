@@ -26,11 +26,11 @@ export default function WhyUs() {
       {features.map((f) => (
         <div
           key={f.title}
-          className="bg-gray-50 border border-gray-200 p-6 rounded-xl shadow-sm text-center"
+          className="bg-gray-50 dark:bg-gray-600 border border-gray-200 p-6 rounded-xl shadow-sm text-center"
         >
           <div className="flex justify-center mb-4">{f.icon}</div>
           <h4 className="font-semibold mb-2">{f.title}</h4>
-          <p className="text-sm text-gray-600">{f.description}</p>
+          <p className="text-sm text-gray-600 dark:text-gray-100">{f.description}</p>
         </div>
       ))}
     </div>

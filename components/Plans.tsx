@@ -16,7 +16,7 @@ export default function Plans({
 }) {
   return (
     <motion.section
-      className="py-16 bg-gray-50"
+      className="py-16 bg-gray-50 dark:bg-gray-900"
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       
@@ -24,7 +24,7 @@ export default function Plans({
       transition={{ duration: 0.6 }}
       viewport={{ once: true }}
     >
-      <h2 className="text-2xl font-bold text-center mb-8">Our Plans</h2>
+      {/*<h2 className="text-2xl font-bold text-center mb-8 dark:text-gray-100">Our Plans</h2>*/}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-5xl mx-auto px-4">
         {plans.map((p) => {
           const isActive = p.name === selectedPlanName;
@@ -32,7 +32,7 @@ export default function Plans({
             <motion.div
               key={p.name}
               onClick={() => onSelect(p.name)}
-              className={`cursor-pointer bg-gray-50 border rounded-xl p-6 shadow transition-shadow ${
+              className={`cursor-pointer bg-gray-50 dark:bg-gray-700 border rounded-xl p-6 shadow transition-shadow ${
                 isActive
                   ? "border-blue-500 shadow-md"
                   : "border-gray-200 hover:shadow-lg"

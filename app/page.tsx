@@ -54,7 +54,7 @@ const rewardTotal = (deposit * apr * (duration / 12)).toFixed(2);
 //Header connected={connected} onConnect={() => setConnected(true)}
 //<main className="container mx-auto px-4 py-10"></main>
   return (
-<main className="min-h-screen bg-gray-50 text-black flex flex-col items-center dark:bg-gray-800"> 
+<main className="min-h-screen bg-gray-50 px-4 text-black flex flex-col items-center dark:bg-gray-800"> 
 <Header />
 
 
@@ -65,60 +65,81 @@ const rewardTotal = (deposit * apr * (duration / 12)).toFixed(2);
 </Reveal>
 
 
+{/* Обёртка для расчетов доходности */}
+<section className="w-full max-w-6xl mx-auto items-start  mt-10 justify-center flex flex-col lg:flex-row gap-8">
 
-<motion.section
-  className="w-full max-w-xl bg-gray-50 rounded-2xl shadow-md p-6 mt-10 border border-gray-200"
-  initial={{ opacity: 0, y: 20 }}
-  animate={{ opacity: 1, y: 0 }}
-  transition={{ delay: 0.1, duration: 0.6 }}
->
-  <h2 className="text-2xl font-semibold mb-6 text-center">
-    Customize Your Stake
-  </h2>
+  <motion.section
+    className="w-full max-w-xl bg-gray-50 dark:bg-gray-700 rounded-2xl shadow-md p-6  border border-gray-200"
+    initial={{ opacity: 0, y: 20 }}
+    animate={{ opacity: 1, y: 0 }}
+    transition={{ delay: 0.1, duration: 0.6 }}
+  >
+    <h2 className="text-2xl font-semibold mb-6 text-center dark:text-gray-100">
+      Customize Your Stake
+    </h2>
 
-  <div className="mb-6">
-    <label htmlFor="deposit" className="block text-sm font-medium text-gray-700 mb-2">
-      Deposit Amount: {deposit} TON
-    </label>
-    <input
-      id="deposit"
-      type="range"
-      min={0}
-      max={5000}
-      step={50}
-      value={deposit}
-      onChange={(e) => setDeposit(Number(e.target.value))}
-      className="w-full"
-    />
+    <div className="mb-6">
+      <label htmlFor="deposit" className="block text-sm font-medium text-gray-700 dark:text-gray-100 mb-2">
+        Deposit Amount: {deposit} TON
+      </label>
+      <input
+        id="deposit"
+        type="range"
+        min={0}
+        max={5000}
+        step={50}
+        value={deposit}
+        onChange={(e) => setDeposit(Number(e.target.value))}
+        className="w-full"
+      />
+    </div>
+
+    <div className="mb-6">
+      <label htmlFor="duration" className="block text-sm font-medium text-gray-700 dark:text-gray-100 mb-2">
+        Staking Duration: {duration} months
+      </label>
+      <input
+        id="duration"
+        type="range"
+        min={1}
+        max={24}
+        step={1}
+        value={duration}
+        onChange={(e) => setDuration(Number(e.target.value))}
+        className="w-full"
+      />
+    </div>
+
+    <div className="text-center text-gray-600 dark:text-gray-100 text-sm">
+      Expected reward: <strong>≈ {reward} TON</strong>
+    </div>
+  </motion.section>
+
+  {/* Доходность */}
+  <div className="w-full flex-none lg:w-64 bg-gray-50 border border-gray-200 rounded-xl p-6 shadow-sm dark:bg-gray-700">
+    <h4 className="text-lg font-semibold mb-4 dark:text-gray-100">Estimated Earnings</h4>
+    <ul className="text-sm text-gray-700 space-y-2 dark:text-gray-200">
+      <li><strong>1 week:</strong> ≈ {rewardWeek} TON</li>
+      <li><strong>1 month:</strong> ≈ {rewardMonth} TON</li>
+      <li><strong>1 year:</strong> ≈ {rewardYear} TON</li>
+      <li className="pt-2 border-t border-gray-100">
+        <strong>{duration} months total:</strong> ≈ {rewardTotal} TON
+      </li>
+    </ul>
   </div>
 
-  <div className="mb-6">
-    <label htmlFor="duration" className="block text-sm font-medium text-gray-700 mb-2">
-      Staking Duration: {duration} months
-    </label>
-    <input
-      id="duration"
-      type="range"
-      min={1}
-      max={24}
-      step={1}
-      value={duration}
-      onChange={(e) => setDuration(Number(e.target.value))}
-      className="w-full"
-    />
-  </div>
 
-  <div className="text-center text-gray-600 text-sm">
-    Expected reward: <strong>≈ {reward} TON</strong>
-  </div>
-</motion.section>
+</section>
 
-
-
-<section className="w-full max-w-6xl mt-14 px-4 flex flex-col lg:flex-row gap-8 ">
+<section className="
+    w-full max-w-6xl mx-auto   /* центрируем по странице */
+    px-4                       /* боковые паддинги */
+    mt-14                      /* отступ сверху */
+    flex flex-col items-center /* колонки + центр контента */
+  ">
   {/* Валидаторы */}
   <div className="flex-1">
-    <h3 className="text-lg font-semibold mb-4">Choose Validator</h3>
+    <h3 className="text-lg font-semibold mb-4 dark:text-gray-300">Choose Validator</h3>
     <div className="flex gap-4 overflow-x-auto pb-2">
     {validators.map((v, i) => {
   const isSelected = selectedValidator.name === v.name;
@@ -128,11 +149,11 @@ const rewardTotal = (deposit * apr * (duration / 12)).toFixed(2);
       key={i}
       onClick={() => setSelectedValidator(v)}
       className={`min-w-[200px] flex-shrink-0 border rounded-xl p-4 shadow-sm cursor-pointer transition-all
-        ${isSelected ? "bg-blue-50 border-blue-500" : "bg-gray-50 border-gray-200"}
+        ${isSelected ? "bg-blue-50 border-blue-500 dark:bg-gray-800" : "bg-gray-50 border-gray-200 dark:bg-gray-700"}
       `}
     >
       <h4 className="text-base font-bold">{v.name}</h4>
-      <p className="text-sm text-gray-600">{v.apr} APR</p>
+      <p className="text-sm text-gray-600 dark:text-gray-100">{v.apr} APR</p>
       <Button
         className={`mt-3 text-sm w-full ${
           isSelected
@@ -148,18 +169,7 @@ const rewardTotal = (deposit * apr * (duration / 12)).toFixed(2);
     </div>
   </div>
 
-  {/* Доходность */}
-  <div className="w-full lg:w-64 bg-gray-50 border border-gray-200 rounded-xl p-6 shadow-sm">
-  <h4 className="text-lg font-semibold mb-4">Estimated Earnings</h4>
-  <ul className="text-sm text-gray-700 space-y-2">
-    <li><strong>1 week:</strong> ≈ {rewardWeek} TON</li>
-    <li><strong>1 month:</strong> ≈ {rewardMonth} TON</li>
-    <li><strong>1 year:</strong> ≈ {rewardYear} TON</li>
-    <li className="pt-2 border-t border-gray-100">
-      <strong>{duration} months total:</strong> ≈ {rewardTotal} TON
-    </li>
-  </ul>
-</div>
+ 
 
 </section>
 

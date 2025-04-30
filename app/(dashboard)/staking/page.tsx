@@ -31,9 +31,9 @@ export default function StakingPage() {
   const [modalOpen, setModalOpen] = useState(false);
 
   return (
-    <main className="min-h-screen bg-gray-50 text-black px-4 py-10 flex flex-col items-center">
+    <main className="min-h-screen bg-gray-50 dark:bg-gray-900 text-black px-4 py-10 flex flex-col items-center">
       {/* Заголовок */}
-      <h1 className="text-3xl font-bold mb-6">Staking Plans</h1>
+      <h1 className="text-3xl font-bold mb-6 dark:text-gray-100">Staking Plans</h1>
 
       {/* 1) Выбор плана */}
       <Plans
@@ -65,11 +65,11 @@ export default function StakingPage() {
             />
           </div>
 
-          <div className="bg-gray-50 border border-gray-200 p-6 rounded-xl shadow-sm">
-            <h2 className="text-xl font-semibold mb-4">
+          <div className="bg-gray-50 dark:bg-gray-600 border border-gray-200 p-6 rounded-xl shadow-sm">
+            <h2 className="text-xl font-semibold mb-4 dark:text-gray-100">
               Подтвердите стейк
             </h2>
-            <p className="text-sm text-gray-700 mb-4">
+            <p className="text-sm text-gray-700 mb-4 dark:text-gray-100">
               Вы собираетесь застейкать{" "}
               <strong>{stakeAmount} TON</strong> на{" "}
               <strong>{duration} дней</strong> по{" "}

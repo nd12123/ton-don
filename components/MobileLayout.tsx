@@ -31,7 +31,7 @@ export default function MobileLayout({ children }: { children: React.ReactNode }
 
   return (
     <TonProviderWrapper>
-      <div className="min-h-screen flex flex-col bg-gray-50 text-black dark:bg-gray-900 dark:text-gray-100">
+      <div className="min-h-screen flex flex-col bg-gray-50 dark:bg-gray-900 text-black dark:bg-gray-900 dark:text-gray-100">
         {/* Mobile Top Bar */}
         <div className="md:hidden flex items-center justify-between px-4 py-3 border-b border-gray-200 dark:border-gray-700 overflow-hidden">
           <Menu className="w-6 h-6 cursor-pointer" onClick={() => setMobileOpen(true)} />
@@ -69,7 +69,7 @@ export default function MobileLayout({ children }: { children: React.ReactNode }
             <motion.nav>
             <div className="fixed inset-0 z-50 flex overflow-hidden">
               <div className="fixed inset-0 bg-black/50" onClick={() => setMobileOpen(false)} />
-              <nav className="relative w-64 h-full bg-gray-50 dark:bg-gray-800 p-6">
+              <nav className="relative w-64 h-full bg-gray-50 dark:bg-gray-900 p-6">
                 <div className="flex justify-end">
                   <X className="w-6 h-6 cursor-pointer" onClick={() => setMobileOpen(false)} />
                 </div>
