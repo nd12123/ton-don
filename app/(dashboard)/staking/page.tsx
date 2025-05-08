@@ -1,68 +1,26 @@
 "use client";
 
 import { useState, useEffect } from "react"; //useEffect
-import { useStakeStore, StakeRecord } from "@/lib/store";
+import { useStakeStore } from "@/lib/store";
 import Plans, { Plan } from "@/components/Plans";
 import StakeCalculator from "@/components/StakeCalculator";
 import { InfoCard } from "@/components/InfoCard";
 import { StakeModal } from "@/components/StakeModal";
 import { Button } from "@/components/ui/button";
 import { Database, Archive, Award } from "lucide-react";
-//import { PLANS } from "./page";          // ← import our constant
 
 import { useTonAddress } from "@tonconnect/ui-react";
-import { useTonPrice } from "@/lib/hooks/useTonPrice";
-import { supabase } from "@/lib/supabase";
 
-
-export const plansList: Plan[] = [
-  { name: "Basic",   apr:  4, min:    1, max:   999, range: "1–999 TON" },
-  { name: "Pro",     apr:  7, min: 1000, max:  1999, range: "1000–1 999 TON" },
-  { name: "Premium", apr: 10, min: 2000,               range: "2000+ TON" },
-];
+import { PLANS} from "@/components/Plans";
 
 export default function StakingPage() {
   const address = useTonAddress(); // строка вида "EQCx…"
-
-  //const address = useTonAddress()!;
-  const priceUsd = useTonPrice();
-
-  // Состояния для истории/профиля
-  const [history, setHistory] = useState<StakeRecord[]>([]);
-  useEffect(() => {
-    if (!address) return;
-    supabase
-      .from<"stakes", StakeRecord>("stakes")
-      .select("*")
-      .eq("wallet", address)
-      .then(({ data }) => data && setHistory(data));
-  }, [address]);
-
-  // Расчёты баланса и дохода
-  const totalStaked = history.reduce((sum, r) => sum + r.amount, 0);
-  const totalCompletedRewards = history
-    .filter((r) => r.status === "completed")
-    .reduce(
-      (sum, r) => sum + r.amount * (r.apr / 100) * (r.duration / 365),
-      0
-    );
-  const dailyIncome = history
-    .filter((r) => r.status === "active")
-    .reduce((sum, r) => sum + r.amount * (r.apr / 100) / 365, 0);
-
-
 
 
   const addStake = useStakeStore((s) => s.addStake);
   //const completeStake = useStakeStore((s) => s.completeStake);
 
-  /*
-  const plansList: Plan[] = [
-    { name: "Basic",   apr: 4,  min:   1, max:   999, range: "1–999 TON" },
-    { name: "Pro",     apr: 7,  min: 1000, max:  1999, range: "1000–1 999 TON" },
-    { name: "Premium", apr: 10, min: 2000, max: Infinity, range: "2000+ TON" },
-  ];
-*/
+  const plansList = PLANS
 
   const [selectedPlanName, setSelectedPlanName] = useState(plansList[0].name);
   const selectedPlan = plansList.find((p) => p.name === selectedPlanName)!;
@@ -75,7 +33,7 @@ export default function StakingPage() {
 // 1) когда stakeAmount меняется — находим план и ставим его
 useEffect(() => {
   const auto = plansList.find(p => 
-    stakeAmount >= p.min && stakeAmount <= p.max
+    stakeAmount >= p.min  &&  ((typeof p.max == "undefined") || stakeAmount <= p.max)// p.max can be undefined //?????
   );
   if (auto && auto.name !== selectedPlanName) {
     setSelectedPlanName(auto.name);

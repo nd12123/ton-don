@@ -11,6 +11,12 @@ export type Plan = {
   range: string;
 };
 
+export const PLANS: Plan[] = [
+  { name: "Basic",   apr:  4, min:    1,   max:   999, range: "1–999 TON" },
+  { name: "Pro",     apr:  7, min: 1000,   max:  1999, range: "1000–1 999 TON" },
+  { name: "Premium", apr: 10, min: 2000,             /* без max */ range: "2000+ TON" },
+];
+
 
 export default function Plans({
   plans,
