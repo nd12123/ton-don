@@ -3,7 +3,14 @@
 
 import { motion } from "framer-motion";
 // hover animation on cards, can be added later whileTap={{ scale: 0.98 }}
-export type Plan = { name: string; apr: number; range: string };
+export type Plan = {
+  name: string;
+  apr: number;
+  min: number;
+  max?: number;
+  range: string;
+};
+
 
 export default function Plans({
   plans,

@@ -1,36 +1,27 @@
-'use client';
-
-import { LucideIcon } from "lucide-react";
-
 // components/InfoCard.tsx
+import { LucideIcon } from "lucide-react"; // если нужны иконки
+
+interface InfoCardProps {
+  title: string;
+  value: string;
+  subtitle?: string;
+  Icon?: LucideIcon;
+}
+
 export function InfoCard({
   title,
   value,
+  subtitle,
   Icon,
-}: {
-  title: string;
-  value: string;
-  Icon?: LucideIcon;
-}) {
+}: InfoCardProps) {
   return (
-    <div
-      className="
-        bg-white dark:bg-gray-800
-        border border-gray-200 dark:border-gray-700
-        p-6 rounded-xl shadow-md
-        text-center
-      "
-    >
-      {Icon && (
-        <Icon
-          className="mx-auto mb-2 text-gray-500 dark:text-gray-400"
-          size={24}
-        />
-      )}
+    <div className="bg-white dark:bg-gray-800 border dark:border-gray-700 p-6 rounded-xl shadow">
+      {Icon && <Icon className="w-6 h-6 mb-2 text-blue-500" />}
       <h4 className="text-sm text-gray-500 dark:text-gray-400">{title}</h4>
-      <p className="text-xl font-bold mt-1 text-blue-600 dark:text-blue-400">
-        {value}
-      </p>
+      <p className="text-xl font-bold mt-1">{value}</p>
+      {subtitle && (
+        <p className="text-sm text-gray-400 dark:text-gray-500">{subtitle}</p>
+      )}
     </div>
   );
 }

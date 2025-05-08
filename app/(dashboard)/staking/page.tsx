@@ -1,27 +1,68 @@
 "use client";
 
-import { useState } from "react"; //useEffect
-import { useStakeStore } from "@/lib/store";
+import { useState, useEffect } from "react"; //useEffect
+import { useStakeStore, StakeRecord } from "@/lib/store";
 import Plans, { Plan } from "@/components/Plans";
 import StakeCalculator from "@/components/StakeCalculator";
 import { InfoCard } from "@/components/InfoCard";
 import { StakeModal } from "@/components/StakeModal";
 import { Button } from "@/components/ui/button";
 import { Database, Archive, Award } from "lucide-react";
+//import { PLANS } from "./page";          // ← import our constant
 
 import { useTonAddress } from "@tonconnect/ui-react";
+import { useTonPrice } from "@/lib/hooks/useTonPrice";
+import { supabase } from "@/lib/supabase";
+
+
+export const plansList: Plan[] = [
+  { name: "Basic",   apr:  4, min:    1, max:   999, range: "1–999 TON" },
+  { name: "Pro",     apr:  7, min: 1000, max:  1999, range: "1000–1 999 TON" },
+  { name: "Premium", apr: 10, min: 2000,               range: "2000+ TON" },
+];
 
 export default function StakingPage() {
   const address = useTonAddress(); // строка вида "EQCx…"
 
+  //const address = useTonAddress()!;
+  const priceUsd = useTonPrice();
+
+  // Состояния для истории/профиля
+  const [history, setHistory] = useState<StakeRecord[]>([]);
+  useEffect(() => {
+    if (!address) return;
+    supabase
+      .from<"stakes", StakeRecord>("stakes")
+      .select("*")
+      .eq("wallet", address)
+      .then(({ data }) => data && setHistory(data));
+  }, [address]);
+
+  // Расчёты баланса и дохода
+  const totalStaked = history.reduce((sum, r) => sum + r.amount, 0);
+  const totalCompletedRewards = history
+    .filter((r) => r.status === "completed")
+    .reduce(
+      (sum, r) => sum + r.amount * (r.apr / 100) * (r.duration / 365),
+      0
+    );
+  const dailyIncome = history
+    .filter((r) => r.status === "active")
+    .reduce((sum, r) => sum + r.amount * (r.apr / 100) / 365, 0);
+
+
+
+
   const addStake = useStakeStore((s) => s.addStake);
   //const completeStake = useStakeStore((s) => s.completeStake);
 
+  /*
   const plansList: Plan[] = [
-    { name: "Basic", apr: 4, range: "10–899 TON" },
-    { name: "Pro", apr: 7, range: "900–2 199 TON" },
-    { name: "Premium", apr: 10, range: "2 200+ TON" },
+    { name: "Basic",   apr: 4,  min:   1, max:   999, range: "1–999 TON" },
+    { name: "Pro",     apr: 7,  min: 1000, max:  1999, range: "1000–1 999 TON" },
+    { name: "Premium", apr: 10, min: 2000, max: Infinity, range: "2000+ TON" },
   ];
+*/
 
   const [selectedPlanName, setSelectedPlanName] = useState(plansList[0].name);
   const selectedPlan = plansList.find((p) => p.name === selectedPlanName)!;
@@ -30,6 +71,23 @@ export default function StakingPage() {
   const [duration, setDuration] = useState(30);
   const [modalOpen, setModalOpen] = useState(false);
 
+  // внутри StakingPage
+// 1) когда stakeAmount меняется — находим план и ставим его
+useEffect(() => {
+  const auto = plansList.find(p => 
+    stakeAmount >= p.min && stakeAmount <= p.max
+  );
+  if (auto && auto.name !== selectedPlanName) {
+    setSelectedPlanName(auto.name);
+  }
+}, [stakeAmount, selectedPlanName, plansList]);
+
+function handlePlanSelect(planName: string) {
+  const p = plansList.find(pl => pl.name === planName)!;
+  setSelectedPlanName(planName);
+  setStakeAmount(p.min);    // ползунок «прыгает» на min тарифного диапазона
+}
+
   return (
     <main className="min-h-screen bg-gray-50 dark:bg-gray-900 text-black px-4 py-10 flex flex-col items-center">
       {/* Заголовок */}
@@ -37,10 +95,10 @@ export default function StakingPage() {
 
       {/* 1) Выбор плана */}
       <Plans
-        plans={plansList}
-        selectedPlanName={selectedPlanName}
-        onSelect={setSelectedPlanName}
-      />
+  plans={plansList}
+  selectedPlanName={selectedPlanName}
+  onSelect={handlePlanSelect}
+/>
 
       {/* 2) Сам стейкинг */}
       <section className="w-full max-w-5xl mt-8 grid grid-cols-1 lg:grid-cols-2 gap-8 ">

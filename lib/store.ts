@@ -26,7 +26,7 @@ interface StakeStore {
   history: StakeRecord[];
   loading: boolean;
   error?: string;
-  fetchHistory: () => Promise<void>;
+  fetchHistory: (wallet: string) => Promise<void>;
   addStake: (params: AddStakeParams) => Promise<void>;
   completeStake: (id: string, txHash?: string) => Promise<void>; //id: string???
 }
@@ -37,11 +37,12 @@ export const useStakeStore = create<StakeStore>((set) => ({
   error: undefined,
 
   // Загрузить всё из Supabase
-  fetchHistory: async () => {
+  fetchHistory: async (wallet) => {
     set({ loading: true, error: undefined });
     const res = await supabase
       .from("stakes")
       .select("*")
+      .eq("wallet", wallet)              // фильтруем по кошельку
       .order("created_at", { ascending: false });
     if (res.error) {
       set({ error: res.error.message, loading: false });

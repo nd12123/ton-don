@@ -11,9 +11,14 @@ import { supabase } from "@/lib/supabase";
 import { useStakeStore, StakeRecord } from "@/lib/store";
 import Skeleton from "@/components/ui/Skeleton";
 
+
+import { useTonAddress } from "@tonconnect/ui-react";    // чтобы получить адрес кошелька 
+
 type Filter = "all" | "active" | "completed";
 
 export default function HistoryClient() {
+  const address = useTonAddress();  // EQ… строка или undefined
+
   const history      = useStakeStore((s) => s.history);
   const loading      = useStakeStore((s) => s.loading);
   const fetchHistory = useStakeStore((s) => s.fetchHistory);
@@ -23,7 +28,7 @@ export default function HistoryClient() {
 
   useEffect(() => {
     // 1) первоначальный дамп
-    fetchHistory();
+    fetchHistory(address);
 
     // 2) создаём канал для real-time
     const channel: RealtimeChannel = supabase
