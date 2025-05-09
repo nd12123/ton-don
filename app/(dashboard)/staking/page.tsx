@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react"; //useEffect
+import { useState, useEffect } from "react"; //useEffectн
 import { useStakeStore } from "@/lib/store";
 import Plans from "@/components/Plans";
 import StakeCalculator from "@/components/StakeCalculator";
