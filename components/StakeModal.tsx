@@ -104,8 +104,12 @@ const handleConfirm = async () => {
 
               <p className="text-sm text-gray-700 dark:text-blue-300 mb-6">
                 Сделать стейк размером{" "}
-                <strong>{amount} TON</strong> через{" "}
-                <strong>{validator}</strong> на {" "}
+                <strong>{amount} TON</strong> 
+                через{" "}
+                      <strong>{validator}</strong>
+                 на {" "}
+                {/**
+                  */}
                 <strong>{duration}</strong> дней?
               </p>
 

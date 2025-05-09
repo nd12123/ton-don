@@ -10,7 +10,7 @@ export interface StakeRecord {
   apr: number;
   duration: number;
   status: "active" | "completed";
-  txHash?: string;
+  txHash: string;
   created_at: string;
 }
 
@@ -53,11 +53,11 @@ export const useStakeStore = create<StakeStore>((set) => ({
   },
 
   // Вставить новую запись
-  addStake: async ({ wallet, validator, amount, apr, duration }) => {
+  addStake: async ({ wallet, validator, amount, apr, duration, txHash }) => {
     set({ loading: true, error: undefined });
     const res = await supabase
       .from("stakes")
-      .insert([{ wallet, validator, amount, apr, duration }])
+      .insert([{ wallet, validator, amount, apr, duration, txHash }])
       .select();
     if (res.error) {
       set({ error: res.error.message, loading: false });
