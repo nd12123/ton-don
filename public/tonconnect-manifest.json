@@ -2,7 +2,7 @@
 {
   "name": "TON Stake",
   "description": "Stake your TON tokens securely",
-  "icon": "https://ton-don.vercel.app/images/image-ton-hand.jpg",
+  "icon": "https://staking-mocha-iota.vercel.app/images/image-ton-hand.jpg",
   "network": "testnet"
 }
 
