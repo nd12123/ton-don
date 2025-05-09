@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react"; //useEffect
 import { useStakeStore } from "@/lib/store";
-import Plans, { Plan } from "@/components/Plans";
+import Plans from "@/components/Plans";
 import StakeCalculator from "@/components/StakeCalculator";
 import { InfoCard } from "@/components/InfoCard";
 import { StakeModal } from "@/components/StakeModal";

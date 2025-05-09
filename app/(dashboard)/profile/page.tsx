@@ -1,7 +1,7 @@
 // app/(dashboard)/profile/page.tsx
 "use client";
 
-import { useEffect, useState, useMemo } from "react";
+import { useMemo } from "react";
 import { useStakeStore, StakeRecord } from "@/lib/store";
 import { InfoCard } from "@/components/InfoCard";
 import { Table, Tbody, Td, Th, Thead, Tr } from "@/components/ui/table";
@@ -9,7 +9,7 @@ import { motion } from "framer-motion";
 import { Award } from "lucide-react";
 import DashboardStats from "@/components/DashboardStats";
 import { useTonPrice } from "@/lib/hooks/useTonPrice";
-import { PLANS, Plan} from "@/components/Plans"; // убедитесь, что PLANS экспортируется из этого модуля
+import { PLANS} from "@/components/Plans"; // убедитесь, что PLANS экспортируется из этого модуля
 
 export default function ProfilePage() {
   // получаем историю из стора
