@@ -28,6 +28,20 @@ export default function StakingPage() {
   const [stakeAmount, setStakeAmount] = useState(500);
   const [duration, setDuration] = useState(30);
   const [modalOpen, setModalOpen] = useState(false);
+  // … your validator / apr / duration logic …
+
+  const handleConfirm = (txHash: string) => {
+    addStake({
+      validator: selectedPlan.name,
+      wallet: address,
+      amount: stakeAmount,
+      apr: selectedPlan.apr,
+      duration,
+      txHash,
+    });
+    // reset form…
+  };
+
 
   // внутри StakingPage
 // 1) когда stakeAmount меняется — находим план и ставим его
@@ -107,20 +121,12 @@ function handlePlanSelect(planName: string) {
       <StakeModal
         open={modalOpen}
         onClose={() => setModalOpen(false)}
-        onConfirm={() => {
-          // after
-          addStake({
-                  validator: selectedPlan.name,
-                  wallet: address,
-                  amount: stakeAmount,
-                  apr: selectedPlan.apr,
-                  duration,
-                });
-                setStakeAmount(0);
-                setModalOpen(false);
-        }}
+        onConfirm= {handleConfirm}
         amount={stakeAmount}
         validator={selectedPlan.name}
+        walletAddress={address}
+        apr={selectedPlan.apr}
+        duration={duration}
       />
     </main>
   );

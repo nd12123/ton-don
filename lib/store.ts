@@ -20,6 +20,7 @@ interface AddStakeParams {
   amount: number;
   apr: number;
   duration: number;
+  txHash: string;
 }
 
 interface StakeStore {

@@ -1,4 +1,5 @@
 "use client";
+import { useSyncOnChain } from "@/lib/hooks/useSyncOnChain";
 
 import { ThemeProvider } from "next-themes";
 import ThemeToggle from "@/components/ThemeToggle";
@@ -16,6 +17,8 @@ const menu = [
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
+
+  useSyncOnChain(30_000)
 
   return (
     <ThemeProvider attribute="class">

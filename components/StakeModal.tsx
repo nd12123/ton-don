@@ -2,38 +2,86 @@
 // components/StakeModal.tsx
 "use client";
 
-import React, { useEffect } from "react";
+import React from "react"; //, { useEffect }
 import { Dialog, Transition } from "@headlessui/react";
-import { Fragment } from "react";
-import toast from "react-hot-toast";
+import { Fragment, useState } from "react";
+//import toast from "react-hot-toast";
 
-import { useStakeStore } from "@/lib/store";
+import { useTonConnectUI } from "@tonconnect/ui-react";
+//import { useStakeStore } from "@/lib/store";
 
 interface StakeModalProps {
-  open: boolean;
-  onClose: () => void;
-  onConfirm: () => void;
-  amount: number;
-  validator: string;
+    open: boolean;
+    onClose: () => void;
+    //onConfirm: () => void;          // remove this
+    amount: number;
+    validator: string;
+    walletAddress: string;
+    apr: number;
+    duration: number;
+    onConfirm: (txHash: string) => void;
+  //onConfirm: () => void;
 }
 
 export function StakeModal({
   open,
   onClose,
-  onConfirm,
+  //onConfirm,        // we’ll replace this
   amount,
   validator,
+  walletAddress,
+  apr,
+  duration,
+  onConfirm,
 }: StakeModalProps) {
+  /*
   // Берём из zustand статус загрузки и последнюю ошибку
   const loading = useStakeStore((s) => s.loading);
   const error   = useStakeStore((s) => s.error);
-
   // При появлении ошибки покажем toast (react-hot-toast)
   useEffect(() => {
     if (error) {
       toast.error(error);
     }
   }, [error]);
+*/
+
+const [tonConnectUI] = useTonConnectUI();
+const [loading, setLoading] = useState(false);
+
+const handleConfirm = async () => {
+  if (!walletAddress || amount <= 0) return;
+
+  setLoading(true);
+  try {
+    // build your contract payload here! for now we’ll just
+    // send TON to the validator address (no payload)
+    const transaction = {
+      validUntil: Math.floor(Date.now() / 1000) + 3600,  // 1h TTL
+      messages: [
+        {
+          address: "0QAmQUOW2aGZb8uGmDd8fhhcs7u5NpzzmybooQo46PzGleIL",// your contract address
+          amount: ((amount + 0.05) * 1e9).toString(),       // nanotons
+          sendMode: 3, 
+          // payload: "...",                        // if you need a payload
+        },
+      ],
+    };
+
+    const result = await tonConnectUI.sendTransaction(transaction);
+    // result.boc is the signed BOC; you can fetch the hash from it.
+    // But TonConnect also sets `result.inMessageHash` in recent SDKs:
+    const txHash = (result as any).inMessageHash ?? result.boc;
+
+    // Call the parent onConfirm with our new txHash
+    onConfirm(txHash);
+  } catch (e) {
+    console.error("Failed to send tx", e);
+  } finally {
+    setLoading(false);
+    onClose();
+  }
+};
 
   return (
     <>
@@ -55,9 +103,10 @@ export function StakeModal({
               </Dialog.Title>
 
               <p className="text-sm text-gray-700 dark:text-blue-300 mb-6">
-                Вы уверены, что хотите застейкать{" "}
-                <strong>{amount} TON</strong> у{" "}
-                <strong>{validator}</strong>?
+                Сделать стейк размером{" "}
+                <strong>{amount} TON</strong> через{" "}
+                <strong>{validator}</strong> на {" "}
+                <strong>{duration}</strong> дней?
               </p>
 
               <div className="flex justify-end gap-3">
@@ -68,7 +117,7 @@ export function StakeModal({
                   Отмена
                 </button>
                 <button
-                  onClick={onConfirm}
+                  onClick={handleConfirm}
                   disabled={loading}
                   className="px-4 py-2 text-sm text-white bg-blue-500 hover:bg-blue-600 rounded disabled:opacity-50 disabled:cursor-not-allowed"
                 >
