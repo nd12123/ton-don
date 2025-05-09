@@ -10,7 +10,7 @@ export default function TonProviderWrapper({
   console.log("🚀 TonConnect provider initialized");
 
   return (
-    <TonConnectUIProvider manifestUrl="https://youngdrug.vercel.app/tonconnect-manifest.json">
+    <TonConnectUIProvider manifestUrl="https://staking-mocha-iota.vercel.app/tonconnect-manifest.json">
     {children}
   </TonConnectUIProvider>
   
