@@ -62,7 +62,7 @@ export default function HistoryClient() {
     return () => {
       channel.unsubscribe();
     };
-  }, [fetchHistory]);
+  }, [fetchHistory, address]); //fetchHistory
 
   // Скелетоны, пока идёт первая загрузка
   if (loading && history.length === 0) {

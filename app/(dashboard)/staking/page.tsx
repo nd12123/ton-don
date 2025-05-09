@@ -125,7 +125,7 @@ function handlePlanSelect(planName: string) {
         amount={stakeAmount}
         validator={selectedPlan.name}
         walletAddress={address}
-        apr={selectedPlan.apr}
+        //apr={selectedPlan.apr}
         duration={duration}
       />
     </main>

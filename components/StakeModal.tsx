@@ -17,7 +17,7 @@ interface StakeModalProps {
     amount: number;
     validator: string;
     walletAddress: string;
-    apr: number;
+    //apr: number;
     duration: number;
     onConfirm: (txHash: string) => void;
   //onConfirm: () => void;
@@ -30,7 +30,7 @@ export function StakeModal({
   amount,
   validator,
   walletAddress,
-  apr,
+  //apr,
   duration,
   onConfirm,
 }: StakeModalProps) {
@@ -53,6 +53,8 @@ const handleConfirm = async () => {
   if (!walletAddress || amount <= 0) return;
 
   setLoading(true);
+
+  //setModalOpen(false);
   try {
     // build your contract payload here! for now we’ll just
     // send TON to the validator address (no payload)
@@ -71,8 +73,8 @@ const handleConfirm = async () => {
     const result = await tonConnectUI.sendTransaction(transaction);
     // result.boc is the signed BOC; you can fetch the hash from it.
     // But TonConnect also sets `result.inMessageHash` in recent SDKs:
-    const txHash = (result as any).inMessageHash ?? result.boc;
-
+    const txHash =  result.boc; //(result as any).inMessageHash ??
+    //const txHash = tx.id ?? tx.hash; 
     // Call the parent onConfirm with our new txHash
     onConfirm(txHash);
   } catch (e) {
