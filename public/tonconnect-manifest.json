@@ -1,8 +1,9 @@
 
 {
-  "name": "TON Stake",
+  "url": "https://youngdrug.vercel.app/",
   "description": "Stake your TON tokens securely",
-  "icon": "https://staking-mocha-iota.vercel.app/images/image-ton-hand.jpg",
-  "network": "testnet"
+  "name": "TON Stake",
+  "iconUrl": "https://staking-mocha-iota.vercel.app/images/image-ton-hand.jpg",
+  "termsOfUseUrl": "https://example.com/terms",
+  "privacyPolicyUrl": "https://example.com/privacy"
 }
-
