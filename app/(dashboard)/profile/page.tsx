@@ -31,17 +31,17 @@ export default function ProfilePage() {
 
 // Обработчик вывода
 const handleWithdraw = async (stake: StakeRecord, amt: number) => {
+  try {
   if (amt <= 0 || amt > stake.amount) {
     // можно добавить валидацию и тост
     return;
   }
-  
       // 1) вызываем TonConnect для отправки транзакции
       const response = await tonConnect.sendTransaction({
         validUntil: Math.floor(Date.now() / 1000) + 60 * 5,
         messages: [
           {
-            address: stake.wallet,               // куда возвращаем
+            address: stake.wallet,// адрес площадки: "0QAmQUOW2aGZb8uGmDd8fhhcs7u5NpzzmybooQo46PzGleIL" куда возвращаем
             amount: BigInt(amt * 1e9).toString(),   // переводим TON в нанотоны
             ...("text" in stake ? {} : {}), // другие поля, если нужны
           },
@@ -49,9 +49,9 @@ const handleWithdraw = async (stake: StakeRecord, amt: number) => {
       });
       const tx : string = response.boc
       // 2) как только транзакция уходит, пушим её хеш/ID в Supabase
-      const { data: updated } = await supabase
+      const { } = await supabase //data: updated
         .from("stakes")
-        .update({ status: "completed", txHash: tx })
+        .update({  txHash: tx, amount: stake.amount - amt }) // if amountLaeft == 0, status: "completed",
         .eq("id", stake.id)
         .select();
   /*  // Пример: просто пометим как completed или уменьшить amount
@@ -63,7 +63,12 @@ const handleWithdraw = async (stake: StakeRecord, amt: number) => {
 
   // Обновляем список
   await fetchHistory(address);
-  setModalOpen(false);
+    } catch (err){
+      console.error("Withdraw failed", err);
+      alert("Не удалось выполнить вывод: " + err);
+    } finally{
+      setModalOpen(false);
+    }
 };
 
 
