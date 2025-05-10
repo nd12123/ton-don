@@ -121,7 +121,13 @@ function handlePlanSelect(planName: string) {
       <StakeModal
         open={modalOpen}
         onClose={() => setModalOpen(false)}
-        onConfirm= {handleConfirm}
+        onConfirm={(txHash) => {
+          console.log("🟢 [Page] received txHash:", txHash);
+          addStake({ validator: selectedPlan.name, wallet: address!, amount:stakeAmount, apr:selectedPlan.apr, duration, txHash });
+          setModalOpen(false);
+        }}
+        
+        //{handleConfirm}
         amount={stakeAmount}
         validator={selectedPlan.name}
         walletAddress={address}

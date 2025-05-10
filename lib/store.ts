@@ -20,7 +20,7 @@ interface AddStakeParams {
   amount: number;
   apr: number;
   duration: number;
-  txHash: string;
+  txHash?: string;
 }
 
 interface StakeStore {
@@ -54,10 +54,13 @@ export const useStakeStore = create<StakeStore>((set) => ({
 
   // Вставить новую запись
   addStake: async ({ wallet, validator, amount, apr, duration, txHash }) => {
+    const insertObj: Record<string, any> = { wallet, validator, amount, apr, duration }
+    if (txHash) insertObj.txHash = txHash
+
     set({ loading: true, error: undefined });
     const res = await supabase
       .from("stakes")
-      .insert([{ wallet, validator, amount, apr, duration, txHash }])
+      .insert([insertObj])
       .select();
     if (res.error) {
       set({ error: res.error.message, loading: false });

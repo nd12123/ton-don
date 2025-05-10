@@ -5,6 +5,7 @@
 import React from "react"; //, { useEffect }
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
+import type { SendTransactionResponse } from "@tonconnect/ui-react";
 //import toast from "react-hot-toast";
 
 import { useTonConnectUI } from "@tonconnect/ui-react";
@@ -20,7 +21,6 @@ interface StakeModalProps {
     //apr: number;
     duration: number;
     onConfirm: (txHash: string) => void;
-  //onConfirm: () => void;
 }
 
 export function StakeModal({
@@ -70,10 +70,10 @@ const handleConfirm = async () => {
       ],
     };
 
-    const result = await tonConnectUI.sendTransaction(transaction);
+    const response = await tonConnectUI.sendTransaction(transaction);
     // result.boc is the signed BOC; you can fetch the hash from it.
     // But TonConnect also sets `result.inMessageHash` in recent SDKs:
-    const txHash =  result.boc; //(result as any).inMessageHash ??
+    const txHash =  response.boc; //(result as any).inMessageHash ??
     //const txHash = tx.id ?? tx.hash; 
     // Call the parent onConfirm with our new txHash
     onConfirm(txHash);
