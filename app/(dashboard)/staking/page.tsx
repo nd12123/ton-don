@@ -29,7 +29,7 @@ export default function StakingPage() {
   const [duration, setDuration] = useState(30);
   const [modalOpen, setModalOpen] = useState(false);
   // … your validator / apr / duration logic …
-
+/*
   const handleConfirm = (txHash: string) => {
     addStake({
       validator: selectedPlan.name,
@@ -41,7 +41,7 @@ export default function StakingPage() {
     });
     // reset form…
   };
-
+*/
 
   // внутри StakingPage
 // 1) когда stakeAmount меняется — находим план и ставим его

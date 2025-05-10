@@ -54,7 +54,7 @@ export const useStakeStore = create<StakeStore>((set) => ({
 
   // Вставить новую запись
   addStake: async ({ wallet, validator, amount, apr, duration, txHash }) => {
-    const insertObj: Record<string, any> = { wallet, validator, amount, apr, duration }
+    const insertObj: AddStakeParams = { wallet, validator, amount, apr, duration }
     if (txHash) insertObj.txHash = txHash
 
     set({ loading: true, error: undefined });
