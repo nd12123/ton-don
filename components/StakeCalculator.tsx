@@ -40,7 +40,9 @@ export default function StakeCalculator({
         />
         <input
           type="range"
-          min={100}
+          //min={100}
+          //  step={1}      // если хочешь шаг в одну единицу
+          min={1}
           max={5000}
           step={50}
           value={stakeAmount}

@@ -28,7 +28,7 @@ interface StakeStore {
   loading: boolean;
   error?: string;
   fetchHistory: (wallet: string) => Promise<void>;
-  addStake: (params: AddStakeParams) => Promise<void>;
+  addStake: (params: AddStakeParams) => Promise<StakeRecord>;
   completeStake: (id: string, txHash?: string) => Promise<void>; //id: string???
 }
 
@@ -58,18 +58,21 @@ export const useStakeStore = create<StakeStore>((set) => ({
     if (txHash) insertObj.txHash = txHash
 
     set({ loading: true, error: undefined });
+
     const res = await supabase
       .from("stakes")
       .insert([insertObj])
       .select("*");
     if (res.error) {
       set({ error: res.error.message, loading: false });
+      throw new Error(res.error.message);
     } else {
       const newRec = (res.data as StakeRecord[])[0];
       set((state) => ({
         history: [newRec, ...state.history],
         loading: false,
       }));
+      return newRec;
     }
   },
 
