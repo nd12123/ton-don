@@ -61,7 +61,7 @@ export const useStakeStore = create<StakeStore>((set) => ({
     const res = await supabase
       .from("stakes")
       .insert([insertObj])
-      .select();
+      .select("*");
     if (res.error) {
       set({ error: res.error.message, loading: false });
     } else {
@@ -87,7 +87,7 @@ export const useStakeStore = create<StakeStore>((set) => ({
 
 
       .eq("id", id)
-      .select();
+      .select("*");
     if (res.error) {
       set({ error: res.error.message, loading: false });
     } else {
