@@ -30,9 +30,11 @@ interface StakeStore {
   fetchHistory: (wallet: string) => Promise<void>;
   addStake: (params: AddStakeParams) => Promise<StakeRecord>;
   completeStake: (id: string, txHash?: string) => Promise<void>; //id: string???
+  // ← вот это добавили:
+  withdrawStake: (id: string, amount: number) => Promise<void>;
 }
 
-export const useStakeStore = create<StakeStore>((set) => ({
+export const useStakeStore = create<StakeStore>((set, get) => ({
   history: [],
   loading: false,
   error: undefined,
@@ -101,4 +103,39 @@ export const useStakeStore = create<StakeStore>((set) => ({
       }));
     }
   },
+
+  
+  withdrawStake: async (id:string, amountToWithdraw: number) => {
+    set({ loading: true, error: undefined });
+
+    // Найдём текущую запись в локальном сторе
+    const record = get().history.find((r) => r.id === id);
+    if (!record) {
+      set({ error: "Запись не найдена", loading: false });
+      return;
+    }
+
+    const newAmount = record.amount - amountToWithdraw;
+    if (newAmount < 0) {
+      set({ error: "Нельзя вывести больше, чем застейкано", loading: false });
+      return;
+    }
+
+    const { data, error } = await supabase
+      .from("stakes") //<StakeRecord>
+      .update({ amount: newAmount })
+      .eq("id", id)
+      .select();
+    if (error) {
+      set({ error: error.message, loading: false });
+    } else if (data && data[0]) {
+      set((state) => ({
+        history: state.history.map((r) =>
+          r.id === id ? { ...r, amount: data[0].amount } : r
+        ),
+        loading: false,
+      }));
+    }
+  },
+
 }));

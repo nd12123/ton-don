@@ -1,7 +1,7 @@
 // app/(dashboard)/profile/page.tsx
 "use client";
 
-import { useMemo } from "react";
+import { useState, useMemo } from "react";
 import { useStakeStore, StakeRecord } from "@/lib/store";
 import { InfoCard } from "@/components/InfoCard";
 import { Table, Tbody, Td, Th, Thead, Tr } from "@/components/ui/table";
@@ -10,8 +10,63 @@ import { Award } from "lucide-react";
 import DashboardStats from "@/components/DashboardStats";
 import { useTonPrice } from "@/lib/hooks/useTonPrice";
 import { PLANS} from "@/components/Plans"; // убедитесь, что PLANS экспортируется из этого модуля
+import { WithdrawModal } from "@/components/WithdrawModal";
+
+import { useTonConnectUI } from "@tonconnect/ui-react";
+import { supabase } from "@/lib/supabase";
+
+import { useTonAddress } from "@tonconnect/ui-react";
 
 export default function ProfilePage() {
+
+  const [tonConnect] = useTonConnectUI();
+
+  // Локальный стейт для модалки
+  const [modalOpen, setModalOpen] = useState(false);
+  const [selectedStake, setSelectedStake] = useState<StakeRecord | null>(null);
+
+  const address = useTonAddress();
+  const fetchHistory = useStakeStore((s) => s.fetchHistory);
+  //const withdrawStake = useStakeStore((s) => s.withdrawStake);
+
+// Обработчик вывода
+const handleWithdraw = async (stake: StakeRecord, amt: number) => {
+  if (amt <= 0 || amt > stake.amount) {
+    // можно добавить валидацию и тост
+    return;
+  }
+  
+      // 1) вызываем TonConnect для отправки транзакции
+      const response = await tonConnect.sendTransaction({
+        validUntil: Math.floor(Date.now() / 1000) + 60 * 5,
+        messages: [
+          {
+            address: stake.wallet,               // куда возвращаем
+            amount: BigInt(amt * 1e9).toString(),   // переводим TON в нанотоны
+            ...("text" in stake ? {} : {}), // другие поля, если нужны
+          },
+        ],
+      });
+      const tx : string = response.boc
+      // 2) как только транзакция уходит, пушим её хеш/ID в Supabase
+      const { data: updated } = await supabase
+        .from("stakes")
+        .update({ status: "completed", txHash: tx })
+        .eq("id", stake.id)
+        .select();
+  /*  // Пример: просто пометим как completed или уменьшить amount
+  await supabase
+    .from("stakes")
+    .update({ amount: stake.amount - amt })
+    .eq("id", stake.id);
+    */
+
+  // Обновляем список
+  await fetchHistory(address);
+  setModalOpen(false);
+};
+
+
   // получаем историю из стора
   const history = useStakeStore((s) => s.history as StakeRecord[]);
 
@@ -112,6 +167,20 @@ export default function ProfilePage() {
                     >
                       {h.status === "active" ? "Активен" : "Завершён"}
                     </Td>
+
+                    <Td>
+                    {h.status === "active" && (
+                      <button
+                        onClick={() => {
+                          setSelectedStake(h);
+                          setModalOpen(true);
+                        }}
+                        className="text-sm text-blue-600 hover:underline"
+                      >
+                        Withdraw
+                      </button>
+                    )}
+                  </Td>
                   </Tr>
                 );
               })}
@@ -119,6 +188,16 @@ export default function ProfilePage() {
           </Table>
         )}
       </section>
+
+
+      {selectedStake && (
+        <WithdrawModal
+        open={modalOpen}
+        onClose={() => setModalOpen(false)}
+        stake={selectedStake}
+        onConfirm={handleWithdraw}
+      />
+      )}
     </main>
   );
 }
