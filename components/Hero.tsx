@@ -20,15 +20,15 @@ export default function Hero() {
 
 
   return (
-    <section
-      style={{
-        backgroundImage: `url("/images/ton-graphics.jpg")`,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-      }}
-      className="relative flex flex-col items-center justify-center
-                 text-center h-[50vh] sm:h-[70vh] lg:h-[60vh] overflow-hidden"//Hero block size on mobile corrected
-    >
+<section className="
+     w-full h-96
+     bg-hero      /* ваш токен для фонового цвета-слоя, если он есть */
+     bg-[url('/images/ton-graphics.jpg')]
+     bg-cover bg-center
+     flex items-center justify-center
+   ">
+
+
       {/* затемняющая накладка */}
       <div className="absolute inset-0 bg-black/30" />
 

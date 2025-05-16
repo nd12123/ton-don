@@ -1,26 +1,17 @@
-// tailwind.config.js
-/** @type {import('tailwindcss').Config} */
+const tokens = require('./design-tokens.json');
+
 module.exports = {
-  darkMode: "class",  // or 'media'
-  content: [
-    "./app/**/*.{js,ts,jsx,tsx}",
-    "./components/**/*.{js,ts,jsx,tsx}"
-  ],
+  content: [ "./app/**/*.{js,ts,jsx,tsx}", "./components/**/*.{js,ts,jsx,tsx}" ],
   theme: {
     extend: {
-      // Здесь можно расширить цвета для dark-theme
-      colors: {
-        background: {
-          light: "#ffffff",
-          dark: "#121212",
-        },
-        text: {
-          light: "#1f2937",  // gray-800
-          dark: "#f3f4f6",   // gray-100
-        },
-      },
-    },
+      colors: tokens.color,
+      spacing: tokens.spacing,
+      fontSize: Object.fromEntries(
+        Object.entries(tokens.fontSize).map(([key, [size, lh]]) => [key, size + '/' + lh])
+      ),
+      borderRadius: tokens.radius,
+      boxShadow: tokens.shadow,
+    }
   },
   plugins: [],
 };
-
