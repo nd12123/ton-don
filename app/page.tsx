@@ -2,10 +2,10 @@
 //import Link from "next/link";
 
 import { useState, useEffect } from "react";
-import { useStakeStore } from "@/lib/store";
+//import { useStakeStore } from "@/lib/store";
 import { PLANS }  from "@/components/Plans";
 import Plans from "@/components/Plans"
-import { motion } from "framer-motion";
+//import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import Header from "@/components/header";
 //import WalletConnect from "@/components/WalletConnect";
@@ -24,18 +24,12 @@ import { Database, Archive, Award } from "lucide-react";
 import StartInvesting from "@/components/StartInvesting";
 
 export default function Page() {
-
-  const addStake = useStakeStore((s) => s.addStake);
-  //const completeStake = useStakeStore((s) => s.completeStake);
-
   const plansList = PLANS
 
   const [selectedPlanName, setSelectedPlanName] = useState(plansList[0].name);
   const selectedPlan = plansList.find((p) => p.name === selectedPlanName)!;
 
   const [stakeAmount, setStakeAmount] = useState(500);
-  //const [duration, setDuration] = useState(30);
-  const [modalOpen, setModalOpen] = useState(false);
 // 1) когда stakeAmount меняется — находим план и ставим его
 useEffect(() => {
   const auto = plansList.find(p => 
@@ -53,29 +47,6 @@ function handlePlanSelect(planName: string) {
 }
 
   const [duration, setDuration] = useState(12); // месяцев
-  const [deposit, setDeposit] = useState(1000); // TON
-
-  const reward = ((deposit * 0.065) * (duration / 12)).toFixed(2);
-
-/*
-  const apr = 0.065; // Fixed value*/
-
-const validators = [
-  { name: "Validator One", apr: "6.5%" },
-  { name: "Validator Two", apr: "6.3%" },
-  { name: "Validator Three", apr: "6.1%" },
-  { name: "Validator Four", apr: "6.0%" },
-];
-
-const [selectedValidator, setSelectedValidator] = useState(validators[0]);
-const apr = parseFloat(selectedValidator.apr) / 100; 
-
-const rewardWeek = ((deposit * apr) / 52).toFixed(2);
-const rewardMonth = ((deposit * apr) / 12).toFixed(2);
-const rewardYear = (deposit * apr).toFixed(2);
-const rewardTotal = (deposit * apr * (duration / 12)).toFixed(2);
-
-
 //Header connected={connected} onConnect={() => setConnected(true)}
 //<main className="container mx-auto px-4 py-10"></main>
 //<main className="min-h-screen bg-gray-50 px-4 text-black flex flex-col items-center dark:bg-gray-800"> 

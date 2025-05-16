@@ -11,7 +11,7 @@ export default function StepsToInvest() {
   return (
     <section className="bg-[#0E1A38] py-24 px-4 sm:px-6 lg:px-8 text-white">
       <div className="max-w-5xl mx-auto text-center">
-        <h2 className="text-3xl sm:text-4xl font-bold mb-12">
+        <h2 className="text-3xl sm:text-4xl font-bold mb-12 text-gray-300">
           How to Start Staking
         </h2>
         <div className="grid sm:grid-cols-3 gap-8">

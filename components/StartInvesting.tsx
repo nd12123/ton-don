@@ -6,7 +6,7 @@ import { motion } from "framer-motion"
 
 export default function StartInvesting() {
   return (
-    <section className="relative bg-gradient-to-br from-[#0A1329] to-[#131B3A] text-white py-20 px-4 sm:px-6 lg:px-8 text-center">
+    <section className="relative bg-gradient-to-br from-[#001F3F] via-[#0E1A38] to-[#130B29] text-white py-20 px-4 sm:px-6 lg:px-8 text-center">
       <motion.div
         initial={{ opacity: 0, scale: 0.95 }}
         whileInView={{ opacity: 1, scale: 1 }}
@@ -14,7 +14,7 @@ export default function StartInvesting() {
         viewport={{ once: true }}
         className="max-w-2xl mx-auto"
       >
-        <h2 className="text-3xl sm:text-4xl font-bold">
+        <h2 className="text-3xl sm:text-4xl font-bold text-gray-300">
           Ready to earn with your TON?
         </h2>
         <p className="mt-4 text-gray-300">
