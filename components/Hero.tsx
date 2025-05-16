@@ -1,65 +1,32 @@
-"use client";
-//import GetStartedButton from "@/components/GetStartedButton"; <GetStartedButton />
-import { MotionButton } from "@/components/ui/MotionButton";
-// /images/image-ton-contribute.jpg
-import TestTx from "@/components/TestTx"
-import { useState } from "react";
+// components/Hero.tsx
+"use client"
 
-
-
+import { Button } from "@/components/ui/button"
+import { motion } from "framer-motion"
 
 export default function Hero() {
-
-
-  const [connected, setConnected] = useState(false);
-  const handleConnect = () => {
-    // Здесь позже добавим TonConnect
-    //console.log("done")
-    setConnected(true);
-  };
-
-
   return (
-<section className="
-     w-full h-96
-     bg-hero      /* ваш токен для фонового цвета-слоя, если он есть */
-     bg-[url('/images/ton-graphics.jpg')]
-     bg-cover bg-center
-     flex items-center justify-center
-   ">
+    <section className="relative flex flex-col items-center justify-center text-center pt-28 pb-20 px-4 sm:px-6 lg:px-8 overflow-hidden">
+      {/* Фоновый градиент */}
+      <div className="absolute inset-0 -z-10 bg-gradient-to-br from-[#001F3F] via-[#0E1A38] to-[#130B29]" />
 
-
-      {/* затемняющая накладка */}
-      <div className="absolute inset-0 bg-black/30" />
-
-      <h1 className="relative z-10 text-4xl sm:text-5xl lg:text-6xl font-extrabold
-                     text-white max-w-3xl px-4">
-        Stake TON Easily & Securely
-      </h1>
-      <p className="relative z-10 mt-4 text-lg md:text-xl
-                    text-gray-200 max-w-2xl px-4">
-        Earn passive rewards by staking your TON tokens with trusted validators.
-      </p>
-
-      <div className="relative z-10 mt-8">
-      <MotionButton
-  whileHover={{ scale: 1.05 }}
-  whileTap={{ scale: 0.95 }}
-  transition={{ type: "spring", stiffness: 300 }}
-  className="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-xl"
-  onClick= {() => handleConnect()}
->
-  Stake Now
-</MotionButton>
-
-<p className= "text-white-600 dark:text-gray-800">
-          {connected ? "Wallet Connected ✅" : "Connect your wallet to start staking."}
-</p>
-    <section className="mt-12">
-        <h2 className="text-xl font-semibold">Тестовая транзакция</h2>
-        <TestTx />
-      </section>
-      </div>
+      {/* Контейнер */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8 }}
+        className="max-w-4xl"
+      >
+        <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold leading-tight text-white">
+          Stake TON. Earn rewards.
+        </h1>
+        <p className="mt-4 text-lg sm:text-xl text-gray-300">
+          Secure your assets and grow with the TON network.
+        </p>
+        <div className="mt-8">
+          <Button >Connect Wallet</Button>
+        </div>
+      </motion.div>
     </section>
-  );
+  )
 }
