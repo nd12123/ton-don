@@ -1,19 +1,31 @@
-"use client";
-import { useEffect } from "react";
-import { useRouter } from "next/navigation";
-import { useUserRole } from "@/lib/hooks/useUser";
+"use client"
+
+import { useEffect } from "react"
+import { useRouter } from "next/navigation"
+import { useUserRole } from "@/lib/hooks/useUser"
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
-  const { isAdmin, isLoggedIn } = useUserRole();
-  const router = useRouter();
+  const { isAdmin, isLoggedIn, isLoading } = useUserRole()
+  const router = useRouter()
 
   useEffect(() => {
-    if (!isLoggedIn) router.replace("/");         // не вошёл — на главную
-    else if (!isAdmin) router.replace("/dashboard"); // не админ — в дашборд
-  }, [isAdmin, isLoggedIn, router]);
+    if (isLoading) return
+    if (!isLoggedIn) {
+      router.replace("/")
+    } else if (!isAdmin) {
+      router.replace("/dashboard")
+    }
+  }, [isAdmin, isLoggedIn, isLoading, router])
 
-  // Пока проверяем — можно показать лоадер:
-  if (!isLoggedIn || !isAdmin) return null;
+  if (isLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center text-white">
+        Loading admin area...
+      </div>
+    )
+  }
 
-  return <>{children}</>;
+  if (!isLoggedIn || !isAdmin) return null
+
+  return <>{children}</>
 }
