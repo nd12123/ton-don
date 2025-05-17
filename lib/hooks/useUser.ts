@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useEffect, useState, useRef } from "react"
 import { useTonAddress } from "@tonconnect/ui-react"
 
 export function useUserRole() {
@@ -8,25 +8,39 @@ export function useUserRole() {
   const [isAdmin, setIsAdmin] = useState<boolean | null>(null)
   const [isLoggedIn, setIsLoggedIn] = useState<boolean | null>(null)
 
+  const hasInitialized = useRef(false)
+  const previousWallet = useRef<string | null>(null)
+
   useEffect(() => {
-    // если кошелёк не подключен
+    //const adminWallet = process.env.NEXT_PUBLIC_ADMIN_WALLET?.toLowerCase()
+    const admins = (process.env.NEXT_PUBLIC_ADMIN_WALLETS || "").split(",");
     if (!wallet || wallet === "") {
-      setIsLoggedIn(false)
-      setIsAdmin(false)
+      // но если уже был адрес, не сбрасываем резко стейт
+      if (!hasInitialized.current) {
+        setIsLoggedIn(false)
+        setIsAdmin(false)
+      }
       return
     }
 
-    const adminWallet = process.env.NEXT_PUBLIC_ADMIN_WALLET?.toLowerCase()
-    const currentWallet = wallet.toLowerCase()
+    // если ничего не поменялось — не трогаем
+    if (previousWallet.current === wallet && hasInitialized.current) return
 
+    previousWallet.current = wallet
+    hasInitialized.current = true
+
+    //const currentWallet = wallet.toLowerCase() //currentWallet === adminWallet
     setIsLoggedIn(true)
-    setIsAdmin(adminWallet === currentWallet)
+    setIsAdmin(admins.includes(wallet)) 
+    console.log( )
   }, [wallet])
 
-  return {
+  const isLoading = isAdmin === null || isLoggedIn === null
+
+  return { // has to be TTF to go through
     isAdmin,
     isLoggedIn,
-    isLoading: isAdmin === null || isLoggedIn === null,
+    isLoading,
   }
 }
 /*
