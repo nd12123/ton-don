@@ -4,9 +4,8 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import {Toaster} from "react-hot-toast"
 //import Footer from "@/components/Footer";
-import TonProviderWrapper from "@/components/TonProviderWrapper";
+import {TonProviderWrapper} from "@/components/TonProviderWrapper";
 import ThemeProviderWrapper from "@/components/ThemeProviderWrapper";
-//import { TonConnectUIProvider } from "@tonconnect/ui-react";
 //import Footer from "@/components/Footer"
 
 

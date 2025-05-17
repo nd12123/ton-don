@@ -6,7 +6,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
 import ThemeToggle from "@/components/ThemeToggle";
-import TonProviderWrapper from "@/components/TonProviderWrapper";
+import {TonProviderWrapper} from "@/components/TonProviderWrapper";
 //import Footer from "@/components/Footer";
 import { motion } from "framer-motion";
 

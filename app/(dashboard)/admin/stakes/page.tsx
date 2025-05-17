@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import { supabase } from "@/lib/supabase";
 import { Table, Thead, Tbody, Tr, Th, Td } from "@/components/ui/table";
 
+import { RequireAdmin } from "@/components/RequireAdmin"
+
 interface StakeRecord {
   id: string;
   wallet: string;
@@ -43,6 +45,7 @@ export default function AdminStakesPage() {
   }
 
   return (
+    <RequireAdmin >
     <div className="p-6">
       <h1 className="text-2xl font-bold mb-4">Admin: All Stakes</h1>
       {loading ? (
@@ -91,5 +94,6 @@ export default function AdminStakesPage() {
         </Table>
       )}
     </div>
+  </RequireAdmin>
   );
 }
