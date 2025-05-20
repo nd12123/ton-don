@@ -14,9 +14,19 @@ import ProfitableIcon from '@/assets/Main/Profitable.svg';
 import SimpleIcon from '@/assets/Main/Simple.svg';
 import AuditedIcon from '@/assets/Main/bottom audited by certik.svg';
 
-export default function MainSection() {
+type MainSectionProps = {
+  className?: string
+}
+
+export default function MainSection({className = ''}: MainSectionProps) {
   return (
-    <section className="bg-[#0A1329] text-white py-20 px-4 sm:px-6 lg:px-8">
+    <section
+      className={[
+        "bg-[#0A1329] text-white",       // базовые стили
+        "px-4 sm:px-6 lg:px-8",          // паддинги
+        className                       // ваши дополнительные классы
+      ].join(" ")}
+    >
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center max-w-7xl mx-auto">
         {/* Left side: Text and CTA */}
         <div className="space-y-6">

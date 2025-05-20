@@ -42,15 +42,16 @@ export default function Page() {
   };
 
   return (
-    <main className="min-h-screen bg-bg-light text-text-light dark:bg-bg-dark dark:text-text-dark flex flex-col items-center">
+    <div className="min-h-screen flex flex-col">
       <Header />
 
+      <main className="min-h-screen bg-bg-light text-text-light dark:bg-bg-dark   flex-grow">
       {/* Hero section replaced by MainSection */}
       <MainSection />
 
-      {/* Total Value Locked */}
-      <Reveal className="mt-16">
-      <TotalValue />
+      {/* Total Value Locked className="py-7  mt-16 "*/}
+      <Reveal  >
+      <TotalValue className=""/>
       </Reveal>
 
       {/* Why Us */}
@@ -59,7 +60,7 @@ export default function Page() {
       </Reveal>
 
       {/* Steps To Invest */}
-      <StepsToInvest />
+      <div className="py-7"><StepsToInvest /></div>
 
       {/* Plans and Calculator */}
       <section className="container mx-auto px-4 py-16">
@@ -69,7 +70,7 @@ export default function Page() {
           selectedPlanName={selectedPlanName}
           onSelect={handlePlanSelect}
         />
-        <div className="w-full max-w-5xl mt-8 grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <div className="w-full max-w-5xl mt-8 grid grid-cols-1 lg:grid-cols-2 gap-8 justify-items-center">
           <StakeCalculator
             stakeAmount={stakeAmount}
             setStakeAmount={setStakeAmount}
@@ -77,7 +78,7 @@ export default function Page() {
             setDuration={setDuration}
             apr={selectedPlan.apr}
           />
-          <div className="space-y-6">
+          <div className="space-y-6 max-w-md w-full">
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               <InfoCard title="Your Balance" value="2,750 TON" Icon={Database} />
               <InfoCard title="Staked" value="1,200 TON" Icon={Archive} />
@@ -102,8 +103,11 @@ export default function Page() {
         </Reveal>
       </section>
 
+
+      </main>
+
       <Footer />
-    </main>
+      </div>
   );
 }
 
