@@ -1,4 +1,41 @@
-// components/StepsToInvest.tsx
+import React from 'react';
+import Image from 'next/image';
+
+// Import step illustrations and icons
+import step1Img from '@/assets/StepsToInvest/ton 3d 1.png';
+import step2Img from '@/assets/StepsToInvest/ton 3d 2.png';
+import step3Img from '@/assets/StepsToInvest/ton 3d 3.png';
+import step4Img from '@/assets/StepsToInvest/╤Б╨▓╨╡╤З╨╡╨╜╨╕╨╡ 2.png'; //assets\StepsToInvest\╤Б╨▓╨╡╤З╨╡╨╜╨╕╨╡ 2.png
+
+export default function StepsToInvest() {
+  const steps = [
+    { title: 'Connect Wallet', img: step1Img },
+    { title: 'Choose Plan', img: step2Img },
+    { title: 'Stake Tokens', img: step3Img },
+    { title: 'Earn Rewards', img: step4Img },
+  ];
+
+  return (
+    <section className="py-20 bg-[#0A1329] text-white">
+      <div className="container mx-auto px-4">
+        <h2 className="text-3xl font-bold mb-12 text-center">How to Start Investing</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+          {steps.map((step, idx) => (
+            <div key={idx} className="flex flex-col items-center">
+              <Image src={step.img} alt={step.title} className="w-24 h-24 mb-4" />
+              <h3 className="text-xl font-semibold mb-2">{step.title}</h3>
+              <p className="text-center text-gray-300">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+
+
+/* components/StepsToInvest.tsx
 "use client"
 
 const steps = [
@@ -29,3 +66,5 @@ export default function StepsToInvest() {
     </section>
   )
 }
+
+*/

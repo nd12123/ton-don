@@ -11,9 +11,9 @@
   align-items: center;
   justify-items: center;
   min-height: 100svh;
-  padding: 80px;
-  gap: 64px;
-  font-family: var(--font-geist-sans);
+  padding: var(--space-xl);
+  gap: var(--space-lg);
+  font-family: 'Geist Sans', sans-serif;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -32,6 +32,7 @@
   flex-direction: column;
   gap: 32px;
   grid-row-start: 2;
+  background-color: (--color-primary);
 }
 
 .main ol {
