@@ -23,7 +23,7 @@ export default function MainSection({className = ''}: MainSectionProps) {
     <section
       className={[
         "bg-[#0A1329] text-white",       // базовые стили
-        "px-4 sm:px-6 lg:px-8",          // паддинги
+        "px-4 py-32 sm:px-6 lg:px-8",          // паддинги
         className                       // ваши дополнительные классы
       ].join(" ")}
     >
@@ -61,8 +61,8 @@ export default function MainSection({className = ''}: MainSectionProps) {
           </div>
         </div>
 
-        {/* Right side: 3D images */}
-        <div className="relative w-full h-96">
+        {/* Right side: 3D images
+         <div className="relative w-full h-96">
           <Image
             src={ton3d1}
             alt="3D Illustration 1"
@@ -78,7 +78,25 @@ export default function MainSection({className = ''}: MainSectionProps) {
             alt="3D Illustration 3"
             className="absolute top-20 right-0 w-1/2 h-auto animate-float delay-4000"
           />
-        </div>
+        </div> */}
+       
+        <div className="absolute inset-0 pointer-events-none">
+        <Image
+          src={ton3d3}
+          alt=""
+          className="absolute top-[10%] right-[13%] w-[20%] opacity-60 animate-float delay-4000"
+        />
+        <Image
+          src={ton3d1}
+          alt=""
+          className="absolute top-[23%] right-[25%] w-[15%] opacity-70 animate-float"
+        />
+        <Image
+          src={ton3d2}
+          alt=""
+          className="absolute top-[35%] right-[15%] w-[30%] opacity-80 animate-float delay-2000"
+        />
+      </div>
       </div>
     </section>
   );

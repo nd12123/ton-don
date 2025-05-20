@@ -50,12 +50,12 @@ export default function Page() {
       <MainSection />
 
       {/* Total Value Locked className="py-7  mt-16 "*/}
-      <Reveal  >
-      <TotalValue className=""/>
+      <Reveal className="" >
+      <TotalValue className="py-7"/>
       </Reveal>
 
       {/* Why Us */}
-      <Reveal className="mt-16">
+      <Reveal className="py-14 mt-16">
         <WhyUs />
       </Reveal>
 
@@ -63,14 +63,17 @@ export default function Page() {
       <div className="py-7"><StepsToInvest /></div>
 
       {/* Plans and Calculator */}
-      <section className="container mx-auto px-4 py-16">
-        <h1 className="text-3xl font-bold mb-6 dark:text-white">Staking Plans</h1>
+      <section className="container dark:bg-light mx-auto px-4 py-16">
+        <h1 className="text-3xl font-bold mb-6 dark:text-white text-center">Staking Plans</h1>
+        <div className="w-full">
         <Plans
           plans={plansList}
           selectedPlanName={selectedPlanName}
           onSelect={handlePlanSelect}
         />
-        <div className="w-full max-w-5xl mt-8 grid grid-cols-1 lg:grid-cols-2 gap-8 justify-items-center">
+        </div>
+        <div className="w-full max-w-6xl mx-auto mt-8 grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div className="lg:col-span-2">
           <StakeCalculator
             stakeAmount={stakeAmount}
             setStakeAmount={setStakeAmount}
@@ -78,6 +81,7 @@ export default function Page() {
             setDuration={setDuration}
             apr={selectedPlan.apr}
           />
+          </div>
           <div className="space-y-6 max-w-md w-full">
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               <InfoCard title="Your Balance" value="2,750 TON" Icon={Database} />
