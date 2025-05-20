@@ -25,12 +25,18 @@ export default function RootLayout({
   return (
       <html lang="en" suppressHydrationWarning>
       <body
-        className={`
+      /* {`
           container mx-auto px-4 py-10 flex flex-col min-h-screen 
           bg-white text-black
           dark:bg-gray-900 dark:text-gray-100
           ${geistSans.variable} ${geistMono.variable}
-        `}
+        `}*/
+        className="
+        min-h-screen
+        bg-bg-light text-text-primary
+        dark:bg-bg-dark dark:text-text-dark
+        flex flex-col
+      "
         suppressHydrationWarning
       >
         <ThemeProviderWrapper>
