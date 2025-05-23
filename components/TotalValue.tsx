@@ -7,8 +7,8 @@ import ton3d5 from '@/assets/TotalValue/Ton 3d 5.png';
 import ton3d6 from '@/assets/TotalValue/Ton 3d 6.png';
 import ton3d7 from '@/assets/TotalValue/Ton 3d 7.png';
 
-import StarsCluster from '@/app/InteractivePage'
-import GlowingArcs from '@/app/InteractivePage' 
+//import StarsCluster from '@/app/InteractivePage'
+//import GlowingArcs from '@/app/InteractivePage' 
 
 //<StarsCluster />
 //<GlowingArcs />
