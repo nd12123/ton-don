@@ -18,7 +18,7 @@ export function useSyncOnChain(pollInterval = 30000) {
         try {
           // Запрос к TonCenter Testnet RPC
           const resp = await fetch(
-            `https://testnet.toncenter.com/api/v2/getTransaction?hash=${r.txHash}`
+            ''//`https://testnet.toncenter.com/api/v2/getTransaction?hash=${r.txHash}`
           );
           const json = await resp.json();
           // Если статус 3 = включено в блок

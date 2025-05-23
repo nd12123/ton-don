@@ -8,7 +8,7 @@ export function useTonPrice(): number {
 
   useEffect(() => {
     fetch(
-      "https://api.coingecko.com/api/v3/simple/price?ids=toncoin&vs_currencies=usd"
+      ""//"https://api.coingecko.com/api/v3/simple/price?ids=toncoin&vs_currencies=usd"
     )
       .then((res) => res.json())
       .then((data) => {
