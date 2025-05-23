@@ -14,6 +14,8 @@ import ProfitableIcon from '@/assets/Main/Profitable.svg';
 import SimpleIcon from '@/assets/Main/Simple.svg';
 import AuditedIcon from '@/assets/Main/bottom audited by certik.svg';
 
+import StarsCluster from '@/app/InteractivePage'
+import GlowingArcs from '@/app/InteractivePage' 
 type MainSectionProps = {
   className?: string
 }
@@ -27,6 +29,8 @@ export default function MainSection({className = ''}: MainSectionProps) {
         className                       // ваши дополнительные классы
       ].join(" ")}
     >
+    <StarsCluster />
+     <GlowingArcs />
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center max-w-7xl mx-auto">
         {/* Left side: Text and CTA */}
         <div className="space-y-6">

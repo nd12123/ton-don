@@ -1,3 +1,24 @@
+/* в начале — после :root и @tailwind директив */
+
+/* Медленная пульсация для звёзд */
+@keyframes pulse-slow {
+  0%, 100% { opacity: 0.3; }
+  50%       { opacity: 0.8; }
+}
+.animate-pulse-slow {
+  animation: pulse-slow 4s ease-in-out infinite;
+}
+
+/* Медленный «флот» */
+@keyframes float-slow {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(12px); }
+}
+.animate-float-slow {
+  animation: float-slow 8s ease-in-out infinite;
+}
+
+
 
 :root {
   --color-primary-start:   #5C7CFA;
