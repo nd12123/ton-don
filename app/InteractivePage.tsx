@@ -11,10 +11,11 @@ import { PLANS } from "@/components/Plans";
 import Plans from "@/components/Plans";
 import StakeCalculator from "@/components/StakeCalculator";
 import { InfoCard } from "@/components/InfoCard";
-import StartInvesting from "@/components/StartInvesting";
+//import StartInvesting from "@/components/StartInvesting";
 import FAQSection from "@/components/FAQSection";
 import Footer from "@/components/Footer";
 import { Database, Archive, Award } from "lucide-react";
+import CalculateAndPlans from "@/components/CalculateAndPlans";
 
 export default function InteractivePage() {
   const plansList = PLANS;
@@ -50,12 +51,15 @@ export default function InteractivePage() {
       <TotalValue />
       <WhyUs />
       <StepsToInvest />
+      
+      {/* Секция “Calculate & Plans” */}
+      <CalculateAndPlans />
 
       {/* Staking Plans & Calculator */}
-      <div className="bg-gray-50 dark:bg-gray-800 py-16">
+      <div className="bg-light dark:bg-dark py-16">
         <div className="container mx-auto px-4">
-          <h1 className="text-3xl font-bold mb-6 dark:text-gray-100">
-            Staking Plans
+          <h1 className="text-3xl font-bold mb-6 dark:text-gray-100 text-center">
+            Choose a plan and calculate your profit
           </h1>
           <Plans
             plans={plansList}
@@ -96,7 +100,6 @@ export default function InteractivePage() {
       </div>
 
       <FAQSection />
-      <StartInvesting />
       <Footer />
     </>
   );

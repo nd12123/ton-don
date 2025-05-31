@@ -8,7 +8,7 @@ import ton3d2 from '@/assets/Main/Ton 3d 2.png';
 import ton3d3 from '@/assets/Main/Ton 3d 3.png';
 
 // Import SVG icons
-import GetStartedIcon from '@/assets/Main/Get started.svg';
+//import GetStartedIcon from '@/assets/Main/Get started.svg';
 import ReliableIcon from '@/assets/Main/Reliable.svg';
 import ProfitableIcon from '@/assets/Main/Profitable.svg';
 import SimpleIcon from '@/assets/Main/Simple.svg';

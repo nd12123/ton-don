@@ -9,7 +9,7 @@ import Plans from "@/components/Plans"
 import { Button } from "@/components/ui/button";
 import Header from "@/components/header";
 //import WalletConnect from "@/components/WalletConnect";
-import Hero  from "@/components/Hero";
+import Hero  from "@/components/Hero(nouse)";
 import Footer from "@/components/Footer"
 import Reveal from "@/components/ui/Reveal";
 //import WhyUs from "@/components/WhyUs";

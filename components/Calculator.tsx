@@ -32,7 +32,7 @@ export default function Calculator({ plans }: CalculatorProps) {
   }, [amount, apr]);
 
   const inOneDay = dailyEarnings * 1;     // за 1 день
-  const inThirtyDays = dailyEarnings * 30; // за 30 дней
+  //const inThirtyDays = dailyEarnings * 30; // за 30 дней
 
   return (
     <div className="relative overflow-hidden bg-[#0F1B3F] rounded-2xl p-6 grid grid-cols-1 md:grid-cols-3 gap-6">

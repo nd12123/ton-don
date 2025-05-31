@@ -25,6 +25,9 @@
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
+    "@figma-export/cli": "^6.2.0",
+    "@figma-export/output-components-as-svg": "^6.2.0",
+    "@figma-export/output-styles-as-sass": "^6.2.0",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",

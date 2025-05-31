@@ -7,7 +7,7 @@ import Link from "next/link";
 
 // Пути к вашим файлам. Поместите картинки в папку /public/decorative/
 import coinLarge from "@/assets/StepsToInvest/ton2.png";//"/decorative/ton2.png"; // большая монета
-import coinSmall from "@/assets/StepsToInvest/ton1.png";//"/decorative/ton3.png"; // мелкие монеты
+//import coinSmall from "@/assets/StepsToInvest/ton1.png";//"/decorative/ton3.png"; // мелкие монеты
 import leftCorner from "@/assets/StepsToInvest/leftCorner.svg";
 import rightCorner from "@/assets/StepsToInvest/rightCorner.svg";
 export default function StepsToInvest() {
