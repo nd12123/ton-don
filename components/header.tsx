@@ -26,7 +26,7 @@ export default function Header() {
       {/* Лого */}
       <Link 
       href="/"
-        className="text-xl font-bold tracking-wide">TON Stake
+        className="text-xl font-bold tracking-wide text-gray-100">TON Stake
       </Link>
 
       {/* Навигация */}

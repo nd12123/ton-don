@@ -1,4 +1,187 @@
 // components/StepsToInvest.tsx
+"use client";
+
+import React from "react";
+import Image from "next/image";
+import Link from "next/link";
+
+// Пути к вашим файлам. Поместите картинки в папку /public/decorative/
+import coinLarge from "@/assets/StepsToInvest/ton2.png";//"/decorative/ton2.png"; // большая монета
+import coinSmall from "@/assets/StepsToInvest/ton1.png";//"/decorative/ton3.png"; // мелкие монеты
+import leftCorner from "@/assets/StepsToInvest/leftCorner.svg";
+import rightCorner from "@/assets/StepsToInvest/rightCorner.svg";
+export default function StepsToInvest() {
+  // Структура трёх шагов (номер, заголовок, описание).
+  const steps = [
+    {
+      id: 1,
+      title: "Choose Plan",
+      description: "Select the plan that suits you best",
+    },
+    {
+      id: 2,
+      title: "Make a Deposit",
+      description: "Deposit at least 10 TON",
+    },
+    {
+      id: 3,
+      title: "Receive Dividends",
+      description: "Earn rewards and withdraw anytime",
+    },
+  ];
+
+  return (
+    <section
+      className="
+        relative 
+        overflow-hidden 
+        bg-gradient-to-br from-[#0A1329] to-[#081028] 
+        text-white
+        py-20
+      "
+    >
+      {/* 1) Фоновый «баграунд» со скруглёнными боковинами (если нужен) */}
+      <div className="absolute inset-0 pointer-events-none">
+        {/* 
+          – Если в Figma фон «переходит» с одного оттенка синего в другой, 
+            можно залить градиентом (как выше в `bg-gradient-to-br`).
+          – Если у вас есть статический фон (например, SVG-обвод, «волнистая» граница),
+            можно добавить его сюда через <Image> или вставить SVG.
+        */}
+      </div>
+
+      {/* 2) Заголовок + кнопка „See Plans“ */}
+      <div className="relative z-10 max-w-5xl mx-auto px-4 text-center">
+        <h2 className="text-4xl md:text-5xl lg:text-6xl font-extrabold mb-6">
+          3 Easy steps to invest in 
+          <span className="text-[#00C2FF]">TonStake.Ai</span>
+        </h2>
+
+        <Link href="/plans" 
+            className="
+              inline-block 
+              bg-[#00BFFF] hover:bg-[#00A5E0] 
+              text-white 
+              font-medium 
+              rounded-full 
+              px-6 py-3 
+              text-lg 
+              transition 
+              shadow-lg
+            "
+          >
+            See Plans
+        </Link>
+      </div>
+
+      {/* 3) Контейнер с тремя «шагами» */}
+      <div className="relative z-10 max-w-6xl mx-auto px-4 mt-12">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-0">
+          {steps.map((step, idx) => (
+            <div key={step.id} className="relative group">
+              {/* 
+                3.1) Сам «блок» шага: фон ярко-синего цвета с лёгкой тенью.
+                     Скругляем углы: слева и справа слегка волнистые (имитация «зубцов»),
+                     но для простоты здесь скругление сделано обычным border-radius.
+                     Если вам нужна именно форма «как в макете» (с зубчиками), 
+                     можно сделать SVG-маску, но для начала часто хватает 
+                     простого округления углов.
+              */}
+              <div
+                className="
+                  bg-gradient-to-r from-[#00A8FF] to-[#006EFF] 
+                  rounded-2xl 
+                  p-8 
+                  h-full 
+                  flex 
+                  flex-col 
+                  justify-start 
+                  hover:shadow-2xl 
+                  transition
+                "
+              >
+                {/* Номер шага */}
+                <div className="text-4xl font-bold mb-4">{step.id.toString().padStart(2, "0")}</div>
+
+                {/* Текст шага */}
+                <h3 className="text-2xl font-semibold mb-2">{step.title}</h3>
+                <p className="text-base">{step.description}</p>
+              </div>
+
+              {/* 
+                3.2) Вертикальная пунктирная линия между карточками (кроме последнего)
+                    – делаем позиционированный div с высотой равной блоку шагов 
+                    – с border-left: 2px dashed white/серый (или tailwind-классом)
+              */}
+              {idx < steps.length - 1 && (
+                <div
+                  className="
+                    hidden md:block 
+                    absolute 
+                    top-1/4 
+                    right-0 
+                    h-1/2 
+                    border-r-2 border-dashed border-white/50
+                  "
+                />
+              )}
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* 4) Абсолютно позиционированные «плавающие» 3D-монетки */}
+      <div className="absolute inset-0 pointer-events-none">
+        {/* Большая монета в центре */}
+        <div className="absolute inset-x-0 -top-120 opacity-60 flex justify-center">
+          <Image
+            src={coinLarge}
+            alt="Ton Coin"
+            className="w-48 h-48 opacity-70 animate-float-slow"
+          />
+        </div>
+
+        {/* Мелкие монетки слева и справа */}
+        <Image
+          src={leftCorner}
+          alt="Ton Coin"
+          className="absolute left-0 h-80 top-1/3 opacity-60 animate-float-slow delay-2000" //w-16 h-16  left-8 top-1/2 
+        />
+        <Image
+          src={rightCorner}
+          alt="Ton Coin"
+          className="absolute right-0 h-80 top-1/3  opacity-60 animate-float-slow delay-2000" //right-8 top-1/3 w-20 h-20
+        />
+      </div>
+
+      {/* 5) Кнопка «Connect Wallet» снизу */}
+      <div className="relative z-10 mt-16 flex justify-center">
+        <Link href="/connect" 
+            className="
+              inline-flex items-center 
+              bg-[#00BFFF] hover:bg-[#00A5E0] 
+              text-white 
+              font-medium 
+              rounded-full 
+              px-6 py-3 
+              text-lg 
+              transition 
+              shadow-lg
+            "
+          >
+            {/* Здесь можно вставить иконку кошелька (через <Image>) */}
+            <span className="mr-2">💼</span>
+            Connect Wallet
+        </Link>
+      </div>
+    </section>
+  );
+}
+
+
+
+// components/StepsToInvest.tsx
+/*
 import React from 'react';
 import Image, { StaticImageData } from 'next/image';
 import stepsBg from '@/assets/StepsToInvest/steps.svg';  
@@ -41,7 +224,6 @@ export default function StepsToInvest() {
         backgroundPosition: '5% 50%, center 50%, 95% 50%',
       }}
     >
-      {/* Контент поверх фона */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 px-40">
           {steps.map((step) => (
             <div key={step.id} className="flex flex-col items-center">
@@ -64,7 +246,7 @@ export default function StepsToInvest() {
   );
 }
 
-
+*/
 
 
 /* 
