@@ -20,16 +20,17 @@ export default function TotalValue({ className = "" }: TotalValueProps) {
   return (
     <section
       className={`relative overflow-hidden text-white ${className}`}
+      
+    >{/** Картинка
       style={{
-        // устанавливаем «космическое сечение» как фон секции
-        backgroundImage: `url("/decorative/horizon-bg.svg")`,
-        backgroundSize: "cover",
-        backgroundPosition: "center top", //bottom
-        backgroundRepeat: "no-repeat",
-      }}
-    >
-      {/* Полупрозрачный слой глубокого космоса (чтобы было темнее наверху) */}
-      <div className="absolute inset-0 bg-gradient-to-t from-bg-dark via-black/30 to-bg-dark pointer-events-none" />
+      // устанавливаем «космическое сечение» как фон секции
+      backgroundImage: `url("/decorative/horizon-bg.svg")`,
+      backgroundSize: "cover",
+      backgroundPosition: "center top", //bottom
+      backgroundRepeat: "no-repeat",
+    }} */}
+      {/* Полупрозрачный слой глубокого космоса (чтобы было темнее наверху)<div className="absolute inset-0 " /> bg-gradient-to-t from-bg-dark via-black/30 to-bg-dark pointer-events-none */}
+      
 
       {/* Дополнительные «тонкие» 3D-иллюстрации (опционально) */}
       <div className="absolute inset-0 pointer-events-none">
@@ -60,7 +61,7 @@ export default function TotalValue({ className = "" }: TotalValueProps) {
         <h2 className="text-5xl sm:text-6xl font-extrabold mb-4">
           Total Value Locked
         </h2>
-        <p className="text-7xl sm:text-8xl font-extrabold">$14,320,000</p>
+        <p className="text-7xl sm:text-8xl font-extrabold mb-4">$14,320,000</p>
       </div>
     </section>
   );

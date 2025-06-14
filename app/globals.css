@@ -22,6 +22,10 @@
 /* #0B1128*/
 :root { 
 
+  
+  --bg-dark-start: #0A1329;
+  --bg-dark-end:   #050813;
+
   --accent-100: "#00BFFF";
   --accent-200: "#00C2FF";
   --gray-800: "#0F1B3F";
@@ -73,6 +77,88 @@
     --text-secondary: #D1D5DB;
   }
 }
+
+
+
+html, body {
+  height: 100%;
+}
+
+body {
+  /* Радиальный градиент 
+  background-color: var(--bg-dark-end);
+  background-image:
+    radial-gradient(circle at top center,
+      var(--bg-dark-start) 0%,
+      var(--bg-dark-end)   100%
+    );
+  position: relative;
+  overflow-x: hidden; 
+  
+  background:
+    url("/decorative/noise.jpg") repeat fixed,
+    linear-gradient(180deg, #081028 0%, #0A1329 100%);
+    */
+  /* Шумный Фон  */
+
+  /** Линейный Градиент */
+  background: linear-gradient(180deg, #081028 0%, #0A1329 100%);
+  position: relative; 
+  background-color: #081028;
+}
+
+/* 2. Текстура шума поверх всего документа */
+body::before {  
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background: url("/decorative/noise.jpg") repeat;
+  opacity: 0.04;         /* <–– ставь любую цифру 0.01–0.1 по вкусу */
+  z-index: -1;
+}
+
+/*
+before:
+  content: "";
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  background: url("/decorative/noise.jpg") repeat;
+  opacity: 0.04;
+  z-index: 50;
+
+
+  content: "";
+  position: fixed;
+  inset: 0;                
+  pointer-events: none;    
+  background: url("/decorative/horizon-bg.svg") no-repeat bottom center;
+  background-size: cover;  
+  opacity: 0.25;           
+  z-index: -1; 
+
+body {
+  position: relative; 
+  background:
+    url("/decorative/noise.jpg") repeat fixed,
+    linear-gradient(180deg, #081028 0%, #0A1329 100%);
+  background-color: #081028;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;                
+  pointer-events: none;    
+  background: url("/horizon.png") no-repeat bottom center;
+  background-size: cover;  
+  opacity: 0.25;           
+  z-index: -1;             
+}
+
+*/
+
 
 /* 2) Tailwind-директивы на отдельных строках */
 @tailwind base;

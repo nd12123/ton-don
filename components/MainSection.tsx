@@ -22,7 +22,7 @@ export default function MainSection({className = ''}: MainSectionProps) {
   return (
     <section
       className={[
-        "bg-bg-light text-white",       // базовые стили
+        " text-white",       // базовые стили bg-bg-light
         "px-4 py-32 sm:px-6 lg:px-8",          // паддинги
         className                       // ваши дополнительные классы
       ].join(" ")}

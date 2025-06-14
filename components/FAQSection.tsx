@@ -54,8 +54,8 @@ export default function FAQSection() {
   };
 
   return (
-    <section className="relative py-20 bg-[#081028] text-white overflow-hidden">
-      {/* [Опционально] какие-то декоративные звёздочки или фон можно разместить здесь */}
+    <section className="relative py-20  text-white overflow-hidden">
+      {/* bg-[#081028] [Опционально] какие-то декоративные звёздочки или фон можно разместить здесь */}
       <div className="container mx-auto px-4">
         {/* Заголовок */}
         <h2 className="text-4xl sm:text-5xl font-bold text-center mb-4">

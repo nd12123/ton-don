@@ -17,7 +17,7 @@ type FooterProps = {
 
 export default function Footer({ className = "" }: FooterProps) {
   return (
-    <footer className={`bg-[#081028] text-white ${className}`}>
+    <footer className={`text-white ${className}`}> {/**bg-[#081028] */}
       {/* 1) CTA-блок «Start investing now!» сверху футера */}
       <StartInvesting className="mb-16" />
 

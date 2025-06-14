@@ -35,7 +35,6 @@ export default function StepsToInvest() {
       className="
         relative 
         overflow-hidden 
-        bg-gradient-to-br from-[#0A1329] to-[#081028] 
         text-white
         py-20
       "

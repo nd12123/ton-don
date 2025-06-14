@@ -30,11 +30,13 @@ export default function RootLayout({
           bg-white text-black
           dark:bg-gray-900 dark:text-gray-100
           ${geistSans.variable} ${geistMono.variable}
+          
+          bg-bg-light
         `}*/
-        className="
+        className=" bg-page-noise bg-repeat bg-fixed
         min-h-screen
-        bg-bg-light text-text-primary
-        dark:bg-bg-dark dark:text-text-dark
+         text-text-primary
+         dark:text-text-dark
         flex flex-col
       "
         suppressHydrationWarning
