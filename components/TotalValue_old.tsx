@@ -7,7 +7,6 @@ import ton3d5 from '@/assets/TotalValue/Ton 3d 5.png';
 import ton3d6 from '@/assets/TotalValue/Ton 3d 6.png';
 import ton3d7 from '@/assets/TotalValue/Ton 3d 7.png';
 
-import { StarsCluster } from "@/components/decorative/StarsCluster";
 
 
 // если хочешь через next/image
@@ -23,7 +22,7 @@ type TotalValueProps = {
   className?: string;
 };
 
-export default function TotalValue({ className = "" }: TotalValueProps) {
+export default function TotalValue({}: TotalValueProps) { // className = "" 
   return (
     <section className="relative overflow-hidden bg-bg-dark text-white py-32">
       {/* 1) Слой звёзд (слабая непрозрачность) */}
