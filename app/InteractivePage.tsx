@@ -17,7 +17,7 @@ import Footer from "@/components/Footer";
 //import { Database, Archive, Award } from "lucide-react";
 import CalculateAndPlans from "@/components/CalculateAndPlans";
 //import NewStakeCalculator from "@/components/NewStakeCalculator";
-
+import SectionWrapper from "@/components/decorative/SectionWrapper";
 export default function InteractivePage() {
   const plansList = PLANS;
 
@@ -41,8 +41,26 @@ export default function InteractivePage() {
   return (
     <>
       <Header />
+
+
+
       <MainSection />
-      <TotalValue />
+
+      <SectionWrapper>
+        {/*topCloud={{
+          leftSrc: '/decorative/ellipse6.png',
+          rightSrc: '/decorative/ellipse5.png',
+          height: 600,
+        }}
+        bottomCloud={{
+          leftSrc: '/decorative/ellipse6.png',
+          rightSrc: '/decorative/ellipse5.png',
+          height: 300,
+        }}
+      >*/}
+        <TotalValue />
+      </SectionWrapper>
+        
       <WhyUs />
       <StepsToInvest />
       

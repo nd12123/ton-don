@@ -30,7 +30,7 @@ export default function RootLayout({
           bg-white text-black
           dark:bg-gray-900 dark:text-gray-100
           ${geistSans.variable} ${geistMono.variable}
-          
+
           bg-bg-light
         `}*/
         className=" bg-page-noise bg-repeat bg-fixed
@@ -44,9 +44,9 @@ export default function RootLayout({
 {/* фоновая “точка света” слева, перенести потом */}
 <div
     className="absolute inset-0 pointer-events-none"
-    style={{
+    style={{ /** позволяет подсветить угло основной страницы, мб нужно для плавности
       background:
-        "radial-gradient(ellipse at bottom left, rgba(0,194,255,0.2), transparent 60%)",
+        "radial-gradient(ellipse at bottom left, rgba(0,194,255,0.2), transparent 60%)", */
     }}
   />
         <ThemeProviderWrapper>

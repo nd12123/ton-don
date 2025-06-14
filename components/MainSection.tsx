@@ -22,11 +22,40 @@ export default function MainSection({className = ''}: MainSectionProps) {
   return (
     <section
       className={[
-        " text-white",       // базовые стили bg-bg-light
+        " text-white",       // базовые стили 
         "px-4 py-32 sm:px-6 lg:px-8",          // паддинги
         className                       // ваши дополнительные классы
       ].join(" ")}
     >
+
+{/* === Свечения (без импортов, просто пути) ===
+
+<div className="pointer-events-none absolute bottom-0 left-0 w-64 h-64 opacity-100">
+        <Image
+          src="/decorative/ellipse6.png"
+          alt=""
+          layout="fill"
+          objectFit="contain"
+        />
+      </div>
+      <div className="pointer-events-none absolute bottom-0 right-0 w-72 h-72 opacity-100">
+        <Image
+          src="/decorative/ellipse5.png"
+          alt=""
+          layout="fill"
+          objectFit="contain"
+        />
+      </div>
+       */}
+      <div className="pointer-events-none absolute top-20 right-1/4 transform translate-x-1/4 w-96 h-96 opacity-60">
+        <Image
+          src="/decorative/ellipse10.png"
+          alt=""
+          layout="fill"
+          objectFit="contain"
+        />
+      </div>
+
 
 <div className="flex flex-wrap gap-12 items-center max-w-7xl mx-auto">
             <div className="flex items-center space-x-2">
@@ -78,7 +107,7 @@ export default function MainSection({className = ''}: MainSectionProps) {
         <Image
           src={ton3d2}
           alt=""
-          className="absolute top-[35%] right-[15%] w-[27%] opacity-80 animate-float delay-2000"
+          className="absolute top-[35%] right-[15%] w-[23%] opacity-80 animate-float delay-2000"
         />
       </div>
       </div>

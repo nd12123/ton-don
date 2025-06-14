@@ -1,23 +1,10 @@
-/* в начале — после :root и @tailwind директив */
 
-/* Медленная пульсация для звёзд */
-@keyframes pulse-slow {
-  0%, 100% { opacity: 0.3; }
-  50%       { opacity: 0.8; }
-}
-.animate-pulse-slow {
-  animation: pulse-slow 4s ease-in-out infinite;
-}
 
-/* Медленный «флот» */
-@keyframes float-slow {
-  0%, 100% { transform: translateY(0); }
-  50%      { transform: translateY(12px); }
-}
-.animate-float-slow {
-  animation: float-slow 8s ease-in-out infinite;
-}
 
+/* 2) Tailwind-директивы на отдельных строках */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 /* #0B1128*/
 :root { 
@@ -101,10 +88,11 @@ body {
     */
   /* Шумный Фон  */
 
-  /** Линейный Градиент */
-  background: linear-gradient(180deg, #081028 0%, #0A1329 100%);
+  /** Линейный Градиент 
+  background: linear-gradient(180deg, #2E86ED 0%, #0B1128 100%);
+  */
   position: relative; 
-  background-color: #081028;
+  background-color: #080d20; 
 }
 
 /* 2. Текстура шума поверх всего документа */
@@ -114,9 +102,143 @@ body::before {
   inset: 0;
   pointer-events: none;
   background: url("/decorative/noise.jpg") repeat;
-  opacity: 0.04;         /* <–– ставь любую цифру 0.01–0.1 по вкусу */
+  opacity: 0.03;         /* <–– ставь любую цифру 0.01–0.1 по вкусу */
   z-index: -1;
 }
+
+/* 1) Основной фон горизонта */
+.horizon {
+  /* 1) Верхняя растушёвка (градиент: прозрачность → фон) */
+  background-image:
+    linear-gradient(to top,
+      rgba(10,19,41,0) 0%,
+      rgba(10,19,41,1) 30%
+    ),
+    /* 2) Нижняя растушёвка (градиент: прозрачность → фон) */
+    linear-gradient(to bottom,
+      rgba(10,19,41,0) 0%,
+      rgba(10,19,41,1) 30%
+    ),
+    /* 3) Звёздная текстура */
+    url("/decorative/starsbg1.png"),
+    /* 4) Горизонт */  
+    url("/decorative/horizonbg.svg"),
+    /* 5) Цвет фона (на случай, если картинок не загрузилось) */
+    rgba(10,19,41,1);
+
+  /* Расположение и размер каждого слоя */
+  background-repeat:
+    no-repeat,      /* верхний градиент */
+    no-repeat,      /* нижний градиент */
+    repeat,         /* звёзды */
+    no-repeat,      /* горизонт */
+    no-repeat;      /* сплошной цвет */
+
+  background-position:
+    center top,     /* градиент сверху */
+    center bottom,  /* градиент снизу */
+    0 0,            /* звёзды — из угла */
+    center bottom,  /* горизонт по центру снизу */
+    center center;  /* цвет просто по центру */
+
+  background-size:
+    cover,          /* растушёвки — растянуть на всю ширину */
+    cover,
+    auto,           /* звёзды — естественный тайловый размер */
+    cover,          /* горизонт — покрытие */
+    auto;
+
+  /* Чтобы основной темный фон проходил сквозь полупрозрачные градиенты */
+  background-blend-mode:
+    normal,         /* верхний градиент (нормальный) */
+    normal,         /* нижний градиент */
+    screen,         /* звёзды пусть светят сквозь фон */
+    overlay,        /* горизонт слегка смешиваем с фоном */
+    normal;         /* цвет фона */
+
+  /* остальное ваше позиционирование */
+  position: relative;
+  overflow: hidden;
+}
+
+/* tailwind.config.js — добавьте в extend.backgroundImage, либо просто в globals.css */
+.section-mask {
+  /* плавная растушёвка по краям */
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    black 10%,
+    black 90%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    black 10%,
+    black 90%,
+    transparent 100%
+  );
+}
+
+
+/*
+
+.horizon::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 200px; 
+  background: linear-gradient(
+    to bottom,
+    rgba(10,19,41,0) 0%,
+    rgba(10,19,41,1) 100%
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+
+.horizon::before {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; top: 0;
+  height: 300px; 
+  background: linear-gradient(
+    to top,
+    rgba(10,19,41,0) 0%,
+    rgba(10,19,41,1) 100%
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+
+.horizon > * {
+  position: relative;
+  z-index: 2;
+}
+
+*/
+
+
+/* в начале — после :root и @tailwind директив */
+
+/* Медленная пульсация для звёзд */
+@keyframes pulse-slow {
+  0%, 100% { opacity: 0.3; }
+  50%       { opacity: 0.8; }
+}
+.animate-pulse-slow {
+  animation: pulse-slow 4s ease-in-out infinite;
+}
+
+/* Медленный «флот» */
+@keyframes float-slow {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(12px); }
+}
+.animate-float-slow {
+  animation: float-slow 8s ease-in-out infinite;
+}
+
 
 /*
 before:
@@ -160,10 +282,9 @@ body::before {
 */
 
 
-/* 2) Tailwind-директивы на отдельных строках */
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+
+
+
 
 /* Tailwind directives */
 /*
