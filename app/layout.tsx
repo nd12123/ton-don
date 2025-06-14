@@ -7,7 +7,7 @@ import {Toaster} from "react-hot-toast"
 import {TonProviderWrapper} from "@/components/TonProviderWrapper";
 import ThemeProviderWrapper from "@/components/ThemeProviderWrapper";
 //import Footer from "@/components/Footer"
-
+//import { StarsCluster } from "@/components/ui/Decorative"; <StarsCluster /> 
 
 //const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
 //const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
@@ -39,6 +39,14 @@ export default function RootLayout({
       "
         suppressHydrationWarning
       >
+{/* фоновая “точка света” слева, перенести потом */}
+<div
+    className="absolute inset-0 pointer-events-none"
+    style={{
+      background:
+        "radial-gradient(ellipse at bottom left, rgba(0,194,255,0.2), transparent 60%)",
+    }}
+  />
         <ThemeProviderWrapper>
           <TonProviderWrapper>
             {/* глобальный контейнер для тостов */}

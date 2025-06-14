@@ -8,23 +8,22 @@ import TotalValue from "@/components/TotalValue";
 import WhyUs from "@/components/WhyUs";
 import StepsToInvest from "@/components/StepsToInvest";
 import { PLANS } from "@/components/Plans";
-import Plans from "@/components/Plans";
-import StakeCalculator from "@/components/StakeCalculator";
-import { InfoCard } from "@/components/InfoCard";
+//import Plans from "@/components/Plans";
+//import StakeCalculator from "@/components/StakeCalculator";
+//import { InfoCard } from "@/components/InfoCard";
 //import StartInvesting from "@/components/StartInvesting";
 import FAQSection from "@/components/FAQSection";
 import Footer from "@/components/Footer";
-import { Database, Archive, Award } from "lucide-react";
+//import { Database, Archive, Award } from "lucide-react";
 import CalculateAndPlans from "@/components/CalculateAndPlans";
+//import NewStakeCalculator from "@/components/NewStakeCalculator";
 
 export default function InteractivePage() {
   const plansList = PLANS;
 
   const [selectedPlanName, setSelectedPlanName] = useState(plansList[0].name);
-  const selectedPlan = plansList.find((p) => p.name === selectedPlanName)!;
 
-  const [stakeAmount, setStakeAmount] = useState(500);
-  const [duration, setDuration] = useState(12);
+  const [stakeAmount] = useState(500); //, setStakeAmount
 
   // Авто-выбор плана при изменении суммы
   useEffect(() => {
@@ -38,11 +37,6 @@ export default function InteractivePage() {
     }
   }, [stakeAmount, selectedPlanName, plansList]);
 
-  function handlePlanSelect(planName: string) {
-    const p = plansList.find((pl) => pl.name === planName)!;
-    setSelectedPlanName(planName);
-    setStakeAmount(p.min);
-  }
 
   return (
     <>
@@ -52,10 +46,30 @@ export default function InteractivePage() {
       <WhyUs />
       <StepsToInvest />
       
+
       {/* Секция “Calculate & Plans” */}
       <CalculateAndPlans />
 
-      {/* Staking Plans & Calculator */}
+
+      <FAQSection />
+      <Footer />
+    </>
+  );
+}
+
+/* 
+
+
+  const [duration, setDuration] = useState(12);
+  const selectedPlan = plansList.find((p) => p.name === selectedPlanName)!;
+
+  function handlePlanSelect(planName: string) {
+    const p = plansList.find((pl) => pl.name === planName)!;
+    setSelectedPlanName(planName);
+    setStakeAmount(p.min);
+  }
+
+Staking Plans & Calculator 
       <div className="bg-light dark:bg-dark py-16">
         <div className="container mx-auto px-4">
           <h1 className="text-3xl font-bold mb-6 dark:text-gray-100 text-center">
@@ -98,9 +112,4 @@ export default function InteractivePage() {
           </div>
         </div>
       </div>
-
-      <FAQSection />
-      <Footer />
-    </>
-  );
-}
+      */

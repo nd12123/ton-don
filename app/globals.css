@@ -21,6 +21,13 @@
 
 /* #0B1128*/
 :root { 
+
+  --accent-100: "#00BFFF";
+  --accent-200: "#00C2FF";
+  --gray-800: "#0F1B3F";
+  --gray-700: "#142144";
+
+
   --color-primary-start:   #5C7CFA;
   --color-primary-end:     #6B35F3;
   --color-accent:          #3B82F6;

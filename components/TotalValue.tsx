@@ -60,7 +60,7 @@ export default function TotalValue({ className = "" }: TotalValueProps) {
         <h2 className="text-5xl sm:text-6xl font-extrabold mb-4">
           Total Value Locked
         </h2>
-        <p className="text-7xl sm:text-8xl font-extrabold">$12,320,000</p>
+        <p className="text-7xl sm:text-8xl font-extrabold">$14,320,000</p>
       </div>
     </section>
   );

@@ -1,6 +1,103 @@
 // components/Calculator.tsx
 "use client";
 
+import React from "react";
+
+type CalculatorProps = {
+  amount: number;
+  onAmountChange: (v: number) => void;
+  sliderMin: number;     // фиксированный нижний предел
+  sliderMax: number;     // фиксированный верхний предел
+  days: number;
+  onDaysChange: (v: number) => void;
+  apr: number;
+  dailyEarnings: number;
+};
+
+export default function Calculator({
+  amount,
+  onAmountChange,
+  sliderMin,
+  sliderMax,
+  days,
+  onDaysChange,
+  apr,
+  dailyEarnings,
+}: CalculatorProps) {
+  return (
+    <div className="relative overflow-hidden bg-gray-800 rounded-2xl p-8 grid grid-cols-1 lg:grid-cols-2 gap-6 shadow-neon">
+      {/* ← ЛЕВАЯ: слайдеры */}
+      <div className="space-y-6">
+        <div>
+          <label className="block text-sm text-gray-300 mb-2">
+            Deposit amount:{" "}
+            <span className="text-white font-medium">{amount} TON</span>
+          </label>
+          <input
+            type="range"
+            min={sliderMin}
+            max={sliderMax}
+            step={10}
+            value={amount}
+            onChange={(e) => onAmountChange(Number(e.target.value))}
+            className="w-full h-2 bg-gray-700 rounded-lg cursor-pointer accent-accent-100"
+          />{/**accent-[#00BFFF] */}
+        </div>
+        <div>
+          <label className="block text-sm text-gray-300 mb-2">
+            Duration:{" "}
+            <span className="text-white font-medium">{days} days</span>
+          </label>
+          <input
+            type="range"
+            min={1}
+            max={365}
+            step={1}
+            value={days}
+            onChange={(e) => onDaysChange(Number(e.target.value))}
+            className="w-full h-2 bg-gray-700 rounded-lg accent-[#00BFFF] cursor-pointer"
+          />
+        </div>
+      </div>
+
+      {/* → ПРАВАЯ: APR + результаты + кнопка */}
+      <div className="flex flex-col justify-between">
+        <div>
+          <p className="text-sm text-gray-300 mb-2">Current APR</p>
+          <h2 className="text-4xl font-bold text-[#00C2FF] mb-6">{apr}%</h2>
+        </div>
+        <div className="bg-[#00C2FF]/10 rounded-lg p-4 space-y-4 mb-6">
+          <div>
+            <p className="text-xs text-gray-300">In 24 hours:</p>
+            <p className="text-lg font-bold text-white">
+              +{dailyEarnings.toFixed(2)} TON
+            </p>
+          </div>
+          <div>
+            <p className="text-xs text-gray-300">In 1 day:</p>
+            <p className="text-lg font-bold text-white">
+              +{dailyEarnings.toFixed(2)} TON
+            </p>
+          </div>
+          <div>
+            <p className="text-xs text-gray-300">In {days} days:</p>
+            <p className="text-lg font-bold text-white">
+              +{(dailyEarnings * days).toFixed(2)} TON
+            </p>
+          </div>
+        </div>
+        <button className="bg-[#00BFFF] hover:bg-[#00A5E0] text-white px-4 py-2 rounded-lg font-medium transition-shadow shadow-md">
+          Connect Wallet
+        </button>
+      </div>
+    </div>
+  );
+}
+
+/*
+// components/Calculator.tsx
+"use client";
+
 import React, { useState, useMemo } from "react";
 import TabButton from "./ui/TabButton";
 
@@ -36,7 +133,6 @@ export default function Calculator({ plans }: CalculatorProps) {
 
   return (
     <div className="relative overflow-hidden bg-[#0F1B3F] rounded-2xl p-6 grid grid-cols-1 md:grid-cols-3 gap-6">
-      {/* 4.1 Табы + кнопка «Connect Wallet» (левая колонка) */}
       <div className="flex flex-col">
         <div className="flex mb-4">
           {plans.map((plan, idx) => (
@@ -53,10 +149,7 @@ export default function Calculator({ plans }: CalculatorProps) {
           Connect Wallet
         </button>
       </div>
-
-      {/* 4.2 Слайдеры (средняя колонка) */}
       <div className="flex flex-col justify-between">
-        {/* Слайдер «Deposit amount» */}
         <div className="mb-6">
           <label className="block text-sm text-gray-300 mb-2">
             Deposit amount: <span className="text-white font-medium">{amount} TON</span>
@@ -72,7 +165,6 @@ export default function Calculator({ plans }: CalculatorProps) {
           />
         </div>
 
-        {/* Слайдер «Number of days» */}
         <div>
           <label className="block text-sm text-gray-300 mb-2">
             Number of days you want to invest:{" "}
@@ -90,7 +182,6 @@ export default function Calculator({ plans }: CalculatorProps) {
         </div>
       </div>
 
-      {/* 4.3 Результаты (правая колонка) */}
       <div className="flex flex-col justify-center">
         <div className="bg-[#00C2FF]/10 rounded-lg p-4 space-y-4">
           <div>
@@ -116,3 +207,4 @@ export default function Calculator({ plans }: CalculatorProps) {
     </div>
   );
 }
+*/
