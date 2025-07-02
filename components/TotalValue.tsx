@@ -5,11 +5,14 @@ import ton3d4 from "@/assets/TotalValue/Ton 3d 4.png";
 import ton3d5 from "@/assets/TotalValue/Ton 3d 5.png";
 import ton3d6 from "@/assets/TotalValue/Ton 3d 6.png";
 import ton3d7 from "@/assets/TotalValue/Ton 3d 7.png";
-import SectionFadeWrapper from "./decorative/SectionFadeWrapper";
+//import SectionFadeWrapper from "./decorative/SectionFadeWrapper";
+
+import ellipse5 from '@/public/decorative/Ellipse50.png'
+import ellipse6 from '@/public/decorative/Ellipse60.png'
 
 export default function TotalValue() {
   return (
-    <SectionFadeWrapper >
+    //<SectionFadeWrapper >
     <section
       className="horizon section-mask relative overflow-hidden text-white py-52  bg-gradient-to-r from-[#00BFFF] to-[#009FEF]"
       style={{
@@ -17,7 +20,7 @@ export default function TotalValue() {
         backgroundImage: `url("/decorative/horizon-bg.svg")`,
         backgroundSize: "cover",
         backgroundPosition: "center top",
-        opacity: 0.5,
+        opacity: 0.4,
         backgroundRepeat: "no-repeat",
         
       }}
@@ -35,7 +38,36 @@ export default function TotalValue() {
           mixBlendMode: "screen",  // можно убрать или заменить на "overlay"
         }}
       />
+<div
+        className="absolute top-0 left-0 w-1/2 h-full pointer-events-none"
+      >
+        <Image
+          src={ellipse6}
+          alt=""
+          fill
+          style={{
+            objectFit: 'cover',
+            objectPosition: 'left top',
+            opacity: 0.99,
+          }}
+        />
+      </div>
+      <div
+        className="absolute top-0 right-0 w-1/2 h-full pointer-events-none"
+      >
+        <Image
+          src={ellipse5}
+          alt=""
+          fill
+          style={{
+            objectFit: 'cover',
+            objectPosition: 'right top',
+            opacity: 0.9,
+          }}
+        />
+      </div>
 
+      
       {/* 3) Горизонтальное «сечение» */}
       <div className="absolute inset-0 pointer-events-none">
         <Image
@@ -68,6 +100,6 @@ export default function TotalValue() {
         <p className="text-7xl sm:text-8xl font-extrabold">$12,320,000</p>
       </div>
     </section>
-    </SectionFadeWrapper>
+    //</SectionFadeWrapper>
   );
 }

@@ -32,13 +32,20 @@ export default function StepsToInvest() {
 
   return (
     <section
-      className="
-        relative 
-        overflow-hidden 
-        text-white
-        py-20
-      "
-    >
+          className="relative overflow-hidden text-white py-20"
+
+          //style={{
+            /* 
+             1) основной фон из одного SVG 
+             2) по центру, без повторов, растягиваем именно на width=100%, а height подгоняется автоматически 
+            */
+            //backgroundImage: `url("/decorative/step-mask.svg")`,
+            //backgroundRepeat: "no-repeat",
+            //backgroundPosition: "center center",
+            //backgroundSize: "auto 350px",
+            //backgroundColor: "#0A1329", // на случай, если SVG не загрузится
+          //}}
+          >
       {/* 1) Фоновый «баграунд» со скруглёнными боковинами (если нужен) */}
       <div className="absolute inset-0 pointer-events-none">
         {/* 
@@ -55,7 +62,7 @@ export default function StepsToInvest() {
           3 Easy steps to invest in 
           <span className="text-[#00C2FF]">TonStake.Ai</span>
         </h2>
-
+{/*
         <Link href="/plans" 
             className="
               inline-block 
@@ -71,13 +78,30 @@ export default function StepsToInvest() {
           >
             See Plans
         </Link>
+        */}
       </div>
 
-      {/* 3) Контейнер с тремя «шагами» */}
-      <div className="relative z-10 max-w-6xl mx-auto px-4 mt-12">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-0">
+ {/* ========== ОБКАТЫВАЕМ КОНТЕНТ В RELATIVE-wrapper ========== */}
+ <div className="relative mt-12">
+        {/* 1) фон-изображение – ровно под гридом */}
+        <div className="absolute inset-x-0 top-0 flex justify-center pointer-events-none"
+                  style={{ height: 350 }}
+>
+          <Image
+            src="/decorative/step-mask.svg"
+            alt="steps background"
+            fill
+            style={{
+              objectFit: "contain",
+              objectPosition: "center center",  // по центру по X, сверху по Y
+            }}
+          />
+        </div>
+      {/* 3) Контейнер с тремя «шагами» py-20 */}
+      <div className="relative z-10 max-w-6xl mx-auto px-4 mt-12 "> 
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5" >
           {steps.map((step, idx) => (
-            <div key={step.id} className="relative group">
+            <div key={step.id} className="relative group" >
               {/* 
                 3.1) Сам «блок» шага: фон ярко-синего цвета с лёгкой тенью.
                      Скругляем углы: слева и справа слегка волнистые (имитация «зубцов»),
@@ -87,20 +111,17 @@ export default function StepsToInvest() {
                      простого округления углов.
               */}
               <div
-                className="
-                  bg-gradient-to-r from-[#00A8FF] to-[#006EFF] 
-                  rounded-2xl 
-                  p-8 
-                  h-full 
-                  flex 
-                  flex-col 
-                  justify-start 
-                  hover:shadow-2xl 
-                  transition
-                "
+                  className="
+                    bg-transparent    /* фон убрали, теперь виден только SVG */
+                    rounded-2xl 
+                    p-10 
+                    h-full
+                    flex flex-col /*justify-start */
+                    hover:shadow-xl transition
+                  "
               >
                 {/* Номер шага */}
-                <div className="text-4xl font-bold mb-4">{step.id.toString().padStart(2, "0")}</div>
+                <div className="text-4xl font-bold mb-4 py-6">{step.id.toString().padStart(2, "0")}</div>
 
                 {/* Текст шага */}
                 <h3 className="text-2xl font-semibold mb-2">{step.title}</h3>
@@ -114,14 +135,14 @@ export default function StepsToInvest() {
               */}
               {idx < steps.length - 1 && (
                 <div
-                  className="
+                  /*className="
                     hidden md:block 
                     absolute 
                     top-1/4 
                     right-0 
                     h-1/2 
                     border-r-2 border-dashed border-white/50
-                  "
+                  " */
                 />
               )}
             </div>
@@ -131,28 +152,31 @@ export default function StepsToInvest() {
 
       {/* 4) Абсолютно позиционированные «плавающие» 3D-монетки */}
       <div className="absolute inset-0 pointer-events-none">
-        {/* Большая монета в центре */}
-        <div className="absolute inset-x-0 -top-120 opacity-60 flex justify-center">
+        {/* Большая монета в центре 
+        
+       
+        */}
+        
+        <div className="absolute inset-x-0 -top-1/2 -right-1/3 opacity-60 flex justify-center">
           <Image
             src={coinLarge}
             alt="Ton Coin"
             className="w-48 h-48 opacity-70 animate-float-slow"
           />
         </div>
-
         {/* Мелкие монетки слева и справа */}
         <Image
           src={leftCorner}
           alt="Ton Coin"
-          className="absolute left-0 h-80 top-1/3 opacity-60 animate-float-slow delay-2000" //w-16 h-16  left-8 top-1/2 
+          className="absolute left-0 h-80 top-center opacity-60 animate-float-slow delay-2000" //w-16 h-16  left-8 top-1/2 
         />
         <Image
           src={rightCorner}
           alt="Ton Coin"
-          className="absolute right-0 h-80 top-1/3  opacity-60 animate-float-slow delay-2000" //right-8 top-1/3 w-20 h-20
+          className="absolute right-0 h-80 top-center  opacity-60 animate-float-slow delay-2000" //right-8 top-1/3 w-20 h-20
         />
       </div>
-
+</div>
       {/* 5) Кнопка «Connect Wallet» снизу */}
       <div className="relative z-10 mt-16 flex justify-center">
         <Link href="/connect" 

@@ -17,7 +17,12 @@ import Footer from "@/components/Footer";
 //import { Database, Archive, Award } from "lucide-react";
 import CalculateAndPlans from "@/components/CalculateAndPlans";
 //import NewStakeCalculator from "@/components/NewStakeCalculator";
-import SectionWrapper from "@/components/decorative/SectionWrapper";
+//import SectionWrapper from "@/components/decorative/SectionWrapper";
+//import SectionWithFade from '@/components/SectionWithFade';
+
+//import StepsFinal from "@/components/StepsFinal";
+
+
 export default function InteractivePage() {
   const plansList = PLANS;
 
@@ -42,11 +47,11 @@ export default function InteractivePage() {
     <>
       <Header />
 
-
-
+{/**
+      <SectionWrapper>
+      </SectionWrapper> */}
       <MainSection />
 
-      <SectionWrapper>
         {/*topCloud={{
           leftSrc: '/decorative/ellipse6.png',
           rightSrc: '/decorative/ellipse5.png',
@@ -57,14 +62,28 @@ export default function InteractivePage() {
           rightSrc: '/decorative/ellipse5.png',
           height: 300,
         }}
-      >*/}
-        <TotalValue />
-      </SectionWrapper>
-        
-      <WhyUs />
-      <StepsToInvest />
-      
+          <SectionWithFade 
+              fadeHeight={550}
 
+              topSrc="/decorative/ellipse6.png"
+      bottomSrc="/decorative/star.png">
+       <TotalValue  />
+      </SectionWithFade>
+
+      >*/}
+      
+        <TotalValue  />
+
+
+      
+      <WhyUs />
+
+
+
+
+
+      <StepsToInvest />
+      {/* <StepsFinal /> */}
       {/* Секция “Calculate & Plans” */}
       <CalculateAndPlans />
 

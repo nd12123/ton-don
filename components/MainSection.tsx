@@ -7,6 +7,9 @@ import ton3d1 from '@/assets/Main/Ton 3d 1.png';
 import ton3d2 from '@/assets/Main/Ton 3d 2.png';
 import ton3d3 from '@/assets/Main/Ton 3d 3.png';
 
+const ellipse6 = '/decorative/ellipse6.png';
+const ellipse5 = '/decorative/ellipse5.png';
+
 // Import SVG icons
 //import GetStartedIcon from '@/assets/Main/Get started.svg';
 import ReliableIcon from '@/assets/Main/Reliable.svg';
@@ -22,6 +25,7 @@ export default function MainSection({className = ''}: MainSectionProps) {
   return (
     <section
       className={[
+        "relative", //чтобы рисунки на границах отрисовывались только один раз
         " text-white",       // базовые стили 
         "px-4 py-32 sm:px-6 lg:px-8",          // паддинги
         className                       // ваши дополнительные классы
@@ -47,6 +51,24 @@ export default function MainSection({className = ''}: MainSectionProps) {
         />
       </div>
        */}
+<div className="absolute bottom-0 left-0 w-1/2 h-full pointer-events-none">
+        <Image
+          src={ellipse6}
+          alt=""
+          fill
+          style={{ objectFit: 'cover', objectPosition: 'left bottom', opacity: 0.45 }}
+        />
+      </div>
+
+      <div className="absolute bottom-0 right-0 w-1/2 h-full pointer-events-none">
+        <Image
+          src={ellipse5}
+          alt=""
+          fill
+          style={{ objectFit: 'cover', objectPosition: 'right bottom', opacity: 0.38 }}
+        />
+      </div>
+
       <div className="pointer-events-none absolute top-20 right-1/4 transform translate-x-1/4 w-96 h-96 opacity-60">
         <Image
           src="/decorative/ellipse10.png"

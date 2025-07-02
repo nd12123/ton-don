@@ -72,12 +72,12 @@ export default function TotalValue({}: TotalValueProps) { // className = ""
         <Image
           src={ton3d5}
           alt=""
-          className="absolute top-[20%] right-[15%] w-[25%] opacity-15 animate-float delay-2000"
+          className="absolute top-[20%] right-[15%] w-[25%] opacity-75 animate-float delay-2000"
         />
         <Image
           src={ton3d7}
           alt=""
-          className="absolute bottom-[35%] left-[10%] w-[20%] opacity-15 animate-float delay-6000"
+          className="absolute bottom-[35%] left-[10%] w-[20%] opacity-75 animate-float delay-6000"
         />
       </div>
 
