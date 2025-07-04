@@ -34,7 +34,7 @@ export default function TotalValue() {
           backgroundImage: `url("/decorative/starsbg1.png")`,
           backgroundRepeat: "repeat",
           backgroundSize: "auto",
-          opacity: 0.3,
+          opacity: 0.99,
           mixBlendMode: "screen",  // можно убрать или заменить на "overlay"
         }}
       />
@@ -73,22 +73,22 @@ export default function TotalValue() {
         <Image
           src={ton3d4}
           alt=""
-          className="absolute top-[0%] left-[0%] w-[10%] opacity-20 animate-float"
+          className="absolute top-[55%] left-[0%] w-[10%] opacity-30 animate-float"
         />
         <Image
           src={ton3d6}
           alt=""
-          className="absolute top-[15%] right-[0%] w-[10%] opacity-20 animate-float delay-4000"
+          className="absolute top-[10%] right-[0%] w-[10%] opacity-40 animate-float delay-4000"
         />
         <Image
           src={ton3d5}
           alt=""
-          className="absolute top-[20%] right-[10%] w-[25%] opacity-20 animate-float delay-2000"
+          className="absolute bottom-[0%] right-[9%] w-[25%] opacity-30 animate-float delay-2000"
         />
         <Image
           src={ton3d7}
           alt=""
-          className="absolute bottom-[40%] left-[10%] w-[20%] opacity-20 animate-float delay-6000"
+          className="absolute top-[0%] left-[10%] w-[16%] opacity-45 animate-float delay-6000"
         />
       </div>
 

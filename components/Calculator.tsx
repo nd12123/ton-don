@@ -1,18 +1,24 @@
-// components/Calculator.tsx
 "use client";
 
 import React from "react";
+import PlanCard from "./PlanCardMini";
 
 type CalculatorProps = {
   amount: number;
   onAmountChange: (v: number) => void;
-  sliderMin: number;     // фиксированный нижний предел
-  sliderMax: number;     // фиксированный верхний предел
+  sliderMin: number;
+  sliderMax: number;
   days: number;
   onDaysChange: (v: number) => void;
   apr: number;
   dailyEarnings: number;
 };
+
+const PLANS = [
+  { id: 0, label: "Basic",  iconSrc: "/decorative/basic icon.svg" },
+  { id: 1, label: "Pro", iconSrc: "/decorative/pro icon.svg"   },
+  { id: 2, label: "Premium", iconSrc: "/decorative/super icon.svg" },
+];
 
 export default function Calculator({
   amount,
@@ -21,17 +27,34 @@ export default function Calculator({
   sliderMax,
   days,
   onDaysChange,
-  apr,
+  //apr,
   dailyEarnings,
 }: CalculatorProps) {
   return (
-    <div className="relative overflow-hidden bg-gray-800 rounded-2xl p-8 grid grid-cols-1 lg:grid-cols-2 gap-6 shadow-neon">
-      {/* ← ЛЕВАЯ: слайдеры */}
-      <div className="space-y-6">
+    <div
+      className="relative  rounded-[32px] border border-white/10 shadow-[0_0_60px_#00C2FF33] 
+      px-6  md:px-12  flex flex-col lg:flex-row gap-10 justify-between" //py-10 md:py-14 ?? bg-[url('/ticket-bg.png')] bg-cover bg-center
+    >
+      {/* Левая секция — планы */}
+      <div className="flex flex-col gap-2 w-full lg:w-[25%] py-6">
+        {PLANS.map((plan, idx) => (
+          <PlanCard key={plan.id} title={plan.label} 
+          iconSrc={plan.iconSrc}
+          isActive={idx === 0}
+           />
+        ))}
+        <button className="bg-[#00C2FF] hover:bg-[#00A5E0] text-white px-6 py-3 rounded-xl font-semibold transition-all shadow-lg">
+          Connect Wallet
+        </button>
+      </div>
+
+      {/* Центральная секция — слайдеры */}
+      <div className="flex flex-col gap-2 w-full lg:w-[50%] py-6"//
+      >
         <div>
-          <label className="block text-sm text-gray-300 mb-2">
-            Deposit amount:{" "}
-            <span className="text-white font-medium">{amount} TON</span>
+          <label className="block text-sm text-white/70 mb-2 font-medium">
+            Deposit amount:
+            <span className="text-white font-bold ml-2">{amount} TON</span>
           </label>
           <input
             type="range"
@@ -40,13 +63,13 @@ export default function Calculator({
             step={10}
             value={amount}
             onChange={(e) => onAmountChange(Number(e.target.value))}
-            className="w-full h-2 bg-gray-700 rounded-lg cursor-pointer accent-accent-100"
-          />{/**accent-[#00BFFF] */}
+            className="w-full h-2 bg-white/10 rounded-lg cursor-pointer accent-[#00C2FF]"
+          />
         </div>
         <div>
-          <label className="block text-sm text-gray-300 mb-2">
-            Duration:{" "}
-            <span className="text-white font-medium">{days} days</span>
+          <label className="block text-sm text-white/70 mb-2 font-medium">
+            Duration:
+            <span className="text-white font-bold ml-2">{days} days</span>
           </label>
           <input
             type="range"
@@ -55,41 +78,66 @@ export default function Calculator({
             step={1}
             value={days}
             onChange={(e) => onDaysChange(Number(e.target.value))}
-            className="w-full h-2 bg-gray-700 rounded-lg accent-[#00BFFF] cursor-pointer"
+            className="w-full h-2 bg-white/10 rounded-lg cursor-pointer accent-[#00C2FF]"
           />
         </div>
       </div>
 
-      {/* → ПРАВАЯ: APR + результаты + кнопка */}
-      <div className="flex flex-col justify-between">
-        <div>
-          <p className="text-sm text-gray-300 mb-2">Current APR</p>
-          <h2 className="text-4xl font-bold text-[#00C2FF] mb-6">{apr}%</h2>
+      {/* Правая секция — доходы */}
+      <div
+  className="relative bg-[url('/decorative/Rectangle.png')] h-450px w-300 bg-contain bg-center justify-between" // w-fullshadow-[0_0_60px_#00C2FF55] rounded-[28px] lg:w-[25%] px-6 py-8
+  style={{
+    backgroundPosition: "center top",
+    opacity: 1,
+    backgroundRepeat: "no-repeat",}}
+  >
+  {/* Пунктирная линия — вертикальная 
+    <div className="absolute left-0 top-4 bottom-4 w-px border-l border-dashed border-white/30"></div>
+      <div className="absolute right-0 top-4 bottom-4 w-px border-l border-dashed border-white/30"></div>
+*/}
+  {/* Earnings блок
+    <div className="bg-white/10 backdrop-blur-sm rounded-xl space-y-3 text-white text-base">
+  </div>
+  */}
+      <div className="bg-white/10  rounded-xl space-y-6 text-white text-base py-1" //backdrop-blur-sm
+      >
+
+    <div className="flex justify-between">
+      <span>In 1 day</span>
+      <span>+{dailyEarnings.toFixed(2)} TON</span>
+    </div>
+    <div className="flex justify-between py-1">
+      <span>In 7 days</span>
+      <span>+{(dailyEarnings * 7).toFixed(2)} TON</span>
+    </div>
+    <div className="flex justify-between font-semibold py-1">
+      <span>In 30 days</span>
+      <span>+{(dailyEarnings * 30).toFixed(2)} TON</span>
+    </div>
+
+    </div>
+
+</div>
+
+{/*<div className="flex flex-col gap-4 justify-between w-full lg:w-[25%]">
+        <div className="bg-[#00C2FF]/10 backdrop-blur-md rounded-xl p-6 space-y-4">
+          <div className="flex justify-between text-white/90 text-base">
+            <span>In 1 day</span>
+            <span>+{dailyEarnings.toFixed(2)} TON</span>
+          </div>
+          <div className="flex justify-between text-white/90 text-base">
+            <span>In 7 days</span>
+            <span>+{(dailyEarnings * 7).toFixed(2)} TON</span>
+          </div>
+          <div className="flex justify-between text-white text-base font-semibold">
+            <span>In 30 days</span>
+            <span>+{(dailyEarnings * 30).toFixed(2)} TON</span>
+          </div>
         </div>
-        <div className="bg-[#00C2FF]/10 rounded-lg p-4 space-y-4 mb-6">
-          <div>
-            <p className="text-xs text-gray-300">In 24 hours:</p>
-            <p className="text-lg font-bold text-white">
-              +{dailyEarnings.toFixed(2)} TON
-            </p>
-          </div>
-          <div>
-            <p className="text-xs text-gray-300">In 1 day:</p>
-            <p className="text-lg font-bold text-white">
-              +{dailyEarnings.toFixed(2)} TON
-            </p>
-          </div>
-          <div>
-            <p className="text-xs text-gray-300">In {days} days:</p>
-            <p className="text-lg font-bold text-white">
-              +{(dailyEarnings * days).toFixed(2)} TON
-            </p>
-          </div>
-        </div>
-        <button className="bg-[#00BFFF] hover:bg-[#00A5E0] text-white px-4 py-2 rounded-lg font-medium transition-shadow shadow-md">
-          Connect Wallet
-        </button>
       </div>
+
+*/}
+      
     </div>
   );
 }

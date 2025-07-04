@@ -5,26 +5,96 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 
-// Пути к логотипам и иконкам (поменяйте, если у вас другие пути)
-import logoSvg from "@/assets/Footer/Ton image.png";       // ваш логотип TONStake.ai
-import certikBadge from "@/assets/Main/bottom audited by certik.svg"; // иконка «Audited by Certik»
-import supportIcon from "@/assets/Footer/Support.svg"; // иконка на кнопке «Support»
-import telegramIcon from "@/assets/Footer/telegram.svg"; // иконка Telegram
+import logoSvg from "@/assets/Footer/Ton image.png";
+import certikBadge from "@/assets/Main/bottom audited by certik.svg";
+import supportIcon from "@/assets/Footer/Support.svg";
+import telegramIcon from "@/assets/Footer/telegram.svg";
 
-type FooterProps = {
-  className?: string;
-};
+// дополнительные декоративные картинки
+// положите их в public/decorative/
+const stars1 = "/decorative/starsbg1.png";
+const stars2 = "/decorative/stars1.png";
+const sphereTop = "/decorative/ellipse10.png";    // яркая сфера сверху
+const sphereLeft = "/decorative/ellipse6.png";    // сбоку слева
+const sphereUpperLeft = "/decorative/EllipseNowLeft.png";    // сбоку слева
+const sphereRight = "/decorative/ellipse5.png";   // сбоку справа
+const tonCoin1 = "/decorative/ton3.png";
+const tonCoin2 = "/decorative/ton2.png";
 
-export default function Footer({ className = "" }: FooterProps) {
+export default function Footer({ className = "" }: { className?: string }) {
   return (
-    <footer className={`text-white ${className}`}> {/**bg-[#081028] */}
-      {/* 1) CTA-блок «Start investing now!» сверху футера */}
-      <StartInvesting className="mb-16" />
+    <footer className={`relative overflow-hidden text-white ${className}`}>
+      {/* =========================
+          0) Фоновый слой: звёзды, сферы, тоны
+         ========================= */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+        {/* звёздные текстуры */}
+        <div
+          className="absolute inset-0 opacity-20"
+          style={{
+            backgroundImage: `url(${stars1}), url(${stars2})`,
+            backgroundRepeat: "repeat, repeat",
+            backgroundSize: "auto, auto",
+            mixBlendMode: "screen",
+          }}
+        />
 
-      {/* 2) Нижняя навигация */}
-      <div className="border-t border-[#1F2A44] pt-10 pb-6">
+        {/* большие полупрозрачные сферы */}
+        <Image
+          src={sphereTop}
+          alt=""
+          fill
+          style={{
+            objectFit: "contain",
+            objectPosition: "center top",
+            opacity: 0.2
+          }}
+        />
+
+        <Image
+          src={sphereUpperLeft}
+          alt=""
+          className="absolute left-0 top-0 w-full h-auto opacity-50"
+        />
+
+        <Image
+          src={sphereLeft}
+          alt=""
+          className="absolute left-0 bottom-0 w-1/2 h-auto opacity-25"
+        />
+        <Image
+          src={sphereRight}
+          alt=""
+          className="absolute right-0 bottom-0 w-1/2 h-auto opacity-25"
+        />
+
+        {/* плавающие монеты TON */}
+        <Image
+          src={tonCoin1}
+          alt=""
+          className="absolute w-24 h-24 top-[5%] left-[15%] opacity-60 animate-float-slow"
+        />
+        <Image
+          src={tonCoin2}
+          alt=""
+          className="absolute w-20 h-20 bottom-[15%] right-[20%] opacity-50 animate-float-slow delay-3000"
+        />
+      </div>
+
+      {/* =========================
+          1) CTA-блок «Start investing now!»
+         ========================= */}
+      <div className="relative z-10 mb-16">
+        {/* здесь ваш компонент StartInvesting */}
+        <StartInvesting />
+      </div>
+
+      {/* =========================
+          2) Основной футер: логотип, навигация, соцсети 
+         ========================= */}
+      <div className="relative z-10 border-t border-[#1F2A44] pt-10 pb-6">
         <div className="container mx-auto px-4 flex flex-col lg:flex-row items-center justify-between gap-6">
-          {/* Левая часть: логотип + Certik */}
+          {/* левый блок */}
           <div className="flex items-center gap-6">
             <div className="flex items-center gap-2">
               <Image src={logoSvg} alt="TONStake.ai" width={32} height={32} />
@@ -42,80 +112,68 @@ export default function Footer({ className = "" }: FooterProps) {
             </div>
           </div>
 
-          {/* Средняя часть: навигационные ссылки */}
+          {/* навигация */}
           <nav className="flex flex-wrap gap-8 text-[#A0B0D8]">
-            <Link href="staking" className="hover:text-white transition-colors">
+            <Link href="/staking" className="hover:text-white transition-colors">
               Staking
             </Link>
-            <Link href="history" className="hover:text-white transition-colors">
+            <Link href="/history" className="hover:text-white transition-colors">
               History
             </Link>
-            <Link
-              href="profile"
-              className="hover:text-white transition-colors"
-            >
+            <Link href="/profile" className="hover:text-white transition-colors">
               Profile
             </Link>
-            <Link href="faq" className="hover:text-white transition-colors">
+            <Link href="/faq" className="hover:text-white transition-colors">
               FAQ
             </Link>
           </nav>
 
-          {/* Правая часть: Support + Telegram */}
-          <div className="flex items-center ">
+          {/* соцкнопки */}
+          <div className="flex items-center gap-4">
             <Link
-            href="support"
+              href="/support"
               className="
                 inline-flex items-center justify-center
                 bg-[#0A1329] hover:bg-[#1F2A44]
                 rounded-lg p-3
-                transition-colors duration-200
+                transition-colors
               "
             >
-              <Image
-                src={supportIcon}
-                alt="Support"
-                width={150}
-                height={75}
-              />
+              <Image src={supportIcon} alt="Support" width={24} height={24} />
             </Link>
             <Link
-              href="https://t.me/YourTelegramChannel" // замените на реальную ссылку
+              href="https://t.me/YourTelegramChannel"
               target="_blank"
               rel="noreferrer"
               className="
                 inline-flex items-center justify-center
                 bg-[#0A1329] hover:bg-[#1F2A44]
                 rounded-lg p-3
-                transition-colors duration-200
+                transition-colors
               "
             >
               <Image
                 src={telegramIcon}
                 alt="Telegram"
-                width={75}
-                height={75}
+                width={50}
+                height={50}
               />
             </Link>
           </div>
         </div>
       </div>
 
-      {/* 3) Копирайт и ссылки на условия */}
-      <div className="border-t border-[#1F2A44] mt-6 pt-6 pb-4">
+      {/* =========================
+          3) Копирайт
+         ========================= */}
+      <div className="relative z-10 border-t border-[#1F2A44] mt-6 pt-6 pb-4">
         <div className="container mx-auto px-4 flex flex-col-reverse lg:flex-row items-center justify-between gap-4 text-sm text-[#A0B0D8]">
           <p>© 2025 Orbi Ton | All Rights Reserved</p>
           <div className="flex gap-4">
-            <Link
-              href="/terms"
-              className="hover:text-white transition-colors"
-            >
+            <Link href="/terms" className="hover:text-white transition-colors">
               Terms and Conditions
             </Link>
-            <Link
-              href="/privacy"
-              className="hover:text-white transition-colors"
-            >
+            <Link href="/privacy" className="hover:text-white transition-colors">
               Privacy Policy
             </Link>
           </div>
@@ -125,36 +183,5 @@ export default function Footer({ className = "" }: FooterProps) {
   );
 }
 
-// Не забудьте импортировать StartInvesting в этом файле
+// не забудьте импортировать StartInvesting
 import StartInvesting from "./StartInvesting";
-
-
-/*
-import { Mail, MessageCircle, HelpCircle } from "lucide-react";
-
-export default function Footer() {
-    return (
-      <footer className="
-      py-6">
-        <div className="flex flex-col sm:flex-row justify-between items-center max-w-6xl mx-auto gap-2">
-          <span>&copy; {new Date().getFullYear()} TON Stake. Все права защищены.</span>
-          <div className="flex gap-4 items-center text-gray-600">
-  <a href="mailto:support@tonstake.app" className="hover:text-blue-600 flex items-center gap-1">
-    <Mail size={16} />
-    Поддержка
-  </a>
-  <a href="https://t.me/tonstake" target="_blank" className="hover:text-blue-600 flex items-center gap-1">
-    <MessageCircle size={16} />
-    Telegram
-  </a>
-  <a href="/faq" className="hover:text-blue-600 flex items-center gap-1">
-    <HelpCircle size={16} />
-    FAQ
-  </a>
-</div>
-
-        </div>
-      </footer>
-    );
-  }
-  */

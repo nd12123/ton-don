@@ -1,6 +1,7 @@
 // components/CalculateAndPlans.tsx
 "use client";
 import React, { useState, useMemo } from "react";
+import Image from "next/image";
 import PlanCard from "./PlanCard";
 import Calculator from "./Calculator";
 
@@ -15,52 +16,59 @@ export default function CalculateAndPlans() {
   const [amount, setAmount] = useState(PLANS[0].min);
   const [days,   setDays]   = useState(30);
 
-  // 1) Клик по карточке — просто устанавливаем amount = min этого тарифа
   const handlePlanSelect = (idx: number) => {
     setSelectedPlanIdx(idx);
     setAmount(PLANS[idx].min);
   };
-
-  // 2) При движении слайдера — ищем, в каком плане сейчас оказались
   const handleAmountChange = (v: number) => {
     setAmount(v);
-    // находим самый «высокий» план, чей min <= v
     const newIdx = PLANS
       .map((p, i) => ({ min: p.min, idx: i }))
       .filter(p => v >= p.min)
       .pop()!.idx;
-    if (newIdx !== selectedPlanIdx) {
-      setSelectedPlanIdx(newIdx);
-    }
+    if (newIdx !== selectedPlanIdx) setSelectedPlanIdx(newIdx);
   };
-
   const apr = PLANS[selectedPlanIdx].apr;
-  const dailyEarnings = useMemo(
-    () => (amount * (apr / 100)) / 365,
-    [amount, apr]
-  );
+  const dailyEarnings = useMemo(() => (amount * (apr/100)) / 365, [amount, apr]);
 
-  return (
-     <section className="bg-bg-primary text-white"> {/*<section className="py-20 bg-[#081028] text-white"></section>*/}
+  return ( //py-20 pt-[200px] lg:pt-[375px]
+    <section className="relative overflow-hidden text-white py-8 ">
+      
 
-      <div className="max-w-6xl mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
-        {PLANS.map((plan, idx) => (
-          <PlanCard
-            key={plan.id}
-            title={plan.label}
-            dailyProfit={plan.apr}
-            rangeText={plan.rangeText}
-            iconSrc={plan.iconSrc}
-            isActive={idx === selectedPlanIdx}
-            onSelect={() => handlePlanSelect(idx)}
-          />
-        ))}
+      {/* 2) Горизонт (основной фон) */}
+      <div className="absolute inset-0 pointer-events-none -z-20">
+        <Image
+          src="/decorative/radius-bg.png"
+          alt="horizon"
+          fill
+          style={{ objectFit: "cover", objectPosition: "center top", opacity: 0.35,
+                top: "-400px",               // сдвигаем картинку вверх на 200px
+                height: "calc(100% + 400px)" // увеличиваем высоту, чтобы низ не обрезался
+           }}
+        />
       </div>
+
       <div className="max-w-6xl mx-auto px-4">
+        {/* === 3) Карточки планов === */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
+          {PLANS.map((plan, idx) => (
+            <PlanCard
+              key={plan.id}
+              title={plan.label}
+              dailyProfit={plan.apr}
+              rangeText={plan.rangeText}
+              iconSrc={plan.iconSrc}
+              isActive={idx === selectedPlanIdx}
+              onSelect={() => handlePlanSelect(idx)}
+            />
+          ))}
+        </div>
+
+        {/* === 4) Калькулятор === */}
         <Calculator
           amount={amount}
           onAmountChange={handleAmountChange}
-          sliderMin={PLANS[0].min}   // всегда 1
+          sliderMin={PLANS[0].min}
           sliderMax={5000}
           days={days}
           onDaysChange={setDays}
@@ -68,9 +76,42 @@ export default function CalculateAndPlans() {
           dailyEarnings={dailyEarnings}
         />
       </div>
+      {/* 5) Левый «сфера-хвост» */}
+      <div className="absolute bottom-0 left-0 w-full h-full pointer-events-none -z-10">
+        <Image
+          src="/decorative/EllipseLeftPlans.png"
+          alt=""
+          fill
+          style={{ objectFit: "contain", objectPosition: "left center", opacity: 0.6 }}
+        />
+      </div>
+
+      {/* 6) Правый «сфера-хвост» */}
+      <div className="absolute bottom-0 right-0 w-full h-full pointer-events-none -z-10">
+        <Image
+          src="/decorative/EllipseRightPlans.png"
+          alt=""
+          fill
+          style={{ objectFit: "cover", objectPosition: "right center", opacity: 0.35 }}
+        />
+      </div>
+
+      
+{/* 1) Декоративный звёздный шум (сверхвысокий слой, чуть прозрачный)  //w-full h-full inset-0*/}
+<div className="absolute top-0 right-0 w-80 h-80 pointer-events-none -z-30">
+        <Image
+          src="/decorative/stars-bg3.png"
+          alt="stars"
+          fill
+          style={{ objectFit: "contain", objectPosition: "right top", opacity: 0.3 }}
+        />
+      </div>
+
+
     </section>
   );
 }
+
 
 /*
 // components/CalculateAndPlans.tsx
