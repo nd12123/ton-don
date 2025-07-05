@@ -32,7 +32,7 @@ export default function StepsToInvest() {
 
   return (
     <section
-          className="relative overflow-hidden text-white py-20"
+          className="relative overflow-hidden text-white py-10 pb-10"
 
           //style={{
             /* 
@@ -197,7 +197,10 @@ export default function StepsToInvest() {
             Connect Wallet
         </Link>
       </div>
+      <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-b from-transparent to-[#0A0D1C] z-0" />
+
     </section>
+    
   );
 }
 

@@ -53,7 +53,7 @@ export default function FAQSection() {
       className={[
         'relative',
         'text-white',
-        'px-4 py-32 sm:px-6 lg:px-8',
+        'px-4 py-10 sm:px-6 lg:px-8 stars-mask',
       ].join(' ')}
     >
 {/* 1) Слой «шум» на весь блок */}
@@ -141,7 +141,7 @@ export default function FAQSection() {
       </div>
 
       {/* Левый хвост */}
-      <div className="absolute bottom-0 left-0 w-1/2 h-full pointer-events-none">
+      <div className="absolute bottom-0 left-0 w-1/2 h-1/2 pointer-events-none stars-mask">
         <NextImage
           src={leftSphere}
           alt=""
@@ -149,7 +149,7 @@ export default function FAQSection() {
           style={{
             objectFit: 'cover',
             objectPosition: 'left bottom',
-            opacity: 0.6,
+            opacity: 0.75,
           }}
         />
       </div>

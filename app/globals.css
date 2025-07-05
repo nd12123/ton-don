@@ -260,6 +260,66 @@ body::before {
 }
 
 
+/* global.css */
+input[type='range'] {
+  appearance: none;
+  width: 100%;
+  background: transparent;
+  cursor: pointer;
+}
+
+/* Ось — яркая, с фоном */
+input[type='range']::-webkit-slider-runnable-track {
+  height: 7px;
+  background: url('/decorative/Rectangle3.png') no-repeat;
+  background-size: 100% 100%;
+  border-radius: 999px;
+}
+
+/* Ползунок — светлый, как в фигме */
+input[type='range']::-webkit-slider-thumb {
+  appearance: none;
+  width: 24px;
+  height: 24px;
+  background: url('/decorative/Scroller.png') no-repeat center;
+  background-size: contain;
+  border: none;
+  margin-top: -6px; /* центр по оси */
+  transition: transform 0.2s ease;
+}
+
+input[type='range']::-webkit-slider-thumb:hover {
+  transform: scale(1.1);
+}
+
+/* Firefox */
+input[type='range']::-moz-range-track {
+  height: 7px;
+  background: url('/decorative/Rectangle3.png') no-repeat;
+  background-size: 100% 100%;
+  border-radius: 999px;
+}
+
+input[type='range']::-moz-range-thumb {
+  width: 24px;
+  height: 24px;
+  background: url('/decorative/Scroller.png') no-repeat center;
+  background-size: contain;
+  border: none;
+  cursor: pointer;
+}
+
+
+/* globals.css */
+.stars-mask {
+  mask-image: radial-gradient(circle at center, white 70%, transparent 100%);
+  -webkit-mask-image: radial-gradient(circle at center, white 70%, transparent 100%);
+  mask-repeat: no-repeat;
+  -webkit-mask-repeat: no-repeat;
+  mask-size: cover;
+  -webkit-mask-size: cover;
+}
+
 /*
 
 .horizon::after {

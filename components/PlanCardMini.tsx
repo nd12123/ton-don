@@ -4,6 +4,7 @@ import Image from "next/image";
 
 type PlanCardProps = {
   title: string;
+  min: number;
   iconSrc: string;          // путь к иконке (например «/decorative/plan-heart.svg»)
   isActive: boolean;        // подсвечивать ли карту
   onSelect?: () => void;    // колбэк при клике (если нужно)
@@ -12,6 +13,7 @@ type PlanCardProps = {
 export default function PlanCard({
   title,
   iconSrc,
+  //min,
   isActive,
   onSelect,
 }: PlanCardProps) {

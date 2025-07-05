@@ -32,7 +32,7 @@ export default function CalculateAndPlans() {
   const dailyEarnings = useMemo(() => (amount * (apr/100)) / 365, [amount, apr]);
 
   return ( //py-20 pt-[200px] lg:pt-[375px]
-    <section className="relative overflow-hidden text-white py-8 ">
+    <section className="relative overflow-hidden text-white pb-10 pt-0">
       
 
       {/* 2) Горизонт (основной фон) */}
@@ -98,15 +98,29 @@ export default function CalculateAndPlans() {
 
       
 {/* 1) Декоративный звёздный шум (сверхвысокий слой, чуть прозрачный)  //w-full h-full inset-0*/}
-<div className="absolute top-0 right-0 w-80 h-80 pointer-events-none -z-30">
-        <Image
-          src="/decorative/stars-bg3.png"
-          alt="stars"
-          fill
-          style={{ objectFit: "contain", objectPosition: "right top", opacity: 0.3 }}
-        />
-      </div>
+<div className="absolute top-0 right-0 w-80 h-80 pointer-events-none -z-30 stars-mask">
+<Image
+  src="/decorative/stars-bg3.png"
+  alt="stars"
+  fill
+  style={{
+    objectFit: "contain",
+    objectPosition: "right top",
+    opacity: 0.1,
+    maskImage: "radial-gradient(circle at center, black 70%, transparent 100%)",
+    WebkitMaskImage: "radial-gradient(circle at center, black 70%, transparent 100%)",
+    maskRepeat: "no-repeat",
+    WebkitMaskRepeat: "no-repeat",
+    maskSize: "cover",
+    WebkitMaskSize: "cover"
+  }}
+/>
 
+      </div>
+      {/**
+       *  //<div className="absolute bottom-0 left-0 w-full h-30 bg-gradient-to-b from-transparent to-[#0A0D1C] z-0" //<div className="absolute bottom-0 left-0 w-full h-48 bg-gradient-to-b from-[#00C2FF22] to-[#0A0D1C] z-0" />
+      />
+       */}
 
     </section>
   );

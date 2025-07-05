@@ -1,7 +1,7 @@
 "use client";
 
-import React from "react";
-import PlanCard from "./PlanCardMini";
+import React, { useEffect, useState } from "react";
+//import PlanCard from "./PlanCardMini";
 
 type CalculatorProps = {
   amount: number;
@@ -15,10 +15,16 @@ type CalculatorProps = {
 };
 
 const PLANS = [
-  { id: 0, label: "Basic",  iconSrc: "/decorative/basic icon.svg" },
-  { id: 1, label: "Pro", iconSrc: "/decorative/pro icon.svg"   },
-  { id: 2, label: "Premium", iconSrc: "/decorative/super icon.svg" },
+  { id: 0, label: "Basic", min: 1,  iconSrc: "/decorative/basic icon.svg" },
+  { id: 1, label: "Pro", min: 1000, iconSrc: "/decorative/pro icon.svg"   },
+  { id: 2, label: "Premium", min: 2000, iconSrc: "/decorative/super icon.svg" },
 ];
+
+function getPlanByAmount(amount: number): string {
+  if (amount < 1000) return "Basic";
+  if (amount < 2000) return "Pro";
+  return "Premium";
+}
 
 export default function Calculator({
   amount,
@@ -30,78 +36,166 @@ export default function Calculator({
   //apr,
   dailyEarnings,
 }: CalculatorProps) {
+  const [selectedPlan, setSelectedPlan] = useState<string>(getPlanByAmount(amount));
+// Автообновление плана при изменении amount
+useEffect(() => {
+  const autoPlan = getPlanByAmount(amount);
+  if (autoPlan !== selectedPlan) {
+    setSelectedPlan(autoPlan);
+  }
+}, [amount, selectedPlan]);
+
   return (
     <div
       className="relative  rounded-[32px] border border-white/10 shadow-[0_0_60px_#00C2FF33] 
-      px-6  md:px-12  flex flex-col lg:flex-row gap-10 justify-between" //py-10 md:py-14 ?? bg-[url('/ticket-bg.png')] bg-cover bg-center
+      px-5  md:px-10  flex flex-col lg:flex-row gap-3 justify-between bg-[#101426]/80 backdrop-blur-sm"      //py-10 md:py-14 ?? bg-[url('/ticket-bg.png')] bg-cover bg-center
     >
       {/* Левая секция — планы */}
       <div className="flex flex-col gap-2 w-full lg:w-[25%] py-6">
-        {PLANS.map((plan, idx) => (
-          <PlanCard key={plan.id} title={plan.label} 
-          iconSrc={plan.iconSrc}
-          isActive={idx === 0}
-           />
+        {PLANS.map((plan) => (
+          <button
+            key={plan.label}
+            onClick={() => {
+              onAmountChange(plan.min);
+              setSelectedPlan(plan.label);
+            }}
+            className={`flex items-center gap-2 px-4 py-2 rounded-lg border transition-all hover:border-[#00C2FF] ${
+              selectedPlan === plan.label
+                ? "bg-[#00C2FF]/20 border-[#00C2FF]"
+                : "border-white/20"
+            }`}
+          >
+            <img src={plan.iconSrc} alt={plan.label} className="w-5 h-5" />
+            <span className="text-white text-sm font-medium">{plan.label}</span>
+          </button>
         ))}
-        <button className="bg-[#00C2FF] hover:bg-[#00A5E0] text-white px-6 py-3 rounded-xl font-semibold transition-all shadow-lg">
+        <button className="bg-[#00C2FF] hover:bg-[#00A5E0] text-white px-2 py-2 rounded-xl font-semibold transition-all shadow-lg">
           Connect Wallet
         </button>
       </div>
 
       {/* Центральная секция — слайдеры */}
-      <div className="flex flex-col gap-2 w-full lg:w-[50%] py-6"//
-      >
-        <div>
-          <label className="block text-sm text-white/70 mb-2 font-medium">
-            Deposit amount:
-            <span className="text-white font-bold ml-2">{amount} TON</span>
-          </label>
-          <input
-            type="range"
-            min={sliderMin}
-            max={sliderMax}
-            step={10}
-            value={amount}
-            onChange={(e) => onAmountChange(Number(e.target.value))}
-            className="w-full h-2 bg-white/10 rounded-lg cursor-pointer accent-[#00C2FF]"
-          />
-        </div>
-        <div>
-          <label className="block text-sm text-white/70 mb-2 font-medium">
-            Duration:
-            <span className="text-white font-bold ml-2">{days} days</span>
-          </label>
-          <input
-            type="range"
-            min={1}
-            max={365}
-            step={1}
-            value={days}
-            onChange={(e) => onDaysChange(Number(e.target.value))}
-            className="w-full h-2 bg-white/10 rounded-lg cursor-pointer accent-[#00C2FF]"
-          />
-        </div>
-      </div>
+      <div className="flex flex-col gap-2 w-full relative py-6">
+  <label className="text-white/80 text-sm font-medium">
+    Deposit amount
+  </label>
 
-      {/* Правая секция — доходы */}
-      <div
-  className="relative bg-[url('/decorative/Rectangle.png')] h-450px w-300 bg-contain bg-center justify-between" // w-fullshadow-[0_0_60px_#00C2FF55] rounded-[28px] lg:w-[25%] px-6 py-8
-  style={{
-    backgroundPosition: "center top",
-    opacity: 1,
-    backgroundRepeat: "no-repeat",}}
-  >
-  {/* Пунктирная линия — вертикальная 
-    <div className="absolute left-0 top-4 bottom-4 w-px border-l border-dashed border-white/30"></div>
-      <div className="absolute right-0 top-4 bottom-4 w-px border-l border-dashed border-white/30"></div>
-*/}
-  {/* Earnings блок
-    <div className="bg-white/10 backdrop-blur-sm rounded-xl space-y-3 text-white text-base">
+  <div className="flex items-center gap-4 bg-[#1F1F2C] rounded-2xl px-4 py-2 w-full">
+    {/* Ammount Инпут */}
+    <input
+      type="number"
+      value={amount}
+      min={sliderMin}
+      max={sliderMax}
+      onChange={(e) => onAmountChange(Number(e.target.value))}
+      className="w-[100px] bg-transparent text-white text-lg font-semibold outline-none text-center"
+    />
+
+    {/* Слайдер */}
+    <input
+      type="range"
+      min={sliderMin}
+      max={sliderMax}
+      step={10}
+      value={amount}
+      onChange={(e) => onAmountChange(Number(e.target.value))}
+      className="w-full h-2 appearance-none bg-[#00C2FF]/30 rounded-full relative"
+    />
+
+    {/* Иконка справа */}
+    <img
+      src="/decorative/ton5.png"
+      alt="TON"
+      className="w-8 h-8"
+    />
   </div>
-  */}
-      <div className="bg-white/10  rounded-xl space-y-6 text-white text-base py-1" //backdrop-blur-sm
-      >
 
+
+  <div className="flex flex-col gap-2 w-full relative">
+  <label className="text-white/80 text-sm font-medium">
+    Deposit duration
+  </label>
+
+  <div className="flex items-center gap-4 bg-[#1F1F2C] rounded-2xl px-4 py-2 w-full">
+    {/* Days Инпут */}
+    <input
+      type="number"
+      value={days}
+      min={sliderMin}
+      max={365}
+      onChange={(e) => onDaysChange(Number(e.target.value))}
+      className="w-[100px] bg-transparent text-white text-lg font-semibold outline-none text-center"
+    />
+
+    {/* Слайдер */}
+    <input
+      type="range"
+      min={sliderMin}
+      max={365}
+      step={10}
+      value={days}
+      onChange={(e) => onDaysChange(Number(e.target.value))}
+      className="w-full h-2 appearance-none bg-[#00C2FF]/30 rounded-full relative"
+    />
+
+    {/*  справа */}
+    <label className="text-white/80 text-sm font-medium">
+    Days
+  </label>
+
+  </div>
+  </div>
+  
+</div>
+
+
+
+      <div
+  className="relative w-[350px] h-[220px] rounded-b-[28px] shadow-[0_0_60px_#00C2FF55] overflow-hidden"
+>
+  {/* Фон — уменьшен по высоте, без скруглений сверху */}
+  <img
+    src="/decorative/Rectangle.png"
+    alt="background"
+    className="absolute inset-0 w-full h-full object-cover z-0 pointer-events-none"
+  />
+
+  {/* Вертикальные пунктирные границы */}
+  <div className="absolute left-0 top-6 bottom-6 w-px border-l border-dashed border-white/30 z-10"></div>
+  <div className="absolute right-0 top-6 bottom-6 w-px border-l border-dashed border-white/30 z-10"></div>
+
+  {/* Контент — уменьшен паддинг и отступы */}
+  <div className="relative z-10 flex flex-col justify-center h-full px-6 pb-4 pt-6 text-white text-[18px] gap-4">
+    <div className="flex justify-between items-center h-[32px]">
+      <span>In 1 day</span>
+      <span className="font-medium">+{dailyEarnings.toFixed(2)} TON</span>
+    </div>
+
+    <div
+      className="w-full h-[10px] bg-center bg-no-repeat"
+      style={{ backgroundImage: "url('/decorative/Separator.png')" }}
+    />
+
+    <div className="flex justify-between items-center h-[32px]">
+      <span>In 7 days</span>
+      <span className="font-medium">+{(dailyEarnings * 7).toFixed(2)} TON</span>
+    </div>
+
+    <div
+      className="w-full h-[10px] bg-center bg-no-repeat"
+      style={{ backgroundImage: "url('/decorative/Separator.png')" }}
+    />
+
+    <div className="flex justify-between items-center h-[32px]">
+      <span>In 30 days</span>
+      <span className="font-semibold">+{(dailyEarnings * 30).toFixed(2)} TON</span>
+    </div>
+
+</div>
+
+      {/**<div className="bg-white/10  rounded-xl space-y-6 text-white text-base py-1" //backdrop-blur-sm
+      >
+          </div>
     <div className="flex justify-between">
       <span>In 1 day</span>
       <span>+{dailyEarnings.toFixed(2)} TON</span>
@@ -114,8 +208,9 @@ export default function Calculator({
       <span>In 30 days</span>
       <span>+{(dailyEarnings * 30).toFixed(2)} TON</span>
     </div>
+*/}
 
-    </div>
+
 
 </div>
 
