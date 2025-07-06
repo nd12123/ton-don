@@ -8,16 +8,19 @@ export default function StartInvesting({ className = "" }: StartInvestingProps) 
   return (
     <section
     className={
-      `relative overflow-hidden text-white ` +
+      `relative overflow-visible text-white ` +
       /*`px-6 ` + */
-      `h-[600px] sm:h-[550px] ` +
+
+      `h-[800px] sm:h-[550px] opacity-90` +
       className
     }
       style={{
         //backgroundColor: "#0A1329",   // запасной цвет
         backgroundImage: `url("/decorative/stakeNow.png")`,
         backgroundRepeat: "no-repeat",
-        backgroundPosition: "center bottom",
+        //backgroundPosition: "right bottom",
+        
+      objectFit: "cover",
         backgroundSize: "100% 100%", // точные размеры: ширина 100%, высота 
       }}
     >

@@ -4,13 +4,15 @@
 import React, { useState } from 'react';
 import NextImage from 'next/image';           // << вот так
 import { ChevronDown, ChevronUp } from 'lucide-react';
+//import SectionWithFade from "@/components/SectionWithFade";
 
 // пути к вашим PNG/SVG теперь станут строкой или React-компонентом
 //import leftSphere from '@/public/decorative/EllipseFAQLeft.png';
 //import centerSphere from '@/public/decorative/Ellipse7.png';
 
-import sphereLeft from "@/public/decorative/EllipseFAQLeft.png";    // ellipse6 сбоку слева
-import sphereRightTop from "@/public/decorative/Ellipse50.png";    //  сбоку слева
+//import sphereLeft from "@/public/decorative/EllipseFAQLeft.png";    // ellipse6 сбоку слева
+import sphereRightTop from "@/public/decorative/Ellipse50.png";    //  сбоку 
+import sphere from "@/public/decorative/Ellipse8.png";    //  сбоку слева
 
 type FAQItem = { question: string; answer: string };
 
@@ -57,12 +59,14 @@ export default function FAQSection() {
         'relative z-10',
         'text-white',
          //' stars-mask',  px-4 py-10 sm:px-6 lg:px-8
-        'overflow-hidden',
-        'bg-faq-gradient',
+        //'overflow-hidden',
+        //'bg-faq-gradient',
+        //'horizon',
+        'py-10'
       ].join(' ')}
       >
 
-      <div className="relative z-10 container mx-auto pb-10 px-5">
+      <div className="relative z-10 container mx-auto pb-10 px-5 py-25">
         <h2 className="text-4xl sm:text-5xl font-bold text-center mb-4">
           FAQ
         </h2>
@@ -121,13 +125,13 @@ export default function FAQSection() {
         */}
       <div className="absolute bottom-0 left-0 w-full h-full pointer-events-none z-0">
   <NextImage
-    src={sphereLeft}
+    src={sphere}
     alt=""
     fill
     style={{
       objectFit: "cover",
       objectPosition: "left bottom",
-      opacity: 0.85,
+      opacity: 0.48,
     }}
   />
 </div>
@@ -140,7 +144,7 @@ export default function FAQSection() {
     style={{
       objectFit: "cover",
       objectPosition: "top right",
-      opacity: 0.16,
+      opacity: 0.18,
     }}
   />
 </div>
@@ -164,12 +168,12 @@ export default function FAQSection() {
       </div>
 
       {/* 3) Центрированный блюр-эллипс */}
-      <div className="pointer-events-none absolute top-0 inset-x-0 mx-auto w-1/2 h-96 opacity-30">
+      <div className="pointer-events-none absolute top-0 inset-x-0 mx-auto w-1/3 h-1/3 opacity-35">
         <NextImage
           src="/decorative/EllipseFull.png"
           alt=""
           fill
-          style={{ objectFit: "cover" }}
+          style={{ objectFit: "contain" }}
         />
       </div>
 
@@ -179,7 +183,7 @@ export default function FAQSection() {
         alt=""
         fill
         className="pointer-events-none"
-        style={{ objectFit: "cover", objectPosition: "center top", opacity: "0.25" }}
+        style={{ objectFit: "cover", objectPosition: "center top", opacity: "0.1" }}
       />
 
     </section>

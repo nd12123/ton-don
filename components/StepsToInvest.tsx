@@ -36,7 +36,7 @@ export default function StepsToInvest() {
 
   return (
     <section
-          className="relative  text-white" // pb-10 overflow-hidden
+          className="relative  text-white py-10" // pb-10 overflow-hidden
 
           //style={{
             /* 

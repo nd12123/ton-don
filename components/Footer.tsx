@@ -14,8 +14,8 @@ import telegramIcon from "@/assets/Footer/telegram.svg";
 // положите их в public/decorative/
 const stars1 = "/decorative/starsbg1.png";
 const stars2 = "/decorative/stars1.png";
-const sphereTop = "/decorative/ellipse10.png";    // яркая сфера сверху
-const sphereLeft = "/decorative/Ellipse60.png";    // сбоку слева
+//const sphereTop = "/decorative/ellipse10.png";    // яркая сфера сверху
+//const sphereLeft = "/decorative/Ellipse60.png";    // сбоку слева
 const sphereUpperLeft = "/decorative/EllipseNowLeft.png";    // сбоку слева
 const sphereRight = "/decorative/ellipse5.png";   // сбоку справа
 const tonCoin1 = "/decorative/ton3.png";
@@ -27,10 +27,11 @@ export default function Footer({ className = "" }: { className?: string }) {
       {/* =========================
           0) Фоновый слой: звёзды, сферы, тоны
          ========================= */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+      <div className="absolute inset-0 pointer-events-none"// overflow-hidden
+      >
         {/* звёздные текстуры */}
         <div
-          className="absolute inset-0 opacity-30"
+          className="absolute inset-0 opacity-32"
           style={{
             backgroundImage: `url(${stars1}), url(${stars2})`,
             backgroundRepeat: "repeat, repeat",
@@ -39,29 +40,33 @@ export default function Footer({ className = "" }: { className?: string }) {
           }}
         />
 
-        {/* большие полупрозрачные сферы */}
+        {/* большие полупрозрачные сферы 
         <Image
           src={sphereTop}
           alt=""
           fill
+          className="w-[150] h-[150]"
           style={{
             objectFit: "contain",
             objectPosition: "center top",
             opacity: 0.1
+
           }}
         />
-
-        <Image
-          src={sphereUpperLeft}
-          alt=""
-          className="absolute left-0 top-0 w-full h-auto opacity-80"
-        />
-
+        
         <Image
           src={sphereLeft}
           alt=""
           className="absolute left-0 top-0 w-full h-auto opacity-30"
         />
+        */}
+
+        <Image
+          src={sphereUpperLeft}
+          alt=""
+          className="absolute left-0 top-0 w-full h-auto opacity-35"
+        />
+
         <Image
           src={sphereRight}
           alt=""
@@ -85,10 +90,11 @@ export default function Footer({ className = "" }: { className?: string }) {
           1) CTA-блок «Start investing now!»
           mb-16
          ========================= */}
-      <div className="relative z-10 ">
+      <div className="relative z-10 pb-10 mt-[120px]">
         {/* здесь ваш компонент StartInvesting */}
-      </div>
+        
       <StartInvesting />
+      </div>
 
       {/* =========================
           2) Основной футер: логотип, навигация, соцсети 

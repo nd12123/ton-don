@@ -342,12 +342,16 @@ input[type='range']::-moz-range-thumb {
       rgba(0, 0, 0, 0.2) 0%, 
       transparent 70%
     ),
-    /* Левый центр — ДОБАВЛЕНО */
+    /* Левый центр — ДОБАВЛЕНО
+    
     linear-gradient(
       to right,
-      rgba(0, 0, 0, 0.08) 0%,     /* тень с краю */
+      rgba(0, 0, 0, 0.08) 0%,    
       transparent 20%
     ),
+     */
+    linear-gradient(to right, rgba(0,0,0,0.15) 10%, transparent 30%),
+
     /* Правый верх — свечение */
     radial-gradient(
       at right top,
@@ -368,6 +372,26 @@ input[type='range']::-moz-range-thumb {
     );
 }
 
+/*
+.bg-faq-gradient::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    // усиль затемнение слева по центру градиента 
+    linear-gradient(to right, rgba(0,0,0,0.15) 0%, transparent 30%),
+    // затемнение сверху слева, чтоб уходило в фон Plans 
+    radial-gradient(at left top, rgba(0,0,0,0.25) 0%, transparent 40%),
+    // добавляет свечения над планами 
+    radial-gradient(at right top, rgba(0,195,255,0.08) 0%, transparent 85%),
+    /* клубок тумана/глубины фона 
+    linear-gradient(135deg, rgba(0,194,255,0.06) 10%, rgba(0,0,0,0) 80%),
+    /* глубокий темный угол внизу справа 
+    radial-gradient(at right bottom, rgba(0,0,0,0.35) 0%, transparent 65%);
+}
+
+*/
 .bg-step-overlay::before {
   content: "";
   position: absolute;
@@ -382,6 +406,8 @@ input[type='range']::-moz-range-thumb {
   opacity: 0.6;
   z-index: -1;
 }
+
+
 
 /*
 
