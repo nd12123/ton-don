@@ -6,8 +6,11 @@ import NextImage from 'next/image';           // << вот так
 import { ChevronDown, ChevronUp } from 'lucide-react';
 
 // пути к вашим PNG/SVG теперь станут строкой или React-компонентом
-import leftSphere from '@/public/decorative/EllipseFAQLeft.png';
-import centerSphere from '@/public/decorative/Ellipse7.png';
+//import leftSphere from '@/public/decorative/EllipseFAQLeft.png';
+//import centerSphere from '@/public/decorative/Ellipse7.png';
+
+import sphereLeft from "@/public/decorative/EllipseFAQLeft.png";    // ellipse6 сбоку слева
+import sphereRightTop from "@/public/decorative/Ellipse50.png";    //  сбоку слева
 
 type FAQItem = { question: string; answer: string };
 
@@ -51,50 +54,15 @@ export default function FAQSection() {
   return (
     <section
       className={[
-        'relative',
+        'relative z-10',
         'text-white',
-        'px-4 py-10 sm:px-6 lg:px-8 stars-mask',
+         //' stars-mask',  px-4 py-10 sm:px-6 lg:px-8
+        'overflow-hidden',
+        'bg-faq-gradient',
       ].join(' ')}
-    >
-{/* 1) Слой «шум» на весь блок */}
-<NextImage
-        src="/decorative/starsbg1.png"       // укажите свой файл со звёздами stars-bg ?
-        alt=""
-        fill
-        className="pointer-events-none opacity-10"
-        style={{ objectFit: "cover", objectPosition: "center top" }}
-      />
+      >
 
-      {/* 2) Плавающие ton сверху */}
-      <div className="pointer-events-none absolute top-10 left-1/3 w-40 h-40 opacity-60 animate-float-slow">
-        <NextImage
-          src="/decorative/ton5.png"
-          alt=""
-          fill
-          style={{ objectFit: "contain" }}
-        />
-      </div>
-      <div className="pointer-events-none absolute top-0 left-2/5 w-60 h-60 opacity-65 animate-float-slow delay-2000">
-        <NextImage
-          src="/decorative/ton4.png"
-          alt=""
-          fill
-          style={{ objectFit: "contain" }}
-        />
-      </div>
-
-      {/* 3) Центрированный блюр-эллипс */}
-      <div className="pointer-events-none absolute top-0 inset-x-0 mx-auto w-1/2 h-96 opacity-30">
-        <NextImage
-          src="/decorative/EllipseFull.png"
-          alt=""
-          fill
-          style={{ objectFit: "cover" }}
-        />
-      </div>
-
-
-      <div className="relative z-10 container mx-auto">
+      <div className="relative z-10 container mx-auto pb-10 px-5">
         <h2 className="text-4xl sm:text-5xl font-bold text-center mb-4">
           FAQ
         </h2>
@@ -140,24 +108,97 @@ export default function FAQSection() {
         </div>
       </div>
 
-      {/* Левый хвост */}
-      <div className="absolute bottom-0 left-0 w-1/2 h-1/2 pointer-events-none stars-mask">
+<div className="absolute inset-0 -z-10 pointer-events-none" style={{}} />
+
+{/* 1) Слой «шум» на весь блок 
+
+      <NextImage // w-full h-auto
+          src={sphereLeft}
+          alt=""
+          className="pointer-events-none opacity-99" 
+          style={{ objectFit: "cover", objectPosition: "left bottom" }}
+        />
+        */}
+      <div className="absolute bottom-0 left-0 w-full h-full pointer-events-none z-0">
+  <NextImage
+    src={sphereLeft}
+    alt=""
+    fill
+    style={{
+      objectFit: "cover",
+      objectPosition: "left bottom",
+      opacity: 0.85,
+    }}
+  />
+</div>
+
+<div className="absolute top-0 right-0 w-full h-full pointer-events-none z-0">
+  <NextImage
+    src={sphereRightTop}
+    alt=""
+    fill
+    style={{
+      objectFit: "cover",
+      objectPosition: "top right",
+      opacity: 0.16,
+    }}
+  />
+</div>
+
+      {/* 2) Плавающие ton сверху */}
+      <div className="pointer-events-none absolute top-10 left-1/3 w-40 h-40 opacity-60 animate-float-slow">
         <NextImage
-          src={leftSphere}
+          src="/decorative/ton5.png"
           alt=""
           fill
-          style={{
-            objectFit: 'cover',
-            objectPosition: 'left bottom',
-            opacity: 0.75,
-          }}
+          style={{ objectFit: "contain" }}
+        />
+      </div>
+      <div className="pointer-events-none absolute top-0 left-2/5 w-60 h-60 opacity-65 animate-float-slow delay-2000">
+        <NextImage
+          src="/decorative/ton4.png"
+          alt=""
+          fill
+          style={{ objectFit: "contain" }}
         />
       </div>
 
+      {/* 3) Центрированный блюр-эллипс */}
+      <div className="pointer-events-none absolute top-0 inset-x-0 mx-auto w-1/2 h-96 opacity-30">
+        <NextImage
+          src="/decorative/EllipseFull.png"
+          alt=""
+          fill
+          style={{ objectFit: "cover" }}
+        />
+      </div>
+
+
+      <NextImage
+        src="/decorative/starsbg1.png"       // укажите свой файл со звёздами stars-bg ?
+        alt=""
+        fill
+        className="pointer-events-none"
+        style={{ objectFit: "cover", objectPosition: "center top", opacity: "0.25" }}
+      />
+
+    </section>
+
+  );
+}
+
+      {/* Центральная сфера 
+      <div className="absolute top-20 right-1/4 w-96 h-96 pointer-events-none opacity-60">
+        <NextImage
+          src="/decorative/ellipse10.png"
+          alt=""
+          fill
+          style={{ objectFit: 'contain' }}
+        />
+      </div>
       <div
-    className="absolute bottom-0 left-0 w-full h-full pointer-events-none"
-    style={{ opacity: 0.9 }}
-  >
+    className="absolute bottom-0 left-1/2 w-1/2 h-full pointer-events-none"
+    style={{ opacity: 0.9 }}>
     <NextImage
       src={centerSphere}
       alt=""
@@ -168,19 +209,24 @@ export default function FAQSection() {
       }}
     />
   </div>
+      */}
 
-      {/* Центральная сфера */}
-      <div className="absolute top-20 right-1/4 w-96 h-96 pointer-events-none opacity-60">
+      {/* Левый хвост
+      
+      <div className="absolute bottom-0 left-0 w-full h-full pointer-events-none stars-mask">
         <NextImage
-          src="/decorative/ellipse10.png"
+          src={leftSphere}
           alt=""
           fill
-          style={{ objectFit: 'contain' }}
+          style={{
+            objectFit: 'cover',
+            objectPosition: 'left bottom',
+            opacity: 0.1,
+          }}
         />
-      </div>
-    </section>
-  );
-}
+      </div> */}
+
+
 
 /*
 export default function FAQSection() {

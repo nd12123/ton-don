@@ -15,7 +15,7 @@ import telegramIcon from "@/assets/Footer/telegram.svg";
 const stars1 = "/decorative/starsbg1.png";
 const stars2 = "/decorative/stars1.png";
 const sphereTop = "/decorative/ellipse10.png";    // яркая сфера сверху
-const sphereLeft = "/decorative/ellipse6.png";    // сбоку слева
+const sphereLeft = "/decorative/Ellipse60.png";    // сбоку слева
 const sphereUpperLeft = "/decorative/EllipseNowLeft.png";    // сбоку слева
 const sphereRight = "/decorative/ellipse5.png";   // сбоку справа
 const tonCoin1 = "/decorative/ton3.png";
@@ -30,7 +30,7 @@ export default function Footer({ className = "" }: { className?: string }) {
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
         {/* звёздные текстуры */}
         <div
-          className="absolute inset-0 opacity-20"
+          className="absolute inset-0 opacity-30"
           style={{
             backgroundImage: `url(${stars1}), url(${stars2})`,
             backgroundRepeat: "repeat, repeat",
@@ -47,20 +47,20 @@ export default function Footer({ className = "" }: { className?: string }) {
           style={{
             objectFit: "contain",
             objectPosition: "center top",
-            opacity: 0.2
+            opacity: 0.1
           }}
         />
 
         <Image
           src={sphereUpperLeft}
           alt=""
-          className="absolute left-0 top-0 w-full h-auto opacity-50"
+          className="absolute left-0 top-0 w-full h-auto opacity-80"
         />
 
         <Image
           src={sphereLeft}
           alt=""
-          className="absolute left-0 bottom-0 w-1/2 h-auto opacity-25"
+          className="absolute left-0 top-0 w-full h-auto opacity-30"
         />
         <Image
           src={sphereRight}
@@ -72,7 +72,7 @@ export default function Footer({ className = "" }: { className?: string }) {
         <Image
           src={tonCoin1}
           alt=""
-          className="absolute w-24 h-24 top-[5%] left-[15%] opacity-60 animate-float-slow"
+          className="absolute w-24 h-24 top-[5%] right-[10%] opacity-60 animate-float-slow"
         />
         <Image
           src={tonCoin2}
@@ -83,16 +83,17 @@ export default function Footer({ className = "" }: { className?: string }) {
 
       {/* =========================
           1) CTA-блок «Start investing now!»
+          mb-16
          ========================= */}
-      <div className="relative z-10 mb-16">
+      <div className="relative z-10 ">
         {/* здесь ваш компонент StartInvesting */}
-        <StartInvesting />
       </div>
+      <StartInvesting />
 
       {/* =========================
           2) Основной футер: логотип, навигация, соцсети 
          ========================= */}
-      <div className="relative z-10 border-t border-[#1F2A44] pt-10 pb-6">
+      <div className="relative z-10 border-t border-[#1F2A44] pt-5 pb-3">
         <div className="container mx-auto px-4 flex flex-col lg:flex-row items-center justify-between gap-6">
           {/* левый блок */}
           <div className="flex items-center gap-6">
@@ -166,7 +167,7 @@ export default function Footer({ className = "" }: { className?: string }) {
       {/* =========================
           3) Копирайт
          ========================= */}
-      <div className="relative z-10 border-t border-[#1F2A44] mt-6 pt-6 pb-4">
+      <div className="relative z-10 border-t border-[#1F2A44] mt-6 pt-6 pb-2">
         <div className="container mx-auto px-4 flex flex-col-reverse lg:flex-row items-center justify-between gap-4 text-sm text-[#A0B0D8]">
           <p>© 2025 Orbi Ton | All Rights Reserved</p>
           <div className="flex gap-4">

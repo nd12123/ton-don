@@ -194,7 +194,7 @@ body::before {
   pointer-events: none;
   position: absolute;
   top: 0;
-  left: 0%;      /* сдвигаем градиент внутрь на 20% с каждой стороны */
+  left: 0%;      
   right: 0%;
   height: 100%;
   background: linear-gradient(
@@ -319,8 +319,97 @@ input[type='range']::-moz-range-thumb {
   mask-size: cover;
   -webkit-mask-size: cover;
 }
+.bg-faq-gradient {
+  position: relative;
+  isolation: isolate;
+  background: linear-gradient(
+    to bottom,
+    rgba(10, 13, 28, 0.96) 0%,        
+    rgba(10, 19, 41, 0.92) 40%, 
+    rgba(26, 32, 58, 0.9) 100%        
+  );
+}
+
+.bg-faq-gradient::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: 
+    /* Левый верх — мягкая затемнёнка */
+    radial-gradient(
+      at left top,
+      rgba(0, 0, 0, 0.2) 0%, 
+      transparent 70%
+    ),
+    /* Левый центр — ДОБАВЛЕНО */
+    linear-gradient(
+      to right,
+      rgba(0, 0, 0, 0.08) 0%,     /* тень с краю */
+      transparent 20%
+    ),
+    /* Правый верх — свечение */
+    radial-gradient(
+      at right top,
+      rgba(0, 195, 255, 0.08) 0%, 
+      transparent 90%
+    ),
+    /* Правый низ — тёмный угол */
+    radial-gradient(
+      at right bottom,
+      rgba(0, 0, 0, 0.3) 0%, 
+      transparent 60%
+    ),
+    /* Общий наклонный туман */
+    linear-gradient(
+      135deg,
+      rgba(0, 194, 255, 0.06) 10%,    
+      rgba(0, 0, 0, 0) 80%
+    );
+}
+
+.bg-step-overlay::before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 300px;
+  height: 300px;
+  background-image: url("/decorative/ellipse5.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: bottom left;
+  opacity: 0.6;
+  z-index: -1;
+}
 
 /*
+
+.bg-faq-gradient {
+  position: relative;
+  background: linear-gradient(
+    to bottom,
+    rgba(10, 13, 28, 0.95) 100%,
+    rgba(10, 19, 41, 0.9) 40%,
+    rgba(26, 32, 58, 0.9) 100%,
+  );
+  isolation: isolate;
+}
+
+.bg-faq-gradient::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: 
+  linear-gradient(
+    135deg,
+    rgba(0, 194, 255, 0.06) 90%,      
+    rgba(0, 0, 0, 0) 40%,
+    rgba(0, 194, 255, 0.08) 75%,     
+    rgba(0, 0, 0, 0.0) 100%
+  );
+}
 
 .horizon::after {
   content: "";

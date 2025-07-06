@@ -10,6 +10,10 @@ import coinLarge from "@/assets/StepsToInvest/ton2.png";//"/decorative/ton2.png"
 //import coinSmall from "@/assets/StepsToInvest/ton1.png";//"/decorative/ton3.png"; // мелкие монеты
 import leftCorner from "@/assets/StepsToInvest/leftCorner.svg";
 import rightCorner from "@/assets/StepsToInvest/rightCorner.svg";
+
+import rightCornerBottom from "@/public/decorative/ellipse5.png";
+
+
 export default function StepsToInvest() {
   // Структура трёх шагов (номер, заголовок, описание).
   const steps = [
@@ -32,7 +36,7 @@ export default function StepsToInvest() {
 
   return (
     <section
-          className="relative overflow-hidden text-white py-10 pb-10"
+          className="relative  text-white" // pb-10 overflow-hidden
 
           //style={{
             /* 
@@ -56,37 +60,27 @@ export default function StepsToInvest() {
         */}
       </div>
 
+      <div className="absolute top-0 right-0 w-full h-full pointer-events-none z-0">
+
+      <Image
+          src={rightCornerBottom}
+          alt="corner"
+          className="absolute right-0 bottom-0 w-full h-full opacity-20" //bottom-right 
+        />
+</div>
       {/* 2) Заголовок + кнопка „See Plans“ */}
       <div className="relative z-10 max-w-5xl mx-auto px-4 text-center">
         <h2 className="text-4xl md:text-5xl lg:text-6xl font-extrabold mb-6">
           3 Easy steps to invest in 
           <span className="text-[#00C2FF]">TonStake.Ai</span>
         </h2>
-{/*
-        <Link href="/plans" 
-            className="
-              inline-block 
-              bg-[#00BFFF] hover:bg-[#00A5E0] 
-              text-white 
-              font-medium 
-              rounded-full 
-              px-6 py-3 
-              text-lg 
-              transition 
-              shadow-lg
-            "
-          >
-            See Plans
-        </Link>
-        */}
       </div>
 
  {/* ========== ОБКАТЫВАЕМ КОНТЕНТ В RELATIVE-wrapper ========== */}
  <div className="relative mt-12">
         {/* 1) фон-изображение – ровно под гридом */}
         <div className="absolute inset-x-0 top-0 flex justify-center pointer-events-none"
-                  style={{ height: 350 }}
->
+                  style={{ height: 350 }}>
           <Image
             src="/decorative/step-mask.svg"
             alt="steps background"
@@ -167,18 +161,18 @@ export default function StepsToInvest() {
         {/* Мелкие монетки слева и справа */}
         <Image
           src={leftCorner}
-          alt="Ton Coin"
+          alt="corner"
           className="absolute left-0 h-80 top-center opacity-60 animate-float-slow delay-2000" //w-16 h-16  left-8 top-1/2 
         />
         <Image
           src={rightCorner}
-          alt="Ton Coin"
+          alt="corner"
           className="absolute right-0 h-80 top-center  opacity-60 animate-float-slow delay-2000" //right-8 top-1/3 w-20 h-20
         />
       </div>
 </div>
       {/* 5) Кнопка «Connect Wallet» снизу */}
-      <div className="relative z-10 mt-16 flex justify-center">
+      <div className="relative z-10 mt-16 flex justify-center py-7">
         <Link href="/connect" 
             className="
               inline-flex items-center 
@@ -197,14 +191,40 @@ export default function StepsToInvest() {
             Connect Wallet
         </Link>
       </div>
+      {/*
       <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-b from-transparent to-[#0A0D1C] z-0" />
+      */}
+<div
+  className="absolute bottom-0 left-0 w-1/4 h-20 z-0"
+  style={{
+    background: "linear-gradient(to bottom, transparent, #0A0D1C)",
+    WebkitMaskImage: "linear-gradient(to right, black 80%, transparent 100%)",
+    maskImage: "linear-gradient(to right, black 80%, transparent 100%)"
+  }}
+/>
 
     </section>
     
   );
 }
 
-
+{/*
+        <Link href="/plans" 
+            className="
+              inline-block 
+              bg-[#00BFFF] hover:bg-[#00A5E0] 
+              text-white 
+              font-medium 
+              rounded-full 
+              px-6 py-3 
+              text-lg 
+              transition 
+              shadow-lg
+            "
+          >
+            See Plans
+        </Link>
+        */}
 
 // components/StepsToInvest.tsx
 /*
