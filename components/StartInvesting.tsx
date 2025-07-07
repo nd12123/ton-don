@@ -1,29 +1,63 @@
 // components/StartInvesting.tsx
 import React from "react";
 import Link from "next/link";
+//import Image from "next/image";
 
 type StartInvestingProps = { className?: string };
 
 export default function StartInvesting({ className = "" }: StartInvestingProps) {
   return (
-    <section
-    className={
-      `relative overflow-visible text-white ` +
-      /*`px-6 ` + */
-
-      `h-[800px] sm:h-[550px] opacity-90` +
-      className
-    }
+    /*
+<section
+className={
+  `relative overflow-visible text-white ` +
+  //`h-[800px] sm:h-[550px]` + //opacity-90
+  className
+}
+>
+      <div className="absolute inset-0 pointer-events-none -z-20 overflow-hidden">
+  <div
+    style={{
+      position: "absolute", // relative
+      //top: "0px", // двигаем НИЖЕ
+      left: 0,
+      right: 0,
+      //height: "calc(100% + 30px)",
+      //width: "100%",
+    }}
+  >
+    <Image
+      src="/decorative/stakeNow.png"
+      alt="stakeNow"
+      fill
       style={{
-        //backgroundColor: "#0A1329",   // запасной цвет
-        backgroundImage: `url("/decorative/stakeNow.png")`,
-        backgroundRepeat: "no-repeat",
-        //backgroundPosition: "right bottom",
-        
-      objectFit: "cover",
-        backgroundSize: "100% 100%", // точные размеры: ширина 100%, высота 
+        objectFit: "cover",
+        objectPosition: "center center",
+        opacity: 0.90,
       }}
-    >
+    />
+  </div>
+</div>
+*/
+<section
+className={
+  `relative overflow-visible text-white ` +
+
+  `h-[800px] sm:h-[550px] opacity-90` +
+  className
+}
+  style={{
+    //backgroundColor: "#0A1329",   // запасной цвет
+    backgroundImage: `url("/decorative/stakeNow.png")`,
+    backgroundRepeat: "no-repeat",
+    //backgroundPosition: "right bottom",
+    
+  objectFit: "cover",
+    backgroundSize: "calc(100% + 100px) 100%", // точные размеры: ширина 100%, высота 
+  }}
+>
+      {/* 2) Горизонт (основной фон) */}
+
       <div
         className="
           relative z-10 flex items-center h-full pb-3

@@ -36,19 +36,31 @@ export default function CalculateAndPlans() {
       
 
       {/* 2) Горизонт (основной фон) */}
-      <div className="absolute inset-0 pointer-events-none -z-20">
-        <Image
-          src="/decorative/radius-bg.png"
-          alt="horizon"
-          fill
-          style={{ objectFit: "cover", objectPosition: "center top", opacity: 0.35,
-                top: "-400px",               // сдвигаем картинку вверх на 200px
-                height: "calc(100% + 400px)" // увеличиваем высоту, чтобы низ не обрезался
-           }}
-        />
-      </div>
+      <div className="absolute inset-0 pointer-events-none -z-20 overflow-hidden">
+  <div
+    style={{
+      position: "absolute",
+      top: "-130px", // двигаем НИЖЕ
+      left: 0,
+      right: 0,
+      height: "calc(100% + 130px)",
+    }}
+  >
+    <Image
+      src="/decorative/radius-bg.png"
+      alt="horizon"
+      fill
+      style={{
+        objectFit: "cover",
+        objectPosition: "center top",
+        opacity: 0.40,
+      }}
+    />
+  </div>
+</div>
 
-      <div className="max-w-6xl mx-auto px-4">
+
+      <div className="max-w-6xl mx-auto px-4 pb-6">
         {/* === 3) Карточки планов === */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
           {PLANS.map((plan, idx) => (

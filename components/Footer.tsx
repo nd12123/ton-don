@@ -17,6 +17,7 @@ const stars2 = "/decorative/stars1.png";
 //const sphereTop = "/decorative/ellipse10.png";    // яркая сфера сверху
 //const sphereLeft = "/decorative/Ellipse60.png";    // сбоку слева
 const sphereUpperLeft = "/decorative/EllipseNowLeft.png";    // сбоку слева
+
 const sphereRight = "/decorative/ellipse5.png";   // сбоку справа
 const tonCoin1 = "/decorative/ton3.png";
 const tonCoin2 = "/decorative/ton2.png";
@@ -24,6 +25,17 @@ const tonCoin2 = "/decorative/ton2.png";
 export default function Footer({ className = "" }: { className?: string }) {
   return (
     <footer className={`relative overflow-hidden text-white ${className}`}>
+      <div
+  className="absolute inset-0 -z-10 pointer-events-none"
+  style={{
+    background: `
+      radial-gradient(at top center, rgb(0, 0, 0) 0%, transparent 99%)
+    `,
+    opacity: 0.99,
+    mixBlendMode: "screen",
+  }}
+/>
+
       {/* =========================
           0) Фоновый слой: звёзды, сферы, тоны
          ========================= */}
@@ -31,7 +43,7 @@ export default function Footer({ className = "" }: { className?: string }) {
       >
         {/* звёздные текстуры */}
         <div
-          className="absolute inset-0 opacity-32"
+          className="absolute inset-0 opacity-90"
           style={{
             backgroundImage: `url(${stars1}), url(${stars2})`,
             backgroundRepeat: "repeat, repeat",
@@ -64,8 +76,9 @@ export default function Footer({ className = "" }: { className?: string }) {
         <Image
           src={sphereUpperLeft}
           alt=""
-          className="absolute left-0 top-0 w-full h-auto opacity-35"
+          className="absolute left-0 top-0 w-full h-auto opacity-30"
         />
+
 
         <Image
           src={sphereRight}

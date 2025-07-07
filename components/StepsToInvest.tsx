@@ -65,7 +65,7 @@ export default function StepsToInvest() {
       <Image
           src={rightCornerBottom}
           alt="corner"
-          className="absolute right-0 bottom-0 w-full h-full opacity-20" //bottom-right 
+          className="absolute right-0 bottom-0 w-full h-full opacity-15" //bottom-right 
         />
 </div>
       {/* 2) Заголовок + кнопка „See Plans“ */}

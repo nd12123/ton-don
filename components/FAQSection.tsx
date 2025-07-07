@@ -12,7 +12,9 @@ import { ChevronDown, ChevronUp } from 'lucide-react';
 
 //import sphereLeft from "@/public/decorative/EllipseFAQLeft.png";    // ellipse6 сбоку слева
 import sphereRightTop from "@/public/decorative/Ellipse50.png";    //  сбоку 
-import sphere from "@/public/decorative/Ellipse8.png";    //  сбоку слева
+import sphere from "@/public/decorative/Ellipse8.png";    // ellipse6 // сбоку слева
+
+//const sphereUpperRight = "@/public/decorative/Ellipse50.png";    //  right top
 
 type FAQItem = { question: string; answer: string };
 
@@ -60,7 +62,7 @@ export default function FAQSection() {
         'text-white',
          //' stars-mask',  px-4 py-10 sm:px-6 lg:px-8
         //'overflow-hidden',
-        //'bg-faq-gradient',
+        'bg-faq-gradient',
         //'horizon',
         'py-10'
       ].join(' ')}
@@ -122,6 +124,19 @@ export default function FAQSection() {
           className="pointer-events-none opacity-99" 
           style={{ objectFit: "cover", objectPosition: "left bottom" }}
         />
+        
+<div className="absolute top-0 right-0 w-full h-full pointer-events-none z-0">
+  <NextImage
+    src={sphereUpperRight}
+    alt=""
+    fill
+    style={{
+      objectFit: "cover",
+      objectPosition: "left bottom",
+      opacity: 0.6,
+    }}
+  />
+</div>
         */}
       <div className="absolute bottom-0 left-0 w-full h-full pointer-events-none z-0">
   <NextImage
@@ -131,12 +146,13 @@ export default function FAQSection() {
     style={{
       objectFit: "cover",
       objectPosition: "left bottom",
-      opacity: 0.48,
+      opacity: 0.9,
     }}
   />
 </div>
 
-<div className="absolute top-0 right-0 w-full h-full pointer-events-none z-0">
+
+<div className="absolute top-0 right-0 h-full w-full pointer-events-none z-0">
   <NextImage
     src={sphereRightTop}
     alt=""
@@ -144,7 +160,7 @@ export default function FAQSection() {
     style={{
       objectFit: "cover",
       objectPosition: "top right",
-      opacity: 0.18,
+      opacity: 0.35,
     }}
   />
 </div>
