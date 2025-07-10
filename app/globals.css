@@ -332,6 +332,7 @@ input[type='range']::-moz-range-thumb {
   isolation: isolate;
 }
 
+
 .bg-faq-gradient::before {
   content: "";
   position: absolute;
@@ -343,8 +344,30 @@ input[type='range']::-moz-range-thumb {
       rgba(0, 0, 0, 0.35) 0%,
       rgba(0, 0, 0, 0.2) 20%,
       rgba(0, 0, 0, 0.1) 40%,
-      transparent 60%
+      transparent 55%
     ),
+      /* Верхний левый — тень 
+      radial-gradient(
+        at left top,
+        rgba(0,0,0,0.2) 0%,
+        transparent 70%
+      ),
+      */
+      /* Верхний центр — слегка смягчает переход 
+      linear-gradient(
+        to right,
+        rgba(0,0,0,0.08) 0%,
+        transparent 20%
+      ),
+      */
+      /* Общий наклонный туман 
+      linear-gradient(
+        135deg,
+        rgba(0,194,255,0.06) 10%,
+        rgba(0,0,0,0) 80%
+      );
+      */
+    
     /*
     radial-gradient(
       at bottom center,
@@ -353,7 +376,6 @@ input[type='range']::-moz-range-thumb {
     );
 */
 }
-
 
     /* Левый верх — мягкая затемнёнка 
     radial-gradient(

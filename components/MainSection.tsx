@@ -69,7 +69,7 @@ export default function MainSection({className = ''}: MainSectionProps) {
         />
       </div>
 
-      <div className="pointer-events-none absolute top-20 right-1/4 transform translate-x-1/4 w-96 h-96 opacity-60">
+      <div className="pointer-events-none absolute top-15 right-1/5 transform translate-x-1/5 w-96 h-96 opacity-60">
         <Image
           src="/decorative/ellipse10.png"
           alt=""
@@ -119,17 +119,17 @@ export default function MainSection({className = ''}: MainSectionProps) {
         <Image
           src={ton3d3}
           alt=""
-          className="absolute top-[10%] right-[13%] w-[20%] opacity-60 animate-float delay-4000"
+          className="absolute top-[3%] right-[15%] w-[15%] opacity-80 animate-float delay-4000"
         />
         <Image
           src={ton3d1}
           alt=""
-          className="absolute top-[23%] right-[25%] w-[15%] opacity-70 animate-float"
+          className="absolute top-[23%] right-[24%] w-[10%] opacity-70 animate-float"
         />
         <Image
           src={ton3d2}
           alt=""
-          className="absolute top-[35%] right-[15%] w-[23%] opacity-80 animate-float delay-2000"
+          className="absolute bottom-[0%] right-[10%] w-[25%] opacity-80 animate-float delay-2000"
         />
       </div>
       </div>

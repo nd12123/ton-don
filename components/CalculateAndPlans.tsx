@@ -32,7 +32,7 @@ export default function CalculateAndPlans() {
   const dailyEarnings = useMemo(() => (amount * (apr/100)) / 365, [amount, apr]);
 
   return ( //py-20 pt-[200px] lg:pt-[375px]
-    <section className="relative overflow-hidden text-white pb-7 pt-0">
+    <section className="relative overflow-hidden text-white pb-5 pt-0">
       
 
       {/* 2) Горизонт (основной фон) */}

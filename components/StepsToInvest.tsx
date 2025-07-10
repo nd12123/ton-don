@@ -69,17 +69,18 @@ export default function StepsToInvest() {
         />
 </div>
       {/* 2) Заголовок + кнопка „See Plans“ */}
-      <div className="relative z-10 max-w-5xl mx-auto px-4 text-center">
-        <h2 className="text-4xl md:text-5xl lg:text-6xl font-extrabold mb-6">
-          3 Easy steps to invest in 
-          <span className="text-[#00C2FF]">TonStake.Ai</span>
-        </h2>
-      </div>
+      <div className="relative z-10 w-full max-w-[1000px] px-6 md:px-12 text-left pl-[350px]">
+  <h2 className="text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight">
+    3 Easy steps to invest in{" "}
+    <span className="text-[#00C2FF]">TonStake.Ai</span>
+  </h2>
+</div>
+
 
  {/* ========== ОБКАТЫВАЕМ КОНТЕНТ В RELATIVE-wrapper ========== */}
  <div className="relative mt-12">
         {/* 1) фон-изображение – ровно под гридом */}
-        <div className="absolute inset-x-0 top-0 flex justify-center pointer-events-none"
+        <div className="absolute inset-x-0 top-0 flex justify-center pointer-events-none z-[-1]"
                   style={{ height: 350 }}>
           <Image
             src="/decorative/step-mask.svg"
@@ -146,31 +147,57 @@ export default function StepsToInvest() {
 
       {/* 4) Абсолютно позиционированные «плавающие» 3D-монетки */}
       <div className="absolute inset-0 pointer-events-none">
-        {/* Большая монета в центре 
+        {/* === Плавающие монеты === */}
+{/* Левая монета (ton4) — верхний левый угол */}
+<div className="absolute top-[10px] right-[60px] w-[120px] h-[120px] opacity-65 animate-float-slow z-[5]">
+  <Image
+    src="/decorative/ton4.png"
+    alt="TON Coin Left"
+    fill
+    style={{ objectFit: "contain" }}
+  />
+</div>
+
+  {/* Правая монета (ton5) — между 2 и 3 шагом */}
+  <div className="absolute top-[20px] right-[10%] w-[160px] h-[160px] opacity-65 animate-float-slow delay-1000 z-[5] relative">
+  <Image
+    src="/decorative/ton5.png"
+    alt="TON Coin Right"
+    fill
+    style={{ objectFit: "contain" }}
+  />
+</div>
+
         
-       
-        */}
-        
-        <div className="absolute inset-x-0 -top-1/2 -right-1/3 opacity-60 flex justify-center">
-          <Image
-            src={coinLarge}
-            alt="Ton Coin"
-            className="w-48 h-48 opacity-70 animate-float-slow"
-          />
-        </div>
+        {/* Главная центральная монета — выше всех фонов, под текстом justify-center inset-x-0*/}
+<div className="absolute  top-[-20px] right-[40%] z-0 flex  pointer-events-none">
+  <Image
+    src={coinLarge}
+    alt="Ton Coin"
+    width={260}
+    height={260}
+    className="opacity-100" //animate-float-slow
+    style={{
+      objectFit: "contain",
+      mixBlendMode: "screen"
+    }}
+  />
+</div>
+
         {/* Мелкие монетки слева и справа */}
         <Image
           src={leftCorner}
           alt="corner"
-          className="absolute left-0 h-80 top-center opacity-60 animate-float-slow delay-2000" //w-16 h-16  left-8 top-1/2 
+          className="absolute left-0 h-80 top-20px opacity-60 animate-float-slow delay-2000" //w-16 h-16  left-8 top-1/2 
         />
         <Image
           src={rightCorner}
           alt="corner"
-          className="absolute right-0 h-80 top-center  opacity-60 animate-float-slow delay-2000" //right-8 top-1/3 w-20 h-20
+          className="absolute right-0 h-80 top-20px  opacity-60 animate-float-slow delay-2000" //right-8 top-1/3 w-20 h-20
         />
       </div>
-</div>
+      </div>
+
       {/* 5) Кнопка «Connect Wallet» снизу */}
       <div className="relative z-10 mt-16 flex justify-center py-7">
         <Link href="/connect" 

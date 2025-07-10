@@ -38,6 +38,7 @@ export default function RootLayout({
          text-text-primary
          dark:text-text-dark
         flex flex-col
+        overflow-x-hidden
       "
         suppressHydrationWarning
       >

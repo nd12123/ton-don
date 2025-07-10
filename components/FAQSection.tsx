@@ -160,7 +160,7 @@ export default function FAQSection() {
     style={{
       objectFit: "cover",
       objectPosition: "top right",
-      opacity: 0.35,
+      opacity: 0.22,
     }}
   />
 </div>
@@ -201,6 +201,17 @@ export default function FAQSection() {
         className="pointer-events-none"
         style={{ objectFit: "cover", objectPosition: "center top", opacity: "0.1" }}
       />
+
+<div
+  className="absolute inset-x-0 bottom-0 h-32 pointer-events-none -z-10"
+  style={{
+    background: `
+      linear-gradient(
+      )
+    `,
+  }}
+/>
+
 
     </section>
 

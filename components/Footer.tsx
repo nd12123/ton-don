@@ -15,7 +15,7 @@ import telegramIcon from "@/assets/Footer/telegram.svg";
 const stars1 = "/decorative/starsbg1.png";
 const stars2 = "/decorative/stars1.png";
 //const sphereTop = "/decorative/ellipse10.png";    // яркая сфера сверху
-//const sphereLeft = "/decorative/Ellipse60.png";    // сбоку слева
+const sphereUpperRight = "/decorative/Ellipse50.png";    // сбоку слева
 const sphereUpperLeft = "/decorative/EllipseNowLeft.png";    // сбоку слева
 
 const sphereRight = "/decorative/ellipse5.png";   // сбоку справа
@@ -25,16 +25,32 @@ const tonCoin2 = "/decorative/ton2.png";
 export default function Footer({ className = "" }: { className?: string }) {
   return (
     <footer className={`relative overflow-hidden text-white ${className}`}>
-      <div
-  className="absolute inset-0 -z-10 pointer-events-none"
+    {/**
+     * 
+     <div
+  className="absolute inset-x-0 top-0 h-32 pointer-events-none -z-10"
   style={{
     background: `
-      radial-gradient(at top center, rgb(0, 0, 0) 0%, transparent 99%)
+      linear-gradient(
+        to bottom,
+        rgba(11,23,44,0) 100%,
+        rgba(3,12,28,1) 0%
+      )
     `,
-    opacity: 0.99,
-    mixBlendMode: "screen",
   }}
 />
+     * 
+     */}
+{/* Fade-in сверху футера */}
+<div
+  className="pointer-events-none absolute bottom-0 left-0 w-full h-48 z-10"
+  style={{
+    background: `linear-gradient(to bottom, rgba(3,12,28,0) 0%, rgba(1,6,15,1) 100%)`,
+    mixBlendMode: "multiply",
+
+  }}
+/>
+
 
       {/* =========================
           0) Фоновый слой: звёзды, сферы, тоны
@@ -43,7 +59,7 @@ export default function Footer({ className = "" }: { className?: string }) {
       >
         {/* звёздные текстуры */}
         <div
-          className="absolute inset-0 opacity-90"
+          className="absolute inset-0 opacity-99"
           style={{
             backgroundImage: `url(${stars1}), url(${stars2})`,
             backgroundRepeat: "repeat, repeat",
@@ -72,11 +88,18 @@ export default function Footer({ className = "" }: { className?: string }) {
           className="absolute left-0 top-0 w-full h-auto opacity-30"
         />
         */}
-
+{/**
+ * 
+ */}
         <Image
           src={sphereUpperLeft}
           alt=""
-          className="absolute left-0 top-0 w-full h-auto opacity-30"
+          className="absolute left-0 top-0 w-full h-auto opacity-65"
+        />
+        <Image
+          src={sphereUpperRight}
+          alt=""
+          className="absolute right-0 top-0 w-full h-auto opacity-[05%]"
         />
 
 
