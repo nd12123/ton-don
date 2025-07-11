@@ -51,7 +51,14 @@ export default function Footer({ className = "" }: { className?: string }) {
   }}
 />
 
+<div
+  className="pointer-events-none absolute top-0 left-0 w-full h-48 z-10 opacity-10"
+  style={{
+    background: `linear-gradient(to top, rgba(3,12,28,0) 0%, rgba(1,6,15,1) 100%)`,
+    mixBlendMode: "multiply",
 
+  }}
+/>
       {/* =========================
           0) Фоновый слой: звёзды, сферы, тоны
          ========================= */}
@@ -94,7 +101,7 @@ export default function Footer({ className = "" }: { className?: string }) {
         <Image
           src={sphereUpperLeft}
           alt=""
-          className="absolute left-0 top-0 w-full h-auto opacity-65"
+          className="absolute left-0 top-0 w-full h-auto opacity-85"
         />
         <Image
           src={sphereUpperRight}

@@ -68,17 +68,31 @@ export default function FAQSection() {
       ].join(' ')}
       >
         {/* — Усиленный фэйд вверх для FAQ */}
+{/* — Плавный фэйд сверху для стыка Калькулятора → FAQ */}
 <div
   className="absolute top-0 left-0 w-full h-24 pointer-events-none z-[-1] opacity-30"
   style={{
     backgroundImage: [
-      // 0) тонкая почти-чёрная полоса сверху
-      "linear-gradient(to bottom, rgba(0,0,0,0.50) 0%, rgba(0,0,0,0.25) 8%, transparent 15%)",
-      // 1) усиленный радиальный тёмный блик в левом верхнем углу
-      "radial-gradient(circle at top left, rgba(10,19,41,0.9) 0%, transparent 60%)",
+      // 0) чуть более лёгкая «чёрная» полоса сверху
+      `linear-gradient(
+         to bottom,
+         rgba(0, 0, 0, 0.3) 0%,
+         rgba(0, 0, 0, 0.15) 8%,
+         transparent 30%
+       )`,
+      // 1) смягчённый радиальный блик в левом верхнем углу
+      `radial-gradient(
+         circle at top left,
+         rgba(10, 19, 41, 0.7) 0%,
+         transparent 70%
+       )`,
       // 2) основной линейный фейд сверху вниз
-      "linear-gradient(to top, rgba(10,19,41,1) 0%, rgba(10,19,41,0) 100%)"
-    ].join(", ")
+      `linear-gradient(
+         to top,
+         rgba(10, 19, 41, 1) 0%,
+         rgba(10, 19, 41, 0) 100%
+       )`
+    ].join(', ')
   }}
 />
 

@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import ThemeToggle from "@/components/ThemeToggle";
+//import ThemeToggle from "@/components/ThemeToggle";
 import  WalletConnect from "@/components/WalletConnect";
 
 //import GetStartedButton from "@/components/GetStartedButton"; <GetStartedButton />
@@ -21,12 +21,12 @@ const navLinks = [
 export default function Header() {
   const pathname = usePathname();
 
-  return (
-    <header className="w-full max-w-6xl mx-auto px-4 md:px-8 py-6 flex items-center justify-between">
+  return ( // max-w-6xl mx-auto px-4 md:px-8
+    <header className="w-full py-6 flex items-center justify-between">
       {/* Лого */}
       <Link 
       href="/"
-        className="text-xl font-bold tracking-wide text-gray-100">TON Stake
+        className="text-xl font-bold tracking-wide text-gray-100 px-10">TON Stake
       </Link>
 
       {/* Навигация */}
@@ -46,9 +46,8 @@ export default function Header() {
         ))}
       </nav>
 
-      {/* Центральная CTA-кнопка */}
+      {/* Центральная CTA-кнопка <ThemeToggle />*/}
       <div className="flex items-center space-x-4">
-        <ThemeToggle />
         
         <WalletConnect />
       </div>
