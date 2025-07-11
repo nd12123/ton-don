@@ -61,15 +61,25 @@ export default function StepsToInvest() {
       </div>
 
       <div className="absolute top-0 right-0 w-full h-full pointer-events-none z-0">
-
       <Image
           src={rightCornerBottom}
           alt="corner"
-          className="absolute right-0 bottom-0 w-full h-full opacity-15" //bottom-right 
+          className="absolute right-0 bottom-0 w-full h-full opacity-10" //bottom-right 
         />
 </div>
+
+<div className="absolute top-[20px] right-[30%] opacity-90 z-[5]">
+      <Image
+        src="/decorative/ton5.png"
+        alt="TON Coin Right"
+        width={125}
+        height={125}
+        //className="absolute top-[20px] right-[20%] opacity-65 animate-float-slow animate-float-slow  delay-1000"
+      />
+</div>
+
       {/* 2) Заголовок + кнопка „See Plans“ */}
-      <div className="relative z-10 w-full max-w-[1000px] px-6 md:px-12 text-left pl-[350px]">
+      <div className="relative z-10 w-full max-w-[1000px] px-6 md:px-12 text-left lg:px-50 md:px-50">
   <h2 className="text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight">
     3 Easy steps to invest in{" "}
     <span className="text-[#00C2FF]">TonStake.Ai</span>
@@ -91,7 +101,20 @@ export default function StepsToInvest() {
               objectPosition: "center center",  // по центру по X, сверху по Y
             }}
           />
+           {/* Мелкие corner слева и справа */}
+        <Image
+          src={leftCorner}
+          alt="corner"
+          className="absolute left-0 h-80 w-30 top-0px opacity-60 animate-float-slow delay-2000" //w-16 h-16  left-8 top-1/2 
+        />
+        <Image
+          src={rightCorner}
+          alt="corner"
+          className="absolute right-0 h-80 w-30 top-0px  opacity-60 animate-float-slow delay-2000" //right-8 top-1/3 w-20 h-20
+        />
         </div>
+
+
       {/* 3) Контейнер с тремя «шагами» py-20 */}
       <div className="relative z-10 max-w-6xl mx-auto px-4 mt-12 "> 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5" >
@@ -148,55 +171,33 @@ export default function StepsToInvest() {
       {/* 4) Абсолютно позиционированные «плавающие» 3D-монетки */}
       <div className="absolute inset-0 pointer-events-none">
         {/* === Плавающие монеты === */}
-{/* Левая монета (ton4) — верхний левый угол */}
-<div className="absolute top-[10px] right-[60px] w-[120px] h-[120px] opacity-65 animate-float-slow z-[5]">
-  <Image
-    src="/decorative/ton4.png"
-    alt="TON Coin Left"
-    fill
-    style={{ objectFit: "contain" }}
-  />
-</div>
-
-  {/* Правая монета (ton5) — между 2 и 3 шагом */}
-  <div className="absolute top-[20px] right-[10%] w-[160px] h-[160px] opacity-65 animate-float-slow delay-1000 z-[5] relative">
-  <Image
-    src="/decorative/ton5.png"
-    alt="TON Coin Right"
-    fill
-    style={{ objectFit: "contain" }}
-  />
-</div>
-
+      {/* Левая монета (ton4) — верхний левый угол */}
+      <div className="absolute top-[0px] right-[160px] w-[200px] h-[200px] opacity-100  z-[5]">
+        <Image
+          src="/decorative/ton4.png"
+          alt="TON Coin Left"
+          fill
+          style={{ objectFit: "contain" }} //animate-float-slow
+        />
+      </div>
         
-        {/* Главная центральная монета — выше всех фонов, под текстом justify-center inset-x-0*/}
-<div className="absolute  top-[-20px] right-[40%] z-0 flex  pointer-events-none">
-  <Image
-    src={coinLarge}
-    alt="Ton Coin"
-    width={260}
-    height={260}
-    className="opacity-100" //animate-float-slow
-    style={{
-      objectFit: "contain",
-      mixBlendMode: "screen"
-    }}
-  />
-</div>
+              {/* Главная центральная монета — выше всех фонов, под текстом justify-center inset-x-0*/}
+      <div className="absolute  top-[-120px] right-[36%] z-0 flex  pointer-events-none">
+        <Image
+          src={coinLarge}
+          alt="Ton Coin"
+          width={300}
+          height={300}
+          className="opacity-100" //animate-float-slow
+          style={{
+            objectFit: "contain",
+            mixBlendMode: "screen"
+          }}
+        />
+      </div>
 
-        {/* Мелкие монетки слева и справа */}
-        <Image
-          src={leftCorner}
-          alt="corner"
-          className="absolute left-0 h-80 top-20px opacity-60 animate-float-slow delay-2000" //w-16 h-16  left-8 top-1/2 
-        />
-        <Image
-          src={rightCorner}
-          alt="corner"
-          className="absolute right-0 h-80 top-20px  opacity-60 animate-float-slow delay-2000" //right-8 top-1/3 w-20 h-20
-        />
-      </div>
-      </div>
+       
+    </div>
 
       {/* 5) Кнопка «Connect Wallet» снизу */}
       <div className="relative z-10 mt-16 flex justify-center py-7">
@@ -218,9 +219,41 @@ export default function StepsToInvest() {
             Connect Wallet
         </Link>
       </div>
+
+</div>
+{ /* === Плавный переход снизу в следующую секцию === */ }
+  <div
+    className="absolute bottom-0 left-0 w-full h-8 pointer-events-none z-0 opacity-20"
+    style={{
+      // 1) плавный переход от цвета секции Steps (снизу) вверх в прозрачность
+      background: "linear-gradient(to bottom, transparent, black 40%)", //rgba(10,19,41,1)
+      // 2) по горизонтали «стираем» его к правому краю, чтобы справа он полностью исчезал
+      WebkitMaskImage: "linear-gradient(to right, black 30%, transparent 100%)",
+      maskImage:       "linear-gradient(to right, black 30%, transparent 100%)",
+    }}
+  />
+    </section>
+    
+  );
+}
+
       {/*
       <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-b from-transparent to-[#0A0D1C] z-0" />
-      */}
+<div
+  className="absolute bottom-0 left-0 w-full h-20 pointer-events-none z-0 opacity-50"
+  style={{
+    backgroundImage: [
+      // 1) сильное затемнение левого низа:
+      //"radial-gradient(circle at bottom left, rgba(6, 11, 25, 0.8) 0%, rgba(10,19,41,0) 70%)",
+      //"linear-gradient(to left, #0A1329 0%, rgba(10,19,41,0) 100%)",
+
+      // 2) чуть более тёмный левый верх, стирающийся к центру по вертикали:
+      "linear-gradient(to top, black 0%, rgba(10,19,41,0) 100%)",
+      // 3) плавный убывающий вправо цвет сверху:
+      //"linear-gradient(to right, rgba(10,19,41,1) 0%, rgba(10,19,41,0) 80%)"
+    ].join(", ")
+  }}
+/>
 <div
   className="absolute bottom-0 left-0 w-1/4 h-20 z-0"
   style={{
@@ -229,12 +262,7 @@ export default function StepsToInvest() {
     maskImage: "linear-gradient(to right, black 80%, transparent 100%)"
   }}
 />
-
-    </section>
-    
-  );
-}
-
+      */}
 {/*
         <Link href="/plans" 
             className="

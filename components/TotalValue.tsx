@@ -14,7 +14,7 @@ export default function TotalValue() {
   return (
     //<SectionFadeWrapper >
     <section
-      className="horizon section-mask relative overflow-hidden text-white py-52  bg-gradient-to-r from-[#00BFFF] to-[#009FEF]"
+      className="horizon section-mask relative overflow-hidden text-white py-52  bg-gradient-to-r from-[#00BFFF] to-[#009FEF]" //gradient-to-r??
       style={{
         // 1) Твой основной фон (градиент/цвет из фрейма)
         backgroundImage: `url("/decorative/horizon-bg.svg")`,

@@ -67,6 +67,22 @@ export default function FAQSection() {
         'py-10'
       ].join(' ')}
       >
+        {/* — Усиленный фэйд вверх для FAQ */}
+<div
+  className="absolute top-0 left-0 w-full h-24 pointer-events-none z-[-1] opacity-30"
+  style={{
+    backgroundImage: [
+      // 0) тонкая почти-чёрная полоса сверху
+      "linear-gradient(to bottom, rgba(0,0,0,0.50) 0%, rgba(0,0,0,0.25) 8%, transparent 15%)",
+      // 1) усиленный радиальный тёмный блик в левом верхнем углу
+      "radial-gradient(circle at top left, rgba(10,19,41,0.9) 0%, transparent 60%)",
+      // 2) основной линейный фейд сверху вниз
+      "linear-gradient(to top, rgba(10,19,41,1) 0%, rgba(10,19,41,0) 100%)"
+    ].join(", ")
+  }}
+/>
+
+      
 
       <div className="relative z-10 container mx-auto pb-10 px-5 py-25">
         <h2 className="text-4xl sm:text-5xl font-bold text-center mb-4">
@@ -166,7 +182,7 @@ export default function FAQSection() {
 </div>
 
       {/* 2) Плавающие ton сверху */}
-      <div className="pointer-events-none absolute top-10 left-1/3 w-40 h-40 opacity-60 animate-float-slow">
+      <div className="pointer-events-none absolute top-[-10px] left-2/5 w-40 h-40 opacity-60 animate-float-slow">
         <NextImage
           src="/decorative/ton5.png"
           alt=""
@@ -174,7 +190,7 @@ export default function FAQSection() {
           style={{ objectFit: "contain" }}
         />
       </div>
-      <div className="pointer-events-none absolute top-0 left-2/5 w-60 h-60 opacity-65 animate-float-slow delay-2000">
+      <div className="pointer-events-none absolute top-[-10px] left-1/4 w-60 h-60 opacity-65 animate-float-slow delay-2000">
         <NextImage
           src="/decorative/ton4.png"
           alt=""

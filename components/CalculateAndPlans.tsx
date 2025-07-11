@@ -5,6 +5,8 @@ import Image from "next/image";
 import PlanCard from "./PlanCard";
 import Calculator from "./Calculator";
 
+import tonTop from "@/assets/Calculator/ton3.png"
+
 const PLANS = [
   { id: 0, label: "Basic",   apr:  4, min:    1, rangeText: "1–999 TON",      iconSrc: "/decorative/basic icon.svg" },
   { id: 1, label: "Pro",     apr:  7, min: 1000, rangeText: "1000–1 999 TON", iconSrc: "/decorative/pro icon.svg"   },
@@ -32,8 +34,96 @@ export default function CalculateAndPlans() {
   const dailyEarnings = useMemo(() => (amount * (apr/100)) / 365, [amount, apr]);
 
   return ( //py-20 pt-[200px] lg:pt-[375px]
-    <section className="relative overflow-hidden text-white pb-5 pt-0">
+    <section className="relative overflow-hidden text-white pb-7 pt-0">
+      {/* — плавный градиент сверху в центре для плавного стыка
       
+  <div
+    className="absolute top-0 left-1/2 transform -translate-x-1/2 w-[400px] h-[200px] pointer-events-none z-0"
+    style={{
+      background: 'radial-gradient(circle at center top, rgba(26,32,58,1) 0%, rgba(26,32,58,0) 100%)'
+    }}
+  />
+  
+<div
+  className="absolute top-0 center w-full h-20 z-0"
+  style={{
+    background: "linear-gradient(to top, transparent,rgba(26,32,58,1))",
+    WebkitMaskImage: "linear-gradient(to right,rgb(26, 34, 72) 90%, transparent 100%)",
+    maskImage: "linear-gradient(to right, rgb(26, 34, 72) 90%, transparent 100%)"
+  }}
+  />
+   <div
+  className="absolute top-0 left-0 w-full h-20 pointer-events-none z-0 " //opacity-50
+  style={{
+    backgroundImage: "linear-gradient(to right, #0A1329 0%, rgba(10,19,41,0) 100%)"
+  }}
+/>
+   */}
+<div
+  className="absolute top-0 left-0 w-full h-20 pointer-events-none z-0 opacity-50"
+  style={{
+    backgroundImage: [
+      // 1) сильное затемнение левого низа:
+      "radial-gradient(circle at bottom left, rgba(6, 11, 25, 0.8) 0%, rgba(10,19,41,0) 70%)",
+      "linear-gradient(to right, #0A1329 0%, rgba(10,19,41,0) 100%)",
+
+      // 2) чуть более тёмный левый верх, стирающийся к центру по вертикали:
+      //"linear-gradient(to bottom, rgba(10,19,41,0.6) 0%, rgba(10,19,41,0) 100%)",
+      // 3) плавный убывающий вправо цвет сверху:
+      //"linear-gradient(to right, rgba(10,19,41,1) 0%, rgba(10,19,41,0) 80%)"
+    ].join(", ")
+  }}
+/>
+
+
+{/* ==== Тон-интро перед основным блоком ==== */}
+<div className="relative mb-8 flex items-center justify-center pointer-events-none">
+  {/* Большая полупрозрачная сфера позади текста */}
+  <div className="absolute w-[170px] h-[170px] top-[5px] right-[480px] opacity-90 z-[1]">
+    <Image
+      src="/decorative/EllipseFull.png"
+      alt="Background Sphere"
+      fill
+      style={{
+        objectFit: "contain",
+        //objectPosition: "right center",
+      }}
+    />
+  </div>
+ {/* небольшая TON-иконка справа от текста */}
+ <div className="absolute w-[128px] h-[128px] top-[5px] right-[500px] ml-4 z-[2]">
+    <Image
+      src={tonTop}        // или тот файл, который у тебя для маленькой монеты
+      alt="TON Icon"
+      fill
+      style={{ objectFit: "contain",
+        //objectPosition: "right center",
+       }}
+    />
+  </div>
+</div>
+{/* --- Главный текст из макета Figma --- */}
+<div className="relative z-10 mb-12 px-4 md:px-50">
+        <div className="flex items-center gap-4">
+          {/**
+          <h1 className="font-inter font-bold text-[70px] leading-[68px] text-white">
+            3 Easy steps to invest in{" "}
+            <span className="text-[#00C2FF]">TonStake.Ai</span>
+          </h1>
+           * Choose a plan and Сalculate your Profit
+          */}
+  <h1
+       className="font-inter font-bold text-[70px] leading-[68px] text-white"
+       style={{ lineHeight: "68px" }}
+     >
+      Choose a <span className="text-[#00C2FF]">plan</span> and<br/>
+      <span className="text-[#00C2FF]">Calculate</span> your <span className="text-[#00C2FF]">Profit</span>
+     </h1>
+</div>
+
+
+</div>
+
 
       {/* 2) Горизонт (основной фон) */}
       <div className="absolute inset-0 pointer-events-none -z-20 overflow-hidden">
@@ -76,6 +166,7 @@ export default function CalculateAndPlans() {
           ))}
         </div>
 
+
         {/* === 4) Калькулятор === */}
         <Calculator
           amount={amount}
@@ -88,6 +179,7 @@ export default function CalculateAndPlans() {
           dailyEarnings={dailyEarnings}
         />
       </div>
+
       {/* 5) Левый «сфера-хвост» */}
       <div className="absolute bottom-0 left-0 w-full h-full pointer-events-none -z-10">
         <Image
@@ -104,7 +196,7 @@ export default function CalculateAndPlans() {
           src="/decorative/EllipseRightPlans.png"
           alt=""
           fill
-          style={{ objectFit: "cover", objectPosition: "right center", opacity: 0.35 }}
+          style={{ objectFit: "cover", objectPosition: "right center", opacity: 0.3 }}
         />
       </div>
 
@@ -133,6 +225,19 @@ export default function CalculateAndPlans() {
        *  //<div className="absolute bottom-0 left-0 w-full h-30 bg-gradient-to-b from-transparent to-[#0A0D1C] z-0" //<div className="absolute bottom-0 left-0 w-full h-48 bg-gradient-to-b from-[#00C2FF22] to-[#0A0D1C] z-0" />
       />
        */}
+{/* Плавный оверлей внизу секции «Планы + калькулятор» 
+<div
+  className="absolute inset-x-0 bottom-0 h-7 pointer-events-none z-10 opacity-15"
+  style={{
+    backgroundImage: [
+      // слабый общий фон вверх-вниз для сглаживания верхней границы FAQ
+      "linear-gradient(180deg, rgba(10,19,41,0) 0%, rgba(10,19,41,0.6) 50%, rgba(10,19,41,1) 100%)",
+      // легкий радиальный блюр по центру низа
+      "radial-gradient(circle at 50% 100%, rgba(10,19,41,0) 0%, rgba(10,19,41,1) 80%)"
+    ].join(", ")
+  }}
+/>
+    */}
 
     </section>
   );

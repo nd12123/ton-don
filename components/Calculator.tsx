@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 //import PlanCard from "./PlanCardMini";
-
+import Image from 'next/image'
 type CalculatorProps = {
   amount: number;
   onAmountChange: (v: number) => void;
@@ -190,8 +190,8 @@ useEffect(() => {
       <span>In 30 days</span>
       <span className="font-semibold">+{(dailyEarnings * 30).toFixed(2)} TON</span>
     </div>
-
 </div>
+
 
       {/**<div className="bg-white/10  rounded-xl space-y-6 text-white text-base py-1" //backdrop-blur-sm
       >
@@ -210,8 +210,35 @@ useEffect(() => {
     </div>
 */}
 
+</div>
 
 
+{/* === Декоративные TON-монетки под калькулятором ===  inset-x-0  flex justify-center  animate-float-slow delay-1000 gap-8 */}
+<div className="absolute top-[-30px] right-[-15px] pointer-events-none z-0">
+  {/* Правая монета */}
+  <div className="relative w-[96px] h-[96px] ">
+    <Image
+      src="/decorative/ton5.png"
+      alt="Ton Coin Right"
+      fill
+      style={{ objectFit: "contain" }}
+    />
+  </div>
+</div>
+
+<div className="absolute bottom-[-50px] right-[210px]  pointer-events-none z-0" //gap-8 
+> 
+  {/* Центральная монета чуть большего размера animate-float-slow delay-500 */}
+  <div className="relative w-[128px] h-[128px]  ">
+    <Image
+      src="/decorative/ton2.png"
+      alt="Ton Coin Center"
+      fill
+      style={{ objectFit: "contain",
+        //objectPosition: "center top",
+       }}
+    />
+  </div>
 </div>
 
 {/*<div className="flex flex-col gap-4 justify-between w-full lg:w-[25%]">
@@ -234,6 +261,8 @@ useEffect(() => {
 */}
       
     </div>
+
+
   );
 }
 
