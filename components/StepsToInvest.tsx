@@ -12,7 +12,7 @@ import leftCorner from "@/assets/StepsToInvest/leftCorner.svg";
 import rightCorner from "@/assets/StepsToInvest/rightCorner.svg";
 
 import rightCornerBottom from "@/public/decorative/ellipse5.png";
-import centerSphere from "@/public/decorative/ellipse51.png";
+import centerSphere from "@/public/decorative/Ellipse51.png";
 
 
 export default function StepsToInvest() {
@@ -213,7 +213,7 @@ export default function StepsToInvest() {
         />
       </div>
 
-      <div className="absolute top-[-150px] right-[-150px] w-full h-full opacity-100  z-[5]">
+      <div className="absolute top-[-150px] right-[-150px] w-full h-full opacity-100 z-[5]">
         <Image
           src={centerSphere}
           alt="TON Coin Left"
