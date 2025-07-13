@@ -1,12 +1,12 @@
 import React from 'react';
 import Image from 'next/image';
-import { Button } from '@/components/ui/button';
+//import { Button } from '@/components/ui/button';
 
 // Import 3D images
 import ton3d1 from '@/assets/Main/Ton 3d 1.png';
 import ton3d2 from '@/assets/Main/Ton 3d 2.png';
 import ton3d3 from '@/assets/Main/Ton 3d 3.png';
-import centralSphere from '@/assets/Main/EllipseFull.png';
+import centralSphere from '@/assets/Main/Ellipse10.png';
 
 const ellipse6 = '/decorative/ellipse6.png';
 const ellipse5 = '/decorative/ellipse5.png';
@@ -55,7 +55,7 @@ export default function MainSection({className = ''}: MainSectionProps) {
      
 
 {/* 1) Расположение «здесь иконки» в контейнере */}
-<div className="max-w-7xl mx-auto mb-8">
+<div className="max-w-7xl mx-auto mb-8  md:pl-[90px]">
         <div className="flex items-center gap-16">
           <div className="flex items-center gap-2">
             <Image src={ReliableIcon} alt="Reliable" width={24} height={24} />
@@ -73,61 +73,77 @@ export default function MainSection({className = ''}: MainSectionProps) {
       </div>
 
 {/* 2) Основной грид: слева текст + кнопки, справа 3D-монеты */}
-<div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+<div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center  md:pl-[90px]">
+  {/* === Абсолютный эллипс за текстом === */}
+  <div
+    className="pointer-events-none absolute top-[30px] left-[50px] w-[600px] h-[600px] opacity-90 -z-10"
+  >
+    <Image
+      src="/decorative/ellipse10.png"
+      alt=""
+      fill
+      style={{ objectFit: "contain" }}
+    />
+  </div>
         {/* Левый столбец */}
-        <div className="space-y-6">
+        <div className="space-y-6 max-w-[811px]">
           <h1
             className="font-bold"
             style={{ fontSize: "70px", lineHeight: "68px" }}
           >
             Stake TON<br />
-            <span className="text-[#00C2FF]">Easily</span> &amp;{" "}
-            <span className="text-[#00C2FF]">Securely</span>
-          </h1>
+            <span className="whitespace-nowrap">
+    <span className="text-[#00C2FF]">Easily</span>&nbsp;&amp;&nbsp;<span className="text-[#00C2FF]">Securely</span>
+  </span>
+  </h1>
           <p className="text-lg text-gray-300 max-w-lg">
             Stake your TON tokens securely and earn passive income with our
             audited smart contracts.
           </p>
           <div className="flex items-center gap-10">
-            <Button>Get Started</Button>
-            <div className="flex items-center gap-2 bg-white bg-opacity-10 ">
-              <Image src={AuditedIcon} alt="Audited by Certik" height={32} />
+             {/* Primary button */}
+  <button
+    className="
+      flex-1 h-[48px]
+      bg-gradient-to-br from-[#00BFFF] to-[#009FEF]
+      hover:from-[#00D4FF] hover:to-[#007FCC]
+      rounded-xl
+      text-white text-lg font-semibold
+      shadow-lg
+      transition
+    "
+  >
+    Get Started
+  </button>
+            <div className="flex items-center gap-2" //bg-white bg-opacity-10 
+            >
+              <Image src={AuditedIcon} alt="Audited by Certik" height={48} />
               {/*<span className="text-sm">Audited by Certik</span>
               px-4 py-2 rounded-full */}
             </div>
           </div>
         </div>
 
-        <div className="pointer-events-none absolute top-0 w-96 h-96 opacity-30" // left-1/3 right-1/5 transform translate-x-1/5
-      >
-        <Image
-          src="/decorative/ellipse10.png"
-          alt=""
-          layout="fill"
-          objectFit="contain"
-        />
-      </div>
-
         <div className="absolute inset-0 pointer-events-none">
         <Image
           src={centralSphere}
           alt=""
-          className="absolute top-[23%] right-[10%] w-[35%] opacity-80 animate-float"
+          className="absolute top-[0%] right-[18px] w-[45%] opacity-40 animate-float"
         />
         <Image
           src={ton3d3}
           alt=""
-          className="absolute top-[4%] right-[15%] w-[15%] opacity-90 animate-float delay-4000"
+          className="absolute top-[4%] right-[16%] w-[17%] opacity-90 animate-float delay-4000"
         />
         <Image
           src={ton3d1}
           alt=""
-          className="absolute top-[23%] right-[24%] w-[10%] opacity-80 animate-float"
+          className="absolute top-[23%] right-[26%] w-[10%] opacity-80 animate-float"
         />
         <Image
           src={ton3d2}
           alt=""
-          className="absolute bottom-[8%] right-[10%] w-[25%] opacity-90 animate-float delay-2000"
+          className="absolute bottom-[8%] right-[10%] w-[28%] opacity-90 animate-float delay-2000"
         />
       </div>
       </div>

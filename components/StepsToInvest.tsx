@@ -3,7 +3,7 @@
 
 import React from "react";
 import Image from "next/image";
-import Link from "next/link";
+//import Link from "next/link";
 
 // Пути к вашим файлам. Поместите картинки в папку /public/decorative/
 import coinLarge from "@/assets/StepsToInvest/ton2.png";//"/decorative/ton2.png"; // большая монета
@@ -13,6 +13,8 @@ import rightCorner from "@/assets/StepsToInvest/rightCorner.svg";
 
 import rightCornerBottom from "@/public/decorative/ellipse5.png";
 import centerSphere from "@/public/decorative/Ellipse51.png";
+
+import WalletConnect from "@/components/WalletConnect";
 
 
 export default function StepsToInvest() {
@@ -69,7 +71,7 @@ export default function StepsToInvest() {
         />
 </div>
 
-<div className="absolute top-[20px] right-[30%] opacity-90 z-[5]">
+<div className="absolute top-[40px] right-[32%] opacity-90 z-[5]">
       <Image
         src="/decorative/ton5.png"
         alt="TON Coin Right"
@@ -226,7 +228,7 @@ export default function StepsToInvest() {
        
     </div>
 
-      {/* 5) Кнопка «Connect Wallet» снизу */}
+      {/* 5) Кнопка «Connect Wallet» снизу 
       <div className="relative z-10 mt-16 flex justify-center py-7">
         <Link href="/connect" 
             className="
@@ -241,11 +243,14 @@ export default function StepsToInvest() {
               shadow-lg
             "
           >
-            {/* Здесь можно вставить иконку кошелька (через <Image>) */}
             <span className="mr-2">💼</span>
             Connect Wallet
         </Link>
-      </div>
+      </div> 
+*/}
+<div className="relative z-10 mt-16 flex justify-center py-7">
+  <WalletConnect />
+</div>
 
 </div>
 { /* === Плавный переход снизу в следующую секцию === */ }

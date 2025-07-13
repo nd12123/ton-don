@@ -5,12 +5,13 @@ import Image from "next/image";
 import PlanCard from "./PlanCard";
 import Calculator from "./Calculator";
 
-import tonTop from "@/assets/Calculator/ton3.png"
+import tonTop from "@/assets/Calculator/ton.svg"
+import sphere from "@/assets/Calculator/Ellipse9.png"
 
 const PLANS = [
-  { id: 0, label: "Basic",   apr:  4, min:    1, rangeText: "1–999 TON",      iconSrc: "/decorative/basic icon.svg" },
-  { id: 1, label: "Pro",     apr:  7, min: 1000, rangeText: "1000–1 999 TON", iconSrc: "/decorative/pro icon.svg"   },
-  { id: 2, label: "Premium", apr: 10, min: 2000, rangeText: "2000+ TON",      iconSrc: "/decorative/super icon.svg" },
+  { id: 0, label: "Basic",   apr:  4, min:    1, rangeText: "1–999 TON",      iconSrc: "/decorative/basic icon.svg", bgSrc: "/decorative/stepsRight.png"},
+  { id: 1, label: "Pro",     apr:  7, min: 1000, rangeText: "1000–1 999 TON", iconSrc: "/decorative/pro icon.svg", bgSrc: "/decorative/stepsCardBg.svg"   },
+  { id: 2, label: "Premium", apr: 10, min: 2000, rangeText: "2000+ TON",      iconSrc: "/decorative/super icon.svg", bgSrc: "/decorative/stepsLeft.png" },
 ];
 
 export default function CalculateAndPlans() {
@@ -66,7 +67,6 @@ export default function CalculateAndPlans() {
       // 1) сильное затемнение левого низа:
       "radial-gradient(circle at bottom left, rgba(6, 11, 25, 0.8) 0%, rgba(10,19,41,0) 70%)",
       "linear-gradient(to right, #0A1329 0%, rgba(10,19,41,0) 100%)",
-
       // 2) чуть более тёмный левый верх, стирающийся к центру по вертикали:
       //"linear-gradient(to bottom, rgba(10,19,41,0.6) 0%, rgba(10,19,41,0) 100%)",
       // 3) плавный убывающий вправо цвет сверху:
@@ -79,9 +79,9 @@ export default function CalculateAndPlans() {
 {/* ==== Тон-интро перед основным блоком ==== */}
 <div className="relative mb-8 flex items-center justify-center pointer-events-none">
   {/* Большая полупрозрачная сфера позади текста */}
-  <div className="absolute w-[170px] h-[170px] top-[5px] right-[480px] opacity-90 z-[1]">
+  <div className="absolute w-[170px] h-[170px] top-[5px] right-[460px] opacity-99 z-[1]">
     <Image
-      src="/decorative/EllipseFull.png"
+      src={sphere}
       alt="Background Sphere"
       fill
       style={{
@@ -91,7 +91,7 @@ export default function CalculateAndPlans() {
     />
   </div>
  {/* небольшая TON-иконка справа от текста */}
- <div className="absolute w-[128px] h-[128px] top-[5px] right-[500px] ml-4 z-[2]">
+ <div className="absolute w-[160px] h-[160px] top-[5px] right-[450px] ml-4 z-[2]">
     <Image
       src={tonTop}        // или тот файл, который у тебя для маленькой монеты
       alt="TON Icon"
@@ -117,9 +117,10 @@ export default function CalculateAndPlans() {
     style={{
       position: "absolute",
       top: "0px", // двигаем НИЖЕ
+      bottom: "100px",
       left: 0,
       right: 0,
-      height: "calc(100% + 30px)",
+      height: "110%",
     }}
   >
     <Image
@@ -128,8 +129,9 @@ export default function CalculateAndPlans() {
       fill
       style={{
         objectFit: "cover",
-        objectPosition: "center top",
-        opacity: 0.40,
+        //objectPosition: "center top",
+        opacity: 0.40, 
+        //opacity: 0.9,
       }}
     />
   </div>
@@ -138,7 +140,7 @@ export default function CalculateAndPlans() {
 
       <div className="max-w-6xl mx-auto px-4 pb-6">
         {/* === 3) Карточки планов === */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-x-16 gap-y-8 mb-16">
           {PLANS.map((plan, idx) => (
             <PlanCard
               key={plan.id}
@@ -147,6 +149,7 @@ export default function CalculateAndPlans() {
               rangeText={plan.rangeText}
               iconSrc={plan.iconSrc}
               isActive={idx === selectedPlanIdx}
+              bgSrc={plan.bgSrc}
               onSelect={() => handlePlanSelect(idx)}
             />
           ))}

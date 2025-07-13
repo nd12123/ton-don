@@ -48,7 +48,7 @@ useEffect(() => {
   return (
     <div
       className="relative  rounded-[32px] border border-white/10 shadow-[0_0_60px_#00C2FF33] 
-      px-5  md:px-10  flex flex-col lg:flex-row gap-3 justify-between bg-[#101426]/80 backdrop-blur-sm"      //py-10 md:py-14 ?? bg-[url('/ticket-bg.png')] bg-cover bg-center
+      px-5  md:px-8  flex flex-col lg:flex-row gap-3 justify-between bg-[#101426]/80 backdrop-blur-sm"      //py-10 md:py-14 ?? bg-[url('/ticket-bg.png')] bg-cover bg-center
     >
       {/* Левая секция — планы */}
       <div className="flex flex-col gap-2 w-full lg:w-[25%] py-6">
@@ -73,6 +73,11 @@ useEffect(() => {
           Connect Wallet
         </button>
       </div>
+{/* === Наша новая линия-сепаратор === */}
+<div
+          className="h-[180px] w-[2px] my-6"
+          style={{ background: "rgba(59, 71, 114, 1)" }}
+        />
 
       {/* Центральная секция — слайдеры */}
       <div className="flex flex-col gap-2 w-full relative py-6">
@@ -160,10 +165,10 @@ useEffect(() => {
     className="absolute inset-0 w-full h-full object-cover z-0 pointer-events-none"
   />
 
-  {/* Вертикальные пунктирные границы */}
+  {/* Вертикальные пунктирные границы 
   <div className="absolute left-0 top-6 bottom-6 w-px border-l border-dashed border-white/30 z-10"></div>
   <div className="absolute right-0 top-6 bottom-6 w-px border-l border-dashed border-white/30 z-10"></div>
-
+*/}
   {/* Контент — уменьшен паддинг и отступы */}
   <div className="relative z-10 flex flex-col justify-center h-full px-6 pb-4 pt-6 text-white text-[18px] gap-4">
     <div className="flex justify-between items-center h-[32px]">
