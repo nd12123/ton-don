@@ -12,6 +12,7 @@ import leftCorner from "@/assets/StepsToInvest/leftCorner.svg";
 import rightCorner from "@/assets/StepsToInvest/rightCorner.svg";
 
 import rightCornerBottom from "@/public/decorative/ellipse5.png";
+import centerSphere from "@/public/decorative/ellipse51.png";
 
 
 export default function StepsToInvest() {
@@ -79,12 +80,14 @@ export default function StepsToInvest() {
 </div>
 
       {/* 2) Заголовок + кнопка „See Plans“ */}
-      <div className="relative z-10 w-full max-w-[1000px] px-6 md:px-12 text-left lg:px-50 md:px-50">
-  <h2 className="text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight">
-    3 Easy steps to invest in{" "}
-    <span className="text-[#00C2FF]">TonStake.Ai</span>
+      {/* 2.1) Заголовок */}
+<div className="max-w-6xl mx-auto px-4 relative z-10 text-left">
+  <h2 className="text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight font-inter">
+    3 Easy steps to invest<br/>
+     in <span className="text-[#00C2FF]">TonStake.Ai</span>
   </h2>
 </div>
+
 
 
  {/* ========== ОБКАТЫВАЕМ КОНТЕНТ В RELATIVE-wrapper ========== */}
@@ -105,12 +108,26 @@ export default function StepsToInvest() {
         <Image
           src={leftCorner}
           alt="corner"
-          className="absolute left-0 h-80 w-30 top-0px opacity-60 animate-float-slow delay-2000" //w-16 h-16  left-8 top-1/2 
+          fill
+          height= {350}
+          width={120}
+          className="absolute left-0  top-[30px] opacity-60 animate-float-slow delay-2000" //w-16 h-16  left-8 top-1/2 
+          style={{
+            objectFit: "contain",
+            objectPosition: "left center",  
+          }}
         />
         <Image
           src={rightCorner}
           alt="corner"
-          className="absolute right-0 h-80 w-30 top-0px  opacity-60 animate-float-slow delay-2000" //right-8 top-1/3 w-20 h-20
+          fill
+          height= {350}
+          width={120}
+          className="absolute right-0  top-[30px]  opacity-60 animate-float-slow delay-2000" //right-8 top-1/3 w-20 h-20
+          style={{
+            objectFit: "contain",
+            objectPosition: "right center",  
+          }}
         />
         </div>
 
@@ -196,6 +213,16 @@ export default function StepsToInvest() {
         />
       </div>
 
+      <div className="absolute top-[-150px] right-[-150px] w-full h-full opacity-100  z-[5]">
+        <Image
+          src={centerSphere}
+          alt="TON Coin Left"
+          fill
+          style={{ objectFit: "contain",
+            mixBlendMode: "screen"
+           }} 
+        />
+      </div>
        
     </div>
 

@@ -11,6 +11,15 @@ import ThemeProviderWrapper from "@/components/ThemeProviderWrapper";
 
 //const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
 //const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
+// app/layout.tsx
+import { Inter } from 'next/font/google';
+
+const inter = Inter({
+  subsets: ['latin'],
+  variable: '--font-inter',
+  weight: ['400','500','700'],
+});
+
 
 export const metadata: Metadata = {
   title: "TON Stake",
@@ -33,13 +42,15 @@ export default function RootLayout({
 
           bg-bg-light
         `}*/
-        className=" bg-page-noise bg-repeat bg-fixed
+        className={`
+          ${inter.variable} font-inter
+          bg-page-noise bg-repeat bg-fixed
         min-h-screen
          text-text-primary
          dark:text-text-dark
         flex flex-col
         overflow-x-hidden
-      "
+        `}
         suppressHydrationWarning
       >
 {/* фоновая “точка света” слева, перенести потом */}

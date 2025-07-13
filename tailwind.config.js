@@ -18,7 +18,6 @@ module.exports = {
         "pulse-slow": "pulse-slow 4s ease-in-out infinite",
         "float-slow": "float-slow 8s ease-in-out infinite",
       },
-
       
       colors: tokens.color,
       spacing: tokens.spacing,
@@ -27,6 +26,12 @@ module.exports = {
       ),
       borderRadius: tokens.radius,
       boxShadow: tokens.shadow,
+
+      // вот добавляем fontFamily
+      fontFamily: {
+        sans: ['var(--font-inter)', 'sans-serif'],  // теперь font-sans → Inter по умолчанию он везде
+        inter: ['var(--font-inter)', 'sans-serif'],
+      },
     }
   },
   plugins: [],

@@ -3,9 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 //import ThemeToggle from "@/components/ThemeToggle";
-import  WalletConnect from "@/components/WalletConnect";
-
-//import GetStartedButton from "@/components/GetStartedButton"; <GetStartedButton />
+import WalletConnect from "@/components/WalletConnect";
 
 const navLinks = [
   { name: "Home", href: "/" },
@@ -15,41 +13,43 @@ const navLinks = [
   { name: "Profile", href: "/profile" },
 ];
 
-
-  
-
 export default function Header() {
   const pathname = usePathname();
 
-  return ( // max-w-6xl mx-auto px-4 md:px-8
-    <header className="w-full py-6 flex items-center justify-between">
-      {/* Лого */}
-      <Link 
-      href="/"
-        className="text-xl font-bold tracking-wide text-gray-100 px-10">TON Stake
-      </Link>
+  return (
+    <header className="
+      fixed top-0 left-0 w-full z-50
+      bg-[rgba(11,17,40,1)] backdrop-blur-sm 
+    " //border-b  border-white/10
+    >
+      <div className=" mx-auto px-4 md:px-8 py-3 flex items-center justify-between"//max-w-6xl
+      >
+        {/* Лого */}
+        <Link href="/" className="text-xl font-bold text-white">
+          TON Stake
+        </Link>
 
-      {/* Навигация */}
-      <nav className="hidden sm:flex gap-6 text-sm">
-        {navLinks.map((link) => (
-          <Link
-            key={link.href}
-            href={link.href}
-            className={`transition ${
-              pathname === link.href
-                ? "text-blue-600 font-semibold"
-                : "text-gray-600 hover:text-blue-500"
-            }`}
-          >
-            {link.name}
-          </Link>
-        ))}
-      </nav>
+        {/* Навигация */}
+        <nav className="hidden sm:flex gap-8 text-sm">
+          {navLinks.map((link) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              className={`transition ${
+                pathname === link.href
+                  ? "text-[#00C2FF] font-semibold"
+                  : "text-gray-400 hover:text-[#00C2FF]"
+              }`}
+            >
+              {link.name}
+            </Link>
+          ))}
+        </nav>
 
-      {/* Центральная CTA-кнопка <ThemeToggle />*/}
-      <div className="flex items-center space-x-4">
-        
-        <WalletConnect />
+        {/* Кнопка подключения кошелька */}
+        <div>
+          <WalletConnect />
+        </div>
       </div>
     </header>
   );

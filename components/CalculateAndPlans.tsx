@@ -103,25 +103,11 @@ export default function CalculateAndPlans() {
   </div>
 </div>
 {/* --- Главный текст из макета Figma --- */}
-<div className="relative z-10 mb-12 px-4 md:px-50">
-        <div className="flex items-center gap-4">
-          {/**
-          <h1 className="font-inter font-bold text-[70px] leading-[68px] text-white">
-            3 Easy steps to invest in{" "}
-            <span className="text-[#00C2FF]">TonStake.Ai</span>
-          </h1>
-           * Choose a plan and Сalculate your Profit
-          */}
-  <h1
-       className="font-inter font-bold text-[70px] leading-[68px] text-white"
-       style={{ lineHeight: "68px" }}
-     >
-      Choose a <span className="text-[#00C2FF]">plan</span> and<br/>
-      <span className="text-[#00C2FF]">Calculate</span> your <span className="text-[#00C2FF]">Profit</span>
-     </h1>
-</div>
-
-
+<div className="max-w-6xl mx-auto px-4 mb-12 relative z-10">
+  <h1 className="font-inter font-bold text-[70px] leading-[68px] text-white">
+    Choose a <span className="text-[#00C2FF]">plan</span> and<br/>
+    <span className="text-[#00C2FF]">Calculate</span> your <span className="text-[#00C2FF]">Profit</span>
+  </h1>
 </div>
 
 
@@ -130,10 +116,10 @@ export default function CalculateAndPlans() {
   <div
     style={{
       position: "absolute",
-      top: "-130px", // двигаем НИЖЕ
+      top: "0px", // двигаем НИЖЕ
       left: 0,
       right: 0,
-      height: "calc(100% + 130px)",
+      height: "calc(100% + 30px)",
     }}
   >
     <Image

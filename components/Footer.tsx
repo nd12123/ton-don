@@ -120,12 +120,12 @@ export default function Footer({ className = "" }: { className?: string }) {
         <Image
           src={tonCoin1}
           alt=""
-          className="absolute w-24 h-24 top-[5%] right-[10%] opacity-60 animate-float-slow"
+          className="absolute w-32 h-32 top-[5%] right-[3%] opacity-60 animate-float-slow"
         />
         <Image
           src={tonCoin2}
           alt=""
-          className="absolute w-20 h-20 bottom-[15%] right-[20%] opacity-50 animate-float-slow delay-3000"
+          className="absolute w-32 h-32 bottom-[30%] left-[4%] opacity-50 animate-float-slow delay-3000"
         />
       </div>
 
@@ -133,16 +133,15 @@ export default function Footer({ className = "" }: { className?: string }) {
           1) CTA-блок «Start investing now!»
           mb-16
          ========================= */}
-      <div className="relative z-10 pb-10 mt-[120px]">
+      <div className="relative z-10 pb-6 mt-[100px]">
         {/* здесь ваш компонент StartInvesting */}
-        
       <StartInvesting />
       </div>
 
       {/* =========================
           2) Основной футер: логотип, навигация, соцсети 
          ========================= */}
-      <div className="relative z-10 border-t border-[#1F2A44] pt-5 pb-3">
+      <div className="relative z-10 border-t border-[#1F2A44] pt-3 pb-3">
         <div className="container mx-auto px-4 flex flex-col lg:flex-row items-center justify-between gap-6">
           {/* левый блок */}
           <div className="flex items-center gap-6">
@@ -150,14 +149,23 @@ export default function Footer({ className = "" }: { className?: string }) {
               <Image src={logoSvg} alt="TONStake.ai" width={32} height={32} />
               <span className="text-xl font-semibold">TON Stake Ai</span>
             </div>
-            <div className="h-6 border-l border-[#1F2A44]" />
-            <div className="flex items-center gap-2 bg-[#0A1329] px-3 py-1 rounded-lg">
+
+            <div
+            className="h-6 border-l-4 border-transparent mx-4"
+            style={{
+              borderImageSlice: 1,
+              borderImageSource:
+                "linear-gradient(90deg, #021B37 0%, #0099FF 20.19%, #0099FF 81.25%, #021B37 100%)",
+            }}
+            />
+            <div className="flex items-center gap-2 bg-[#0A1329] px-2 py-1 rounded-lg">
               <Image
                 src={certikBadge}
                 alt="Audited by Certik"
-                width={100}
-                height={40}
+                width={120}
+                height={50}
               />
+              {/**/}
               <span className="text-sm text-[#A0B0D8]">Audited by Certik</span>
             </div>
           </div>
@@ -182,31 +190,19 @@ export default function Footer({ className = "" }: { className?: string }) {
           <div className="flex items-center gap-4">
             <Link
               href="/support"
-              className="
-                inline-flex items-center justify-center
-                bg-[#0A1329] hover:bg-[#1F2A44]
-                rounded-lg p-3
-                transition-colors
-              "
             >
-              <Image src={supportIcon} alt="Support" width={24} height={24} />
+              <Image src={supportIcon} alt="Support" width={120} height={60} />
             </Link>
             <Link
               href="https://t.me/YourTelegramChannel"
               target="_blank"
               rel="noreferrer"
-              className="
-                inline-flex items-center justify-center
-                bg-[#0A1329] hover:bg-[#1F2A44]
-                rounded-lg p-3
-                transition-colors
-              "
             >
               <Image
                 src={telegramIcon}
                 alt="Telegram"
-                width={50}
-                height={50}
+                width={60}
+                height={60}
               />
             </Link>
           </div>
@@ -216,7 +212,7 @@ export default function Footer({ className = "" }: { className?: string }) {
       {/* =========================
           3) Копирайт
          ========================= */}
-      <div className="relative z-10 border-t border-[#1F2A44] mt-6 pt-6 pb-2">
+      <div className="relative z-10 border-t border-[#1F2A44] mt-4 pt-4 pb-1">
         <div className="container mx-auto px-4 flex flex-col-reverse lg:flex-row items-center justify-between gap-4 text-sm text-[#A0B0D8]">
           <p>© 2025 Orbi Ton | All Rights Reserved</p>
           <div className="flex gap-4">

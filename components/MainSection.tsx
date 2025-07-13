@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import ton3d1 from '@/assets/Main/Ton 3d 1.png';
 import ton3d2 from '@/assets/Main/Ton 3d 2.png';
 import ton3d3 from '@/assets/Main/Ton 3d 3.png';
+import centralSphere from '@/assets/Main/EllipseFull.png';
 
 const ellipse6 = '/decorative/ellipse6.png';
 const ellipse5 = '/decorative/ellipse5.png';
@@ -27,11 +28,165 @@ export default function MainSection({className = ''}: MainSectionProps) {
       className={[
         "relative", //чтобы рисунки на границах отрисовывались только один раз
         " text-white",       // базовые стили 
-        "px-4 py-32 sm:px-6 lg:px-8",          // паддинги
+        "px-4 py-32 sm:px-6 lg:px-8",          // pt-20 паддинги
+        //"main",
         className                       // ваши дополнительные классы
       ].join(" ")}
     >
 
+<div className="absolute bottom-0 left-0 w-1/2 h-full pointer-events-none">
+        <Image
+          src={ellipse6}
+          alt=""
+          fill
+          style={{ objectFit: 'cover', objectPosition: 'left bottom', opacity: 0.45 }}
+        />
+      </div>
+
+      <div className="absolute bottom-0 right-0 w-1/2 h-full pointer-events-none">
+        <Image
+          src={ellipse5}
+          alt=""
+          fill
+          style={{ objectFit: 'cover', objectPosition: 'right bottom', opacity: 0.38 }}
+        />
+      </div>
+
+     
+
+{/* 1) Расположение «здесь иконки» в контейнере */}
+<div className="max-w-7xl mx-auto mb-8">
+        <div className="flex items-center gap-16">
+          <div className="flex items-center gap-2">
+            <Image src={ReliableIcon} alt="Reliable" width={24} height={24} />
+            <span className="text-lg font-medium">Reliable</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <Image src={ProfitableIcon} alt="Profitable" width={24} height={24} />
+            <span className="text-lg font-medium">Profitable</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <Image src={SimpleIcon} alt="Simple" width={24} height={24} />
+            <span className="text-lg font-medium">Simple</span>
+          </div>
+        </div>
+      </div>
+
+{/* 2) Основной грид: слева текст + кнопки, справа 3D-монеты */}
+<div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        {/* Левый столбец */}
+        <div className="space-y-6">
+          <h1
+            className="font-bold"
+            style={{ fontSize: "70px", lineHeight: "68px" }}
+          >
+            Stake TON<br />
+            <span className="text-[#00C2FF]">Easily</span> &amp;{" "}
+            <span className="text-[#00C2FF]">Securely</span>
+          </h1>
+          <p className="text-lg text-gray-300 max-w-lg">
+            Stake your TON tokens securely and earn passive income with our
+            audited smart contracts.
+          </p>
+          <div className="flex items-center gap-10">
+            <Button>Get Started</Button>
+            <div className="flex items-center gap-2 bg-white bg-opacity-10 ">
+              <Image src={AuditedIcon} alt="Audited by Certik" height={32} />
+              {/*<span className="text-sm">Audited by Certik</span>
+              px-4 py-2 rounded-full */}
+            </div>
+          </div>
+        </div>
+
+        <div className="pointer-events-none absolute top-0 w-96 h-96 opacity-30" // left-1/3 right-1/5 transform translate-x-1/5
+      >
+        <Image
+          src="/decorative/ellipse10.png"
+          alt=""
+          layout="fill"
+          objectFit="contain"
+        />
+      </div>
+
+        <div className="absolute inset-0 pointer-events-none">
+        <Image
+          src={centralSphere}
+          alt=""
+          className="absolute top-[23%] right-[10%] w-[35%] opacity-80 animate-float"
+        />
+        <Image
+          src={ton3d3}
+          alt=""
+          className="absolute top-[4%] right-[15%] w-[15%] opacity-90 animate-float delay-4000"
+        />
+        <Image
+          src={ton3d1}
+          alt=""
+          className="absolute top-[23%] right-[24%] w-[10%] opacity-80 animate-float"
+        />
+        <Image
+          src={ton3d2}
+          alt=""
+          className="absolute bottom-[8%] right-[10%] w-[25%] opacity-90 animate-float delay-2000"
+        />
+      </div>
+      </div>
+    </section>
+  );
+  
+{/*
+
+<div
+        className="absolute left-[323px] top-[116px] flex items-center opacity-100"
+        style={{
+          width: "495px",
+          height: "32px",
+          gap: "67px",
+        }}
+      >
+        <div className="flex items-center gap-2">
+          <Image src={ProfitableIcon} width={24} height={24} alt="" />
+          <span className="text-white text-base">Profitable</span>
+        </div>
+        <div className="flex items-center gap-2">
+          <Image src={SimpleIcon} width={24} height={24} alt="" />
+          <span className="text-white text-base">Simple</span>
+        </div>
+        <div className="flex items-center gap-2">
+          <Image src={ReliableIcon} width={24} height={24} alt="" />
+          <span className="text-white text-base">Reliable</span>
+        </div>
+      </div>
+      <h1
+        className="absolute text-white font-bold"
+        style={{
+          left: "323px",
+          top: "206px",
+          width: "811px",
+          height: "277px",
+          fontSize: "70px",
+          lineHeight: "68px",
+        }}
+      >
+        Stake TON<br/>
+        <span className="text-[#00C2FF]">Easily</span> &amp; <span className="text-[#00C2FF]">Securely</span>
+      </h1>
+      <div
+        className="absolute left-[323px] top-[542px] flex items-center"
+        style={{
+          width: "576px",
+          height: "65px",
+          gap: "36px",
+        }}
+      >
+        <button className="flex-1 bg-gradient-to-br from-[#00BFFF] to-[#009FEF] rounded-full text-white text-lg font-medium">
+          Get Started
+        </button>
+        <button className="flex-1 bg-transparent border border-white rounded-full text-white text-lg font-medium">
+          Audited by Certik
+        </button>
+      </div>
+*/}
 {/* === Свечения (без импортов, просто пути) ===
 
 <div className="pointer-events-none absolute bottom-0 left-0 w-64 h-64 opacity-100">
@@ -51,91 +206,6 @@ export default function MainSection({className = ''}: MainSectionProps) {
         />
       </div>
        */}
-<div className="absolute bottom-0 left-0 w-1/2 h-full pointer-events-none">
-        <Image
-          src={ellipse6}
-          alt=""
-          fill
-          style={{ objectFit: 'cover', objectPosition: 'left bottom', opacity: 0.45 }}
-        />
-      </div>
-
-      <div className="absolute bottom-0 right-0 w-1/2 h-full pointer-events-none">
-        <Image
-          src={ellipse5}
-          alt=""
-          fill
-          style={{ objectFit: 'cover', objectPosition: 'right bottom', opacity: 0.38 }}
-        />
-      </div>
-
-      <div className="pointer-events-none absolute top-15 right-1/5 transform translate-x-1/5 w-96 h-96 opacity-60">
-        <Image
-          src="/decorative/ellipse10.png"
-          alt=""
-          layout="fill"
-          objectFit="contain"
-        />
-      </div>
-
-
-<div className="flex flex-wrap gap-12 items-center max-w-7xl mx-auto">
-            <div className="flex items-center space-x-2">
-              <Image src={ReliableIcon} alt="Reliable" width={24} height={24} />
-              <span>Reliable</span>
-            </div>
-            <div className="flex items-center space-x-2">
-              <Image src={ProfitableIcon} alt="Profitable" width={24} height={24} />
-              <span>Profitable</span>
-            </div>
-            <div className="flex items-center space-x-2">
-              <Image src={SimpleIcon} alt="Simple" width={24} height={24} />
-              <span>Simple</span>
-            </div>
-          </div>
-
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center max-w-7xl mx-auto">
-        {/* Left side: Text and CTA */}
-        <div className="space-y-6">
-          <h1 className="text-4xl sm:text-5xl font-bold">
-            Earn with TON Staking
-          </h1>
-          <p className="text-lg text-gray-300">
-            Stake your TON tokens securely and earn passive income with our audited smart contracts.
-          </p>
-          
-
-          <div className="flex flex-wrap gap-12 items-center max-w-7xl mx-auto">
-
-          <Button className="mt-6">Get Started</Button>
-          <div className="mt-6 flex items-center space-x-2">
-            <Image src={AuditedIcon} alt="Audited by Certik"  height={40} /> {/*width={110}*/}
-          </div>
-
-          </div>
-        </div>
-       
-        <div className="absolute inset-0 pointer-events-none">
-        <Image
-          src={ton3d3}
-          alt=""
-          className="absolute top-[3%] right-[15%] w-[15%] opacity-80 animate-float delay-4000"
-        />
-        <Image
-          src={ton3d1}
-          alt=""
-          className="absolute top-[23%] right-[24%] w-[10%] opacity-70 animate-float"
-        />
-        <Image
-          src={ton3d2}
-          alt=""
-          className="absolute bottom-[0%] right-[10%] w-[25%] opacity-80 animate-float delay-2000"
-        />
-      </div>
-      </div>
-    </section>
-  );
-  
         {/* Right side: 3D images
          <div className="relative w-full h-96">
           <Image
