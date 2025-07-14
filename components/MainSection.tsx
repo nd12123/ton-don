@@ -1,6 +1,7 @@
 import React from 'react';
 import Image from 'next/image';
 //import { Button } from '@/components/ui/button';
+import { ChevronRight } from 'lucide-react';
 
 // Import 3D images
 import ton3d1 from '@/assets/Main/Ton 3d 1.png';
@@ -28,7 +29,8 @@ export default function MainSection({className = ''}: MainSectionProps) {
       className={[
         "relative", //чтобы рисунки на границах отрисовывались только один раз
         " text-white",       // базовые стили 
-        "px-4 py-32 sm:px-6 lg:px-8",          // pt-20 паддинги
+        "px-4 pt-20 sm:px-6 lg:px-8 pb-32",          // pt-20 паддинги
+        //"bg-bg-dark",
         //"main",
         className                       // ваши дополнительные классы
       ].join(" ")}
@@ -53,6 +55,9 @@ export default function MainSection({className = ''}: MainSectionProps) {
       </div>
 
      
+      {/* Контейнер 
+      <div className="relative z-10 max-w-7xl mx-auto px-4 lg:px-8 py-20"></div>
+*/}
 
 {/* 1) Расположение «здесь иконки» в контейнере */}
 <div className="max-w-7xl mx-auto mb-8  md:pl-[90px]">
@@ -86,54 +91,68 @@ export default function MainSection({className = ''}: MainSectionProps) {
     />
   </div>
         {/* Левый столбец */}
-        <div className="space-y-6 max-w-[811px]">
-          <h1
-            className="font-bold"
-            style={{ fontSize: "70px", lineHeight: "68px" }}
-          >
-            Stake TON<br />
-            <span className="whitespace-nowrap">
-    <span className="text-[#00C2FF]">Easily</span>&nbsp;&amp;&nbsp;<span className="text-[#00C2FF]">Securely</span>
-  </span>
-  </h1>
-          <p className="text-lg text-gray-300 max-w-lg">
-            Stake your TON tokens securely and earn passive income with our
-            audited smart contracts.
-          </p>
-          <div className="flex items-center gap-10">
-             {/* Primary button */}
-  <button
-    className="
-      flex-1 h-[48px]
-      bg-gradient-to-br from-[#00BFFF] to-[#009FEF]
-      hover:from-[#00D4FF] hover:to-[#007FCC]
-      rounded-xl
-      text-white text-lg font-semibold
-      shadow-lg
-      transition
-    "
-  >
-    Get Started
-  </button>
-            <div className="flex items-center gap-2" //bg-white bg-opacity-10 
-            >
-              <Image src={AuditedIcon} alt="Audited by Certik" height={48} />
-              {/*<span className="text-sm">Audited by Certik</span>
-              px-4 py-2 rounded-full */}
-            </div>
-          </div>
+          <div className="space-y-6 max-w-[811px]">
+              <h1
+                className="text-8xl font-bold leading-[90px]"
+                style={{ fontSize: "70px", lineHeight: "68px" }}
+              >
+                Stake TON<br />
+                <span className="whitespace-nowrap">
+        <span className="text-[#00C2FF]">Easily</span>&nbsp;&amp;&nbsp;<span className="text-[#00C2FF]">Securely</span>
+      </span>
+      </h1>
+              <p className="text-lg text-gray-300 max-w-lg">
+                Stake your TON tokens securely and earn passive income with our
+                audited smart contracts.
+              </p>
+              
+              <div className="flex items-center gap-10">
+                    {/* Primary button */}
+                    <button
+  type="button"
+  className="
+    w-64 h-16
+    bg-gradient-to-r from-sky-600 to-sky-400
+    rounded-2xl
+    shadow-[0px_21px_40px_rgba(6,173,252,0.19)]
+    shadow-[inset_5px_11px_30px_rgba(56,172,234,1)]
+    inline-flex items-center justify-center gap-6
+    text-white text-lg font-semibold font-inter leading-loose
+    transition-transform hover:scale-105
+  "
+>
+  <span>Get Started</span>
+  <ChevronRight className="w-5 h-5 text-white" />
+</button>
+<button
+  type="button"
+  className="
+    w-64 h-16
+    bg-transparent
+    border-2 border-sky-400
+    rounded-2xl
+    inline-flex items-center justify-center gap-2
+    text-white text-lg font-semibold font-inter leading-loose
+    transition
+    hover:bg-white hover:text-sky-600
+  "
+>
+  <Image src={AuditedIcon} alt="Audited by Certik" />
+</button>
+
+</div>
         </div>
 
         <div className="absolute inset-0 pointer-events-none">
         <Image
           src={centralSphere}
           alt=""
-          className="absolute top-[0%] right-[18px] w-[45%] opacity-40 animate-float"
+          className="absolute top-[0%] right-[20px] w-[45%] opacity-50 animate-float"
         />
         <Image
           src={ton3d3}
           alt=""
-          className="absolute top-[4%] right-[16%] w-[17%] opacity-90 animate-float delay-4000"
+          className="absolute top-[3%] right-[16%] w-[17%] opacity-90 animate-float delay-4000"
         />
         <Image
           src={ton3d1}
@@ -143,7 +162,7 @@ export default function MainSection({className = ''}: MainSectionProps) {
         <Image
           src={ton3d2}
           alt=""
-          className="absolute bottom-[8%] right-[10%] w-[28%] opacity-90 animate-float delay-2000"
+          className="absolute bottom-[5%] right-[10%] w-[28%] opacity-90 animate-float delay-2000"
         />
       </div>
       </div>

@@ -35,7 +35,7 @@ export default function CalculateAndPlans() {
   const dailyEarnings = useMemo(() => (amount * (apr/100)) / 365, [amount, apr]);
 
   return ( //py-20 pt-[200px] lg:pt-[375px]
-    <section className="relative overflow-hidden text-white pb-7 pt-0">
+    <section id="calculate-plans" className="relative overflow-hidden text-white pb-7 pt-0">
       {/* — плавный градиент сверху в центре для плавного стыка
       
   <div
@@ -60,6 +60,8 @@ export default function CalculateAndPlans() {
   }}
 />
    */}
+
+   {/**
 <div
   className="absolute top-0 left-0 w-full h-20 pointer-events-none z-0 opacity-50"
   style={{
@@ -74,6 +76,8 @@ export default function CalculateAndPlans() {
     ].join(", ")
   }}
 />
+    * 
+    */}
 
 
 {/* ==== Тон-интро перед основным блоком ==== */}
@@ -109,8 +113,6 @@ export default function CalculateAndPlans() {
     <span className="text-[#00C2FF]">Calculate</span> your <span className="text-[#00C2FF]">Profit</span>
   </h1>
 </div>
-
-
       {/* 2) Горизонт (основной фон) */}
       <div className="absolute inset-0 pointer-events-none -z-20 overflow-hidden">
   <div

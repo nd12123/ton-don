@@ -19,7 +19,7 @@ export default function Header() {
   return (
     <header className="
       fixed top-0 left-0 w-full z-50
-      bg-[rgba(11,17,40,1)] backdrop-blur-sm 
+      bg-[#0B1128] backdrop-blur-sm 
     " //border-b  border-white/10
     >
       <div className=" mx-auto px-4 md:px-8 py-3 flex items-center justify-between"//max-w-6xl

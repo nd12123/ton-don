@@ -50,8 +50,7 @@ export default function InteractivePage() {
 {/**
       <SectionWrapper>
       </SectionWrapper> */}
-      <MainSection className="main"/>
-
+      <MainSection/>  {/**className="main" */}
         {/*topCloud={{
           leftSrc: '/decorative/ellipse6.png',
           rightSrc: '/decorative/ellipse5.png',

@@ -3,7 +3,7 @@
 
 import React from "react";
 import Image from "next/image";
-//import Link from "next/link";
+import Link from "next/link";
 
 // Пути к вашим файлам. Поместите картинки в папку /public/decorative/
 import coinLarge from "@/assets/StepsToInvest/ton2.png";//"/decorative/ton2.png"; // большая монета
@@ -14,7 +14,8 @@ import rightCorner from "@/assets/StepsToInvest/rightCorner.svg";
 import rightCornerBottom from "@/public/decorative/ellipse5.png";
 import centerSphere from "@/public/decorative/Ellipse51.png";
 
-import WalletConnect from "@/components/WalletConnect";
+//import WalletConnect from "@/components/WalletConnect";
+import ConnectWalletButton from "@/components/ConnectWalletButton";
 
 
 export default function StepsToInvest() {
@@ -71,7 +72,7 @@ export default function StepsToInvest() {
         />
 </div>
 
-<div className="absolute top-[40px] right-[32%] opacity-90 z-[5]">
+<div className="absolute top-[20%] right-[30%] opacity-90 z-[5]">
       <Image
         src="/decorative/ton5.png"
         alt="TON Coin Right"
@@ -88,6 +89,28 @@ export default function StepsToInvest() {
     3 Easy steps to invest<br/>
      in <span className="text-[#00C2FF]">TonStake.Ai</span>
   </h2>
+  
+      {/* 5) Кнопка „See Plans“ */}
+      <div className="relative z-10 mt-6 flex justify-left">
+        <Link href="#calculate-plans" scroll={false}>
+          <a
+            className="
+              w-52 h-11
+              relative
+              bg-[radial-gradient(ellipse_179.05%_152.88%_at_74.38%_155.56%,_#3DD4FF_0%,_#0098EA_100%)]
+              rounded-xl
+              shadow-[0px_4px_27.6px_0px_rgba(61,212,255,0.42)]
+              outline outline-1 outline-offset-[-1px] outline-sky-400
+              overflow-hidden
+              flex items-center justify-center
+            "
+          >
+            <span className="text-white text-lg font-semibold font-['Inter'] leading-loose">
+              See Plans
+            </span>
+          </a>
+        </Link>
+      </div>
 </div>
 
 
@@ -112,26 +135,44 @@ export default function StepsToInvest() {
           alt="corner"
           fill
           height= {350}
-          width={120}
+          width={100}
           className="absolute left-0  top-[30px] opacity-60 animate-float-slow delay-2000" //w-16 h-16  left-8 top-1/2 
           style={{
             objectFit: "contain",
             objectPosition: "left center",  
           }}
         />
+        {/**
+         * 
         <Image
           src={rightCorner}
           alt="corner"
           fill
           height= {350}
-          width={120}
+          width={60}
           className="absolute right-0  top-[30px]  opacity-60 animate-float-slow delay-2000" //right-8 top-1/3 w-20 h-20
           style={{
             objectFit: "contain",
             objectPosition: "right center",  
           }}
         />
+         */}
         </div>
+        <div
+  className="absolute right-0 top-[30px] opacity-60 animate-float-slow delay-2000 pointer-events-none"
+  style={{
+    width: "150px",
+    height: "350px"
+  }}
+>
+  <Image
+    src={rightCorner}
+    alt="corner"
+    width={120}
+    height={350}
+    style={{ objectFit: "contain", objectPosition: "right center" }}
+  />
+</div>
 
 
       {/* 3) Контейнер с тремя «шагами» py-20 */}
@@ -227,7 +268,6 @@ export default function StepsToInvest() {
       </div>
        
     </div>
-
       {/* 5) Кнопка «Connect Wallet» снизу 
       <div className="relative z-10 mt-16 flex justify-center py-7">
         <Link href="/connect" 
@@ -248,12 +288,19 @@ export default function StepsToInvest() {
         </Link>
       </div> 
 */}
-<div className="relative z-10 mt-16 flex justify-center py-7">
-  <WalletConnect />
+{/** */}
+<div className="relative z-10 flex justify-center py-7"//mt-16
+>
+  <ConnectWalletButton />
+</div>
+{/**
+<div className="w-44 h-10 relative bg-[radial-gradient(ellipse_72.70%_100.11%_at_50.00%_50.00%,_#009BEF_0%,_#3CBAFF_100%)] rounded-xl shadow-[0px_11px_21px_0px_rgba(56,172,234,0.18)] overflow-hidden">
+  <div className="w-32 h-4 left-[35px] top-[12px] absolute justify-center text-white text-base font-semibold font-['Inter'] leading-loose">Connect Wallet</div>
+  <div className="w-4 h-4 left-[11.35px] top-[11.43px] absolute bg-white" />
 </div>
 
-</div>
-{ /* === Плавный переход снизу в следующую секцию === */ }
+ * 
+//{  === Плавный переход снизу в следующую секцию ===  }
   <div
     className="absolute bottom-0 left-0 w-full h-8 pointer-events-none z-0 opacity-20"
     style={{
@@ -264,6 +311,10 @@ export default function StepsToInvest() {
       maskImage:       "linear-gradient(to right, black 30%, transparent 100%)",
     }}
   />
+ */}
+
+</div>
+
     </section>
     
   );
