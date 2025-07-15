@@ -17,7 +17,7 @@ export default function TotalValue() {
   return (
     //<SectionFadeWrapper >
     <section
-      className="horizon section-mask relative overflow-hidden text-white py-32 " // bg-[#0B1028]  bg-gradient-to-r from-[#00BFFF] to-[#009FEF]??
+      className="horizon section-mask relative overflow-hidden text-white py-32 z-0" // bg-[#0B1028]  bg-gradient-to-r from-[#00BFFF] to-[#009FEF]??
       style={{
       //top: "30px", // двигаем НИЖЕ
       //height: "calc(100% + 30px)",
@@ -34,7 +34,7 @@ export default function TotalValue() {
       {/**,
             url('/decorative/starsbg2.png') */}
       <div
-        className="absolute inset-0 pointer-events-none z-10"
+        className="absolute inset-0 pointer-events-none z-0"
         style={{
           backgroundImage: `url("/decorative/starsbg1.png")`,
           backgroundRepeat: "repeat",
@@ -44,7 +44,7 @@ export default function TotalValue() {
         }}
       />
 <div
-        className="absolute top-0 left-0 w-1/2 h-full pointer-events-none"
+        className="absolute top-0 left-0 w-1/2 h-full pointer-events-none z-5"
       >
         <Image
           src={ellipse6}
@@ -53,12 +53,12 @@ export default function TotalValue() {
           style={{
             objectFit: 'cover',
             objectPosition: 'left top',
-            opacity: 0.99,
+            opacity: 1.1,
           }}
         />
       </div>
       <div
-        className="absolute top-0 right-0 w-1/2 h-full pointer-events-none"
+        className="absolute top-0 right-0 w-1/2 h-full pointer-events-none z-5"
       >
         <Image
           src={ellipse5}
@@ -67,43 +67,43 @@ export default function TotalValue() {
           style={{
             objectFit: 'cover',
             objectPosition: 'right top',
-            opacity: 0.9,
+            opacity: 1.1,
           }}
         />
       </div>
 
       
       {/* 3) Горизонтальное «сечение» */}
-      <div className="absolute inset-0 pointer-events-none">
+      <div className="absolute inset-0 pointer-events-none ">
         <Image
           src={ton3d4}
           alt=""
-          className="absolute top-[55%] left-[0%] w-[10%] opacity-99 animate-float"
+          className="absolute top-[55%] left-[0%] w-[10%] opacity-100 animate-float z-10"
         />
         <Image
           src={ton3d6}
           alt=""
-          className="absolute top-[10%] right-[0%] w-[10%] opacity-99 animate-float delay-4000"
+          className="absolute top-[10%] right-[0%] w-[10%] opacity-100 animate-float delay-4000 z-10"
         />
         <Image
           src={ton3d5}
           alt=""
-          className="absolute bottom-[0%] right-[9%] w-[25%] opacity-99 animate-float delay-2000" // animate-float delay-2000
+          className="absolute bottom-[0%] right-[9%] w-[25%] opacity-110 animate-float delay-2000 z-10" // animate-float delay-2000
         />
         <Image
           src={leftSphere}
           alt=""
-          className="absolute bottom-[0%] right-[7%] w-[30%] opacity-80"
+          className="absolute bottom-[0%] right-[7%] w-[30%] opacity-80 z-5"
         />
         <Image
           src={ton3d7}
           alt=""
-          className="absolute top-[0%] left-[10%] w-[16%] opacity-99 animate-float delay-2000" // animate-float delay-6000
+          className="absolute top-[0%] left-[10%] w-[16%] opacity-110 animate-float delay-2000 z-10" // animate-float delay-6000
         />
         <Image
           src={rightSphere}
           alt=""
-          className="absolute top-[0%] left-[8%] w-[20%] opacity-70"
+          className="absolute top-[0%] left-[8%] w-[20%] opacity-70 z-5"
         />
       </div>
 

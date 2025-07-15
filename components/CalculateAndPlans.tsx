@@ -151,7 +151,7 @@ export default function CalculateAndPlans() {
               rangeText={plan.rangeText}
               iconSrc={plan.iconSrc}
               isActive={idx === selectedPlanIdx}
-              bgSrc={plan.bgSrc}
+              //bgSrc={plan.bgSrc}
               onSelect={() => handlePlanSelect(idx)}
             />
           ))}

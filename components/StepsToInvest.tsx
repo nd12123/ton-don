@@ -92,7 +92,8 @@ export default function StepsToInvest() {
   
       {/* 5) Кнопка „See Plans“ */}
       <div className="relative z-10 mt-6 flex justify-left">
-        <Link href="#calculate-plans" scroll={false}>
+        <Link href="#calculate-plans" //scroll={false}
+        >
           <a
             className="
               w-52 h-11

@@ -47,8 +47,12 @@ useEffect(() => {
 
   return (
     <div
-      className="relative  rounded-[32px] border border-white/10 shadow-[0_0_60px_#00C2FF33] 
-      px-5  md:px-8  flex flex-col lg:flex-row gap-3 justify-between bg-[#101426]/80 backdrop-blur-sm"      //py-10 md:py-14 ?? bg-[url('/ticket-bg.png')] bg-cover bg-center
+      className="relative  rounded-[32px] border border-white/10 
+      px-5  md:px-8  flex flex-col lg:flex-row gap-3 justify-between  backdrop-blur-sm
+      bg-[radial-gradient(ellipse_90.67%_90.68%_at_51.85%_6.45%,_#3E5C89_0%,_#171E38_100%)]
+      shadow-[1px_15px_48.9px_0px_rgba(61,212,255,0.18)]
+      outline outline-[3px] outline-offset-[-3px] outline-sky-400
+      "      //py-10 md:py-14 ?? bg-[url('/ticket-bg.png')] bg-cover bg-center bg-[#101426]/80 shadow-[0_0_60px_#00C2FF33] 
     >
       {/* Левая секция — планы */}
       <div className="flex flex-col gap-2 w-full lg:w-[25%] py-6">
@@ -101,7 +105,7 @@ useEffect(() => {
       type="range"
       min={sliderMin}
       max={sliderMax}
-      step={10}
+      step={1}
       value={amount}
       onChange={(e) => onAmountChange(Number(e.target.value))}
       className="w-full h-2 appearance-none bg-[#00C2FF]/30 rounded-full relative"
@@ -114,8 +118,6 @@ useEffect(() => {
       className="w-8 h-8"
     />
   </div>
-
-
   <div className="flex flex-col gap-2 w-full relative">
   <label className="text-white/80 text-sm font-medium">
     Deposit duration
@@ -137,7 +139,7 @@ useEffect(() => {
       type="range"
       min={sliderMin}
       max={365}
-      step={10}
+      step={1}
       value={days}
       onChange={(e) => onDaysChange(Number(e.target.value))}
       className="w-full h-2 appearance-none bg-[#00C2FF]/30 rounded-full relative"
@@ -170,10 +172,10 @@ useEffect(() => {
   <div className="absolute right-0 top-6 bottom-6 w-px border-l border-dashed border-white/30 z-10"></div>
 */}
   {/* Контент — уменьшен паддинг и отступы */}
-  <div className="relative z-10 flex flex-col justify-center h-full px-6 pb-4 pt-6 text-white text-[18px] gap-4">
-    <div className="flex justify-between items-center h-[32px]">
-      <span>In 1 day</span>
-      <span className="font-medium">+{dailyEarnings.toFixed(2)} TON</span>
+  <div className="relative z-10 flex flex-col justify-center h-full px-5 pb-4 pt-1 text-white  gap-4">
+    <div className="flex flex-col justify-center items-center h-[32px]">
+      <span className="text-sm text-white/80">In 1 day</span>
+      <span className="text-xl font-medium">+{dailyEarnings.toFixed(2)} TON</span>
     </div>
 
     <div
@@ -181,8 +183,8 @@ useEffect(() => {
       style={{ backgroundImage: "url('/decorative/Separator.png')" }}
     />
 
-    <div className="flex justify-between items-center h-[32px]">
-      <span>In 7 days</span>
+    <div className="flex flex-col justify-center items-center h-[32px]">
+      <span className="text-sm text-white/80">In 7 days</span>
       <span className="font-medium">+{(dailyEarnings * 7).toFixed(2)} TON</span>
     </div>
 
@@ -191,9 +193,9 @@ useEffect(() => {
       style={{ backgroundImage: "url('/decorative/Separator.png')" }}
     />
 
-    <div className="flex justify-between items-center h-[32px]">
-      <span>In 30 days</span>
-      <span className="font-semibold">+{(dailyEarnings * 30).toFixed(2)} TON</span>
+    <div className="flex flex-col justify-center items-center h-[32px]">
+      <span className="text-sm text-white/80">Investment period</span>
+      <span className="font-medium">+{(dailyEarnings * days).toFixed(2)} TON</span>
     </div>
 </div>
 

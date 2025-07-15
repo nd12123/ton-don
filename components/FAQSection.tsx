@@ -106,7 +106,7 @@ export default function FAQSection() {
           Quick answers to popular questions...
         </p>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 auto-rows-min gap-8">
           {faqs.map((item, idx) => {
             const isOpen = openIndex === idx;
             return (
