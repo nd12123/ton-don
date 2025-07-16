@@ -2,93 +2,95 @@
 import React from "react";
 import Image from "next/image";
 import ton3d4 from "@/assets/TotalValue/Ton 3d 4.png";
-import ton3d5 from "@/assets/TotalValue/Ton 3d 5.png";
+import ton3d5 from "@/assets/TotalValue/Ton 3d 5.svg";
 import ton3d6 from "@/assets/TotalValue/Ton 3d 6.png";
 import ton3d7 from "@/assets/TotalValue/Ton 3d 7.svg";
-
-//import SectionFadeWrapper from "./decorative/SectionFadeWrapper";
-import leftSphere from '@/assets/TotalValue/Ellipse9.png';
-import rightSphere from '@/assets/TotalValue/Ellipse10.png';
-
-import ellipse5 from '@/public/decorative/Ellipse50.png'
-import ellipse6 from '@/public/decorative/Ellipse60.png'
+import leftSphere from "@/assets/TotalValue/Ellipse9.png";
+import rightSphere from "@/assets/TotalValue/Ellipse10.png";
 
 export default function TotalValue() {
   return (
-    //<SectionFadeWrapper >
-    <section
-      className="horizon section-mask relative overflow-hidden text-white py-32 z-0" // bg-[#0B1028]  bg-gradient-to-r from-[#00BFFF] to-[#009FEF]??
-      style={{
-      //top: "30px", // двигаем НИЖЕ
-      //height: "calc(100% + 30px)",
-        // 1) Твой основной фон (градиент/цвет из фрейма)
-        backgroundImage: `url("/decorative/horizon-bg.svg")`,
-        backgroundSize: "cover",
-        backgroundPosition: "center top",
-        opacity: 0.4,
-        backgroundRepeat: "no-repeat",
-        
-      }}
-    >
-      {/* 2) Звёздная текстура — тайлируемая и полупрозрачная */}
-      {/**,
-            url('/decorative/starsbg2.png') */}
-      <div
-        className="absolute inset-0 pointer-events-none z-0"
-        style={{
-          backgroundImage: `url("/decorative/starsbg1.png")`,
-          backgroundRepeat: "repeat",
-          backgroundSize: "auto",
-          opacity: 0.99,
-          mixBlendMode: "screen",  // можно убрать или заменить на "overlay"
-        }}
-      />
-<div
-        className="absolute top-0 left-0 w-1/2 h-full pointer-events-none z-5"
-      >
+    <section className="relative overflow-hidden text-white py-32">
+      {/* 1) Фон горизонта (полупрозрачный) */}
+      <div className="absolute inset-0 -z-20">
         <Image
-          src={ellipse6}
-          alt=""
+          src="/decorative/horizon-bg.svg"
+          alt="horizon"
           fill
           style={{
-            objectFit: 'cover',
-            objectPosition: 'left top',
-            opacity: 1.1,
+            objectFit: "cover",
+            objectPosition: "center top",
+            opacity: 0.4,
           }}
         />
       </div>
+{/* — Плавный фэйд сверху, чтобы скрыть «стык» с Main */}
       <div
-        className="absolute top-0 right-0 w-1/2 h-full pointer-events-none z-5"
-      >
+        className="absolute top-0 left-0 w-full h-24 pointer-events-none -z-1"
+        style={{
+          background: "linear-gradient(to bottom, #0B1028, rgba(11, 17, 40, 0))",
+        }}
+      />
+
+      {/* 2) Звёздная текстура */}
+      <div className="absolute inset-0 -z-10 pointer-events-none">
         <Image
-          src={ellipse5}
-          alt=""
+          src="/decorative/starsbg1.png"
+          alt="stars"
           fill
           style={{
-            objectFit: 'cover',
-            objectPosition: 'right top',
-            opacity: 1.1,
+            objectFit: "cover",
+            opacity: 0.1,
           }}
         />
       </div>
 
-      
-      {/* 3) Горизонтальное «сечение» */}
-      <div className="absolute inset-0 pointer-events-none ">
+      {/* 3) Боковые эллипсы (сферы) */}
+      <div className="absolute top-0 left-0 w-1/2 h-full pointer-events-none z-0">
+        <Image
+          src="/decorative/Ellipse60.png"
+          alt="left glow"
+          fill
+          style={{
+            objectFit: "cover",
+            objectPosition: "left top",
+            opacity: 0.45,
+            //filter: "brightness(1)",
+            //mixBlendMode: "screen",
+          }}
+        />
+      </div>
+      <div className="absolute top-0 right-0 w-1/2 h-full pointer-events-none z-0">
+        <Image
+          src="/decorative/Ellipse50.png"
+          alt="right glow"
+          fill
+          style={{
+            objectFit: "cover",
+            objectPosition: "right top",
+            opacity: 0.45,
+            //filter: "brightness(1)",
+            //mixBlendMode: "screen",
+          }}
+        />
+      </div>
+
+      {/* 4) 3D-монеты на горизонте */}
+      <div className="absolute inset-0 pointer-events-none">
         <Image
           src={ton3d4}
           alt=""
-          className="absolute top-[55%] left-[0%] w-[10%] opacity-100 animate-float z-10"
+          className="absolute top-[55%] left-[0%] w-[10%] opacity-100 animate-float  z-10"
         />
         <Image
           src={ton3d6}
           alt=""
-          className="absolute top-[10%] right-[0%] w-[10%] opacity-100 animate-float delay-4000 z-10"
+          className="absolute top-[10%] right-[0%] w-[10%] opacity-100 animate-float delay-4000  z-10"
         />
         <Image
           src={ton3d5}
           alt=""
-          className="absolute bottom-[0%] right-[9%] w-[25%] opacity-110 animate-float delay-2000 z-10" // animate-float delay-2000
+          className="absolute bottom-[0%] right-[9%] w-[25%] opacity-100 animate-float delay-2000  z-10"
         />
         <Image
           src={leftSphere}
@@ -98,27 +100,23 @@ export default function TotalValue() {
         <Image
           src={ton3d7}
           alt=""
-          className="absolute top-[0%] left-[10%] w-[16%] opacity-110 animate-float delay-2000 z-10" // animate-float delay-6000
+          className="absolute top-[0%] left-[10%] w-[12%] opacity-100 animate-float delay-2000 z-10"
         />
         <Image
           src={rightSphere}
           alt=""
-          className="absolute top-[0%] left-[8%] w-[20%] opacity-70 z-5"
+          className="absolute top-[0%] left-[8%] w-[15%] opacity-60 z-5"
         />
       </div>
 
-      {/* 4) Контент */}
-      
-      {/* контейнер ровно по макету */}
+      {/* 5) Контент */}
       <div className="container mx-auto px-4 text-center py-10">
-        {/* 1) надпись Total Value */}
         <p className="text-lg text-[#4DC0F5]">Total Value</p>
 
-        {/* 2) цифры с иконкой */}
         <div className="mt-4 flex items-center justify-center">
           <Image
             src="/decorative/ton-icon.svg"
-            alt="TON"
+            alt="TON icon"
             width={48}
             height={48}
           />
@@ -127,14 +125,12 @@ export default function TotalValue() {
           </h2>
         </div>
 
-        {/* 3) текст под цифрами */}
         <p className="mt-6 max-w-2xl mx-auto text-base text-gray-300">
-          TonStake.ai automates your income&nbsp;– over $2 million TON is already
-          making a profit on our algorithms. Start with 10 TON and watch your
-          capital grow!
+          TonStake.ai automates your income&nbsp;– over $2 million TON is
+          already making a profit on our algorithms. Start with 10 TON and
+          watch your capital grow!
         </p>
 
-        {/* 4) кнопка */}
         <button
           className="mt-10 inline-block px-8 py-4 bg-gradient-to-br from-[#00BFFF] to-[#009FEF]
                      text-white text-lg font-medium rounded-[15px] shadow-lg hover:opacity-90 transition"
@@ -143,6 +139,5 @@ export default function TotalValue() {
         </button>
       </div>
     </section>
-    //</SectionFadeWrapper>
   );
 }

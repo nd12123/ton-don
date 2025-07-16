@@ -50,7 +50,7 @@ export default function MainSection({className = ''}: MainSectionProps) {
           src={ellipse5}
           alt=""
           fill
-          style={{ objectFit: 'cover', objectPosition: 'right bottom', opacity: 0.38 }}
+          style={{ objectFit: 'cover', objectPosition: 'right bottom', opacity: 0.45 }}
         />
       </div>
 
@@ -166,6 +166,13 @@ export default function MainSection({className = ''}: MainSectionProps) {
         />
       </div>
       </div>
+      {/* в конце MainSection, перед закрывающим </section>: 
+<div
+  className="absolute inset-x-0 bottom-0 h-24 pointer-events-none z-20"
+  style={{
+    background: "linear-gradient(to top, #0B1028, rgba(11,17,40,0))",
+  }}
+/>*/}
     </section>
   );
   
