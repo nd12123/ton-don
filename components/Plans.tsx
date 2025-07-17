@@ -33,7 +33,6 @@ export default function Plans({
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       
-
       transition={{ duration: 0.6 }}
       viewport={{ once: true }}
     >
@@ -45,12 +44,12 @@ export default function Plans({
             <motion.div
               key={p.name}
               onClick={() => onSelect(p.name)}
-              className={`cursor-pointer bg-gray-50 dark:bg-gray-700 border rounded-xl p-6 shadow transition-shadow ${
+              className={`cursor-pointer border rounded-xl p-6  ${ //shadow transition-shadow bg-gray-50 dark:bg-gray-700
                 isActive
-                  ? "border-blue-500 shadow-md"
-                  : "border-gray-200 hover:shadow-lg"
+                  ? "border-blue-500 "//shadow-md
+                  : "border-gray-200 "//hover:shadow-lg
               }`}
-              whileHover={{ y: isActive ? 0 : -4 }}
+              //whileHover={{ y: isActive ? 0 : -4 }}
             >
               <h3 className="text-xl font-semibold mb-2 flex items-center justify-center">
                 {p.name}

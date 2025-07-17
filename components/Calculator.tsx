@@ -185,7 +185,7 @@ useEffect(() => {
 
     <div className="flex flex-col justify-center items-center h-[32px]">
       <span className="text-sm text-white/80">In 7 days</span>
-      <span className="font-medium">+{(dailyEarnings * 7).toFixed(2)} TON</span>
+      <span className="text-xl font-medium">+{(dailyEarnings * 7).toFixed(2)} TON</span>
     </div>
 
     <div
@@ -195,27 +195,9 @@ useEffect(() => {
 
     <div className="flex flex-col justify-center items-center h-[32px]">
       <span className="text-sm text-white/80">Investment period</span>
-      <span className="font-medium">+{(dailyEarnings * days).toFixed(2)} TON</span>
+      <span className="text-xl font-medium">+{(dailyEarnings * days).toFixed(2)} TON</span>
     </div>
-</div>
-
-
-      {/**<div className="bg-white/10  rounded-xl space-y-6 text-white text-base py-1" //backdrop-blur-sm
-      >
-          </div>
-    <div className="flex justify-between">
-      <span>In 1 day</span>
-      <span>+{dailyEarnings.toFixed(2)} TON</span>
-    </div>
-    <div className="flex justify-between py-1">
-      <span>In 7 days</span>
-      <span>+{(dailyEarnings * 7).toFixed(2)} TON</span>
-    </div>
-    <div className="flex justify-between font-semibold py-1">
-      <span>In 30 days</span>
-      <span>+{(dailyEarnings * 30).toFixed(2)} TON</span>
-    </div>
-*/}
+  </div>
 
 </div>
 
@@ -266,7 +248,23 @@ useEffect(() => {
       </div>
 
 */}
-      
+     
+      {/**<div className="bg-white/10  rounded-xl space-y-6 text-white text-base py-1" //backdrop-blur-sm
+      >
+          </div>
+    <div className="flex justify-between">
+      <span>In 1 day</span>
+      <span>+{dailyEarnings.toFixed(2)} TON</span>
+    </div>
+    <div className="flex justify-between py-1">
+      <span>In 7 days</span>
+      <span>+{(dailyEarnings * 7).toFixed(2)} TON</span>
+    </div>
+    <div className="flex justify-between font-semibold py-1">
+      <span>In 30 days</span>
+      <span>+{(dailyEarnings * 30).toFixed(2)} TON</span>
+    </div>
+*/} 
     </div>
 
 

@@ -26,32 +26,17 @@ export default function PlanCard({
       onClick={onSelect}
       className={`
         relative flex flex-col p-6 rounded-2xl cursor-pointer transition
-        border-2 border-accent-200
+        border-2 border-accent-200 hover:scale-105 hover:border-sky-400
         outline outline-1 outline-offset-[-1px] outline-sky-500
         shadow-[0px_4px_32px_0px_rgba(52,177,212,0.30)]
         bg-plan-${title.toLowerCase()} 
         ${isActive
           ? "border-2 border-sky-400"
-          : "transform hover:scale-105 hover:z-10 transition-transform duration-200 ease-out border border-white/20 hover:border-sky-400"}
+          : "transform transition-transform duration-200 ease-out border border-white/20"}
 
-        /* shadow-neon*/ 
+        /* shadow-neon hover:z-10*/ 
       `}
     >
-
-      {/** ${isActive
-          ? "border-2 border-accent-200 bg-accent-200/10 shadow-neon"
-          : "border border-white/20 bg-gradient-to-b from-gray-800 to-gray-700 hover:border-accent-200 hover:bg-accent-200/5 hover:shadow-neon/50"
-        }*/}
-
-      {/* Фон-картинка
-      <div className="absolute inset-0 -z-10">
-        <img
-          //src={bgSrc}
-          alt=""
-          className="w-full h-full object-cover"
-        />
-      </div>  */}
-
       {/* иконка + заголовок */}
       <div className="flex items-center mb-4">
         <div className="flex-shrink-0 w-10 h-10 bg-accent-200 rounded-full flex items-center justify-center mr-3">
@@ -116,6 +101,19 @@ export default function PlanCard({
       </div>
        * 
        */}
+      {/** ${isActive
+          ? "border-2 border-accent-200 bg-accent-200/10 shadow-neon"
+          : "border border-white/20 bg-gradient-to-b from-gray-800 to-gray-700 hover:border-accent-200 hover:bg-accent-200/5 hover:shadow-neon/50"
+        }*/}
+
+      {/* Фон-картинка
+      <div className="absolute inset-0 -z-10">
+        <img
+          //src={bgSrc}
+          alt=""
+          className="w-full h-full object-cover"
+        />
+      </div>  */}
     </div>
   );
 }
