@@ -5,6 +5,8 @@ import { Table, Thead, Tbody, Tr, Th, Td } from "@/components/ui/table";
 
 import { RequireAdmin } from "@/components/RequireAdmin"
 
+import  StakePanel  from "@/components/StakePanel"
+
 interface StakeRecord {
   id: string;
   wallet: string;
@@ -46,8 +48,13 @@ export default function AdminStakesPage() {
 
   return (
     <RequireAdmin >
+       <div className="p-8">
+      <h1 className="text-2xl font-bold mb-4">Админ-панель</h1>
+      {/* Вот он — ваш стейкинг-интерфейс */}
+      <StakePanel />
+    </div>
     <div className="p-6">
-      <h1 className="text-2xl font-bold mb-4">Admin: All Stakes</h1>
+      <h1 className="text-2xl text-black font-bold mb-4">Admin: All Stakes</h1>
       {loading ? (
         <p>Loading…</p>
       ) : (

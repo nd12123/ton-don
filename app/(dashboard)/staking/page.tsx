@@ -13,6 +13,8 @@ import { useTonAddress } from "@tonconnect/ui-react";
 
 import { PLANS} from "@/components/Plans";
 
+import StakePanel from "@/components/StakePanel";
+
 export default function StakingPage() {
   const address = useTonAddress(); // строка вида "EQCx…"
 
@@ -62,8 +64,10 @@ function handlePlanSelect(planName: string) {
 
   return (
     <main className="min-h-screen bg-gray-50 dark:bg-gray-900 text-black px-4 py-10 flex flex-col items-center">
+      
       {/* Заголовок */}
       <h1 className="text-3xl font-bold mb-6 dark:text-gray-100">Staking Plans</h1>
+      
 
       {/* 1) Выбор плана */}
       <Plans
@@ -115,6 +119,12 @@ function handlePlanSelect(planName: string) {
             </Button>
           </div>
         </div>
+        
+             <div className="p-8">
+            <h1 className="text-2xl font-bold mb-4">Админ-панель</h1>
+            {/* Вот он — ваш стейкинг-интерфейс */}
+            <StakePanel />
+          </div>
       </section>
 
       {/* 3) Модалка */}
@@ -126,6 +136,8 @@ function handlePlanSelect(planName: string) {
           addStake({ validator: selectedPlan.name, wallet: address!, amount:stakeAmount, apr:selectedPlan.apr, duration, txHash });
           setModalOpen(false);
         }}
+
+
         
         //{handleConfirm}
         amount={stakeAmount}

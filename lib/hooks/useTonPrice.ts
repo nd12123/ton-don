@@ -1,6 +1,6 @@
 // lib/hooks/useTonPrice.ts
 "use client";
-
+//don't think I use it
 import { useEffect, useState } from "react";
 
 export function useTonPrice(): number {

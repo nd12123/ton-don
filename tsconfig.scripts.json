@@ -1,0 +1,17 @@
+// tsconfig.scripts.json
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "outDir": "ton",       // КОМПИЛИРУЕМ прямо в scripts/
+    "rootDir": "ton",
+    "esModuleInterop": true,
+    "strict": true,
+    "skipLibCheck": true,
+    "noEmitOnError": true
+  },
+  "include": ["ton/scripts**/*.ts", "ton/scripts/deployStakeContract.ts"],
+    "exclude": ["node_modules", "dist"]   // убрали "scripts"
+
+}

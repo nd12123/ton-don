@@ -1,5 +1,5 @@
 "use client"
-
+//set if the user is Admin
 import { useEffect, useState, useRef } from "react"
 import { useTonAddress } from "@tonconnect/ui-react"
 
