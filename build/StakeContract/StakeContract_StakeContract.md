@@ -1,9 +1,9 @@
 # Tact compilation report
 Contract: StakeContract
-BoC Size: 1066 bytes
+BoC Size: 1227 bytes
 
 ## Structures (Structs and Messages)
-Total structures: 18
+Total structures: 20
 
 ### DataSize
 TL-B: `_ cells:int257 bits:int257 refs:int257 = DataSize`
@@ -57,6 +57,14 @@ Signature: `DeployOk{queryId:uint64}`
 TL-B: `factory_deploy#6d0ff13b queryId:uint64 cashback:address = FactoryDeploy`
 Signature: `FactoryDeploy{queryId:uint64,cashback:address}`
 
+### ChangeOwner
+TL-B: `change_owner#819dbe99 queryId:uint64 newOwner:address = ChangeOwner`
+Signature: `ChangeOwner{queryId:uint64,newOwner:address}`
+
+### ChangeOwnerOk
+TL-B: `change_owner_ok#327b2b4a queryId:uint64 newOwner:address = ChangeOwnerOk`
+Signature: `ChangeOwnerOk{queryId:uint64,newOwner:address}`
+
 ### AddStake
 TL-B: `add_stake#bfd60d84 amount:uint32 = AddStake`
 Signature: `AddStake{amount:uint32}`
@@ -74,11 +82,11 @@ TL-B: `drain#50262060 target:address = Drain`
 Signature: `Drain{target:address}`
 
 ### StakeContract$Data
-TL-B: `_ totalStaked:int257 admin:address balance:int257 mapStakes:dict<address, int> = StakeContract`
-Signature: `StakeContract{totalStaked:int257,admin:address,balance:int257,mapStakes:dict<address, int>}`
+TL-B: `_ totalStaked:int257 admin:address balance:int257 owner:address mapStakes:dict<address, int> = StakeContract`
+Signature: `StakeContract{totalStaked:int257,admin:address,balance:int257,owner:address,mapStakes:dict<address, int>}`
 
 ## Get methods
-Total get methods: 4
+Total get methods: 5
 
 ## userStake
 Argument: key
@@ -90,6 +98,9 @@ No arguments
 No arguments
 
 ## balance
+No arguments
+
+## owner
 No arguments
 
 ## Exit codes
@@ -142,6 +153,8 @@ StakeContract
 StakeContract --> BaseTrait
 StakeContract --> Deployable
 Deployable --> BaseTrait
+StakeContract --> Ownable
+Ownable --> BaseTrait
 ```
 
 ## Contract dependency diagram

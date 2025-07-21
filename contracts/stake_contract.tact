@@ -1,4 +1,5 @@
 import "@stdlib/deploy";
+import "@stdlib/ownable";
 
 message AddStake {
     amount: Int as uint32;
@@ -16,10 +17,11 @@ message Drain {
     target: Address;
 }
 
-contract StakeContract with Deployable {
+contract StakeContract with Deployable, Ownable {
     totalStaked: Int; // as uint128
     admin: Address;
     balance: Int;
+    owner: Address;
     
     const minTonForStorage: Int = ton("0.001");
 
@@ -30,6 +32,7 @@ contract StakeContract with Deployable {
         self.balance = 0;
         self.mapStakes = emptyMap();
         self.admin = sender();
+        self.owner = sender();
         //self.admin = 'EQBGhqLAZseEqRXz4ByFPTGV7SVMlI4hrbs-Sps_Xzx01x8G'; //example
     }
 

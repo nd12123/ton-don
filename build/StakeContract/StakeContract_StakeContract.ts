@@ -756,6 +756,112 @@ export function dictValueParserFactoryDeploy(): DictionaryValue<FactoryDeploy> {
     }
 }
 
+export type ChangeOwner = {
+    $$type: 'ChangeOwner';
+    queryId: bigint;
+    newOwner: Address;
+}
+
+export function storeChangeOwner(src: ChangeOwner) {
+    return (builder: Builder) => {
+        const b_0 = builder;
+        b_0.storeUint(2174598809, 32);
+        b_0.storeUint(src.queryId, 64);
+        b_0.storeAddress(src.newOwner);
+    };
+}
+
+export function loadChangeOwner(slice: Slice) {
+    const sc_0 = slice;
+    if (sc_0.loadUint(32) !== 2174598809) { throw Error('Invalid prefix'); }
+    const _queryId = sc_0.loadUintBig(64);
+    const _newOwner = sc_0.loadAddress();
+    return { $$type: 'ChangeOwner' as const, queryId: _queryId, newOwner: _newOwner };
+}
+
+export function loadTupleChangeOwner(source: TupleReader) {
+    const _queryId = source.readBigNumber();
+    const _newOwner = source.readAddress();
+    return { $$type: 'ChangeOwner' as const, queryId: _queryId, newOwner: _newOwner };
+}
+
+export function loadGetterTupleChangeOwner(source: TupleReader) {
+    const _queryId = source.readBigNumber();
+    const _newOwner = source.readAddress();
+    return { $$type: 'ChangeOwner' as const, queryId: _queryId, newOwner: _newOwner };
+}
+
+export function storeTupleChangeOwner(source: ChangeOwner) {
+    const builder = new TupleBuilder();
+    builder.writeNumber(source.queryId);
+    builder.writeAddress(source.newOwner);
+    return builder.build();
+}
+
+export function dictValueParserChangeOwner(): DictionaryValue<ChangeOwner> {
+    return {
+        serialize: (src, builder) => {
+            builder.storeRef(beginCell().store(storeChangeOwner(src)).endCell());
+        },
+        parse: (src) => {
+            return loadChangeOwner(src.loadRef().beginParse());
+        }
+    }
+}
+
+export type ChangeOwnerOk = {
+    $$type: 'ChangeOwnerOk';
+    queryId: bigint;
+    newOwner: Address;
+}
+
+export function storeChangeOwnerOk(src: ChangeOwnerOk) {
+    return (builder: Builder) => {
+        const b_0 = builder;
+        b_0.storeUint(846932810, 32);
+        b_0.storeUint(src.queryId, 64);
+        b_0.storeAddress(src.newOwner);
+    };
+}
+
+export function loadChangeOwnerOk(slice: Slice) {
+    const sc_0 = slice;
+    if (sc_0.loadUint(32) !== 846932810) { throw Error('Invalid prefix'); }
+    const _queryId = sc_0.loadUintBig(64);
+    const _newOwner = sc_0.loadAddress();
+    return { $$type: 'ChangeOwnerOk' as const, queryId: _queryId, newOwner: _newOwner };
+}
+
+export function loadTupleChangeOwnerOk(source: TupleReader) {
+    const _queryId = source.readBigNumber();
+    const _newOwner = source.readAddress();
+    return { $$type: 'ChangeOwnerOk' as const, queryId: _queryId, newOwner: _newOwner };
+}
+
+export function loadGetterTupleChangeOwnerOk(source: TupleReader) {
+    const _queryId = source.readBigNumber();
+    const _newOwner = source.readAddress();
+    return { $$type: 'ChangeOwnerOk' as const, queryId: _queryId, newOwner: _newOwner };
+}
+
+export function storeTupleChangeOwnerOk(source: ChangeOwnerOk) {
+    const builder = new TupleBuilder();
+    builder.writeNumber(source.queryId);
+    builder.writeAddress(source.newOwner);
+    return builder.build();
+}
+
+export function dictValueParserChangeOwnerOk(): DictionaryValue<ChangeOwnerOk> {
+    return {
+        serialize: (src, builder) => {
+            builder.storeRef(beginCell().store(storeChangeOwnerOk(src)).endCell());
+        },
+        parse: (src) => {
+            return loadChangeOwnerOk(src.loadRef().beginParse());
+        }
+    }
+}
+
 export type AddStake = {
     $$type: 'AddStake';
     amount: bigint;
@@ -955,6 +1061,7 @@ export type StakeContract$Data = {
     totalStaked: bigint;
     admin: Address;
     balance: bigint;
+    owner: Address;
     mapStakes: Dictionary<Address, bigint>;
 }
 
@@ -964,7 +1071,10 @@ export function storeStakeContract$Data(src: StakeContract$Data) {
         b_0.storeInt(src.totalStaked, 257);
         b_0.storeAddress(src.admin);
         b_0.storeInt(src.balance, 257);
-        b_0.storeDict(src.mapStakes, Dictionary.Keys.Address(), Dictionary.Values.BigInt(257));
+        const b_1 = new Builder();
+        b_1.storeAddress(src.owner);
+        b_1.storeDict(src.mapStakes, Dictionary.Keys.Address(), Dictionary.Values.BigInt(257));
+        b_0.storeRef(b_1.endCell());
     };
 }
 
@@ -973,24 +1083,28 @@ export function loadStakeContract$Data(slice: Slice) {
     const _totalStaked = sc_0.loadIntBig(257);
     const _admin = sc_0.loadAddress();
     const _balance = sc_0.loadIntBig(257);
-    const _mapStakes = Dictionary.load(Dictionary.Keys.Address(), Dictionary.Values.BigInt(257), sc_0);
-    return { $$type: 'StakeContract$Data' as const, totalStaked: _totalStaked, admin: _admin, balance: _balance, mapStakes: _mapStakes };
+    const sc_1 = sc_0.loadRef().beginParse();
+    const _owner = sc_1.loadAddress();
+    const _mapStakes = Dictionary.load(Dictionary.Keys.Address(), Dictionary.Values.BigInt(257), sc_1);
+    return { $$type: 'StakeContract$Data' as const, totalStaked: _totalStaked, admin: _admin, balance: _balance, owner: _owner, mapStakes: _mapStakes };
 }
 
 export function loadTupleStakeContract$Data(source: TupleReader) {
     const _totalStaked = source.readBigNumber();
     const _admin = source.readAddress();
     const _balance = source.readBigNumber();
+    const _owner = source.readAddress();
     const _mapStakes = Dictionary.loadDirect(Dictionary.Keys.Address(), Dictionary.Values.BigInt(257), source.readCellOpt());
-    return { $$type: 'StakeContract$Data' as const, totalStaked: _totalStaked, admin: _admin, balance: _balance, mapStakes: _mapStakes };
+    return { $$type: 'StakeContract$Data' as const, totalStaked: _totalStaked, admin: _admin, balance: _balance, owner: _owner, mapStakes: _mapStakes };
 }
 
 export function loadGetterTupleStakeContract$Data(source: TupleReader) {
     const _totalStaked = source.readBigNumber();
     const _admin = source.readAddress();
     const _balance = source.readBigNumber();
+    const _owner = source.readAddress();
     const _mapStakes = Dictionary.loadDirect(Dictionary.Keys.Address(), Dictionary.Values.BigInt(257), source.readCellOpt());
-    return { $$type: 'StakeContract$Data' as const, totalStaked: _totalStaked, admin: _admin, balance: _balance, mapStakes: _mapStakes };
+    return { $$type: 'StakeContract$Data' as const, totalStaked: _totalStaked, admin: _admin, balance: _balance, owner: _owner, mapStakes: _mapStakes };
 }
 
 export function storeTupleStakeContract$Data(source: StakeContract$Data) {
@@ -998,6 +1112,7 @@ export function storeTupleStakeContract$Data(source: StakeContract$Data) {
     builder.writeNumber(source.totalStaked);
     builder.writeAddress(source.admin);
     builder.writeNumber(source.balance);
+    builder.writeAddress(source.owner);
     builder.writeCell(source.mapStakes.size > 0 ? beginCell().storeDictDirect(source.mapStakes, Dictionary.Keys.Address(), Dictionary.Values.BigInt(257)).endCell() : null);
     return builder.build();
 }
@@ -1024,7 +1139,7 @@ function initStakeContract_init_args(src: StakeContract_init_args) {
 }
 
 async function StakeContract_init() {
-    const __code = Cell.fromHex('b5ee9c724102150100041e000228ff008e88f4a413f4bcf2c80bed5320e303ed43d9010c02027102040153beed476a268690000c709408080eb807d20408080eb807a022a98360a4b98381036fc212cf16d9e3620c03000223020148050a02027506080155a5c7da89a1a400031c25020203ae01f481020203ae01e808aa60d8292e60e040dbf084b3c4aa07b678d88307002e81010b22028101014133f40a6fa19401d70030925b6de20151a581da89a1a400031c25020203ae01f481020203ae01e808aa60d8292e60e040dbf084b3c5b678d883090002210153b74b7da89a1a400031c25020203ae01f481020203ae01e808aa60d8292e60e040dbf084b3c5b678d88300b00022002f430eda2edfb01d072d721d200d200fa4021103450666f04f86102f862ed44d0d200018e12810101d700fa40810101d700f40455306c14973070206df84259e205925f05e023d749c21f9130e30d02f90182f0941585dfcf619652420ac6b4b343948496b6be08bf8221d6d533bccb4c38e3a3bae3025f03f2c0820d1402fa03d31f218210bfd60d84ba8eee31d31f30f842218200b75c21c200f2f4813f510382103b9aca00a8f8416f24135f03b913f2f42581010b228101014133f40a6fa19401d70030925b6de2206e92307095206ef2d080e281010b5113a0103712810101216e955b59f4593098c801cf004133f441e25124a05034a001e021110e01fc82102b6b6d85ba8e7331d31ffa403081404df84224c705f2f48148375352bef2f45141a1504480426d5a6d6d40037fc8cf8580ca00cf8440ce01fa028069cf40025c6e016eb0935bcf819d58cf8680cf8480f400f400cf81e2f400c901fb004003c87f01ca0055305034810101cf00ce810101cf00f400c9ed54db31e0210f04fe821050262060ba8f6a5b22a5f842217f810082036d6d50436d5033c8cf8580ca00cf8440ce01fa028069cf40025c6e016eb0935bcf819d58cf8680cf8480f400f400cf81e2f400c901fb0013a1884140f8427f705003804201503304c8cf8580ca00cf8440ce01fa02806acf40f400c901fb00e0218210a1bc3662bae3020110111213001600000000647261696e65640036c87f01ca0055305034810101cf00ce810101cf00f400c9ed54db31005a31fa403081404df8425003c70512f2f44003c87f01ca0055305034810101cf00ce810101cf00f400c9ed54db3100ba8210946a98b6ba8e52d33f30c8018210aff90f5758cb1fcb3fc9443012f84270705003804201503304c8cf8580ca00cf8440ce01fa02806acf40f400c901fb00c87f01ca0055305034810101cf00ce810101cf00f400c9ed54db31e03300c481404df84223c705f2f4f8427080426d5a6d6d40037fc8cf8580ca00cf8440ce01fa028069cf40025c6e016eb0935bcf819d58cf8680cf8480f400f400cf81e2f400c901fb00027001c87f01ca0055305034810101cf00ce810101cf00f400c9ed5423b5106a');
+    const __code = Cell.fromHex('b5ee9c72410218010004bf0003e4ff008e88f4a413f4bcf2c80bed53208f5d30eda2edfb01d072d721d200d200fa4021103450666f04f86102f862ed44d0d200018e1c810101d700fa40810101d700d401d0fa40f404301025102410236c159a3070206df842f8424303e206925f06e024d749c21f9131e30d03f901e1ed43d9010f16020271020702016a0305016db1477b5134348000638720404075c03e9020404075c03500743e903d010c040944090408db05668c1c081b7e10be1090c0f8b6cf1b146004000221016db36a3b5134348000638720404075c03e9020404075c03500743e903d010c040944090408db05668c1c081b7e10be1090c0f8b6cf1b146006000224020148080d020275090b016fa5c7da89a1a400031c39020203ae01f481020203ae01a803a1f481e80860204a20482046d82b3460e040dbf085f0848607c4aa09b678d8a30a002e81010b22028101014133f40a6fa19401d70030925b6de2016ba581da89a1a400031c39020203ae01f481020203ae01a803a1f481e80860204a20482046d82b3460e040dbf085f0848607c5b678d8a30c000222016db74b7da89a1a400031c39020203ae01f481020203ae01a803a1f481e80860204a20482046d82b3460e040dbf085f0848607c5b678d8a300e00022002f804d31f218210bfd60d84ba8eed31d31f30f842218200b75c21c200f2f4813f510382103b9aca00a8f8416f24135f03b913f2f42681010b228101014133f40a6fa19401d70030925b6de2206e92307095206ef2d080e281010b5113a0103812810101216e955b59f4593098c801cf004133f441e25135a005a05ae021131004fe82102b6b6d85bae30221821050262060ba8f6b5b20a5f842217f810082036d6d50436d5033c8cf8580ca00cf8440ce01fa028069cf40025c6e016eb0935bcf819d58cf8680cf8480f400f400cf81e2f400c901fb00a18810354430f8427f705003804201503304c8cf8580ca00cf8440ce01fa02806acf40f400c901fb00e01112131400ee31d31ffa403081404df84225c705f2f48148375dbef2f45121a15980426d5a6d6d40037fc8cf8580ca00cf8440ce01fa028069cf40025c6e016eb0935bcf819d58cf8680cf8480f400f400cf81e2f400c901fb004034c87f01ca0055405045810101cf0012ce810101cf0001c8ce12f400cdc9ed54db31001600000000647261696e65640042c87f01ca0055405045810101cf0012ce810101cf0001c8ce12f400cdc9ed54db310194218210a1bc3662ba8e3331fa403081404df8425004c70513f2f44034c87f01ca0055405045810101cf0012ce810101cf0001c8ce12f400cdc9ed54db31e0018210946a98b6bae30231031500b2d33f30c8018210aff90f5758cb1fcb3fc910354430f84270705003804201503304c8cf8580ca00cf8440ce01fa02806acf40f400c901fb00c87f01ca0055405045810101cf0012ce810101cf0001c8ce12f400cdc9ed54db31015482f0941585dfcf619652420ac6b4b343948496b6be08bf8221d6d533bccb4c38e3a3bae3025f04f2c0821700d081404df84222c705f2f4f8427080426d5a6d6d40037fc8cf8580ca00cf8440ce01fa028069cf40025c6e016eb0935bcf819d58cf8680cf8480f400f400cf81e2f400c901fb005a7002c87f01ca0055405045810101cf0012ce810101cf0001c8ce12f400cdc9ed54f9638c46');
     const builder = beginCell();
     builder.storeUint(0, 1);
     initStakeContract_init_args({ $$type: 'StakeContract_init_args' })(builder);
@@ -1132,17 +1247,21 @@ const StakeContract_types: ABIType[] = [
     {"name":"Deploy","header":2490013878,"fields":[{"name":"queryId","type":{"kind":"simple","type":"uint","optional":false,"format":64}}]},
     {"name":"DeployOk","header":2952335191,"fields":[{"name":"queryId","type":{"kind":"simple","type":"uint","optional":false,"format":64}}]},
     {"name":"FactoryDeploy","header":1829761339,"fields":[{"name":"queryId","type":{"kind":"simple","type":"uint","optional":false,"format":64}},{"name":"cashback","type":{"kind":"simple","type":"address","optional":false}}]},
+    {"name":"ChangeOwner","header":2174598809,"fields":[{"name":"queryId","type":{"kind":"simple","type":"uint","optional":false,"format":64}},{"name":"newOwner","type":{"kind":"simple","type":"address","optional":false}}]},
+    {"name":"ChangeOwnerOk","header":846932810,"fields":[{"name":"queryId","type":{"kind":"simple","type":"uint","optional":false,"format":64}},{"name":"newOwner","type":{"kind":"simple","type":"address","optional":false}}]},
     {"name":"AddStake","header":3218476420,"fields":[{"name":"amount","type":{"kind":"simple","type":"uint","optional":false,"format":32}}]},
     {"name":"Withdraw","header":728460677,"fields":[{"name":"amount","type":{"kind":"simple","type":"uint","optional":false,"format":32}},{"name":"target","type":{"kind":"simple","type":"address","optional":false}}]},
     {"name":"SetAdmin","header":2713466466,"fields":[{"name":"newAdmin","type":{"kind":"simple","type":"address","optional":false}}]},
     {"name":"Drain","header":1344675936,"fields":[{"name":"target","type":{"kind":"simple","type":"address","optional":false}}]},
-    {"name":"StakeContract$Data","header":null,"fields":[{"name":"totalStaked","type":{"kind":"simple","type":"int","optional":false,"format":257}},{"name":"admin","type":{"kind":"simple","type":"address","optional":false}},{"name":"balance","type":{"kind":"simple","type":"int","optional":false,"format":257}},{"name":"mapStakes","type":{"kind":"dict","key":"address","value":"int"}}]},
+    {"name":"StakeContract$Data","header":null,"fields":[{"name":"totalStaked","type":{"kind":"simple","type":"int","optional":false,"format":257}},{"name":"admin","type":{"kind":"simple","type":"address","optional":false}},{"name":"balance","type":{"kind":"simple","type":"int","optional":false,"format":257}},{"name":"owner","type":{"kind":"simple","type":"address","optional":false}},{"name":"mapStakes","type":{"kind":"dict","key":"address","value":"int"}}]},
 ]
 
 const StakeContract_opcodes = {
     "Deploy": 2490013878,
     "DeployOk": 2952335191,
     "FactoryDeploy": 1829761339,
+    "ChangeOwner": 2174598809,
+    "ChangeOwnerOk": 846932810,
     "AddStake": 3218476420,
     "Withdraw": 728460677,
     "SetAdmin": 2713466466,
@@ -1154,6 +1273,7 @@ const StakeContract_getters: ABIGetter[] = [
     {"name":"allStakes","methodId":113243,"arguments":[],"returnType":{"kind":"dict","key":"address","value":"int"}},
     {"name":"totalStaked","methodId":89512,"arguments":[],"returnType":{"kind":"simple","type":"int","optional":false,"format":257}},
     {"name":"balance","methodId":104128,"arguments":[],"returnType":{"kind":"simple","type":"int","optional":false,"format":257}},
+    {"name":"owner","methodId":83229,"arguments":[],"returnType":{"kind":"simple","type":"address","optional":false}},
 ]
 
 export const StakeContract_getterMapping: { [key: string]: string } = {
@@ -1161,6 +1281,7 @@ export const StakeContract_getterMapping: { [key: string]: string } = {
     'allStakes': 'getAllStakes',
     'totalStaked': 'getTotalStaked',
     'balance': 'getBalance',
+    'owner': 'getOwner',
 }
 
 const StakeContract_receivers: ABIReceiver[] = [
@@ -1261,6 +1382,13 @@ export class StakeContract implements Contract {
         const builder = new TupleBuilder();
         const source = (await provider.get('balance', builder.build())).stack;
         const result = source.readBigNumber();
+        return result;
+    }
+    
+    async getOwner(provider: ContractProvider) {
+        const builder = new TupleBuilder();
+        const source = (await provider.get('owner', builder.build())).stack;
+        const result = source.readAddress();
         return result;
     }
     

@@ -1,7 +1,32 @@
+import { toNano } from '@ton/core';
+import { StakeContract } from '../wrappers/StakeContract';
+
+import { NetworkProvider } from '@ton/blueprint';
+
+export async function run(provider: NetworkProvider) {
+    const stakeContract = provider.open(await StakeContract.fromInit());
+
+    await stakeContract.send(
+        provider.sender(),
+        {
+            value: toNano('0.05'),
+        },
+            {
+                $$type: 'Deploy',
+                queryId: 1n,
+            },
+    );
+
+    await provider.waitForDeploy(stakeContract.address);
+
+    // run methods on `stakeContract`
+}
+
+/*
 // scripts/deployStakeContract.ts
 import { toNano } from '@ton/core';
-import { StakeContract } from '../build/StakeContract/StakeContract_StakeContract';
-//import { StakeContract } from '../wrappers/StakeContract_StakeContract';
+import { StakeContract } from '../wrappers/StakeContract';
+//import { StakeContract } from '../build/StakeContract/StakeContract_StakeContract';
 import { compile, NetworkProvider } from '@ton/blueprint';
 
 export async function run(provider: NetworkProvider) {
@@ -39,6 +64,8 @@ export async function run(provider: NetworkProvider) {
   const total = await stake.getTotalStaked();
   console.log('🔢 TotalStaked initial value:', total.toString());
 }
+*/
+
 
 /*
 

@@ -5,5 +5,7 @@
   "name": "TON Stake",
   "iconUrl": "https://staking-mocha-iota.vercel.app/images/image-ton-hand.jpg",
   "termsOfUseUrl": "https://example.com/terms",
-  "privacyPolicyUrl": "https://example.com/privacy"
+  "privacyPolicyUrl": "https://example.com/privacy",
+  "permissions": ["tonClient"],              
+  "networks": ["testnet"] 
 }

@@ -7,10 +7,10 @@ import { useStakeContract } from "@/lib/ton/useContract";
 import { useTonConnect }    from "@/lib/ton/useTonConnect";
 
 export default function StakePanel() {
-  const contractAddress = process.env.NEXT_PUBLIC_CONTRACT_ADDRESS!;
-  const { connected, connect } = useTonConnect();
+  //const contractAddress = process.env.NEXT_PUBLIC_CONTRACT_ADDRESS!;
+  const { connected } = useTonConnect(); //connect
   const { totalStaked, userStake, stakeTon, withdrawTon } =
-    useStakeContract(contractAddress);
+    useStakeContract(); //contractAddress
 
   const [amount, setAmount] = useState(0);
   const [target, setTarget] = useState("");
@@ -21,7 +21,7 @@ export default function StakePanel() {
         <p>Чтобы начать, подключите ваш TON-кошелёк:</p>
         <button
           className="mt-2 px-4 py-2 bg-blue-500 text-white rounded"
-          onClick={connect}
+          onClick={console.log}
         >
           Connect Wallet
         </button>

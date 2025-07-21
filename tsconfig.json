@@ -22,6 +22,6 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["next-env.d.ts", "test/StakeContract.spec.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "tailwind.config.js", "scripts/deployStakeContract.ts"],
+  "include": ["next-env.d.ts", "tests/StakeContract.spec.ts", "build/StakeContract/StakeContract_StakeContract.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "tailwind.config.js", "scripts/deployStakeContract.ts"],
   "exclude": ["node_modules"]
 }

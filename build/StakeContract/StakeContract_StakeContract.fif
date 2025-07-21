@@ -20,6 +20,7 @@ PROGRAM{
   DECLPROC $MessageParameters$_constructor_bounce_to_value_mode_body
   DECLPROC $StakeContract$_fun_reply
   DECLPROC $StakeContract$_fun_notify
+  DECLPROC $StakeContract$_fun_owner
   DECLPROC $SendParameters$_constructor_to_value_mode
   DECLPROC $SendParameters$_constructor_to_value_bounce_mode
   DECLPROC $DeployOk$_constructor_queryId
@@ -27,6 +28,7 @@ PROGRAM{
   113243 DECLMETHOD %allStakes
   89512 DECLMETHOD %totalStaked
   104128 DECLMETHOD %balance
+  83229 DECLMETHOD %owner
   DECLPROC recv_internal
   65535 DECLMETHOD __tact_selector_hack
   DECLGLOBVAR __tact_context
@@ -85,13 +87,19 @@ PROGRAM{
     ENDC
   }>
   $StakeContract$_store PROCINLINE:<{
-    s3 s4 XCHG2
+    s4 s5 XCHG2
     257 PUSHINT
     STIX
+    s1 s2 XCHG
     STSLICE
     257 PUSHINT
     STIX
+    SWAP
+    NEWC
+    STSLICE
+    s1 s2 XCHG
     STDICT
+    STBREFR
   }>
   $StakeContract$_load PROCINLINE:<{
     257 PUSHINT
@@ -99,8 +107,15 @@ PROGRAM{
     LDMSGADDR
     257 PUSHINT
     LDIX
+    LDREF
+    SWAP
+    CTOS
+    LDMSGADDR
     LDDICT
-    4 -ROLL
+    DROP
+    s2 s5 XCHG
+    s2 s4 XCHG
+    s2 s3 XCHG
   }>
   $Context$_get_value PROCINLINE:<{
     s1 s3 XCHG
@@ -111,7 +126,8 @@ PROGRAM{
     DUP
     PUSHNULL
     __tact_context_get_sender INLINECALLDICT
-    -ROT
+    __tact_context_get_sender INLINECALLDICT
+    s3 s0 s3 XCHG3
   }>
   $StakeContract$_contract_load PROCINLINE:<{
     c4 PUSH
@@ -120,7 +136,7 @@ PROGRAM{
     SWAP
     IF:<{
       $StakeContract$_load INLINECALLDICT
-      1 4 BLKDROP2
+      1 5 BLKDROP2
     }>ELSE<{
       DROP
       $StakeContract$_contract_init INLINECALLDICT
@@ -131,7 +147,7 @@ PROGRAM{
     TRUE
     SWAP
     1 STI
-    4 -ROLL
+    5 -ROLL
     $StakeContract$_store INLINECALLDICT
     ENDC
     c4 POP
@@ -147,10 +163,10 @@ PROGRAM{
     DUP
   }>
   $StakeContract$_fun_totalStaked PROCREF:<{
-    s3 PUSH
+    s4 PUSH
   }>
   $StakeContract$_fun_balance PROCREF:<{
-    OVER
+    s2 PUSH
   }>
   $MessageParameters$_constructor_bounce_to_value_mode_body PROCINLINE:<{
     s3 s3 XCHG2
@@ -208,6 +224,9 @@ PROGRAM{
         SWAP
         SENDRAWMSG
   }>
+  $StakeContract$_fun_owner PROCREF:<{
+    OVER
+  }>
   $SendParameters$_constructor_to_value_mode PROCINLINE:<{
     PUSHNULL
     2SWAP
@@ -228,24 +247,29 @@ PROGRAM{
   }>
   %userStake PROC:<{
     $StakeContract$_contract_load INLINECALLDICT
-    4 ROLL
+    5 ROLL
     $StakeContract$_fun_userStake INLINECALLDICT
-    4 1 BLKDROP2
+    5 1 BLKDROP2
   }>
   %allStakes PROC:<{
     $StakeContract$_contract_load INLINECALLDICT
     $StakeContract$_fun_allStakes INLINECALLDICT
-    4 1 BLKDROP2
+    5 1 BLKDROP2
   }>
   %totalStaked PROC:<{
     $StakeContract$_contract_load INLINECALLDICT
     $StakeContract$_fun_totalStaked INLINECALLDICT
-    4 1 BLKDROP2
+    5 1 BLKDROP2
   }>
   %balance PROC:<{
     $StakeContract$_contract_load INLINECALLDICT
     $StakeContract$_fun_balance INLINECALLDICT
-    4 1 BLKDROP2
+    5 1 BLKDROP2
+  }>
+  %owner PROC:<{
+    $StakeContract$_contract_load INLINECALLDICT
+    $StakeContract$_fun_owner INLINECALLDICT
+    5 1 BLKDROP2
   }>
   recv_internal PROC:<{
     c2 SAVE
@@ -265,15 +289,15 @@ PROGRAM{
     s0 s2 XCHG
     __tact_context_sender SETGLOB
     $StakeContract$_contract_load INLINECALLDICT
-    s0 s5 XCHG
+    s0 s6 XCHG
     IFJMP:<{
-      5 BLKDROP
+      6 BLKDROP
     }>
-    s3 PUSH
+    s4 PUSH
     SBITS
     31 GTINT
     IF:<{
-      s0 s3 XCHG
+      s0 s4 XCHG
       32 LDU
       OVER
       3218476420 PUSHINT
@@ -297,7 +321,7 @@ PROGRAM{
         LESS
         s1 s3 XCHG
         THROWANYIFNOT
-        s5 PUSH
+        s6 PUSH
         267 PUSHINT
         s2 PUSH
         257 PUSHINT
@@ -313,15 +337,15 @@ PROGRAM{
         267 PUSHINT
         s1 s3 XCPU
         ADD
-        s3 s7 XCHG
+        s3 s8 XCHG
         s1 s2 XCHG
         257 PUSHINT
         __tact_dict_set_slice_int INLINECALLDICT
-        s2 s4 XCPU
+        s3 s5 XCPU
         ADD
-        s3 s4 XCHG2
+        s0 s5 XCHG
         ADD
-        SWAP
+        2SWAP
         $StakeContract$_contract_store INLINECALLDICT
         RETALT
       }>
@@ -335,16 +359,16 @@ PROGRAM{
         DROP
         16461 PUSHINT
         __tact_context_get_sender INLINECALLDICT
-        s4 PUSH
+        s5 PUSH
         SDEQ
         THROWANYIFNOT
         18487 PUSHINT
-        s5 s2 PUSH2
+        2OVER
         GEQ
         THROWANYIFNOT
-        s4 s1 XCPU
+        s2 s1 XCPU
         SUB
-        s4 s4 XCHG2
+        -ROT
         66 PUSHINT
         $SendParameters$_constructor_to_value_mode INLINECALLDICT
             NEWC
@@ -413,7 +437,7 @@ PROGRAM{
             // Group 5: Sending the message, with `mode` on top
             SWAP
             SENDRAWMSG // https://github.com/tact-lang/tact/issues/1558
-        s0 s0 s3 XCHG3
+        s0 s3 s4 XCHG3
         $StakeContract$_contract_store INLINECALLDICT
         RETALT
       }>
@@ -422,7 +446,7 @@ PROGRAM{
       EQUAL
       IFJMP:<{
         2DROP
-        s2 PUSH
+        DUP
         DEC
         __tact_context_get_sender INLINECALLDICT
         OVER
@@ -495,10 +519,10 @@ PROGRAM{
             // Group 5: Sending the message, with `mode` on top
             SWAP
             SENDRAWMSG // https://github.com/tact-lang/tact/issues/1558
-        s1 s3 XCHG
         SUB
             B{b5ee9c7241010101000d00001600000000647261696e65640b6d6669} B>boc PUSHREF
-        s1 s4 s0 XCHG3
+        s3 s5 XCHG
+        s4 s3 s0 XCHG3
         $StakeContract$_fun_reply INLINECALLDICT
         $StakeContract$_contract_store INLINECALLDICT
         RETALT
@@ -512,11 +536,11 @@ PROGRAM{
         DROP
         16461 PUSHINT
         __tact_context_get_sender INLINECALLDICT
-        s0 s3 XCHG2
+        s0 s4 XCHG2
         SDEQ
-        s1 s2 XCHG
+        s1 s3 XCHG
         THROWANYIFNOT
-        s0 s0 s3 XCHG3
+        s0 s3 s4 XCHG3
         $StakeContract$_contract_store INLINECALLDICT
         RETALT
       }>
@@ -529,24 +553,25 @@ PROGRAM{
         $DeployOk$_constructor_queryId INLINECALLDICT
         NEWC
         $DeployOk$_store_cell INLINECALLDICT
+        s3 s5 XCHG
         s4 s3 s0 XCHG3
-        s1 s2 XCHG
         $StakeContract$_fun_notify INLINECALLDICT
         $StakeContract$_contract_store INLINECALLDICT
         RETALT
       }>
-      s3 POP
+      NIP
+      s0 s3 XCHG
     }>ELSE<{
-      DROP
+      NIP
     }>
-    s0 s2 XCHG
+    s0 s3 XCHG
     HASHSU
     66980329344855790887704333477733912927286506207428756763196383856412247778211 PUSHINT
     EQUAL
     IFJMP:<{
       16461 PUSHINT
       __tact_context_get_sender INLINECALLDICT
-      s3 PUSH
+      s2 PUSH
       SDEQ
       THROWANYIFNOT
       __tact_context_get_sender INLINECALLDICT
@@ -619,12 +644,12 @@ PROGRAM{
           // Group 5: Sending the message, with `mode` on top
           SWAP
           SENDRAWMSG // https://github.com/tact-lang/tact/issues/1558
-      s0 s2 XCHG
+      2SWAP
       0 PUSHINT
-      SWAP
+      s0 s2 XCHG
       $StakeContract$_contract_store INLINECALLDICT
     }>
-    3 BLKDROP
+    4 BLKDROP
     130 THROW
   }>
   __tact_selector_hack PROC:<{

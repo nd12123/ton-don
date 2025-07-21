@@ -1,6 +1,6 @@
 "use client"
 
-import { TonConnectUIProvider } from "@tonconnect/ui-react"
+import { TonConnectUIProvider } from "@tonconnect/ui-react" //CHAIN
 import { useEffect, useState } from "react"
 
 export function TonProviderWrapper({ children }: { children: React.ReactNode }) {
@@ -18,6 +18,7 @@ export function TonProviderWrapper({ children }: { children: React.ReactNode }) 
   return (
     <TonConnectUIProvider
       manifestUrl="https://staking-mocha-iota.vercel.app/tonconnect-manifest.json"
+      //networks={[CHAIN.TESTNET]}                // ← only allow Testnet
       actionsConfiguration={{
         twaReturnUrl: returnUrl,
       }}

@@ -3,13 +3,14 @@
 
 import { CHAIN, useTonConnectUI, useTonWallet } from "@tonconnect/ui-react";
 import { Address, Sender, SenderArguments }      from "@ton/core";
+//import { Wallet } from "lucide-react";
 
 export function useTonConnect(): {
   sender: Sender;
   connected: boolean;
   wallet: string | null;
   network: CHAIN | null;
-  connect: () => Promise<void>;
+  //connect: () => Promise<void>;
 } {
   const [tonConnectUI] = useTonConnectUI();
   const walletState    = useTonWallet();
@@ -18,17 +19,47 @@ export function useTonConnect(): {
   const rawAddress = walletState?.account?.address ?? null;
   const connected  = rawAddress !== null && rawAddress !== "?";
 
-  const rawChain = walletState?.account?.chain ?? null;
-  const network  = connected ? (rawChain as CHAIN) : null;
+  //const rawChain = walletState?.account?.chain ?? null;
+  //const network  = connected ? (rawChain as CHAIN) : null;
+
+  //console.log('establishing TON connection', )
+  return {
+    sender: {
+        send: async(args: SenderArguments) => {
+            tonConnectUI.sendTransaction({
+                messages: [{
+                    address:args.toString(),
+                    amount: args.value.toString(),
+                    payload: args.body?.toBoc().toString("base64")
+                }],
+            validUntil: Math.floor(Date.now() / 1000) + 60 * 5,
+            })
+        },
+        address: walletState?.account.address ? Address.parse(walletState?.account.address as string) : undefined
+    },
+    
+    connected: connected, //!!walletState?.account.address,
+    wallet: walletState?.account.address ?? null,
+    network: walletState?.account.chain ?? null,
+
+  }
+}
+
+
 
   // кнопку подключения
+  /*
   const connect = async () => {
     await tonConnectUI.openModal();
   };
+  */
 
   // наш sender — адрес только если connected
-  const sender: Sender = {
+  
+/*
+const sender: Sender = {
     address: connected ? Address.parse(rawAddress!) : undefined,
+
     send: async (args: SenderArguments) => {
       await tonConnectUI.sendTransaction({
         validUntil: Date.now() + 5 * 60_000,
@@ -42,7 +73,6 @@ export function useTonConnect(): {
       });
     },
   };
-
   return {
     sender,
     connected,
@@ -50,4 +80,4 @@ export function useTonConnect(): {
     network,
     connect,
   };
-}
+*/

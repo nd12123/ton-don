@@ -14,8 +14,17 @@ import { useTonAddress } from "@tonconnect/ui-react";
 import { PLANS} from "@/components/Plans";
 
 import StakePanel from "@/components/StakePanel";
+import { useTonConnect } from "@/lib/ton/useTonConnect";
+import {TonConnectButton, CHAIN } from "@tonconnect/ui-react"
+import { Jetton } from "@/components/Jetton";
+import { FlexBoxCol, FlexBoxRow } from "../../../components/styled/styled";
+import { Address } from "@ton/core";
+
 
 export default function StakingPage() {
+  const {network, wallet} = useTonConnect()
+
+
   const address = useTonAddress(); // строка вида "EQCx…"
 
 
@@ -63,8 +72,27 @@ function handlePlanSelect(planName: string) {
 }
 
   return (
-    <main className="min-h-screen bg-gray-50 dark:bg-gray-900 text-black px-4 py-10 flex flex-col items-center">
+    <main className="min-h-screen bg-gray-50 dark:bg-gray-900 text-blue-900 px-4 py-10 flex flex-col items-center">
       
+        <FlexBoxCol>
+          <FlexBoxRow>
+            <TonConnectButton/>
+            <Button>
+              {network
+                ? network === CHAIN.MAINNET
+                  ? "mainnet"
+                  : "testnet"
+                : "N/A"}
+            </Button>
+            <Button>
+              {wallet
+                  ? Address.parse(wallet as string).toString()
+                : "N/A"}
+            </Button>
+          </FlexBoxRow>
+          <Jetton />
+          <StakePanel />
+        </FlexBoxCol>
       {/* Заголовок */}
       <h1 className="text-3xl font-bold mb-6 dark:text-gray-100">Staking Plans</h1>
       
@@ -120,11 +148,7 @@ function handlePlanSelect(planName: string) {
           </div>
         </div>
         
-             <div className="p-8">
-            <h1 className="text-2xl font-bold mb-4">Админ-панель</h1>
-            {/* Вот он — ваш стейкинг-интерфейс */}
-            <StakePanel />
-          </div>
+             
       </section>
 
       {/* 3) Модалка */}
