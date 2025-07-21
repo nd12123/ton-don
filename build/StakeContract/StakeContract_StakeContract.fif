@@ -13,6 +13,7 @@ PROGRAM{
   DECLPROC $StakeContract$_contract_init
   DECLPROC $StakeContract$_contract_load
   DECLPROC $StakeContract$_contract_store
+  DECLPROC $StakeContract$_fun_Admin
   DECLPROC $StakeContract$_fun_userStake
   DECLPROC $StakeContract$_fun_allStakes
   DECLPROC $StakeContract$_fun_totalStaked
@@ -24,6 +25,7 @@ PROGRAM{
   DECLPROC $SendParameters$_constructor_to_value_mode
   DECLPROC $SendParameters$_constructor_to_value_bounce_mode
   DECLPROC $DeployOk$_constructor_queryId
+  118266 DECLMETHOD %Admin
   103651 DECLMETHOD %userStake
   113243 DECLMETHOD %allStakes
   89512 DECLMETHOD %totalStaked
@@ -152,6 +154,9 @@ PROGRAM{
     ENDC
     c4 POP
   }>
+  $StakeContract$_fun_Admin PROCREF:<{
+    s3 PUSH
+  }>
   $StakeContract$_fun_userStake PROCREF:<{
     267 PUSHINT
     s2 PUSH
@@ -244,6 +249,11 @@ PROGRAM{
     s3 s3 XCHG2
   }>
   $DeployOk$_constructor_queryId PROCINLINE:<{
+  }>
+  %Admin PROC:<{
+    $StakeContract$_contract_load INLINECALLDICT
+    $StakeContract$_fun_Admin INLINECALLDICT
+    5 1 BLKDROP2
   }>
   %userStake PROC:<{
     $StakeContract$_contract_load INLINECALLDICT
@@ -345,6 +355,16 @@ PROGRAM{
         ADD
         s0 s5 XCHG
         ADD
+        __tact_context_get_sender INLINECALLDICT
+            NEWC
+            x{42_} STSLICECONST // .storeUint(0x10, 6)
+            STSLICE          // .storeAddress(to)
+            0 PUSHINT        // 0
+            111 STUR         // .storeUint(0, 111)
+                             // 4 zeros for coins and 107 zeros for lt, fees, etc.
+            ENDC
+            66 PUSHINT       // SendRemainingValue | SendIgnoreErrors
+            SENDRAWMSG
         2SWAP
         $StakeContract$_contract_store INLINECALLDICT
         RETALT

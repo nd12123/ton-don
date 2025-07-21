@@ -7,6 +7,7 @@ import {
   StakeContract,
   AddStake,
   Withdraw,
+  //SetAdmin noneed
 } from "../../build/StakeContract/StakeContract_StakeContract";
 import { useAsyncInitialize } from "./useAsyncInitialize";
 import { useTonClient }       from "./useTonClient";
@@ -22,14 +23,15 @@ export function useStakeContract() { //contractAddress: string
   
   const [totalStaked, setTotalStaked] = useState<bigint>(0n);
   const [userStake,   setUserStake]   = useState<bigint>(0n);
+  const [admin,      setAdminAddr]    = useState<string | null>(null);
 
   // 1) Открываем контракт
   const contract = useAsyncInitialize<OpenedContract<StakeContract> | null>(
     async () => {
       if (!client || !wallet) return null;
-      console.log("Contract opening, wallet ", Address.parse(wallet as string).toString(), " contract ", Address.parse("kQB3u_BlKZsMEHsz9GFwJfUY7lG7xlzKdil8yUwqEIFFstNz"))
+      console.log("Contract opening, wallet ", Address.parse(wallet as string).toString(), " contract ", "kQB3u_BlKZsMEHsz9GFwJfUY7lG7xlzKdil8yUwqEIFFstNz") //Address.parse()
       const desc = StakeContract.fromAddress(
-        Address.parse("EQB3u_BlKZsMEHsz9GFwJfUY7lG7xlzKdil8yUwqEIFFsmj5")//kQB3u_BlKZsMEHsz9GFwJfUY7lG7xlzKdil8yUwqEIFFstNz") //contractAddress //"kQB3u_BlKZsMEHsz9GFwJfUY7lG7xlzKdil8yUwqEIFFstNz")//"0QAmQUOW2aGZb8uGmDd8fhhcs7u5NpzzmybooQo46PzGleIL")//"EQB8akzBYXBpATjJiWG1vRwo2FG2JoA9czy3yNno-qhMnlMo") //process.env.NEXT_PUBLIC_ADMIN_WALLETS ? can be a string? maybe log
+        Address.parse("kQB3u_BlKZsMEHsz9GFwJfUY7lG7xlzKdil8yUwqEIFFstNz")//") // EQB3u_BlKZsMEHsz9GFwJfUY7lG7xlzKdil8yUwqEIFFsmj5 //contractAddress //"kQB3u_BlKZsMEHsz9GFwJfUY7lG7xlzKdil8yUwqEIFFstNz")//"0QAmQUOW2aGZb8uGmDd8fhhcs7u5NpzzmybooQo46PzGleIL")//"EQB8akzBYXBpATjJiWG1vRwo2FG2JoA9czy3yNno-qhMnlMo") //process.env.NEXT_PUBLIC_ADMIN_WALLETS ? can be a string? maybe log
       );
       return client.open(desc) as OpenedContract<StakeContract>;
     },
@@ -41,8 +43,10 @@ export function useStakeContract() { //contractAddress: string
     async function fetchData() {
       if (!contract || !sender.address) return;
       const total = await contract.getTotalStaked();
-      console.log("✅ contract is ready, address:", contract.address.toString());
+      const admin = await contract.getAdmin(); //!!
 
+      console.log("✅ contract is ready, address:", contract.address.toString(), " Admin ", admin.toString());
+      setAdminAddr(admin.toString())
       setTotalStaked(total);
       console.log('Total ',total)
       const stake = await contract.getUserStake(sender.address);
@@ -50,6 +54,16 @@ export function useStakeContract() { //contractAddress: string
     }
     fetchData();
   }, [contract, sender.address]);
+
+// 3) fetch admin as soon as contract is ready
+  useEffect(() => {
+    if (!contract) return;
+    (async () => {
+      const a = await contract.getAdmin();
+      setAdminAddr(a.toString());
+    })();
+  }, [contract]);
+
 
   // 3) Метод стейка
   
@@ -63,16 +77,111 @@ export function useStakeContract() { //contractAddress: string
     };
     console.log('ready to stake ', amount, msg, sender.address)
 
-
+    console.log('Amount in msg ', BigInt(amount), ' Value sent ', toNano('1.05') )
     await contract.send(
       sender,
-      { value: toNano(amount.toString()) + gasBuffer },
-      msg
+      { 
+        value: toNano('1.05') 
+      }, // toNano(amount.toString()) + gasBuffer 
+      {
+      $$type: "AddStake",
+      amount: BigInt(amount),
+      }
     );
     console.log('staking ', fromNano(toNano(amount.toString())) + gasBuffer , ' TON', msg)
     // можно вызвать fetchData(), если нужно сразу обновить UI
   };
   
+  // 5) setAdmin — only callable by current admin
+  /*
+  const setAdmin = async (newAdmin: string) => {
+    if (!contract) throw new Error("contract not ready");
+    await contract.send(
+      sender,
+      { value: toNano("0.05") },
+      { $$type: "SetAdmin", admin: Address.parse(newAdmin) } as SetAdmin
+    );
+    setAdminAddr(newAdmin);
+  };
+  */
+
+  // 4) Метод вывода
+  const withdrawTon = async (amount: number, target: string) => {
+    if (!contract) return;
+    const msg: Withdraw = {
+      $$type: "Withdraw",
+      amount: BigInt(amount),
+      target: Address.parse(target),
+    };
+    await contract.send(
+      sender,
+      { value: toNano("0.03") },
+      msg
+    );
+    // можно вызвать fetchData() здесь тоже
+  };
+
+  return {
+        contractAddress: contract?.address.toString(),
+    //connected: connected,
+    /*
+    contractAddress: contract?.address.toString(),
+    */
+    totalStaked,
+    userStake,
+    stakeTon,
+    withdrawTon,
+    admin
+
+/*
+    stakeScript: (amount: number) =>{
+    console.log('preparing to stake ', amount)
+    if (!contract){ console.log("Contract not deployed"); return};
+    const msg: AddStake = {
+      $$type: "AddStake",
+      amount: BigInt(amount),
+    };
+    console.log('ready to stake ', amount, msg, sender.address)
+
+    contract.send(
+      sender,
+      { value: toNano(amount.toString()) + gasBuffer,
+        //sendMode: 3 value only(
+       },
+      msg
+    );
+    console.log('staking ', fromNano(toNano(amount.toString())) + gasBuffer , ' TON', msg)
+    // можно вызвать fetchData(), если нужно сразу обновить UI
+  }
+
+  */
+            /*
+    mint: () => {
+            const message = {
+                $$type: "Mint",
+                amount: 150n
+            }
+            StakeContract?.send(sender, {
+                value: toNano("0.05")
+            }, message)
+        }
+            */
+      
+    /*
+    staker: () => {
+      const message ={
+        $$type: 'Stake',
+        amount: 1n,
+
+      }
+      StakeContract?.(sender, {
+                value: toNano("0.05")
+            }, message) //send
+    }
+            */
+  };
+}
+
 
 
   /*
@@ -103,98 +212,4 @@ export function useStakeContract() { //contractAddress: string
       ],
     });
   };
-*/
-  // 4) Метод вывода
-  const withdrawTon = async (amount: number, target: string) => {
-    if (!contract) return;
-    const msg: Withdraw = {
-      $$type: "Withdraw",
-      amount: BigInt(amount),
-      target: Address.parse(target),
-    };
-    await contract.send(
-      sender,
-      { value: toNano("0.03") },
-      msg
-    );
-    // можно вызвать fetchData() здесь тоже
-  };
-
-  return {
-        contractAddress: contract?.address.toString(),
-    //connected: connected,
-    /*
-    contractAddress: contract?.address.toString(),
-    */
-    totalStaked,
-    userStake,
-    stakeTon,
-    withdrawTon,
-
-
-    stakeScript: (amount: number) =>{
-    console.log('preparing to stake ', amount)
-    if (!contract){ console.log("Contract not deployed"); return};
-    const msg: AddStake = {
-      $$type: "AddStake",
-      amount: BigInt(amount),
-    };
-    console.log('ready to stake ', amount, msg, sender.address)
-
-    contract.send(
-      sender,
-      { value: toNano(amount.toString()) + gasBuffer,
-        //sendMode: 3 value only(
-       },
-      msg
-    );
-    console.log('staking ', fromNano(toNano(amount.toString())) + gasBuffer , ' TON', msg)
-    // можно вызвать fetchData(), если нужно сразу обновить UI
-  }
-            /*
-    mint: () => {
-            const message = {
-                $$type: "Mint",
-                amount: 150n
-            }
-            StakeContract?.send(sender, {
-                value: toNano("0.05")
-            }, message)
-        }
-            */
-      
-    /*
-    staker: () => {
-      const message ={
-        $$type: 'Stake',
-        amount: 1n,
-
-      }
-      StakeContract?.(sender, {
-                value: toNano("0.05")
-            }, message) //send
-    }
-            */
-  };
-}
-
-
-
-/*
-   const jettonContract = useAsyncInitialize(async()=>{
-        if(!client || !wallet) return;
-
-        const contract = StakeContract.fromAddress(Address.parse("EQB8akzBYXBpATjJiWG1vRwo2FG2JoA9czy3yNno-qhMnlMo")) //
-
-        return client.open(contract) as OpenedContract<StakeContract>
-    }, [client, wallet])
-  const jettonWalletContract = useAsyncInitialize(async()=>{
-        if(!jettonContract || !client) return;
-
-        const jettonWalletAddress = await jettonContract.getGetWalletAddress(
-            Address.parse(Address.parse(wallet!).toString())
-        )
-
-        return client.open(JettonDefaultWallet.fromAddress(jettonWalletAddress))
-    }, [jettonContract, client])
 */

@@ -28,9 +28,10 @@ export function useTonConnect(): {
         send: async(args: SenderArguments) => {
             tonConnectUI.sendTransaction({
                 messages: [{
-                    address:args.toString(),
+                    address:args.to.toString(),
                     amount: args.value.toString(),
-                    payload: args.body?.toBoc().toString("base64")
+                    payload: args.body?.toBoc().toString("base64"),
+                    //stateInit: ,
                 }],
             validUntil: Math.floor(Date.now() / 1000) + 60 * 5,
             })

@@ -1,7 +1,5 @@
-
 import { Address } from "@ton/core";
-//import { useJettonContract } from "../hooks/useJettonContract";
-import { useStakeContract } from "../lib/ton/useContract";
+import { useStakeContract } from "@/lib/ton/useContract";
 import { useTonConnect } from "@/lib/ton/useTonConnect";
 import { useStakeDeploy } from "@/lib/ton/useStakeDeploy";
 import {
@@ -11,66 +9,83 @@ import {
   Button,
   Ellipsis,
 } from "./styled/styled";
-export function Jetton() {
-  const {deploy} = useStakeDeploy()
-  const { wallet, connected} = useTonConnect() //connected
-  //const {jettonWalletAddress, balance, mint} = useStakeContract()
-    //const address = process.env.NEXT_PUBLIC_CONTRACT_ADDRESS!;
 
-  const  {contractAddress, totalStaked, userStake, stakeScript} =  useStakeContract() // mint,address totalStaked, userStake, stakeTon, withdrawTon
+export function Jetton() {
+  const { deploy } = useStakeDeploy();
+  const { wallet, connected } = useTonConnect();
+  const { contractAddress, totalStaked, userStake, stakeTon, withdrawTon, admin } = useStakeContract();
 
   return (
     <Card title="Contract">
       <FlexBoxCol>
-        <h3>Smart-Contract</h3>
+        <h3>Smart Contract</h3>
+
         <FlexBoxRow>
-          Wallet
-          <Ellipsis>{ wallet ? Address.parse(wallet as string).toString() : "Loading..."}</Ellipsis>
-        </FlexBoxRow>
-        <FlexBoxRow>
-          Contract Wallet
-          <Ellipsis>{contractAddress ? contractAddress : "Loading..."}</Ellipsis>
-        </FlexBoxRow>
-                <FlexBoxRow>
-          TotalStaked
+          <strong>Wallet:</strong>
           <Ellipsis>
-     { totalStaked !== undefined
-        ? totalStaked.toString()
-        : "Loading…"
-     }</Ellipsis>
+            {wallet ? Address.parse(wallet).toString() : "Loading..."}
+          </Ellipsis>
         </FlexBoxRow>
 
         <FlexBoxRow>
-          Balance
-          <div>{userStake ?? "Loading..."}</div>
+          <strong>Contract:</strong>
+          <Ellipsis>
+            {contractAddress ?? "Loading..."}
+          </Ellipsis>
         </FlexBoxRow>
-        
+
         <FlexBoxRow>
-        <Button
-          disabled={!connected} onClick={() => {
-     // здесь React ожидает void, а мы запускаем асинхронную логику
-     stakeScript(1);
-   }}>
-        </Button>
+          <strong>Admin:</strong>
+          <Ellipsis>
+            {admin ? Address.parse(admin).toString() : "Loading..."}
+          </Ellipsis>
         </FlexBoxRow>
-        
+
         <FlexBoxRow>
-        <Button
-          disabled={!connected} onClick={deploy}>
-        </Button>
+          <strong>Total Staked:</strong>
+          <Ellipsis>
+            {totalStaked.toString()}
+          </Ellipsis>
         </FlexBoxRow>
-        
-        {/**
-        <Button>
-          disabled={!connected} onClick={mint}>
-          </FlexBoxCol>Mint jettons
-        </Button>
-         */}
+
+        <FlexBoxRow>
+          <strong>Your Stake:</strong>
+          <Ellipsis>
+            {userStake.toString()}
+          </Ellipsis>
+        </FlexBoxRow>
+
+        <FlexBoxRow>
+          <Button
+            disabled={!connected}
+            style={{ backgroundColor: '#0070f3', color: '#fff' }}
+            onClick={() => stakeTon(1)}
+          >
+            Stake 1 TON
+          </Button>
+        </FlexBoxRow>
+
+        <FlexBoxRow>
+          <Button
+            disabled={!connected || userStake === 0n}
+            style={{ backgroundColor: '#e00', color: '#fff' }}
+            onClick={() => withdrawTon(1, "0QAmQUOW2aGZb8uGmDd8fhhcs7u5NpzzmybooQo46PzGleIL")}
+          >
+            Withdraw Stake
+          </Button>
+        </FlexBoxRow>
+
+        <FlexBoxRow>
+          <Button
+            disabled={!connected}
+            style={{ backgroundColor: '#ffa500', color: '#000' }}
+            onClick={() => deploy()}
+          >
+            Deploy Contract
+          </Button>
+        </FlexBoxRow>
+
       </FlexBoxCol>
     </Card>
-    
   );
 }
-
-/*
-  */

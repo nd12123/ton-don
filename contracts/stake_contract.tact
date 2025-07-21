@@ -44,7 +44,6 @@ contract StakeContract with Deployable, Ownable {
         
         require(stakeAmount > 0, "Nothing to stake");
         require(msg.amount * 1000000000 < context().value, "Mismatch stake");
-
         // Get current stake
         //let current: Int = self.mapStakes.get(sender) 0; //?? 0
         // Получаем опциональный предыдущий стейк
@@ -56,13 +55,11 @@ contract StakeContract with Deployable, Ownable {
         } else {
             current = prevOpt!!;
         }
-
-
         // Update mapping and total
         self.mapStakes.set(user, current + stakeAmount); 
         self.totalStaked += stakeAmount;
         self.balance += stakeAmount;
-        //cashback(sender());
+        cashback(sender());
     }
 
     receive(msg: Withdraw) {
@@ -109,6 +106,9 @@ self.balance = 0;
         self.admin = msg.newAdmin;
     }
 
+get fun Admin(): Address{
+        return self.admin;
+    }
 
     get fun userStake(key: Address):  Int? {
         return self.mapStakes.get(key);

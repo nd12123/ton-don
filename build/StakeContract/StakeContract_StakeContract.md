@@ -1,6 +1,6 @@
 # Tact compilation report
 Contract: StakeContract
-BoC Size: 1227 bytes
+BoC Size: 1308 bytes
 
 ## Structures (Structs and Messages)
 Total structures: 20
@@ -86,7 +86,10 @@ TL-B: `_ totalStaked:int257 admin:address balance:int257 owner:address mapStakes
 Signature: `StakeContract{totalStaked:int257,admin:address,balance:int257,owner:address,mapStakes:dict<address, int>}`
 
 ## Get methods
-Total get methods: 5
+Total get methods: 6
+
+## Admin
+No arguments
 
 ## userStake
 Argument: key
