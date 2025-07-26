@@ -1,6 +1,6 @@
 # Tact compilation report
 Contract: StakeContract
-BoC Size: 1308 bytes
+BoC Size: 1307 bytes
 
 ## Structures (Structs and Messages)
 Total structures: 20
@@ -88,7 +88,7 @@ Signature: `StakeContract{totalStaked:int257,admin:address,balance:int257,owner:
 ## Get methods
 Total get methods: 6
 
-## Admin
+## contractAdmin
 No arguments
 
 ## userStake

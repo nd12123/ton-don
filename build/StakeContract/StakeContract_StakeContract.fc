@@ -47,8 +47,8 @@ _ $Context$_get_value((int, slice, int, slice) v) inline;
 ;; $StakeContract$_contract_store
 () $StakeContract$_contract_store((int, slice, int, slice, cell) v) impure inline;
 
-;; $StakeContract$_fun_Admin
-((int, slice, int, slice, cell), slice) $StakeContract$_fun_Admin((int, slice, int, slice, cell) $self) impure inline_ref;
+;; $StakeContract$_fun_contractAdmin
+((int, slice, int, slice, cell), slice) $StakeContract$_fun_contractAdmin((int, slice, int, slice, cell) $self) impure inline_ref;
 
 ;; $StakeContract$_fun_userStake
 ((int, slice, int, slice, cell), int) $StakeContract$_fun_userStake((int, slice, int, slice, cell) $self, slice $key) impure inline_ref;
@@ -279,8 +279,8 @@ int $global_myBalance() impure asm """
 
 ((int, slice, int, slice, cell), slice) $StakeContract$_fun_owner((int, slice, int, slice, cell) $self) impure inline_ref {
     var (($self'totalStaked, $self'admin, $self'balance, $self'owner, $self'mapStakes)) = $self;
-    var $fresh$ret_5 = $self'owner;
-    return (($self'totalStaked, $self'admin, $self'balance, $self'owner, $self'mapStakes), $fresh$ret_5);
+    var $fresh$ret_11 = $self'owner;
+    return (($self'totalStaked, $self'admin, $self'balance, $self'owner, $self'mapStakes), $fresh$ret_11);
 }
 
 ;; StakeContract_StakeContract.constants.fc
@@ -402,43 +402,43 @@ builder $StakeContract$_store(builder build_0, (int, slice, int, slice, cell) v)
     return ($self'totalStaked, $self'admin, $self'balance, $self'owner, $self'mapStakes);
 }
 
-((int, slice, int, slice, cell), slice) $StakeContract$_fun_Admin((int, slice, int, slice, cell) $self) impure inline_ref {
+((int, slice, int, slice, cell), slice) $StakeContract$_fun_contractAdmin((int, slice, int, slice, cell) $self) impure inline_ref {
     var (($self'totalStaked, $self'admin, $self'balance, $self'owner, $self'mapStakes)) = $self;
-    var $fresh$ret_0 = $self'admin;
-    return (($self'totalStaked, $self'admin, $self'balance, $self'owner, $self'mapStakes), $fresh$ret_0);
+    var $fresh$ret_6 = $self'admin;
+    return (($self'totalStaked, $self'admin, $self'balance, $self'owner, $self'mapStakes), $fresh$ret_6);
 }
 
 ((int, slice, int, slice, cell), int) $StakeContract$_fun_userStake((int, slice, int, slice, cell) $self, slice $key) impure inline_ref {
     var (($self'totalStaked, $self'admin, $self'balance, $self'owner, $self'mapStakes)) = $self;
-    var $fresh$ret_1 = __tact_dict_get_slice_int($self'mapStakes, 267, $key, 257);
-    return (($self'totalStaked, $self'admin, $self'balance, $self'owner, $self'mapStakes), $fresh$ret_1);
+    var $fresh$ret_7 = __tact_dict_get_slice_int($self'mapStakes, 267, $key, 257);
+    return (($self'totalStaked, $self'admin, $self'balance, $self'owner, $self'mapStakes), $fresh$ret_7);
 }
 
 ((int, slice, int, slice, cell), cell) $StakeContract$_fun_allStakes((int, slice, int, slice, cell) $self) impure inline_ref {
     var (($self'totalStaked, $self'admin, $self'balance, $self'owner, $self'mapStakes)) = $self;
-    var $fresh$ret_2 = $self'mapStakes;
-    return (($self'totalStaked, $self'admin, $self'balance, $self'owner, $self'mapStakes), $fresh$ret_2);
+    var $fresh$ret_8 = $self'mapStakes;
+    return (($self'totalStaked, $self'admin, $self'balance, $self'owner, $self'mapStakes), $fresh$ret_8);
 }
 
 ((int, slice, int, slice, cell), int) $StakeContract$_fun_totalStaked((int, slice, int, slice, cell) $self) impure inline_ref {
     var (($self'totalStaked, $self'admin, $self'balance, $self'owner, $self'mapStakes)) = $self;
-    var $fresh$ret_3 = $self'totalStaked;
-    return (($self'totalStaked, $self'admin, $self'balance, $self'owner, $self'mapStakes), $fresh$ret_3);
+    var $fresh$ret_9 = $self'totalStaked;
+    return (($self'totalStaked, $self'admin, $self'balance, $self'owner, $self'mapStakes), $fresh$ret_9);
 }
 
 ((int, slice, int, slice, cell), int) $StakeContract$_fun_balance((int, slice, int, slice, cell) $self) impure inline_ref {
     var (($self'totalStaked, $self'admin, $self'balance, $self'owner, $self'mapStakes)) = $self;
-    var $fresh$ret_4 = $self'balance;
-    return (($self'totalStaked, $self'admin, $self'balance, $self'owner, $self'mapStakes), $fresh$ret_4);
+    var $fresh$ret_10 = $self'balance;
+    return (($self'totalStaked, $self'admin, $self'balance, $self'owner, $self'mapStakes), $fresh$ret_10);
 }
 
 ;;
 ;; Get methods of a Contract StakeContract
 ;;
 
-_ %Admin() method_id(118266) {
+_ %contractAdmin() method_id(103927) {
     var self = $StakeContract$_contract_load();
-    var res = self~$StakeContract$_fun_Admin();
+    var res = self~$StakeContract$_fun_contractAdmin();
     return res;
 }
 

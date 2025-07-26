@@ -106,7 +106,7 @@ self.balance = 0;
         self.admin = msg.newAdmin;
     }
 
-get fun Admin(): Address{
+    get fun contractAdmin(): Address{
         return self.admin;
     }
 

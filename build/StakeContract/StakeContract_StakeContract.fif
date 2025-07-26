@@ -13,7 +13,7 @@ PROGRAM{
   DECLPROC $StakeContract$_contract_init
   DECLPROC $StakeContract$_contract_load
   DECLPROC $StakeContract$_contract_store
-  DECLPROC $StakeContract$_fun_Admin
+  DECLPROC $StakeContract$_fun_contractAdmin
   DECLPROC $StakeContract$_fun_userStake
   DECLPROC $StakeContract$_fun_allStakes
   DECLPROC $StakeContract$_fun_totalStaked
@@ -25,7 +25,7 @@ PROGRAM{
   DECLPROC $SendParameters$_constructor_to_value_mode
   DECLPROC $SendParameters$_constructor_to_value_bounce_mode
   DECLPROC $DeployOk$_constructor_queryId
-  118266 DECLMETHOD %Admin
+  103927 DECLMETHOD %contractAdmin
   103651 DECLMETHOD %userStake
   113243 DECLMETHOD %allStakes
   89512 DECLMETHOD %totalStaked
@@ -154,7 +154,7 @@ PROGRAM{
     ENDC
     c4 POP
   }>
-  $StakeContract$_fun_Admin PROCREF:<{
+  $StakeContract$_fun_contractAdmin PROCREF:<{
     s3 PUSH
   }>
   $StakeContract$_fun_userStake PROCREF:<{
@@ -250,9 +250,9 @@ PROGRAM{
   }>
   $DeployOk$_constructor_queryId PROCINLINE:<{
   }>
-  %Admin PROC:<{
+  %contractAdmin PROC:<{
     $StakeContract$_contract_load INLINECALLDICT
-    $StakeContract$_fun_Admin INLINECALLDICT
+    $StakeContract$_fun_contractAdmin INLINECALLDICT
     5 1 BLKDROP2
   }>
   %userStake PROC:<{
