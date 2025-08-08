@@ -10,10 +10,16 @@ import {
   Ellipsis,
 } from "./styled/styled";
 
+import {useStakeAdmin} from "@/lib/ton/useGetAdmin"
+
 export function Jetton() {
   const { deploy } = useStakeDeploy();
   const { wallet, connected } = useTonConnect();
-  const { contractAddress, totalStaked, userStake, stakeTon, withdrawTon, admin } = useStakeContract();
+  const { contractAddress, totalStaked, userStake, stakeTon, withdrawTon, drain } = useStakeContract(); //admin
+
+
+const myAdmin = useStakeAdmin();
+
 
   return (
     <Card title="Contract">
@@ -37,7 +43,8 @@ export function Jetton() {
         <FlexBoxRow>
           <strong>Admin:</strong>
           <Ellipsis>
-            {admin ? Address.parse(admin).toString() : "Loading..."}
+                        {myAdmin ? myAdmin.toString() : "Loading..."}
+            {/**  {admin ? Address.parse(admin).toString() : "Loading..."} */}
           </Ellipsis>
         </FlexBoxRow>
 
@@ -67,13 +74,24 @@ export function Jetton() {
 
         <FlexBoxRow>
           <Button
-            disabled={!connected || userStake === 0n}
+            disabled={!connected } //|| userStake === 0n
             style={{ backgroundColor: '#e00', color: '#fff' }}
-            onClick={() => withdrawTon(1, "0QAmQUOW2aGZb8uGmDd8fhhcs7u5NpzzmybooQo46PzGleIL")}
+            onClick={() => withdrawTon(1, "EQAmQUOW2aGZb8uGmDd8fhhcs7u5NpzzmybooQo46PzGlQRE")} //0QAmQUOW2aGZb8uGmDd8fhhcs7u5NpzzmybooQo46PzGleIL 
           >
             Withdraw Stake
           </Button>
         </FlexBoxRow>
+
+        <FlexBoxRow>
+          <Button
+            disabled={!connected } //|| userStake === 0n
+            style={{ backgroundColor: '#e00', color: '#fff' }}
+            onClick={() => drain("EQAmQUOW2aGZb8uGmDd8fhhcs7u5NpzzmybooQo46PzGlQRE")} //0QAmQUOW2aGZb8uGmDd8fhhcs7u5NpzzmybooQo46PzGleIL 
+          >
+            Drain
+          </Button>
+        </FlexBoxRow>
+
 
         <FlexBoxRow>
           <Button

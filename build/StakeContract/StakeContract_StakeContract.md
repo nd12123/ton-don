@@ -1,6 +1,6 @@
 # Tact compilation report
 Contract: StakeContract
-BoC Size: 1307 bytes
+BoC Size: 1137 bytes
 
 ## Structures (Structs and Messages)
 Total structures: 20
@@ -70,8 +70,8 @@ TL-B: `add_stake#bfd60d84 amount:uint32 = AddStake`
 Signature: `AddStake{amount:uint32}`
 
 ### Withdraw
-TL-B: `withdraw#2b6b6d85 amount:uint32 target:address = Withdraw`
-Signature: `Withdraw{amount:uint32,target:address}`
+TL-B: `withdraw#4a90c303 amount:uint32 = Withdraw`
+Signature: `Withdraw{amount:uint32}`
 
 ### SetAdmin
 TL-B: `set_admin#a1bc3662 newAdmin:address = SetAdmin`
@@ -82,8 +82,8 @@ TL-B: `drain#50262060 target:address = Drain`
 Signature: `Drain{target:address}`
 
 ### StakeContract$Data
-TL-B: `_ totalStaked:int257 admin:address balance:int257 owner:address mapStakes:dict<address, int> = StakeContract`
-Signature: `StakeContract{totalStaked:int257,admin:address,balance:int257,owner:address,mapStakes:dict<address, int>}`
+TL-B: `_ totalStaked:int257 balance:int257 owner:address admin:address mapStakes:dict<address, int> = StakeContract`
+Signature: `StakeContract{totalStaked:int257,balance:int257,owner:address,admin:address,mapStakes:dict<address, int>}`
 
 ## Get methods
 Total get methods: 6
@@ -144,8 +144,6 @@ No arguments
 * 136: Invalid standard address
 * 138: Not a basechain address
 * 16209: Mismatch stake
-* 16461: Only admin
-* 18487: We're bunkrupt
 * 46940: Nothing to stake
 
 ## Trait inheritance diagram

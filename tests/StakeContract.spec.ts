@@ -84,13 +84,13 @@ describe('StakeContract', () => {
         console.log(balanceStart, balanceEnd) //res, balanceCompany)
         
         const start = await stakeContract.getBalance();
-
+/*
         console.log('balance before drain', start)
 
         await stakeContract.send(deployer.getSender(), {
             value: toNano('0.2')
         }, "drain")
-
+*/
         const inbetween = await stakeContract.getBalance();
         console.log('balance inbetween', inbetween)
 

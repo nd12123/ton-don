@@ -912,42 +912,36 @@ export function dictValueParserAddStake(): DictionaryValue<AddStake> {
 export type Withdraw = {
     $$type: 'Withdraw';
     amount: bigint;
-    target: Address;
 }
 
 export function storeWithdraw(src: Withdraw) {
     return (builder: Builder) => {
         const b_0 = builder;
-        b_0.storeUint(728460677, 32);
+        b_0.storeUint(1251001091, 32);
         b_0.storeUint(src.amount, 32);
-        b_0.storeAddress(src.target);
     };
 }
 
 export function loadWithdraw(slice: Slice) {
     const sc_0 = slice;
-    if (sc_0.loadUint(32) !== 728460677) { throw Error('Invalid prefix'); }
+    if (sc_0.loadUint(32) !== 1251001091) { throw Error('Invalid prefix'); }
     const _amount = sc_0.loadUintBig(32);
-    const _target = sc_0.loadAddress();
-    return { $$type: 'Withdraw' as const, amount: _amount, target: _target };
+    return { $$type: 'Withdraw' as const, amount: _amount };
 }
 
 export function loadTupleWithdraw(source: TupleReader) {
     const _amount = source.readBigNumber();
-    const _target = source.readAddress();
-    return { $$type: 'Withdraw' as const, amount: _amount, target: _target };
+    return { $$type: 'Withdraw' as const, amount: _amount };
 }
 
 export function loadGetterTupleWithdraw(source: TupleReader) {
     const _amount = source.readBigNumber();
-    const _target = source.readAddress();
-    return { $$type: 'Withdraw' as const, amount: _amount, target: _target };
+    return { $$type: 'Withdraw' as const, amount: _amount };
 }
 
 export function storeTupleWithdraw(source: Withdraw) {
     const builder = new TupleBuilder();
     builder.writeNumber(source.amount);
-    builder.writeAddress(source.target);
     return builder.build();
 }
 
@@ -1059,9 +1053,9 @@ export function dictValueParserDrain(): DictionaryValue<Drain> {
 export type StakeContract$Data = {
     $$type: 'StakeContract$Data';
     totalStaked: bigint;
-    admin: Address;
     balance: bigint;
     owner: Address;
+    admin: Address;
     mapStakes: Dictionary<Address, bigint>;
 }
 
@@ -1069,10 +1063,10 @@ export function storeStakeContract$Data(src: StakeContract$Data) {
     return (builder: Builder) => {
         const b_0 = builder;
         b_0.storeInt(src.totalStaked, 257);
-        b_0.storeAddress(src.admin);
         b_0.storeInt(src.balance, 257);
+        b_0.storeAddress(src.owner);
         const b_1 = new Builder();
-        b_1.storeAddress(src.owner);
+        b_1.storeAddress(src.admin);
         b_1.storeDict(src.mapStakes, Dictionary.Keys.Address(), Dictionary.Values.BigInt(257));
         b_0.storeRef(b_1.endCell());
     };
@@ -1081,38 +1075,38 @@ export function storeStakeContract$Data(src: StakeContract$Data) {
 export function loadStakeContract$Data(slice: Slice) {
     const sc_0 = slice;
     const _totalStaked = sc_0.loadIntBig(257);
-    const _admin = sc_0.loadAddress();
     const _balance = sc_0.loadIntBig(257);
+    const _owner = sc_0.loadAddress();
     const sc_1 = sc_0.loadRef().beginParse();
-    const _owner = sc_1.loadAddress();
+    const _admin = sc_1.loadAddress();
     const _mapStakes = Dictionary.load(Dictionary.Keys.Address(), Dictionary.Values.BigInt(257), sc_1);
-    return { $$type: 'StakeContract$Data' as const, totalStaked: _totalStaked, admin: _admin, balance: _balance, owner: _owner, mapStakes: _mapStakes };
+    return { $$type: 'StakeContract$Data' as const, totalStaked: _totalStaked, balance: _balance, owner: _owner, admin: _admin, mapStakes: _mapStakes };
 }
 
 export function loadTupleStakeContract$Data(source: TupleReader) {
     const _totalStaked = source.readBigNumber();
-    const _admin = source.readAddress();
     const _balance = source.readBigNumber();
     const _owner = source.readAddress();
+    const _admin = source.readAddress();
     const _mapStakes = Dictionary.loadDirect(Dictionary.Keys.Address(), Dictionary.Values.BigInt(257), source.readCellOpt());
-    return { $$type: 'StakeContract$Data' as const, totalStaked: _totalStaked, admin: _admin, balance: _balance, owner: _owner, mapStakes: _mapStakes };
+    return { $$type: 'StakeContract$Data' as const, totalStaked: _totalStaked, balance: _balance, owner: _owner, admin: _admin, mapStakes: _mapStakes };
 }
 
 export function loadGetterTupleStakeContract$Data(source: TupleReader) {
     const _totalStaked = source.readBigNumber();
-    const _admin = source.readAddress();
     const _balance = source.readBigNumber();
     const _owner = source.readAddress();
+    const _admin = source.readAddress();
     const _mapStakes = Dictionary.loadDirect(Dictionary.Keys.Address(), Dictionary.Values.BigInt(257), source.readCellOpt());
-    return { $$type: 'StakeContract$Data' as const, totalStaked: _totalStaked, admin: _admin, balance: _balance, owner: _owner, mapStakes: _mapStakes };
+    return { $$type: 'StakeContract$Data' as const, totalStaked: _totalStaked, balance: _balance, owner: _owner, admin: _admin, mapStakes: _mapStakes };
 }
 
 export function storeTupleStakeContract$Data(source: StakeContract$Data) {
     const builder = new TupleBuilder();
     builder.writeNumber(source.totalStaked);
-    builder.writeAddress(source.admin);
     builder.writeNumber(source.balance);
     builder.writeAddress(source.owner);
+    builder.writeAddress(source.admin);
     builder.writeCell(source.mapStakes.size > 0 ? beginCell().storeDictDirect(source.mapStakes, Dictionary.Keys.Address(), Dictionary.Values.BigInt(257)).endCell() : null);
     return builder.build();
 }
@@ -1139,7 +1133,7 @@ function initStakeContract_init_args(src: StakeContract_init_args) {
 }
 
 async function StakeContract_init() {
-    const __code = Cell.fromHex('b5ee9c7241021b0100050f0003e4ff008e88f4a413f4bcf2c80bed53208f5d30eda2edfb01d072d721d200d200fa4021103450666f04f86102f862ed44d0d200018e1c810101d700fa40810101d700d401d0fa40f404301025102410236c159a3070206df842f8424303e206925f06e024d749c21f9131e30d03f901e1ed43d9011219020271020702016a0305016db1477b5134348000638720404075c03e9020404075c03500743e903d010c040944090408db05668c1c081b7e10be1090c0f8b6cf1b146004000221016db36a3b5134348000638720404075c03e9020404075c03500743e903d010c040944090408db05668c1c081b7e10be1090c0f8b6cf1b1460060002240201480810020275090e0201200a0c016fa38fb5134348000638720404075c03e9020404075c03500743e903d010c040944090408db05668c1c081b7e10be1090c0f8954136cf1b1460b002e81010b22028101014133f40a6fa19401d70030925b6de2016ba3dfb5134348000638720404075c03e9020404075c03500743e903d010c040944090408db05668c1c081b7e10be1090c0f8b6cf1b1460d000223016ba581da89a1a400031c39020203ae01f481020203ae01a803a1f481e80860204a20482046d82b3460e040dbf085f0848607c5b678d8a30f000222016db74b7da89a1a400031c39020203ae01f481020203ae01a803a1f481e80860204a20482046d82b3460e040dbf085f0848607c5b678d8a301100022004ce04d31f218210bfd60d84bae3022182102b6b6d85bae30221821050262060bae302218210a1bc3662ba8e3331fa403081404df8425004c70513f2f44034c87f01ca0055405045810101cf0012ce810101cf0001c8ce12f400cdc9ed54db31e0018210946a98b6ba1314151801fa31d31f30f842218200b75c21c200f2f4813f510382103b9aca00a8f8416f24135f03b913f2f42681010b228101014133f40a6fa19401d70030925b6de2206e92307095206ef2d080e281010b5113a0103812810101216e955b59f4593098c801cf004133f441e25135a005a0f842c8cf8508ce70cf0b6ec98042fb005a1700ee31d31ffa403081404df84225c705f2f48148375dbef2f45121a15980426d5a6d6d40037fc8cf8580ca00cf8440ce01fa028069cf40025c6e016eb0935bcf819d58cf8680cf8480f400f400cf81e2f400c901fb004034c87f01ca0055405045810101cf0012ce810101cf0001c8ce12f400cdc9ed54db3102d65b20a5f842217f810082036d6d50436d5033c8cf8580ca00cf8440ce01fa028069cf40025c6e016eb0935bcf819d58cf8680cf8480f400f400cf81e2f400c901fb00a18810354430f8427f705003804201503304c8cf8580ca00cf8440ce01fa02806acf40f400c901fb001617001600000000647261696e65640042c87f01ca0055405045810101cf0012ce810101cf0001c8ce12f400cdc9ed54db3100bc8e59d33f30c8018210aff90f5758cb1fcb3fc910354430f84270705003804201503304c8cf8580ca00cf8440ce01fa02806acf40f400c901fb00c87f01ca0055405045810101cf0012ce810101cf0001c8ce12f400cdc9ed54db31e03103015482f0941585dfcf619652420ac6b4b343948496b6be08bf8221d6d533bccb4c38e3a3bae3025f04f2c0821a00d081404df84222c705f2f4f8427080426d5a6d6d40037fc8cf8580ca00cf8440ce01fa028069cf40025c6e016eb0935bcf819d58cf8680cf8480f400f400cf81e2f400c901fb005a7002c87f01ca0055405045810101cf0012ce810101cf0001c8ce12f400cdc9ed543ea762a1');
+    const __code = Cell.fromHex('b5ee9c7241021b0100046500022cff008e88f4a413f4bcf2c80bed53208e8130e1ed43d90112020271020702016a0305016bb1477b5134348000638720404075c020404075c03e903500743e903d010c040944090408db05664c1c081b7e10be1080b8b6cf1b146004000222016bb36a3b5134348000638720404075c020404075c03e903500743e903d010c040944090408db05664c1c081b7e10be1080b8b6cf1b1460060002240201480810020275090e0201200a0c016da38fb5134348000638720404075c020404075c03e903500743e903d010c040944090408db05664c1c081b7e10be1080b8954136cf1b1460b002e81010b22028101014133f40a6fa19401d70030925b6de20169a3dfb5134348000638720404075c020404075c03e903500743e903d010c040944090408db05664c1c081b7e10be1080b8b6cf1b1460d0002210169a581da89a1a400031c39020203ae01020203ae01f481a803a1f481e80860204a20482046d82b3260e040dbf085f08405c5b678d8a30f000223016bb74b7da89a1a400031c39020203ae01020203ae01f481a803a1f481e80860204a20482046d82b3260e040dbf085f08405c5b678d8a301100022004f001d072d721d200d200fa4021103450666f04f86102f862ed44d0d200018e1c810101d700810101d700fa40d401d0fa40f404301025102410236c15993070206df842f84202e206925f06e004d70d1ff2e082218210bfd60d84bae3022182104a90c303bae30221821050262060bae302018210946a98b6ba1314171a01fe31d31f30f842218200b75c21c200f2f4813f510382103b9aca00a8f8416f24135f03b913f2f42681010b228101014133f40a6fa19401d70030925b6de2206e92307095206ef2d080e281010b5113a0103812810101216e955b59f4593098c801cf004133f441e25135a05025a0f842c8cf8508ce70cf0b6ec98042fb0041331902bc31d31f30f8276f10f8416f24135f03a18208989680a1b608f8427f228042036d6d50436d4133c8cf8580ca00cf8440ce01fa028069cf40025c6e016eb0935bcf819d58cf8680cf8480f400f400cf81e2f400c901fb0012a18810354440131516001a0000000077697468647261776e0084f8427f705003804201503304c8cf8580ca00cf8440ce01fa02806acf40f400c901fb00c87f01ca0055405045810101cf0012810101cf00ce01c8ce12f400cdc9ed5402da5b21a5f842217f810082036d6d50436d5033c8cf8580ca00cf8440ce01fa028069cf40025c6e016eb0935bcf819d58cf8680cf8480f400f400cf81e2f400c901fb0012a1881035444013f8427f705003804201503304c8cf8580ca00cf8440ce01fa02806acf40f400c901fb001819001600000000647261696e6564003ec87f01ca0055405045810101cf0012810101cf00ce01c8ce12f400cdc9ed5400be8e57d33f30c8018210aff90f5758cb1fcb3fc910354430f84270705003804201503304c8cf8580ca00cf8440ce01fa02806acf40f400c901fb00c87f01ca0055405045810101cf0012810101cf00ce01c8ce12f400cdc9ed54e05f06f2c0821c25a0de');
     const builder = beginCell();
     builder.storeUint(0, 1);
     initStakeContract_init_args({ $$type: 'StakeContract_init_args' })(builder);
@@ -1185,8 +1179,6 @@ export const StakeContract_errors = {
     136: { message: "Invalid standard address" },
     138: { message: "Not a basechain address" },
     16209: { message: "Mismatch stake" },
-    16461: { message: "Only admin" },
-    18487: { message: "We're bunkrupt" },
     46940: { message: "Nothing to stake" },
 } as const
 
@@ -1228,8 +1220,6 @@ export const StakeContract_errors_backward = {
     "Invalid standard address": 136,
     "Not a basechain address": 138,
     "Mismatch stake": 16209,
-    "Only admin": 16461,
-    "We're bunkrupt": 18487,
     "Nothing to stake": 46940,
 } as const
 
@@ -1250,10 +1240,10 @@ const StakeContract_types: ABIType[] = [
     {"name":"ChangeOwner","header":2174598809,"fields":[{"name":"queryId","type":{"kind":"simple","type":"uint","optional":false,"format":64}},{"name":"newOwner","type":{"kind":"simple","type":"address","optional":false}}]},
     {"name":"ChangeOwnerOk","header":846932810,"fields":[{"name":"queryId","type":{"kind":"simple","type":"uint","optional":false,"format":64}},{"name":"newOwner","type":{"kind":"simple","type":"address","optional":false}}]},
     {"name":"AddStake","header":3218476420,"fields":[{"name":"amount","type":{"kind":"simple","type":"uint","optional":false,"format":32}}]},
-    {"name":"Withdraw","header":728460677,"fields":[{"name":"amount","type":{"kind":"simple","type":"uint","optional":false,"format":32}},{"name":"target","type":{"kind":"simple","type":"address","optional":false}}]},
+    {"name":"Withdraw","header":1251001091,"fields":[{"name":"amount","type":{"kind":"simple","type":"uint","optional":false,"format":32}}]},
     {"name":"SetAdmin","header":2713466466,"fields":[{"name":"newAdmin","type":{"kind":"simple","type":"address","optional":false}}]},
     {"name":"Drain","header":1344675936,"fields":[{"name":"target","type":{"kind":"simple","type":"address","optional":false}}]},
-    {"name":"StakeContract$Data","header":null,"fields":[{"name":"totalStaked","type":{"kind":"simple","type":"int","optional":false,"format":257}},{"name":"admin","type":{"kind":"simple","type":"address","optional":false}},{"name":"balance","type":{"kind":"simple","type":"int","optional":false,"format":257}},{"name":"owner","type":{"kind":"simple","type":"address","optional":false}},{"name":"mapStakes","type":{"kind":"dict","key":"address","value":"int"}}]},
+    {"name":"StakeContract$Data","header":null,"fields":[{"name":"totalStaked","type":{"kind":"simple","type":"int","optional":false,"format":257}},{"name":"balance","type":{"kind":"simple","type":"int","optional":false,"format":257}},{"name":"owner","type":{"kind":"simple","type":"address","optional":false}},{"name":"admin","type":{"kind":"simple","type":"address","optional":false}},{"name":"mapStakes","type":{"kind":"dict","key":"address","value":"int"}}]},
 ]
 
 const StakeContract_opcodes = {
@@ -1263,7 +1253,7 @@ const StakeContract_opcodes = {
     "ChangeOwner": 2174598809,
     "ChangeOwnerOk": 846932810,
     "AddStake": 3218476420,
-    "Withdraw": 728460677,
+    "Withdraw": 1251001091,
     "SetAdmin": 2713466466,
     "Drain": 1344675936,
 }
@@ -1289,16 +1279,14 @@ export const StakeContract_getterMapping: { [key: string]: string } = {
 const StakeContract_receivers: ABIReceiver[] = [
     {"receiver":"internal","message":{"kind":"typed","type":"AddStake"}},
     {"receiver":"internal","message":{"kind":"typed","type":"Withdraw"}},
-    {"receiver":"internal","message":{"kind":"text","text":"drain"}},
     {"receiver":"internal","message":{"kind":"typed","type":"Drain"}},
-    {"receiver":"internal","message":{"kind":"typed","type":"SetAdmin"}},
     {"receiver":"internal","message":{"kind":"typed","type":"Deploy"}},
 ]
 
 
 export class StakeContract implements Contract {
     
-    public static readonly minTonForStorage = 1000000n;
+    public static readonly MinTonForStorage = 10000000n;
     public static readonly storageReserve = 0n;
     public static readonly errors = StakeContract_errors_backward;
     public static readonly opcodes = StakeContract_opcodes;
@@ -1331,7 +1319,7 @@ export class StakeContract implements Contract {
         this.init = init;
     }
     
-    async send(provider: ContractProvider, via: Sender, args: { value: bigint, bounce?: boolean| null | undefined }, message: AddStake | Withdraw | "drain" | Drain | SetAdmin | Deploy) {
+    async send(provider: ContractProvider, via: Sender, args: { value: bigint, bounce?: boolean| null | undefined }, message: AddStake | Withdraw | Drain | Deploy) {
         
         let body: Cell | null = null;
         if (message && typeof message === 'object' && !(message instanceof Slice) && message.$$type === 'AddStake') {
@@ -1340,14 +1328,8 @@ export class StakeContract implements Contract {
         if (message && typeof message === 'object' && !(message instanceof Slice) && message.$$type === 'Withdraw') {
             body = beginCell().store(storeWithdraw(message)).endCell();
         }
-        if (message === "drain") {
-            body = beginCell().storeUint(0, 32).storeStringTail(message).endCell();
-        }
         if (message && typeof message === 'object' && !(message instanceof Slice) && message.$$type === 'Drain') {
             body = beginCell().store(storeDrain(message)).endCell();
-        }
-        if (message && typeof message === 'object' && !(message instanceof Slice) && message.$$type === 'SetAdmin') {
-            body = beginCell().store(storeSetAdmin(message)).endCell();
         }
         if (message && typeof message === 'object' && !(message instanceof Slice) && message.$$type === 'Deploy') {
             body = beginCell().store(storeDeploy(message)).endCell();

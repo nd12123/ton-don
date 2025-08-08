@@ -6,7 +6,7 @@ message AddStake {
 }
 message Withdraw {
     amount: Int as uint32;
-    target: Address;
+    //target: Address;
 }
 
 message SetAdmin {
@@ -17,13 +17,14 @@ message Drain {
     target: Address;
 }
 
-contract StakeContract with Deployable, Ownable {
+contract StakeContract with Deployable, Ownable  { //
     totalStaked: Int; // as uint128
-    admin: Address;
+    //admin: Address;
     balance: Int;
     owner: Address;
+    admin: Address;
     
-    const minTonForStorage: Int = ton("0.001");
+    const MinTonForStorage: Int = ton("0.01");
 
     mapStakes: map<Address, Int>; 
 
@@ -31,6 +32,7 @@ contract StakeContract with Deployable, Ownable {
         self.totalStaked = 0;
         self.balance = 0;
         self.mapStakes = emptyMap();
+        //self.admin = sender();
         self.admin = sender();
         self.owner = sender();
         //self.admin = 'EQBGhqLAZseEqRXz4ByFPTGV7SVMlI4hrbs-Sps_Xzx01x8G'; //example
@@ -61,29 +63,36 @@ contract StakeContract with Deployable, Ownable {
         self.balance += stakeAmount;
         cashback(sender());
     }
-
+/*
     receive(msg: Withdraw) {
-        require(sender() == self.admin, "Only admin");
-        require(self.balance >= msg.amount, "We're bunkrupt");
-        self.balance -= msg.amount;
+        //require(sender() == self.admin, "Only admin");
+        //require(self.balance >= msg.amount, "We're bunkrupt");
+        //self.balance -= msg.amount;
+        let amount = msg.amount; // * 1_000_000_000
         send(SendParameters{
-            to: msg.target,
-            value: msg.amount,
-            mode: SendRemainingValue + SendIgnoreErrors,
+            to: sender(),//msg.target,
+            value: ton("1"), //amount,// msg.amount,
+            bounce: true,
+            mode:  SendIgnoreErrors, //SendIgnoreErrors, //SendRemainingValue
             //body: //Deposit{amount: msg.amount}.toCell()
         });
     }
-    //bounced(){}
-receive("drain"){
-    require(sender() == self.admin, "Only admin");
-    send(SendParameters{
+    */
+
+// this will withdraw a specific amount but leave 0.01 for storage rent costs
+    receive(msg: Withdraw) {
+        //require(sender() == self.deployer, "Only deployer is allowed to withdraw");
+        let amount: Int = min(msg.amount, myBalance() - context().value - self.MinTonForStorage);
+        //require(amount > 0, "Insufficient balance");
+        send(SendParameters{
             to: sender(),
-            value: 0,
-            mode: SendRemainingValue + SendIgnoreErrors,
-            //body: Deposit{amount: msg.amount}.toCell()
+            bounce: true,
+            value: amount,
+            mode: SendRemainingValue + SendIgnoreErrors
         });
-self.balance = 0;
-}
+        self.balance -= amount;
+        self.reply("withdrawn".asComment())
+    }
 
     // Эмердженси-дрейн: сливаем всё на admin
     receive(msg: Drain) {
@@ -100,11 +109,28 @@ self.balance = 0;
         self.reply("drained".asComment())
     }
 
+    //bounced(){}
+    /*
+receive("drain"){
+    require(sender() == self.admin, "Only admin");
+    send(SendParameters{
+            to: sender(),
+            value: 0,
+            mode: SendRemainingValue + SendIgnoreErrors,
+            //body: Deposit{amount: msg.amount}.toCell()
+        });
+self.balance = 0;
+}
+*/
+
+
 // Изменить администратора может только текущий admin
+/*
     receive(msg: SetAdmin) {
         require(sender() == self.admin, "Only admin");
         self.admin = msg.newAdmin;
     }
+    */
 
     get fun contractAdmin(): Address{
         return self.admin;

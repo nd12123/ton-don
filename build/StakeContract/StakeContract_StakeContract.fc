@@ -30,52 +30,52 @@ builder $DeployOk$_store(builder build_0, (int) v) inline;
 cell $DeployOk$_store_cell((int) v, builder b) inline;
 
 ;; $StakeContract$_store
-builder $StakeContract$_store(builder build_0, (int, slice, int, slice, cell) v) inline;
+builder $StakeContract$_store(builder build_0, (int, int, slice, slice, cell) v) inline;
 
 ;; $StakeContract$_load
-(slice, ((int, slice, int, slice, cell))) $StakeContract$_load(slice sc_0) inline;
+(slice, ((int, int, slice, slice, cell))) $StakeContract$_load(slice sc_0) inline;
 
 ;; $Context$_get_value
 _ $Context$_get_value((int, slice, int, slice) v) inline;
 
 ;; $StakeContract$_contract_init
-(int, slice, int, slice, cell) $StakeContract$_contract_init() impure inline;
+(int, int, slice, slice, cell) $StakeContract$_contract_init() impure inline;
 
 ;; $StakeContract$_contract_load
-(int, slice, int, slice, cell) $StakeContract$_contract_load() impure inline;
+(int, int, slice, slice, cell) $StakeContract$_contract_load() impure inline;
 
 ;; $StakeContract$_contract_store
-() $StakeContract$_contract_store((int, slice, int, slice, cell) v) impure inline;
+() $StakeContract$_contract_store((int, int, slice, slice, cell) v) impure inline;
 
 ;; $StakeContract$_fun_contractAdmin
-((int, slice, int, slice, cell), slice) $StakeContract$_fun_contractAdmin((int, slice, int, slice, cell) $self) impure inline_ref;
+((int, int, slice, slice, cell), slice) $StakeContract$_fun_contractAdmin((int, int, slice, slice, cell) $self) impure inline_ref;
 
 ;; $StakeContract$_fun_userStake
-((int, slice, int, slice, cell), int) $StakeContract$_fun_userStake((int, slice, int, slice, cell) $self, slice $key) impure inline_ref;
+((int, int, slice, slice, cell), int) $StakeContract$_fun_userStake((int, int, slice, slice, cell) $self, slice $key) impure inline_ref;
 
 ;; $StakeContract$_fun_allStakes
-((int, slice, int, slice, cell), cell) $StakeContract$_fun_allStakes((int, slice, int, slice, cell) $self) impure inline_ref;
+((int, int, slice, slice, cell), cell) $StakeContract$_fun_allStakes((int, int, slice, slice, cell) $self) impure inline_ref;
 
 ;; $StakeContract$_fun_totalStaked
-((int, slice, int, slice, cell), int) $StakeContract$_fun_totalStaked((int, slice, int, slice, cell) $self) impure inline_ref;
+((int, int, slice, slice, cell), int) $StakeContract$_fun_totalStaked((int, int, slice, slice, cell) $self) impure inline_ref;
 
 ;; $StakeContract$_fun_balance
-((int, slice, int, slice, cell), int) $StakeContract$_fun_balance((int, slice, int, slice, cell) $self) impure inline_ref;
+((int, int, slice, slice, cell), int) $StakeContract$_fun_balance((int, int, slice, slice, cell) $self) impure inline_ref;
 
 ;; $MessageParameters$_constructor_bounce_to_value_mode_body
 ((int, cell, int, slice, int)) $MessageParameters$_constructor_bounce_to_value_mode_body(int $bounce, slice $to, int $value, int $mode, cell $body) inline;
 
 ;; $StakeContract$_fun_reply
-((int, slice, int, slice, cell), ()) $StakeContract$_fun_reply((int, slice, int, slice, cell) $self, cell $body) impure inline;
+((int, int, slice, slice, cell), ()) $StakeContract$_fun_reply((int, int, slice, slice, cell) $self, cell $body) impure inline;
 
 ;; $StakeContract$_fun_notify
-((int, slice, int, slice, cell), ()) $StakeContract$_fun_notify((int, slice, int, slice, cell) $self, cell $body) impure inline;
+((int, int, slice, slice, cell), ()) $StakeContract$_fun_notify((int, int, slice, slice, cell) $self, cell $body) impure inline;
 
 ;; $StakeContract$_fun_owner
-((int, slice, int, slice, cell), slice) $StakeContract$_fun_owner((int, slice, int, slice, cell) $self) impure inline_ref;
+((int, int, slice, slice, cell), slice) $StakeContract$_fun_owner((int, int, slice, slice, cell) $self) impure inline_ref;
 
-;; $SendParameters$_constructor_to_value_mode
-((int, cell, cell, cell, int, slice, int)) $SendParameters$_constructor_to_value_mode(slice $to, int $value, int $mode) inline;
+;; $SendParameters$_constructor_to_bounce_value_mode
+((int, cell, cell, cell, int, slice, int)) $SendParameters$_constructor_to_bounce_value_mode(slice $to, int $bounce, int $value, int $mode) inline;
 
 ;; $SendParameters$_constructor_to_value_bounce_mode
 ((int, cell, cell, cell, int, slice, int)) $SendParameters$_constructor_to_value_bounce_mode(slice $to, int $value, int $bounce, int $mode) inline;
@@ -127,6 +127,10 @@ int __tact_dict_get_slice_int(cell d, int kl, slice k, int vl) inline {
         return (dict_set_builder(d, kl, k, begin_cell().store_int(v, vl)), ());
     }
 }
+
+int $global_min(int $x, int $y) impure asm """
+    MIN
+""";
 
 int $global_myBalance() impure asm """
     BALANCE FIRST
@@ -243,8 +247,8 @@ int $global_myBalance() impure asm """
     SENDRAWMSG
 """;
 
-((int, slice, int, slice, cell), ()) $StakeContract$_fun_reply((int, slice, int, slice, cell) $self, cell $body) impure inline {
-    var (($self'totalStaked, $self'admin, $self'balance, $self'owner, $self'mapStakes)) = $self;
+((int, int, slice, slice, cell), ()) $StakeContract$_fun_reply((int, int, slice, slice, cell) $self, cell $body) impure inline {
+    var (($self'totalStaked, $self'balance, $self'owner, $self'admin, $self'mapStakes)) = $self;
     slice $to = __tact_context_get_sender();
     int $bounce = true;
     if (false) {
@@ -253,15 +257,15 @@ int $global_myBalance() impure asm """
         if (($balanceBeforeMessage < 0)) {
             $global_nativeReserve(0, 0);
             $global_message($MessageParameters$_constructor_bounce_to_value_mode_body($bounce, $to, 0, 130, $body));
-            return (($self'totalStaked, $self'admin, $self'balance, $self'owner, $self'mapStakes), ());
+            return (($self'totalStaked, $self'balance, $self'owner, $self'admin, $self'mapStakes), ());
         }
     }
     $global_message($MessageParameters$_constructor_bounce_to_value_mode_body($bounce, $to, 0, 66, $body));
-    return (($self'totalStaked, $self'admin, $self'balance, $self'owner, $self'mapStakes), ());
+    return (($self'totalStaked, $self'balance, $self'owner, $self'admin, $self'mapStakes), ());
 }
 
-((int, slice, int, slice, cell), ()) $StakeContract$_fun_notify((int, slice, int, slice, cell) $self, cell $body) impure inline {
-    var (($self'totalStaked, $self'admin, $self'balance, $self'owner, $self'mapStakes)) = $self;
+((int, int, slice, slice, cell), ()) $StakeContract$_fun_notify((int, int, slice, slice, cell) $self, cell $body) impure inline {
+    var (($self'totalStaked, $self'balance, $self'owner, $self'admin, $self'mapStakes)) = $self;
     slice $to = __tact_context_get_sender();
     int $bounce = false;
     if (false) {
@@ -270,20 +274,25 @@ int $global_myBalance() impure asm """
         if (($balanceBeforeMessage < 0)) {
             $global_nativeReserve(0, 0);
             $global_message($MessageParameters$_constructor_bounce_to_value_mode_body($bounce, $to, 0, 130, $body));
-            return (($self'totalStaked, $self'admin, $self'balance, $self'owner, $self'mapStakes), ());
+            return (($self'totalStaked, $self'balance, $self'owner, $self'admin, $self'mapStakes), ());
         }
     }
     $global_message($MessageParameters$_constructor_bounce_to_value_mode_body($bounce, $to, 0, 66, $body));
-    return (($self'totalStaked, $self'admin, $self'balance, $self'owner, $self'mapStakes), ());
+    return (($self'totalStaked, $self'balance, $self'owner, $self'admin, $self'mapStakes), ());
 }
 
-((int, slice, int, slice, cell), slice) $StakeContract$_fun_owner((int, slice, int, slice, cell) $self) impure inline_ref {
-    var (($self'totalStaked, $self'admin, $self'balance, $self'owner, $self'mapStakes)) = $self;
-    var $fresh$ret_11 = $self'owner;
-    return (($self'totalStaked, $self'admin, $self'balance, $self'owner, $self'mapStakes), $fresh$ret_11);
+((int, int, slice, slice, cell), slice) $StakeContract$_fun_owner((int, int, slice, slice, cell) $self) impure inline_ref {
+    var (($self'totalStaked, $self'balance, $self'owner, $self'admin, $self'mapStakes)) = $self;
+    var $fresh$ret_5 = $self'owner;
+    return (($self'totalStaked, $self'balance, $self'owner, $self'admin, $self'mapStakes), $fresh$ret_5);
 }
 
 ;; StakeContract_StakeContract.constants.fc
+;; Cell +wOWdNxzNK1koPVdjHDWU+6tQckiTMeHprbRG+R7MH4=
+cell __gen_cell_cell_fb039674dc7334ad64a0f55d8c70d653eead41c9224cc787a6b6d11be47b307e() asm """
+    B{b5ee9c7241010101000f00001a0000000077697468647261776e2bc1b77e} B>boc PUSHREF
+""";
+
 ;; Cell FJRfq+WoodI0Tw0oOizIx0K9P668gD08Mm6DOVfu9Y4=
 cell __gen_cell_cell_14945fabe5a8a1d2344f0d283a2cc8c742bd3faebc803d3c326e833957eef58e() asm """
     B{b5ee9c7241010101000d00001600000000647261696e65640b6d6669} B>boc PUSHREF
@@ -305,8 +314,8 @@ _ $Context$_get_value((int, slice, int, slice) v) inline {
 ;; TLB: _ mode:int257 body:Maybe ^cell code:Maybe ^cell data:Maybe ^cell value:int257 to:address bounce:bool = SendParameters
 ;;
 
-((int, cell, cell, cell, int, slice, int)) $SendParameters$_constructor_to_value_mode(slice $to, int $value, int $mode) inline {
-    return ($mode, null(), null(), null(), $value, $to, true);
+((int, cell, cell, cell, int, slice, int)) $SendParameters$_constructor_to_bounce_value_mode(slice $to, int $bounce, int $value, int $mode) inline {
+    return ($mode, null(), null(), null(), $value, $to, $bounce);
 }
 
 ((int, cell, cell, cell, int, slice, int)) $SendParameters$_constructor_to_value_bounce_mode(slice $to, int $value, int $bounce, int $mode) inline {
@@ -345,32 +354,32 @@ cell $DeployOk$_store_cell((int) v, builder b) inline {
 
 ;;
 ;; Type: StakeContract
-;; TLB: _ totalStaked:int257 admin:address balance:int257 owner:address mapStakes:dict<address, int> = StakeContract
+;; TLB: _ totalStaked:int257 balance:int257 owner:address admin:address mapStakes:dict<address, int> = StakeContract
 ;;
 
-builder $StakeContract$_store(builder build_0, (int, slice, int, slice, cell) v) inline {
-    var (v'totalStaked, v'admin, v'balance, v'owner, v'mapStakes) = v;
+builder $StakeContract$_store(builder build_0, (int, int, slice, slice, cell) v) inline {
+    var (v'totalStaked, v'balance, v'owner, v'admin, v'mapStakes) = v;
     build_0 = build_0.store_int(v'totalStaked, 257);
-    build_0 = build_0.store_slice(v'admin);
     build_0 = build_0.store_int(v'balance, 257);
+    build_0 = build_0.store_slice(v'owner);
     var build_1 = begin_cell();
-    build_1 = build_1.store_slice(v'owner);
+    build_1 = build_1.store_slice(v'admin);
     build_1 = build_1.store_dict(v'mapStakes);
     build_0 = store_builder_ref(build_0, build_1);
     return build_0;
 }
 
-(slice, ((int, slice, int, slice, cell))) $StakeContract$_load(slice sc_0) inline {
+(slice, ((int, int, slice, slice, cell))) $StakeContract$_load(slice sc_0) inline {
     var v'totalStaked = sc_0~load_int(257);
-    var v'admin = sc_0~load_msg_addr();
     var v'balance = sc_0~load_int(257);
+    var v'owner = sc_0~load_msg_addr();
     slice sc_1 = sc_0~load_ref().begin_parse();
-    var v'owner = sc_1~load_msg_addr();
+    var v'admin = sc_1~load_msg_addr();
     var v'mapStakes = sc_1~load_dict();
-    return (sc_0, (v'totalStaked, v'admin, v'balance, v'owner, v'mapStakes));
+    return (sc_0, (v'totalStaked, v'balance, v'owner, v'admin, v'mapStakes));
 }
 
-(int, slice, int, slice, cell) $StakeContract$_contract_load() impure inline {
+(int, int, slice, slice, cell) $StakeContract$_contract_load() impure inline {
     slice $sc = get_data().begin_parse();
     int $loaded = $sc~load_int(1);
     if ($loaded) {
@@ -381,7 +390,7 @@ builder $StakeContract$_store(builder build_0, (int, slice, int, slice, cell) v)
     }
 }
 
-() $StakeContract$_contract_store((int, slice, int, slice, cell) v) impure inline {
+() $StakeContract$_contract_store((int, int, slice, slice, cell) v) impure inline {
     builder b = begin_cell();
     b = b.store_int(true, 1);
     b = $StakeContract$_store(b, v);
@@ -392,44 +401,44 @@ builder $StakeContract$_store(builder build_0, (int, slice, int, slice, cell) v)
 ;; Contract StakeContract functions
 ;;
 
-(int, slice, int, slice, cell) $StakeContract$_contract_init() impure inline {
-    var (($self'totalStaked, $self'admin, $self'balance, $self'owner, $self'mapStakes)) = (null(), null(), null(), null(), null());
+(int, int, slice, slice, cell) $StakeContract$_contract_init() impure inline {
+    var (($self'totalStaked, $self'balance, $self'owner, $self'admin, $self'mapStakes)) = (null(), null(), null(), null(), null());
     $self'totalStaked = 0;
     $self'balance = 0;
     $self'mapStakes = null();
     $self'admin = __tact_context_get_sender();
     $self'owner = __tact_context_get_sender();
-    return ($self'totalStaked, $self'admin, $self'balance, $self'owner, $self'mapStakes);
+    return ($self'totalStaked, $self'balance, $self'owner, $self'admin, $self'mapStakes);
 }
 
-((int, slice, int, slice, cell), slice) $StakeContract$_fun_contractAdmin((int, slice, int, slice, cell) $self) impure inline_ref {
-    var (($self'totalStaked, $self'admin, $self'balance, $self'owner, $self'mapStakes)) = $self;
-    var $fresh$ret_6 = $self'admin;
-    return (($self'totalStaked, $self'admin, $self'balance, $self'owner, $self'mapStakes), $fresh$ret_6);
+((int, int, slice, slice, cell), slice) $StakeContract$_fun_contractAdmin((int, int, slice, slice, cell) $self) impure inline_ref {
+    var (($self'totalStaked, $self'balance, $self'owner, $self'admin, $self'mapStakes)) = $self;
+    var $fresh$ret_0 = $self'admin;
+    return (($self'totalStaked, $self'balance, $self'owner, $self'admin, $self'mapStakes), $fresh$ret_0);
 }
 
-((int, slice, int, slice, cell), int) $StakeContract$_fun_userStake((int, slice, int, slice, cell) $self, slice $key) impure inline_ref {
-    var (($self'totalStaked, $self'admin, $self'balance, $self'owner, $self'mapStakes)) = $self;
-    var $fresh$ret_7 = __tact_dict_get_slice_int($self'mapStakes, 267, $key, 257);
-    return (($self'totalStaked, $self'admin, $self'balance, $self'owner, $self'mapStakes), $fresh$ret_7);
+((int, int, slice, slice, cell), int) $StakeContract$_fun_userStake((int, int, slice, slice, cell) $self, slice $key) impure inline_ref {
+    var (($self'totalStaked, $self'balance, $self'owner, $self'admin, $self'mapStakes)) = $self;
+    var $fresh$ret_1 = __tact_dict_get_slice_int($self'mapStakes, 267, $key, 257);
+    return (($self'totalStaked, $self'balance, $self'owner, $self'admin, $self'mapStakes), $fresh$ret_1);
 }
 
-((int, slice, int, slice, cell), cell) $StakeContract$_fun_allStakes((int, slice, int, slice, cell) $self) impure inline_ref {
-    var (($self'totalStaked, $self'admin, $self'balance, $self'owner, $self'mapStakes)) = $self;
-    var $fresh$ret_8 = $self'mapStakes;
-    return (($self'totalStaked, $self'admin, $self'balance, $self'owner, $self'mapStakes), $fresh$ret_8);
+((int, int, slice, slice, cell), cell) $StakeContract$_fun_allStakes((int, int, slice, slice, cell) $self) impure inline_ref {
+    var (($self'totalStaked, $self'balance, $self'owner, $self'admin, $self'mapStakes)) = $self;
+    var $fresh$ret_2 = $self'mapStakes;
+    return (($self'totalStaked, $self'balance, $self'owner, $self'admin, $self'mapStakes), $fresh$ret_2);
 }
 
-((int, slice, int, slice, cell), int) $StakeContract$_fun_totalStaked((int, slice, int, slice, cell) $self) impure inline_ref {
-    var (($self'totalStaked, $self'admin, $self'balance, $self'owner, $self'mapStakes)) = $self;
-    var $fresh$ret_9 = $self'totalStaked;
-    return (($self'totalStaked, $self'admin, $self'balance, $self'owner, $self'mapStakes), $fresh$ret_9);
+((int, int, slice, slice, cell), int) $StakeContract$_fun_totalStaked((int, int, slice, slice, cell) $self) impure inline_ref {
+    var (($self'totalStaked, $self'balance, $self'owner, $self'admin, $self'mapStakes)) = $self;
+    var $fresh$ret_3 = $self'totalStaked;
+    return (($self'totalStaked, $self'balance, $self'owner, $self'admin, $self'mapStakes), $fresh$ret_3);
 }
 
-((int, slice, int, slice, cell), int) $StakeContract$_fun_balance((int, slice, int, slice, cell) $self) impure inline_ref {
-    var (($self'totalStaked, $self'admin, $self'balance, $self'owner, $self'mapStakes)) = $self;
-    var $fresh$ret_10 = $self'balance;
-    return (($self'totalStaked, $self'admin, $self'balance, $self'owner, $self'mapStakes), $fresh$ret_10);
+((int, int, slice, slice, cell), int) $StakeContract$_fun_balance((int, int, slice, slice, cell) $self) impure inline_ref {
+    var (($self'totalStaked, $self'balance, $self'owner, $self'admin, $self'mapStakes)) = $self;
+    var $fresh$ret_4 = $self'balance;
+    return (($self'totalStaked, $self'balance, $self'owner, $self'admin, $self'mapStakes), $fresh$ret_4);
 }
 
 ;;
@@ -493,87 +502,63 @@ _ %owner() method_id(83229) {
     __tact_context_sender = msg_sender_addr;
     
     ;; Load contract data
-    var ($self'totalStaked, $self'admin, $self'balance, $self'owner, $self'mapStakes) = $StakeContract$_contract_load();
+    var ($self'totalStaked, $self'balance, $self'owner, $self'admin, $self'mapStakes) = $StakeContract$_contract_load();
     
     ;; Handle bounced messages
     if (msg_bounced) { return (); }
-    int op = 0;
-    int in_msg_length = slice_bits(in_msg);
-    if (in_msg_length >= 32) {
-        op = in_msg~load_uint(32);
-        ;; Receive AddStake message
-        if (op == 3218476420) {
-            var $msg'amount = in_msg~load_uint(32);
-            slice $user = __tact_context_get_sender();
-            int $stakeAmount = $msg'amount;
-            throw_unless(46940, ($stakeAmount > 0));
-            throw_unless(16209, (($msg'amount * 1000000000) < $Context$_get_value(__tact_context_get())));
-            int $prevOpt = __tact_dict_get_slice_int($self'mapStakes, 267, $user, 257);
-            int $current = 0;
-            if (null?($prevOpt)) {
-                $current = 0;
-            } else {
-                $current = __tact_not_null($prevOpt);
-            }
-            $self'mapStakes~__tact_dict_set_slice_int(267, $user, ($current + $stakeAmount), 257);
-            $self'totalStaked = $self'totalStaked + $stakeAmount;
-            $self'balance = $self'balance + $stakeAmount;
-            $global_cashback(__tact_context_get_sender());
-            $StakeContract$_contract_store(($self'totalStaked, $self'admin, $self'balance, $self'owner, $self'mapStakes));
-            return ();
+    var op = in_msg~load_opcode_internal();
+    ;; Receive AddStake message
+    if (op == 3218476420) {
+        var $msg'amount = in_msg~load_uint(32);
+        slice $user = __tact_context_get_sender();
+        int $stakeAmount = $msg'amount;
+        throw_unless(46940, ($stakeAmount > 0));
+        throw_unless(16209, (($msg'amount * 1000000000) < $Context$_get_value(__tact_context_get())));
+        int $prevOpt = __tact_dict_get_slice_int($self'mapStakes, 267, $user, 257);
+        int $current = 0;
+        if (null?($prevOpt)) {
+            $current = 0;
+        } else {
+            $current = __tact_not_null($prevOpt);
         }
-        
-        ;; Receive Withdraw message
-        if (op == 728460677) {
-            var $msg'amount = in_msg~load_uint(32);
-            var $msg'target = in_msg~load_msg_addr();
-            throw_unless(16461, ( equal_slices_bits(__tact_context_get_sender(), $self'admin) ));
-            throw_unless(18487, ($self'balance >= $msg'amount));
-            $self'balance = $self'balance - $msg'amount;
-            $global_send($SendParameters$_constructor_to_value_mode($msg'target, $msg'amount, 66));
-            $StakeContract$_contract_store(($self'totalStaked, $self'admin, $self'balance, $self'owner, $self'mapStakes));
-            return ();
-        }
-        
-        ;; Receive Drain message
-        if (op == 1344675936) {
-            var $msg'target = in_msg~load_msg_addr();
-            int $amount = ($self'balance - 1);
-            $global_send($SendParameters$_constructor_to_value_bounce_mode(__tact_context_get_sender(), $amount, true, 130));
-            $self'balance = $self'balance - $amount;
-            ($self'totalStaked, $self'admin, $self'balance, $self'owner, $self'mapStakes)~$StakeContract$_fun_reply(__gen_cell_cell_14945fabe5a8a1d2344f0d283a2cc8c742bd3faebc803d3c326e833957eef58e());
-            $StakeContract$_contract_store(($self'totalStaked, $self'admin, $self'balance, $self'owner, $self'mapStakes));
-            return ();
-        }
-        
-        ;; Receive SetAdmin message
-        if (op == 2713466466) {
-            var $msg'newAdmin = in_msg~load_msg_addr();
-            throw_unless(16461, ( equal_slices_bits(__tact_context_get_sender(), $self'admin) ));
-            $self'admin = $msg'newAdmin;
-            $StakeContract$_contract_store(($self'totalStaked, $self'admin, $self'balance, $self'owner, $self'mapStakes));
-            return ();
-        }
-        
-        ;; Receive Deploy message
-        if (op == 0x946a98b6) {
-            var $deploy'queryId = in_msg~load_uint(64);
-            ($self'totalStaked, $self'admin, $self'balance, $self'owner, $self'mapStakes)~$StakeContract$_fun_notify($DeployOk$_store_cell($DeployOk$_constructor_queryId($deploy'queryId), begin_cell()));
-            $StakeContract$_contract_store(($self'totalStaked, $self'admin, $self'balance, $self'owner, $self'mapStakes));
-            return ();
-        }
-        
-    }
-    ;; Empty Receiver and Text Receivers
-    var text_op = slice_hash(in_msg);
-    ;; Receive "drain" message
-    if (text_op == 0x941585dfcf619652420ac6b4b343948496b6be08bf8221d6d533bccb4c38e3a3) {
-        throw_unless(16461, ( equal_slices_bits(__tact_context_get_sender(), $self'admin) ));
-        $global_send($SendParameters$_constructor_to_value_mode(__tact_context_get_sender(), 0, 66));
-        $self'balance = 0;
-        $StakeContract$_contract_store(($self'totalStaked, $self'admin, $self'balance, $self'owner, $self'mapStakes));
+        $self'mapStakes~__tact_dict_set_slice_int(267, $user, ($current + $stakeAmount), 257);
+        $self'totalStaked = $self'totalStaked + $stakeAmount;
+        $self'balance = $self'balance + $stakeAmount;
+        $global_cashback(__tact_context_get_sender());
+        $StakeContract$_contract_store(($self'totalStaked, $self'balance, $self'owner, $self'admin, $self'mapStakes));
         return ();
     }
+    
+    ;; Receive Withdraw message
+    if (op == 1251001091) {
+        var $msg'amount = in_msg~load_uint(32);
+        int $amount = $global_min($msg'amount, (($global_myBalance() - $Context$_get_value(__tact_context_get())) - 10000000));
+        $global_send($SendParameters$_constructor_to_bounce_value_mode(__tact_context_get_sender(), true, $amount, 66));
+        $self'balance = $self'balance - $amount;
+        ($self'totalStaked, $self'balance, $self'owner, $self'admin, $self'mapStakes)~$StakeContract$_fun_reply(__gen_cell_cell_fb039674dc7334ad64a0f55d8c70d653eead41c9224cc787a6b6d11be47b307e());
+        $StakeContract$_contract_store(($self'totalStaked, $self'balance, $self'owner, $self'admin, $self'mapStakes));
+        return ();
+    }
+    
+    ;; Receive Drain message
+    if (op == 1344675936) {
+        var $msg'target = in_msg~load_msg_addr();
+        int $amount = ($self'balance - 1);
+        $global_send($SendParameters$_constructor_to_value_bounce_mode(__tact_context_get_sender(), $amount, true, 130));
+        $self'balance = $self'balance - $amount;
+        ($self'totalStaked, $self'balance, $self'owner, $self'admin, $self'mapStakes)~$StakeContract$_fun_reply(__gen_cell_cell_14945fabe5a8a1d2344f0d283a2cc8c742bd3faebc803d3c326e833957eef58e());
+        $StakeContract$_contract_store(($self'totalStaked, $self'balance, $self'owner, $self'admin, $self'mapStakes));
+        return ();
+    }
+    
+    ;; Receive Deploy message
+    if (op == 0x946a98b6) {
+        var $deploy'queryId = in_msg~load_uint(64);
+        ($self'totalStaked, $self'balance, $self'owner, $self'admin, $self'mapStakes)~$StakeContract$_fun_notify($DeployOk$_store_cell($DeployOk$_constructor_queryId($deploy'queryId), begin_cell()));
+        $StakeContract$_contract_store(($self'totalStaked, $self'balance, $self'owner, $self'admin, $self'mapStakes));
+        return ();
+    }
+    
     ;; Throw if not handled
     throw(130);
 }

@@ -63,12 +63,12 @@ export function useStakeContract(contractAddress: string) {
 
   // функция вывода
   const withdrawTon = useCallback(
-    async (amount: number, target: string) => {
+    async (amount: number) => { //, target: string
       if (!contract) return;
       const msg: Withdraw = {
         $$type: "Withdraw",
         amount: BigInt(amount),
-        target: Address.parse(target),
+        //target: Address.parse(target),
       };
       await contract.send(
         sender,

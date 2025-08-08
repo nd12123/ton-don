@@ -3,12 +3,13 @@
 
 import { useEffect, useState } from "react";
 import { Address, toNano, fromNano, OpenedContract } from "@ton/core";
-import {
-  StakeContract,
+import type {
   AddStake,
   Withdraw,
+  Drain
   //SetAdmin noneed
 } from "../../build/StakeContract/StakeContract_StakeContract";
+import {StakeContract} from "../../build/StakeContract/StakeContract_StakeContract"
 import { useAsyncInitialize } from "./useAsyncInitialize";
 import { useTonClient }       from "./useTonClient";
 import { useTonConnect }      from "./useTonConnect";
@@ -23,7 +24,7 @@ export function useStakeContract() { //contractAddress: string
   
   const [totalStaked, setTotalStaked] = useState<bigint>(0n);
   const [userStake,   setUserStake]   = useState<bigint>(0n);
-  const [admin,      setAdminAddr]    = useState<string | null>(null);
+  const [admin,      setAdminAddr]    = useState<string | null>(null); //
 
   // 1) Открываем контракт
   const contract = useAsyncInitialize<OpenedContract<StakeContract> | null>(
@@ -43,10 +44,25 @@ export function useStakeContract() { //contractAddress: string
     async function fetchData() {
       if (!contract || !sender.address) return;
       const total = await contract.getTotalStaked();
-      const admin = await contract.getAdmin(); //!!
+      //const admin = await contract.getUserStake(sender.address)//getContractAdmin(); //!!
 
-      console.log("✅ contract is ready, address:", contract.address.toString(), " Admin ", admin.toString());
-      setAdminAddr(admin.toString())
+      
+    // посмотрите, какие методы доступны на объекте
+    //console.log('contract keys:', Object.keys(contract));
+    //console.log('getContractAdmin type:', typeof (contract).getContractAdmin);
+/* try {
+      const raw = await contract.get('contractAdmin');
+      const adminAddr = raw.stack.readAddress();
+      console.log('admin via low-level get:', adminAddr.toString());
+    } catch (e) {
+      console.warn('low-level get failed:', e);
+    }
+      */
+
+      //console.log("✅ contract is ready, address:", contract.address.toString(), " User stake (gon be Admin) ", admin); //.toString()
+      console.log("Contract keys:", Object.keys(contract));
+
+      //setAdminAddr(admin.toString())
       setTotalStaked(total);
       console.log('Total ',total)
       const stake = await contract.getUserStake(sender.address);
@@ -56,14 +72,17 @@ export function useStakeContract() { //contractAddress: string
   }, [contract, sender.address]);
 
 // 3) fetch admin as soon as contract is ready
+/*
+*/
+
   useEffect(() => {
     if (!contract) return;
     (async () => {
-      const a = await contract.getAdmin();
+      const a = await contract.getContractAdmin();//getContractAdmin(); (provider:  ContractProvider)
       setAdminAddr(a.toString());
     })();
+    //    fetchData();
   }, [contract]);
-
 
   // 3) Метод стейка
   
@@ -110,16 +129,31 @@ export function useStakeContract() { //contractAddress: string
     if (!contract) return;
     const msg: Withdraw = {
       $$type: "Withdraw",
-      amount: BigInt(amount),
-      target: Address.parse(target),
+      amount: toNano(1),//BigInt(amount),
+      //target: Address.parse(target),
     };
     await contract.send(
       sender,
       { value: toNano("0.03") },
       msg
     );
+    console.log("Withdraw pressed", amount, target, contract, sender);
     // можно вызвать fetchData() здесь тоже
   };
+
+  const drain = async (target: string) => {
+    if (!contract) return;
+    const msg: Drain = {
+      $$type: "Drain",
+      target: Address.parse(target),
+    }
+    await contract.send(
+      sender,
+      { value: toNano("0.03") },
+      msg
+    );
+        console.log("Draining", target, contract, sender);
+  }
 
   return {
         contractAddress: contract?.address.toString(),
@@ -131,6 +165,7 @@ export function useStakeContract() { //contractAddress: string
     userStake,
     stakeTon,
     withdrawTon,
+    drain,
     admin
 
 /*
