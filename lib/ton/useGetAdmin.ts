@@ -5,35 +5,43 @@ import { Address, TupleBuilder } from "@ton/core";
 import { useTonClient } from "./useTonClient";
 import { useTonConnect } from "./useTonConnect";
 
-export function useStakeAdmin() {
-  const { client } = useTonClient();       // TonClient
-  const { wallet } = useTonConnect();      // чтобы дождаться коннекта, если надо
-  const [admin, setAdmin] = useState<Address | null>(null);
+const CONTRACT = "kQB3u_BlKZsMEHsz9GFwJfUY7lG7xlzKdil8yUwqEIFFstNz";
+
+export function useGetAdmin() {
+  const { client } = useTonClient();
+  const { wallet } = useTonConnect();
+
+  const [admin, setAdmin] = useState<string | null>(null);
+  const [totalStaked, setTotalStaked] = useState<bigint>(0n);
+  const [userStake, setUserStake] = useState<bigint>(0n);
 
   useEffect(() => {
     if (!client) return;
 
-    const run = async () => {
+    (async () => {
       try {
-        const addr = Address.parse("kQB3u_BlKZsMEHsz9GFwJfUY7lG7xlzKdil8yUwqEIFFstNz");
+        const provider = client.provider(Address.parse(CONTRACT));
 
-        // 1) Берём провайдера у клиента по адресу контракта
-        const provider = client.provider(addr);
+        // admin
+        const resAdmin = await provider.get("owner", new TupleBuilder().build());
+        setAdmin(resAdmin.stack.readAddress().toString());
 
-        // 2) Вызываем системный get-метод по имени из контракта: 'owner'
-        const res = await provider.get("owner", new TupleBuilder().build());
+        // total staked
+        const resTotal = await provider.get("total_staked", new TupleBuilder().build());
+        setTotalStaked(resTotal.stack.readBigNumber());
 
-        // 3) Читаем результат
-        const owner = res.stack.readAddress();
-        setAdmin(owner);
+        // user stake — если есть подключённый кошелёк
+        if (wallet) {
+          const tb = new TupleBuilder();
+          tb.writeAddress(Address.parse(wallet));
+          const resUser = await provider.get("user_stake", tb.build());
+          setUserStake(resUser.stack.readBigNumber());
+        }
       } catch (e) {
-        console.error("❌ Failed to fetch admin:", e);
-        setAdmin(null);
+        console.error("❌ Failed to fetch stake data:", e);
       }
-    };
+    })();
+  }, [client, wallet]);
 
-    run();
-  }, [client, wallet]); // wallet по желанию
-
-  return admin;
+  return { admin, totalStaked, userStake };
 }

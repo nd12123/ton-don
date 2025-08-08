@@ -909,49 +909,49 @@ export function dictValueParserAddStake(): DictionaryValue<AddStake> {
     }
 }
 
-export type Withdraw = {
-    $$type: 'Withdraw';
+export type WithdrawAmount = {
+    $$type: 'WithdrawAmount';
     amount: bigint;
 }
 
-export function storeWithdraw(src: Withdraw) {
+export function storeWithdrawAmount(src: WithdrawAmount) {
     return (builder: Builder) => {
         const b_0 = builder;
-        b_0.storeUint(1251001091, 32);
-        b_0.storeUint(src.amount, 32);
+        b_0.storeUint(1308374593, 32);
+        b_0.storeUint(src.amount, 128);
     };
 }
 
-export function loadWithdraw(slice: Slice) {
+export function loadWithdrawAmount(slice: Slice) {
     const sc_0 = slice;
-    if (sc_0.loadUint(32) !== 1251001091) { throw Error('Invalid prefix'); }
-    const _amount = sc_0.loadUintBig(32);
-    return { $$type: 'Withdraw' as const, amount: _amount };
+    if (sc_0.loadUint(32) !== 1308374593) { throw Error('Invalid prefix'); }
+    const _amount = sc_0.loadUintBig(128);
+    return { $$type: 'WithdrawAmount' as const, amount: _amount };
 }
 
-export function loadTupleWithdraw(source: TupleReader) {
+export function loadTupleWithdrawAmount(source: TupleReader) {
     const _amount = source.readBigNumber();
-    return { $$type: 'Withdraw' as const, amount: _amount };
+    return { $$type: 'WithdrawAmount' as const, amount: _amount };
 }
 
-export function loadGetterTupleWithdraw(source: TupleReader) {
+export function loadGetterTupleWithdrawAmount(source: TupleReader) {
     const _amount = source.readBigNumber();
-    return { $$type: 'Withdraw' as const, amount: _amount };
+    return { $$type: 'WithdrawAmount' as const, amount: _amount };
 }
 
-export function storeTupleWithdraw(source: Withdraw) {
+export function storeTupleWithdrawAmount(source: WithdrawAmount) {
     const builder = new TupleBuilder();
     builder.writeNumber(source.amount);
     return builder.build();
 }
 
-export function dictValueParserWithdraw(): DictionaryValue<Withdraw> {
+export function dictValueParserWithdrawAmount(): DictionaryValue<WithdrawAmount> {
     return {
         serialize: (src, builder) => {
-            builder.storeRef(beginCell().store(storeWithdraw(src)).endCell());
+            builder.storeRef(beginCell().store(storeWithdrawAmount(src)).endCell());
         },
         parse: (src) => {
-            return loadWithdraw(src.loadRef().beginParse());
+            return loadWithdrawAmount(src.loadRef().beginParse());
         }
     }
 }
@@ -1133,7 +1133,7 @@ function initStakeContract_init_args(src: StakeContract_init_args) {
 }
 
 async function StakeContract_init() {
-    const __code = Cell.fromHex('b5ee9c7241021b0100046500022cff008e88f4a413f4bcf2c80bed53208e8130e1ed43d90112020271020702016a0305016bb1477b5134348000638720404075c020404075c03e903500743e903d010c040944090408db05664c1c081b7e10be1080b8b6cf1b146004000222016bb36a3b5134348000638720404075c020404075c03e903500743e903d010c040944090408db05664c1c081b7e10be1080b8b6cf1b1460060002240201480810020275090e0201200a0c016da38fb5134348000638720404075c020404075c03e903500743e903d010c040944090408db05664c1c081b7e10be1080b8954136cf1b1460b002e81010b22028101014133f40a6fa19401d70030925b6de20169a3dfb5134348000638720404075c020404075c03e903500743e903d010c040944090408db05664c1c081b7e10be1080b8b6cf1b1460d0002210169a581da89a1a400031c39020203ae01020203ae01f481a803a1f481e80860204a20482046d82b3260e040dbf085f08405c5b678d8a30f000223016bb74b7da89a1a400031c39020203ae01020203ae01f481a803a1f481e80860204a20482046d82b3260e040dbf085f08405c5b678d8a301100022004f001d072d721d200d200fa4021103450666f04f86102f862ed44d0d200018e1c810101d700810101d700fa40d401d0fa40f404301025102410236c15993070206df842f84202e206925f06e004d70d1ff2e082218210bfd60d84bae3022182104a90c303bae30221821050262060bae302018210946a98b6ba1314171a01fe31d31f30f842218200b75c21c200f2f4813f510382103b9aca00a8f8416f24135f03b913f2f42681010b228101014133f40a6fa19401d70030925b6de2206e92307095206ef2d080e281010b5113a0103812810101216e955b59f4593098c801cf004133f441e25135a05025a0f842c8cf8508ce70cf0b6ec98042fb0041331902bc31d31f30f8276f10f8416f24135f03a18208989680a1b608f8427f228042036d6d50436d4133c8cf8580ca00cf8440ce01fa028069cf40025c6e016eb0935bcf819d58cf8680cf8480f400f400cf81e2f400c901fb0012a18810354440131516001a0000000077697468647261776e0084f8427f705003804201503304c8cf8580ca00cf8440ce01fa02806acf40f400c901fb00c87f01ca0055405045810101cf0012810101cf00ce01c8ce12f400cdc9ed5402da5b21a5f842217f810082036d6d50436d5033c8cf8580ca00cf8440ce01fa028069cf40025c6e016eb0935bcf819d58cf8680cf8480f400f400cf81e2f400c901fb0012a1881035444013f8427f705003804201503304c8cf8580ca00cf8440ce01fa02806acf40f400c901fb001819001600000000647261696e6564003ec87f01ca0055405045810101cf0012810101cf00ce01c8ce12f400cdc9ed5400be8e57d33f30c8018210aff90f5758cb1fcb3fc910354430f84270705003804201503304c8cf8580ca00cf8440ce01fa02806acf40f400c901fb00c87f01ca0055405045810101cf0012810101cf00ce01c8ce12f400cdc9ed54e05f06f2c0821c25a0de');
+    const __code = Cell.fromHex('b5ee9c7241021b0100046e00022cff008e88f4a413f4bcf2c80bed53208e8130e1ed43d90112020271020702016a0305016bb1477b5134348000638720404075c020404075c03e903500743e903d010c040944090408db05664c1c081b7e10be1080b8b6cf1b146004000222016bb36a3b5134348000638720404075c020404075c03e903500743e903d010c040944090408db05664c1c081b7e10be1080b8b6cf1b1460060002240201480810020275090e0201200a0c016da38fb5134348000638720404075c020404075c03e903500743e903d010c040944090408db05664c1c081b7e10be1080b8954136cf1b1460b002e81010b22028101014133f40a6fa19401d70030925b6de20169a3dfb5134348000638720404075c020404075c03e903500743e903d010c040944090408db05664c1c081b7e10be1080b8b6cf1b1460d0002210169a581da89a1a400031c39020203ae01020203ae01f481a803a1f481e80860204a20482046d82b3260e040dbf085f08405c5b678d8a30f000223016bb74b7da89a1a400031c39020203ae01020203ae01f481a803a1f481e80860204a20482046d82b3260e040dbf085f08405c5b678d8a301100022004f001d072d721d200d200fa4021103450666f04f86102f862ed44d0d200018e1c810101d700810101d700fa40d401d0fa40f404301025102410236c15993070206df842f84202e206925f06e004d70d1ff2e082218210bfd60d84bae3022182104dfc3641bae30221821050262060bae302018210946a98b6ba1314171a01fe31d31f30f842218200b75c21c200f2f4813f510382103b9aca00a8f8416f24135f03b913f2f42681010b228101014133f40a6fa19401d70030925b6de2206e92307095206ef2d080e281010b5113a0103812810101216e955b59f4593098c801cf004133f441e25135a05025a0f842c8cf8508ce70cf0b6ec98042fb0041331902ce31d37f308209c9c380f8276f1001a120c100923070deb6088200d55721c200f2f4f8427f228042036d6d50436d4133c8cf8580ca00cf8440ce01fa028069cf40025c6e016eb0935bcf819d58cf8680cf8480f400f400cf81e2f400c901fb0012a18810354440131516001a0000000077697468647261776e0084f8427f705003804201503304c8cf8580ca00cf8440ce01fa02806acf40f400c901fb00c87f01ca0055405045810101cf0012810101cf00ce01c8ce12f400cdc9ed5402da5b21a5f842217f810082036d6d50436d5033c8cf8580ca00cf8440ce01fa028069cf40025c6e016eb0935bcf819d58cf8680cf8480f400f400cf81e2f400c901fb0012a1881035444013f8427f705003804201503304c8cf8580ca00cf8440ce01fa02806acf40f400c901fb001819001600000000647261696e6564003ec87f01ca0055405045810101cf0012810101cf00ce01c8ce12f400cdc9ed5400be8e57d33f30c8018210aff90f5758cb1fcb3fc910354430f84270705003804201503304c8cf8580ca00cf8440ce01fa02806acf40f400c901fb00c87f01ca0055405045810101cf0012810101cf00ce01c8ce12f400cdc9ed54e05f06f2c0829c7b8339');
     const builder = beginCell();
     builder.storeUint(0, 1);
     initStakeContract_init_args({ $$type: 'StakeContract_init_args' })(builder);
@@ -1180,6 +1180,7 @@ export const StakeContract_errors = {
     138: { message: "Not a basechain address" },
     16209: { message: "Mismatch stake" },
     46940: { message: "Nothing to stake" },
+    54615: { message: "Insufficient balance" },
 } as const
 
 export const StakeContract_errors_backward = {
@@ -1221,6 +1222,7 @@ export const StakeContract_errors_backward = {
     "Not a basechain address": 138,
     "Mismatch stake": 16209,
     "Nothing to stake": 46940,
+    "Insufficient balance": 54615,
 } as const
 
 const StakeContract_types: ABIType[] = [
@@ -1240,7 +1242,7 @@ const StakeContract_types: ABIType[] = [
     {"name":"ChangeOwner","header":2174598809,"fields":[{"name":"queryId","type":{"kind":"simple","type":"uint","optional":false,"format":64}},{"name":"newOwner","type":{"kind":"simple","type":"address","optional":false}}]},
     {"name":"ChangeOwnerOk","header":846932810,"fields":[{"name":"queryId","type":{"kind":"simple","type":"uint","optional":false,"format":64}},{"name":"newOwner","type":{"kind":"simple","type":"address","optional":false}}]},
     {"name":"AddStake","header":3218476420,"fields":[{"name":"amount","type":{"kind":"simple","type":"uint","optional":false,"format":32}}]},
-    {"name":"Withdraw","header":1251001091,"fields":[{"name":"amount","type":{"kind":"simple","type":"uint","optional":false,"format":32}}]},
+    {"name":"WithdrawAmount","header":1308374593,"fields":[{"name":"amount","type":{"kind":"simple","type":"uint","optional":false,"format":128}}]},
     {"name":"SetAdmin","header":2713466466,"fields":[{"name":"newAdmin","type":{"kind":"simple","type":"address","optional":false}}]},
     {"name":"Drain","header":1344675936,"fields":[{"name":"target","type":{"kind":"simple","type":"address","optional":false}}]},
     {"name":"StakeContract$Data","header":null,"fields":[{"name":"totalStaked","type":{"kind":"simple","type":"int","optional":false,"format":257}},{"name":"balance","type":{"kind":"simple","type":"int","optional":false,"format":257}},{"name":"owner","type":{"kind":"simple","type":"address","optional":false}},{"name":"admin","type":{"kind":"simple","type":"address","optional":false}},{"name":"mapStakes","type":{"kind":"dict","key":"address","value":"int"}}]},
@@ -1253,7 +1255,7 @@ const StakeContract_opcodes = {
     "ChangeOwner": 2174598809,
     "ChangeOwnerOk": 846932810,
     "AddStake": 3218476420,
-    "Withdraw": 1251001091,
+    "WithdrawAmount": 1308374593,
     "SetAdmin": 2713466466,
     "Drain": 1344675936,
 }
@@ -1278,7 +1280,7 @@ export const StakeContract_getterMapping: { [key: string]: string } = {
 
 const StakeContract_receivers: ABIReceiver[] = [
     {"receiver":"internal","message":{"kind":"typed","type":"AddStake"}},
-    {"receiver":"internal","message":{"kind":"typed","type":"Withdraw"}},
+    {"receiver":"internal","message":{"kind":"typed","type":"WithdrawAmount"}},
     {"receiver":"internal","message":{"kind":"typed","type":"Drain"}},
     {"receiver":"internal","message":{"kind":"typed","type":"Deploy"}},
 ]
@@ -1286,7 +1288,7 @@ const StakeContract_receivers: ABIReceiver[] = [
 
 export class StakeContract implements Contract {
     
-    public static readonly MinTonForStorage = 10000000n;
+    public static readonly MinTonForStorage = 30000000n;
     public static readonly storageReserve = 0n;
     public static readonly errors = StakeContract_errors_backward;
     public static readonly opcodes = StakeContract_opcodes;
@@ -1319,14 +1321,14 @@ export class StakeContract implements Contract {
         this.init = init;
     }
     
-    async send(provider: ContractProvider, via: Sender, args: { value: bigint, bounce?: boolean| null | undefined }, message: AddStake | Withdraw | Drain | Deploy) {
+    async send(provider: ContractProvider, via: Sender, args: { value: bigint, bounce?: boolean| null | undefined }, message: AddStake | WithdrawAmount | Drain | Deploy) {
         
         let body: Cell | null = null;
         if (message && typeof message === 'object' && !(message instanceof Slice) && message.$$type === 'AddStake') {
             body = beginCell().store(storeAddStake(message)).endCell();
         }
-        if (message && typeof message === 'object' && !(message instanceof Slice) && message.$$type === 'Withdraw') {
-            body = beginCell().store(storeWithdraw(message)).endCell();
+        if (message && typeof message === 'object' && !(message instanceof Slice) && message.$$type === 'WithdrawAmount') {
+            body = beginCell().store(storeWithdrawAmount(message)).endCell();
         }
         if (message && typeof message === 'object' && !(message instanceof Slice) && message.$$type === 'Drain') {
             body = beginCell().store(storeDrain(message)).endCell();

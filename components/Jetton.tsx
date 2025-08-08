@@ -10,7 +10,7 @@ import {
   Ellipsis,
 } from "./styled/styled";
 
-import {useStakeAdmin} from "@/lib/ton/useGetAdmin"
+import {useGetAdmin} from "@/lib/ton/useGetAdmin"
 
 export function Jetton() {
   const { deploy } = useStakeDeploy();
@@ -18,7 +18,7 @@ export function Jetton() {
   const { contractAddress, totalStaked, userStake, stakeTon, withdrawTon, drain } = useStakeContract(); //admin
 
 
-const myAdmin = useStakeAdmin();
+const myAdmin = useGetAdmin();
 
 
   return (

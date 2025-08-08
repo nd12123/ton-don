@@ -529,10 +529,16 @@ _ %owner() method_id(83229) {
         return ();
     }
     
-    ;; Receive Withdraw message
-    if (op == 1251001091) {
-        var $msg'amount = in_msg~load_uint(32);
-        int $amount = $global_min($msg'amount, (($global_myBalance() - $Context$_get_value(__tact_context_get())) - 10000000));
+    ;; Receive WithdrawAmount message
+    if (op == 1308374593) {
+        var $msg'amount = in_msg~load_uint(128);
+        int $reserve = 30000000;
+        int $spendable = ($global_myBalance() - $reserve);
+        if (($spendable < 0)) {
+            $spendable = 0;
+        }
+        int $amount = $global_min($msg'amount, $spendable);
+        throw_unless(54615, ($amount > 0));
         $global_send($SendParameters$_constructor_to_bounce_value_mode(__tact_context_get_sender(), true, $amount, 66));
         $self'balance = $self'balance - $amount;
         ($self'totalStaked, $self'balance, $self'owner, $self'admin, $self'mapStakes)~$StakeContract$_fun_reply(__gen_cell_cell_fb039674dc7334ad64a0f55d8c70d653eead41c9224cc787a6b6d11be47b307e());

@@ -1,5 +1,5 @@
 import { toNano } from '@ton/core';
-import { StakeContract } from '../wrappers/StakeContract';
+import { StakeContract } from '../build/StakeContract/StakeContract_StakeContract'; //wrappers
 
 import { NetworkProvider } from '@ton/blueprint';
 

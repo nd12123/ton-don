@@ -1,6 +1,6 @@
 # Tact compilation report
 Contract: StakeContract
-BoC Size: 1137 bytes
+BoC Size: 1146 bytes
 
 ## Structures (Structs and Messages)
 Total structures: 20
@@ -69,9 +69,9 @@ Signature: `ChangeOwnerOk{queryId:uint64,newOwner:address}`
 TL-B: `add_stake#bfd60d84 amount:uint32 = AddStake`
 Signature: `AddStake{amount:uint32}`
 
-### Withdraw
-TL-B: `withdraw#4a90c303 amount:uint32 = Withdraw`
-Signature: `Withdraw{amount:uint32}`
+### WithdrawAmount
+TL-B: `withdraw_amount#4dfc3641 amount:uint128 = WithdrawAmount`
+Signature: `WithdrawAmount{amount:uint128}`
 
 ### SetAdmin
 TL-B: `set_admin#a1bc3662 newAdmin:address = SetAdmin`
@@ -145,6 +145,7 @@ No arguments
 * 138: Not a basechain address
 * 16209: Mismatch stake
 * 46940: Nothing to stake
+* 54615: Insufficient balance
 
 ## Trait inheritance diagram
 

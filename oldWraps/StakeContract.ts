@@ -1,0 +1,1 @@
+export * from '../build/StakeContract/StakeContract_StakeContract';

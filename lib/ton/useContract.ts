@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { Address, toNano, fromNano, OpenedContract } from "@ton/core";
 import type {
   AddStake,
-  Withdraw,
+  WithdrawAmount,
   Drain
   //SetAdmin noneed
 } from "../../build/StakeContract/StakeContract_StakeContract";
@@ -14,6 +14,7 @@ import { useAsyncInitialize } from "./useAsyncInitialize";
 import { useTonClient }       from "./useTonClient";
 import { useTonConnect }      from "./useTonConnect";
 //import { number } from "framer-motion";
+
 
 export function useStakeContract() { //contractAddress: string
   const { client } = useTonClient();      // TonClient для чтения
@@ -60,7 +61,7 @@ export function useStakeContract() { //contractAddress: string
       */
 
       //console.log("✅ contract is ready, address:", contract.address.toString(), " User stake (gon be Admin) ", admin); //.toString()
-      console.log("Contract keys:", Object.keys(contract));
+      //console.log("Contract keys:", Object.keys(contract));
 
       //setAdminAddr(admin.toString())
       setTotalStaked(total);
@@ -76,10 +77,26 @@ export function useStakeContract() { //contractAddress: string
 */
 
   useEffect(() => {
-    if (!contract) return;
+    if (!contract || !client) return;
+
+    (async () => {
+  const desc = StakeContract.fromAddress(
+    Address.parse("kQB3u_BlKZsMEHsz9GFwJfUY7lG7xlzKdil8yUwqEIFFstNz")
+  );
+  const opened = client.open(desc);
+
+  console.log("Contract keys by address:", Object.keys(opened));
+  console.log("Contract keys by object", Object.keys(contract));
+
+  const owner = await opened.getOwner();
+  console.log("Owner is:", owner.toString());
+})();
+
+
     (async () => {
       const a = await contract.getContractAdmin();//getContractAdmin(); (provider:  ContractProvider)
       setAdminAddr(a.toString());
+      console.log("!Admin ", a.toString())
     })();
     //    fetchData();
   }, [contract]);
@@ -127,14 +144,14 @@ export function useStakeContract() { //contractAddress: string
   // 4) Метод вывода
   const withdrawTon = async (amount: number, target: string) => {
     if (!contract) return;
-    const msg: Withdraw = {
-      $$type: "Withdraw",
-      amount: toNano(1),//BigInt(amount),
+    const msg: WithdrawAmount = {
+      $$type: "WithdrawAmount",
+      amount: 1n,//toNano(0.01),//BigInt(amount),
       //target: Address.parse(target),
     };
     await contract.send(
       sender,
-      { value: toNano("0.03") },
+      { value: toNano(0.04) },
       msg
     );
     console.log("Withdraw pressed", amount, target, contract, sender);

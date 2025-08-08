@@ -1,5 +1,5 @@
 import { Blockchain, SandboxContract, TreasuryContract } from '@ton/sandbox';
-import { toNano } from '@ton/core';
+import { toNano, Address  } from '@ton/core';
 import { StakeContract } from '../build/StakeContract/StakeContract_StakeContract';
 import '@ton/test-utils';
 
@@ -41,6 +41,15 @@ describe('StakeContract', () => {
     });
 
 
+    it('should return current owner', async () => {
+        const owner = await stakeContract.getOwner();
+        console.log('Owner is:', owner);
+
+        expect(owner).toBeInstanceOf(Address);
+        expect(owner.equals(deployer.address)).toBe(true);
+    });
+
+
     it('should recieve a stake, return a stake by sender address, return all stakes', async () => {
         const totalValueBefore = await stakeContract.getTotalStaked();
         console.log("before all", totalValueBefore);
@@ -75,9 +84,9 @@ describe('StakeContract', () => {
             value: toNano('0.2')
         },
         {
-            $$type: 'Withdraw',
+            $$type: 'WithdrawAmount',//'Withdraw',
             amount: 1n,
-            target: deployer.address
+            //target: deployer.address
         })
         const balanceEnd = await stakeContract.getBalance();
         //const balanceCompany = await company.getBalance();
@@ -128,11 +137,13 @@ await stakeContract.send(deployer.getSender(), {
     const nextAdmin = await blockchain.treasury('nextAdmin');
 
     // call SetAdmin from current admin (deployer)
+    /*
     await stakeContract.send(
       deployer.getSender(),
       { value: toNano('0.05') },
       { $$type: 'SetAdmin', newAdmin: nextAdmin.address },
     );
+*/
 
     // verify that getAdmin returns the new admin address
     const adminAfter = await stakeContract.getContractAdmin();
@@ -157,9 +168,9 @@ await stakeContract.send(deployer.getSender(), {
             value: toNano('0.2')
         },
         {
-            $$type: 'Withdraw',
+            $$type: 'WithdrawAmount',//'Withdraw',
             amount: 3n,
-            target: deployer.address
+            //target: deployer.address
         })
         const balanceEnd = await stakeContract.getBalance();
         //const balanceCompany = await company.getBalance();

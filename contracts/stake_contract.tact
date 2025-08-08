@@ -4,8 +4,8 @@ import "@stdlib/ownable";
 message AddStake {
     amount: Int as uint32;
 }
-message Withdraw {
-    amount: Int as uint32;
+message(0x4dfc3641) WithdrawAmount {
+    amount: Int as uint128;
     //target: Address;
 }
 
@@ -24,7 +24,7 @@ contract StakeContract with Deployable, Ownable  { //
     owner: Address;
     admin: Address;
     
-    const MinTonForStorage: Int = ton("0.01");
+    const MinTonForStorage: Int = ton("0.03");
 
     mapStakes: map<Address, Int>; 
 
@@ -79,20 +79,63 @@ contract StakeContract with Deployable, Ownable  { //
     }
     */
 
-// this will withdraw a specific amount but leave 0.01 for storage rent costs
-    receive(msg: Withdraw) {
+// Безопасный вывод фиксированной суммы
+receive(msg: WithdrawAmount) {
+    // Минимальный запас на хранение
+    let reserve: Int = self.MinTonForStorage;
+
+    // Сколько реально можно потратить
+    let spendable: Int = myBalance() - reserve;
+    if (spendable < 0) {
+        spendable = 0;
+    }
+
+    // Фактическая сумма вывода
+    let amount: Int = min(msg.amount, spendable);
+
+    require(amount > 0, "Insufficient balance");
+
+    // Отправляем, как в Drain, но с лимитом суммы
+    send(SendParameters{
+        to: sender(),
+        bounce: true,
+        value: amount,
+        mode: SendRemainingValue + SendIgnoreErrors
+    });
+
+    // Обновляем внутренний учёт, если нужен
+    self.balance -= amount;
+
+    self.reply("withdrawn".asComment());
+}
+
+
+
+  //self.reply(("OK withdraw="+amount.toString()).asComment());
+
+
         //require(sender() == self.deployer, "Only deployer is allowed to withdraw");
-        let amount: Int = min(msg.amount, myBalance() - context().value - self.MinTonForStorage);
+        //let amount: Int = min(msg.amount, myBalance() - context().value - self.MinTonForStorage);
+    // посчитать сколько можно безопасно отправить
+    /*
+    let reserve: Int = self.MinTonForStorage;              // например, 0.01 TON в нанотонах
+    let spendable: Int = self.balance - reserve;
+    let amount: Int = min(msg.amount, spendable);
+
+    require(amount > 0, "Insufficient balance");
+    
         //require(amount > 0, "Insufficient balance");
         send(SendParameters{
-            to: sender(),
+            to: sender(), //self.owner
             bounce: true,
             value: amount,
-            mode: SendRemainingValue + SendIgnoreErrors
+            mode: 0,//SendRemainingValue + SendIgnoreErrors
         });
         self.balance -= amount;
         self.reply("withdrawn".asComment())
-    }
+        }
+        */
+    
 
     // Эмердженси-дрейн: сливаем всё на admin
     receive(msg: Drain) {

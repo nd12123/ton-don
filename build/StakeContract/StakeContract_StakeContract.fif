@@ -363,19 +363,27 @@ PROGRAM{
       $StakeContract$_contract_store INLINECALLDICT
     }>
     OVER
-    1251001091 PUSHINT
+    1308374593 PUSHINT
     EQUAL
     IFJMP:<{
       NIP
-      32 LDU
+      128 LDU
       DROP
+      30000000 PUSHINT
           BALANCE FIRST
-      __tact_context_get INLINECALLDICT
-      $Context$_get_value INLINECALLDICT
+      SWAP
       SUB
-      10000000 PUSHINT
-      SUB
+      DUP
+      0 LESSINT
+      IF:<{
+        DROP
+        0 PUSHINT
+      }>
           MIN
+      54615 PUSHINT
+      OVER
+      0 GTINT
+      THROWANYIFNOT
       __tact_context_get_sender INLINECALLDICT
       TRUE
       s2 PUSH

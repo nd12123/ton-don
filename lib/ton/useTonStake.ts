@@ -1,4 +1,5 @@
 // lib/hooks/useStakeContract.ts
+/*
 "use client";
 
 import { useEffect, useState, useCallback } from "react";
@@ -89,3 +90,4 @@ export function useStakeContract(contractAddress: string) {
     withdrawTon,
   };
 }
+*/
