@@ -8,8 +8,10 @@ import type {
   WithdrawAmount,
   Drain
   //SetAdmin noneed
-} from "../../build/StakeContract/StakeContract_StakeContract";
-import {StakeContract} from "../../build/StakeContract/StakeContract_StakeContract"
+} from "../../build/LastContract/LastContract_LastContract"; //... /StakeContract/StakeContract_StakeContract
+//import {StakeContract} from "../../build/StakeContract/StakeContract_StakeContract"
+import { LastContract }     from "../../build/LastContract/LastContract_LastContract"; //... /StakeContract/StakeContract_StakeContract
+
 import { useAsyncInitialize } from "./useAsyncInitialize";
 import { useTonClient }       from "./useTonClient";
 import { useTonConnect }      from "./useTonConnect";
@@ -28,14 +30,14 @@ export function useStakeContract() { //contractAddress: string
   const [admin,      setAdminAddr]    = useState<string | null>(null); //
 
   // 1) Открываем контракт
-  const contract = useAsyncInitialize<OpenedContract<StakeContract> | null>(
+  const contract = useAsyncInitialize<OpenedContract<LastContract> | null>(
     async () => {
       if (!client || !wallet) return null;
-      console.log("Contract opening, wallet ", Address.parse(wallet as string).toString(), " contract ", "kQB3u_BlKZsMEHsz9GFwJfUY7lG7xlzKdil8yUwqEIFFstNz") //Address.parse()
-      const desc = StakeContract.fromAddress(
-        Address.parse("kQB3u_BlKZsMEHsz9GFwJfUY7lG7xlzKdil8yUwqEIFFstNz")//") // EQB3u_BlKZsMEHsz9GFwJfUY7lG7xlzKdil8yUwqEIFFsmj5 //contractAddress //"kQB3u_BlKZsMEHsz9GFwJfUY7lG7xlzKdil8yUwqEIFFstNz")//"0QAmQUOW2aGZb8uGmDd8fhhcs7u5NpzzmybooQo46PzGleIL")//"EQB8akzBYXBpATjJiWG1vRwo2FG2JoA9czy3yNno-qhMnlMo") //process.env.NEXT_PUBLIC_ADMIN_WALLETS ? can be a string? maybe log
+      console.log("Contract opening, wallet ", Address.parse(wallet as string).toString(), " contract ", "kQDexuQg5a-vyelfStMMax7ODr8Yc-l_epdqiKuBVNH1p1DP") //Address.parse() //kQB3u_BlKZsMEHsz9GFwJfUY7lG7xlzKdil8yUwqEIFFstNz
+      const desc = LastContract.fromAddress(
+        Address.parse("kQDexuQg5a-vyelfStMMax7ODr8Yc-l_epdqiKuBVNH1p1DP")//") // EQB3u_BlKZsMEHsz9GFwJfUY7lG7xlzKdil8yUwqEIFFsmj5 //contractAddress //"kQB3u_BlKZsMEHsz9GFwJfUY7lG7xlzKdil8yUwqEIFFstNz")//"0QAmQUOW2aGZb8uGmDd8fhhcs7u5NpzzmybooQo46PzGleIL")//"EQB8akzBYXBpATjJiWG1vRwo2FG2JoA9czy3yNno-qhMnlMo") //process.env.NEXT_PUBLIC_ADMIN_WALLETS ? can be a string? maybe log
       );
-      return client.open(desc) as OpenedContract<StakeContract>;
+      return client.open(desc) as OpenedContract<LastContract>;
     },
     [client, wallet] //contractAddress c209edecebfe1050d45bb01b898c1f518df5f7448cf6345c00811822db4c5dca ?
   );
@@ -79,9 +81,10 @@ export function useStakeContract() { //contractAddress: string
   useEffect(() => {
     if (!contract || !client) return;
 
+    /*
     (async () => {
-  const desc = StakeContract.fromAddress(
-    Address.parse("kQB3u_BlKZsMEHsz9GFwJfUY7lG7xlzKdil8yUwqEIFFstNz")
+  const desc = LastContract.fromAddress(
+    Address.parse("kQDexuQg5a-vyelfStMMax7ODr8Yc-l_epdqiKuBVNH1p1DP")//"kQB3u_BlKZsMEHsz9GFwJfUY7lG7xlzKdil8yUwqEIFFstNz")
   );
   const opened = client.open(desc);
 
@@ -91,12 +94,13 @@ export function useStakeContract() { //contractAddress: string
   const owner = await opened.getOwner();
   console.log("Owner is:", owner.toString());
 })();
+*/
 
 
     (async () => {
-      const a = await contract.getContractAdmin();//getContractAdmin(); (provider:  ContractProvider)
+      const a = await contract.getOwner();//getContractAdmin(); (provider:  ContractProvider)
       setAdminAddr(a.toString());
-      console.log("!Admin ", a.toString())
+      console.log("!Owner ", a.toString())
     })();
     //    fetchData();
   }, [contract]);

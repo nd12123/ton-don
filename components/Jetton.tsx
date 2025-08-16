@@ -10,15 +10,12 @@ import {
   Ellipsis,
 } from "./styled/styled";
 
-import {useGetAdmin} from "@/lib/ton/useGetAdmin"
+//import {useGetAdmin} from "@/lib/ton/useGetAdmin"
 
 export function Jetton() {
   const { deploy } = useStakeDeploy();
   const { wallet, connected } = useTonConnect();
-  const { contractAddress, totalStaked, userStake, stakeTon, withdrawTon, drain } = useStakeContract(); //admin
-
-
-const myAdmin = useGetAdmin();
+  const { contractAddress, totalStaked, userStake, stakeTon, withdrawTon, drain, admin } = useStakeContract(); //admin
 
 
   return (
@@ -43,7 +40,7 @@ const myAdmin = useGetAdmin();
         <FlexBoxRow>
           <strong>Admin:</strong>
           <Ellipsis>
-                        {myAdmin ? myAdmin.toString() : "Loading..."}
+                        {admin ? admin.toString() : "Loading..."}
             {/**  {admin ? Address.parse(admin).toString() : "Loading..."} */}
           </Ellipsis>
         </FlexBoxRow>

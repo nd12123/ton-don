@@ -3,14 +3,14 @@
 
 import {  toNano } from "@ton/core"; //beginCell,
 import { useTonConnectUI }   from "@tonconnect/ui-react";
-import { StakeContract }     from "../../build/StakeContract/StakeContract_StakeContract";
+import { LastContract }     from "../../build/LastContract/LastContract_LastContract"; //... /StakeContract/StakeContract_StakeContract
 
 export function useStakeDeploy() {
   const [tonConnectUI] = useTonConnectUI();
 
   const deploy = async () => {
     // 1) get code/data/address
-    const initDesc = await StakeContract.fromInit();
+    const initDesc = await LastContract.fromInit();
     //console.log('deploying a contract')
     // 2) build the single stateInit cell
     /*
