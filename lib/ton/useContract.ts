@@ -33,9 +33,9 @@ export function useStakeContract() { //contractAddress: string
   const contract = useAsyncInitialize<OpenedContract<LastContract> | null>(
     async () => {
       if (!client || !wallet) return null;
-      console.log("Contract opening, wallet ", Address.parse(wallet as string).toString(), " contract ", "kQDexuQg5a-vyelfStMMax7ODr8Yc-l_epdqiKuBVNH1p1DP") //Address.parse() //kQB3u_BlKZsMEHsz9GFwJfUY7lG7xlzKdil8yUwqEIFFstNz
+      console.log("Contract opening, wallet ", Address.parse(wallet as string).toString(), " contract ", "kQCaADFW83YrbuXUg6OCN1zvt77rEe-ZMCToJqv2sxhB-Kh0") //Address.parse() //kQB3u_BlKZsMEHsz9GFwJfUY7lG7xlzKdil8yUwqEIFFstNz
       const desc = LastContract.fromAddress(
-        Address.parse("kQDexuQg5a-vyelfStMMax7ODr8Yc-l_epdqiKuBVNH1p1DP")//") // EQB3u_BlKZsMEHsz9GFwJfUY7lG7xlzKdil8yUwqEIFFsmj5 //contractAddress //"kQB3u_BlKZsMEHsz9GFwJfUY7lG7xlzKdil8yUwqEIFFstNz")//"0QAmQUOW2aGZb8uGmDd8fhhcs7u5NpzzmybooQo46PzGleIL")//"EQB8akzBYXBpATjJiWG1vRwo2FG2JoA9czy3yNno-qhMnlMo") //process.env.NEXT_PUBLIC_ADMIN_WALLETS ? can be a string? maybe log
+        Address.parse("kQCaADFW83YrbuXUg6OCN1zvt77rEe-ZMCToJqv2sxhB-Kh0")//") // EQB3u_BlKZsMEHsz9GFwJfUY7lG7xlzKdil8yUwqEIFFsmj5 //contractAddress //"kQB3u_BlKZsMEHsz9GFwJfUY7lG7xlzKdil8yUwqEIFFstNz")//"0QAmQUOW2aGZb8uGmDd8fhhcs7u5NpzzmybooQo46PzGleIL")//"EQB8akzBYXBpATjJiWG1vRwo2FG2JoA9czy3yNno-qhMnlMo") //process.env.NEXT_PUBLIC_ADMIN_WALLETS ? can be a string? maybe log
       );
       return client.open(desc) as OpenedContract<LastContract>;
     },
@@ -67,7 +67,7 @@ export function useStakeContract() { //contractAddress: string
 
       //setAdminAddr(admin.toString())
       setTotalStaked(total);
-      console.log('Total ',total)
+      //console.log('Total ',total)
       const stake = await contract.getUserStake(sender.address);
       setUserStake(stake ?? 0n);
     }
@@ -82,19 +82,17 @@ export function useStakeContract() { //contractAddress: string
     if (!contract || !client) return;
 
     /*
+*/
     (async () => {
   const desc = LastContract.fromAddress(
-    Address.parse("kQDexuQg5a-vyelfStMMax7ODr8Yc-l_epdqiKuBVNH1p1DP")//"kQB3u_BlKZsMEHsz9GFwJfUY7lG7xlzKdil8yUwqEIFFstNz")
+    Address.parse("kQCaADFW83YrbuXUg6OCN1zvt77rEe-ZMCToJqv2sxhB-Kh0")//"kQB3u_BlKZsMEHsz9GFwJfUY7lG7xlzKdil8yUwqEIFFstNz") kQCaADFW83YrbuXUg6OCN1zvt77rEe-ZMCToJqv2sxhB-Kh0 kQDexuQg5a-vyelfStMMax7ODr8Yc-l_epdqiKuBVNH1p1DP
   );
   const opened = client.open(desc);
-
-  console.log("Contract keys by address:", Object.keys(opened));
-  console.log("Contract keys by object", Object.keys(contract));
-
-  const owner = await opened.getOwner();
-  console.log("Owner is:", owner.toString());
+  //console.log("Contract keys by address:", Object.keys(opened));
+  //console.log("Contract keys by object", Object.keys(contract));
+  const owner = await opened.getAdmin();
+  console.log("Admin is:", owner.toString());
 })();
-*/
 
 
     (async () => {
@@ -115,7 +113,7 @@ export function useStakeContract() { //contractAddress: string
       $$type: "AddStake",
       amount: BigInt(amount),
     };
-    console.log('ready to stake ', amount, msg, sender.address)
+    //console.log('ready to stake ', amount, msg, sender.address)
 
     console.log('Amount in msg ', BigInt(amount), ' Value sent ', toNano('1.05') )
     await contract.send(
