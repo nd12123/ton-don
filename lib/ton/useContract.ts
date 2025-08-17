@@ -6,6 +6,7 @@ import { Address, toNano, fromNano, OpenedContract } from "@ton/core";
 import type {
   AddStake,
   WithdrawAmount,
+  Withdraw,
   Drain
   //SetAdmin noneed
 } from "../../build/LastContract/LastContract_LastContract"; //... /StakeContract/StakeContract_StakeContract
@@ -22,12 +23,12 @@ export function useStakeContract() { //contractAddress: string
   const { client } = useTonClient();      // TonClient для чтения
   const { wallet, sender } = useTonConnect(); // TonConnectUI sender
 
-    const gasBuffer = toNano("0.08");                    // 0.05 TON for gas+storage
+    const gasBuffer = toNano("0.05");                    // 0.05 TON for gas+storage
 
   
   const [totalStaked, setTotalStaked] = useState<bigint>(0n);
   const [userStake,   setUserStake]   = useState<bigint>(0n);
-  const [admin,      setAdminAddr]    = useState<string | null>(null); //
+  const [owner,      setOwner]    = useState<string | null>(null); //
 
   // 1) Открываем контракт
   const contract = useAsyncInitialize<OpenedContract<LastContract> | null>(
@@ -97,7 +98,7 @@ export function useStakeContract() { //contractAddress: string
 
     (async () => {
       const a = await contract.getOwner();//getContractAdmin(); (provider:  ContractProvider)
-      setAdminAddr(a.toString());
+      setOwner(a.toString());
       console.log("!Owner ", a.toString())
     })();
     //    fetchData();
@@ -115,18 +116,18 @@ export function useStakeContract() { //contractAddress: string
     };
     //console.log('ready to stake ', amount, msg, sender.address)
 
-    console.log('Amount in msg ', BigInt(amount), ' Value sent ', toNano('1.05') )
+    console.log('Amount in msg ', BigInt(amount), ' Value sent ', toNano(amount.toString()) + gasBuffer )
     await contract.send(
       sender,
       { 
-        value: toNano('1.05') 
+        value: toNano(amount.toString()) + gasBuffer //toNano('1.05') 
       }, // toNano(amount.toString()) + gasBuffer 
       {
       $$type: "AddStake",
       amount: BigInt(amount),
       }
     );
-    console.log('staking ', fromNano(toNano(amount.toString())) + gasBuffer , ' TON', msg)
+    console.log('staking ', fromNano(toNano(amount.toString()) + gasBuffer) , ' TON', msg)
     // можно вызвать fetchData(), если нужно сразу обновить UI
   };
   
@@ -144,19 +145,33 @@ export function useStakeContract() { //contractAddress: string
   */
 
   // 4) Метод вывода
-  const withdrawTon = async (amount: number, target: string) => {
+  const withdrawTarget = async (amount: number, target: string) => {
     if (!contract) return;
-    const msg: WithdrawAmount = {
-      $$type: "WithdrawAmount",
+    const msg: Withdraw = {
+      $$type: "Withdraw",
       amount: 1n,//toNano(0.01),//BigInt(amount),
-      //target: Address.parse(target),
+      target: Address.parse(target),
     };
     await contract.send(
       sender,
       { value: toNano(0.04) },
       msg
     );
-    console.log("Withdraw pressed", amount, target, contract, sender);
+    console.log("Target withdraw ", amount, target, contract, sender);
+    // можно вызвать fetchData() здесь тоже
+  };
+   const withdrawAmount = async (amount: number) => {
+    if (!contract) return;
+    const msg: WithdrawAmount = {
+      $$type: "WithdrawAmount",
+      amount: 1n,//toNano(0.01),//BigInt(amount),
+    };
+    await contract.send(
+      sender,
+      { value: toNano(0.04) },
+      msg
+    );
+    console.log("Withdraw ", amount, contract, sender);
     // можно вызвать fetchData() здесь тоже
   };
 
@@ -183,9 +198,10 @@ export function useStakeContract() { //contractAddress: string
     totalStaked,
     userStake,
     stakeTon,
-    withdrawTon,
+    withdrawTarget,
+    withdrawAmount,
     drain,
-    admin
+    owner
 
 /*
     stakeScript: (amount: number) =>{

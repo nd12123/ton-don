@@ -9,10 +9,11 @@ import { useTonConnect }    from "@/lib/ton/useTonConnect";
 export default function StakePanel() {
   //const contractAddress = process.env.NEXT_PUBLIC_CONTRACT_ADDRESS!;
   const { connected } = useTonConnect(); //connect
-  const { totalStaked, userStake, stakeTon, withdrawTon } =
+  const { totalStaked, userStake, stakeTon, withdrawTarget } =
     useStakeContract(); //contractAddress
 
   const [amount, setAmount] = useState(0);
+  const [stakeAmount, setStakeAmount] = useState(0)
   const [target, setTarget] = useState("");
 
   if (!connected) {
@@ -39,20 +40,27 @@ export default function StakePanel() {
         <input
           type="number"
           min={1}
-          value={amount}
-          onChange={(e) => setAmount(Number(e.target.value))}
+          value={stakeAmount}
+          onChange={(e) => setStakeAmount(Number(e.target.value))}
           className="border p-1 rounded w-24"
         />
         <button
           className="bg-green-500 text-white px-3 rounded disabled:opacity-50"
-          disabled={amount <= 0}
-          onClick={() => stakeTon(amount)}
+          disabled={stakeAmount <= 0}
+          onClick={() => stakeTon(stakeAmount)}
         >
           Stake
         </button>
       </div>
 
       <div className="flex gap-2">
+        <input
+          type="number"
+          min={1}
+          value={amount}
+          onChange={(e) => setAmount(Number(e.target.value))}
+          className="border p-1 rounded w-24"
+        />
         <input
           type="text"
           placeholder="Адрес для Withdraw"
@@ -63,7 +71,7 @@ export default function StakePanel() {
         <button
           className="bg-red-500 text-white px-3 rounded disabled:opacity-50"
           disabled={amount <= 0 || target === ""}
-          onClick={() => withdrawTon(amount, target)}
+          onClick={() => withdrawTarget(amount, target)}
         >
           Withdraw
         </button>
