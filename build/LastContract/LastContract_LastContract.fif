@@ -464,7 +464,7 @@ PROGRAM{
     EQUAL
     IFJMP:<{
       3 BLKDROP
-      16461 PUSHINT
+      35499 PUSHINT
       __tact_context_get_sender INLINECALLDICT
       s4 PUSH
       SDEQ

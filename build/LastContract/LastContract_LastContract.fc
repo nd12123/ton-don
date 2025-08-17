@@ -275,8 +275,8 @@ int $global_myBalance() impure asm """
 
 ((int, slice, int, slice, cell), slice) $LastContract$_fun_owner((int, slice, int, slice, cell) $self) impure inline_ref {
     var (($self'totalStaked, $self'admin, $self'balance, $self'owner, $self'mapStakes)) = $self;
-    var $fresh$ret_11 = $self'owner;
-    return (($self'totalStaked, $self'admin, $self'balance, $self'owner, $self'mapStakes), $fresh$ret_11);
+    var $fresh$ret_5 = $self'owner;
+    return (($self'totalStaked, $self'admin, $self'balance, $self'owner, $self'mapStakes), $fresh$ret_5);
 }
 
 ;; LastContract_LastContract.constants.fc
@@ -405,32 +405,32 @@ builder $LastContract$_store(builder build_0, (int, slice, int, slice, cell) v) 
 
 ((int, slice, int, slice, cell), slice) $LastContract$_fun_admin((int, slice, int, slice, cell) $self) impure inline_ref {
     var (($self'totalStaked, $self'admin, $self'balance, $self'owner, $self'mapStakes)) = $self;
-    var $fresh$ret_6 = $self'admin;
-    return (($self'totalStaked, $self'admin, $self'balance, $self'owner, $self'mapStakes), $fresh$ret_6);
+    var $fresh$ret_0 = $self'admin;
+    return (($self'totalStaked, $self'admin, $self'balance, $self'owner, $self'mapStakes), $fresh$ret_0);
 }
 
 ((int, slice, int, slice, cell), int) $LastContract$_fun_userStake((int, slice, int, slice, cell) $self, slice $key) impure inline_ref {
     var (($self'totalStaked, $self'admin, $self'balance, $self'owner, $self'mapStakes)) = $self;
-    var $fresh$ret_7 = __tact_dict_get_slice_int($self'mapStakes, 267, $key, 257);
-    return (($self'totalStaked, $self'admin, $self'balance, $self'owner, $self'mapStakes), $fresh$ret_7);
+    var $fresh$ret_1 = __tact_dict_get_slice_int($self'mapStakes, 267, $key, 257);
+    return (($self'totalStaked, $self'admin, $self'balance, $self'owner, $self'mapStakes), $fresh$ret_1);
 }
 
 ((int, slice, int, slice, cell), cell) $LastContract$_fun_allStakes((int, slice, int, slice, cell) $self) impure inline_ref {
     var (($self'totalStaked, $self'admin, $self'balance, $self'owner, $self'mapStakes)) = $self;
-    var $fresh$ret_8 = $self'mapStakes;
-    return (($self'totalStaked, $self'admin, $self'balance, $self'owner, $self'mapStakes), $fresh$ret_8);
+    var $fresh$ret_2 = $self'mapStakes;
+    return (($self'totalStaked, $self'admin, $self'balance, $self'owner, $self'mapStakes), $fresh$ret_2);
 }
 
 ((int, slice, int, slice, cell), int) $LastContract$_fun_totalStaked((int, slice, int, slice, cell) $self) impure inline_ref {
     var (($self'totalStaked, $self'admin, $self'balance, $self'owner, $self'mapStakes)) = $self;
-    var $fresh$ret_9 = $self'totalStaked;
-    return (($self'totalStaked, $self'admin, $self'balance, $self'owner, $self'mapStakes), $fresh$ret_9);
+    var $fresh$ret_3 = $self'totalStaked;
+    return (($self'totalStaked, $self'admin, $self'balance, $self'owner, $self'mapStakes), $fresh$ret_3);
 }
 
 ((int, slice, int, slice, cell), int) $LastContract$_fun_balance((int, slice, int, slice, cell) $self) impure inline_ref {
     var (($self'totalStaked, $self'admin, $self'balance, $self'owner, $self'mapStakes)) = $self;
-    var $fresh$ret_10 = $self'balance;
-    return (($self'totalStaked, $self'admin, $self'balance, $self'owner, $self'mapStakes), $fresh$ret_10);
+    var $fresh$ret_4 = $self'balance;
+    return (($self'totalStaked, $self'admin, $self'balance, $self'owner, $self'mapStakes), $fresh$ret_4);
 }
 
 ;;
@@ -538,7 +538,7 @@ _ %owner() method_id(83229) {
     ;; Receive Drain message
     if (op == 1344675936) {
         var $msg'target = in_msg~load_msg_addr();
-        throw_unless(16461, ( equal_slices_bits(__tact_context_get_sender(), $self'owner) ));
+        throw_unless(35499, ( equal_slices_bits(__tact_context_get_sender(), $self'owner) ));
         $global_send($SendParameters$_constructor_to_value_bounce_mode(__tact_context_get_sender(), 0, true, 130));
         $self'balance = 0;
         ($self'totalStaked, $self'admin, $self'balance, $self'owner, $self'mapStakes)~$LastContract$_fun_reply(__gen_cell_cell_14945fabe5a8a1d2344f0d283a2cc8c742bd3faebc803d3c326e833957eef58e());

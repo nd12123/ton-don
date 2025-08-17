@@ -1,6 +1,6 @@
 # Tact compilation report
 Contract: LastContract
-BoC Size: 1418 bytes
+BoC Size: 1419 bytes
 
 ## Structures (Structs and Messages)
 Total structures: 21
@@ -151,6 +151,7 @@ No arguments
 * 16461: Only admin
 * 18204: Only admin/owner
 * 18487: We're bunkrupt
+* 35499: Only owner
 * 46940: Nothing to stake
 * 54615: Insufficient balance
 
