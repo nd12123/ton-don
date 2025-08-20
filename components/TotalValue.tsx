@@ -7,6 +7,7 @@ import ton3d6 from "@/assets/TotalValue/Ton 3d 6.png";
 import ton3d7 from "@/assets/TotalValue/Ton 3d 7.svg";
 import leftSphere from "@/assets/TotalValue/Ellipse9.png";
 import rightSphere from "@/assets/TotalValue/Ellipse10.png";
+import GoToStakingButton from '@/components/GoToStakingButton';
 
 export default function TotalValue() {
   return (
@@ -131,12 +132,11 @@ export default function TotalValue() {
           watch your capital grow!
         </p>
 
-        <button
-          className="mt-10 inline-block px-8 py-4 bg-gradient-to-br from-[#00BFFF] to-[#009FEF]
-                     text-white text-lg font-medium rounded-[15px] shadow-lg hover:opacity-90 transition"
-        >
-          Start Investing Now
-        </button>
+                    <GoToStakingButton className="btn-primary
+    mt-10 inline-block px-8 py-4 bg-gradient-to-br from-[#00BFFF] to-[#009FEF]
+                     text-white text-lg font-medium rounded-[15px] shadow-lg hover:opacity-90 transition
+  ">Start Investing Now</GoToStakingButton>
+
       </div>
     </section>
   );

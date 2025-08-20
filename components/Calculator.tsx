@@ -1,5 +1,5 @@
 "use client";
-
+import GoToStakingButton from "./GoToStakingButton";
 import React, { useEffect, useState } from "react";
 //import PlanCard from "./PlanCardMini";
 import Image from 'next/image'
@@ -73,9 +73,11 @@ useEffect(() => {
             <span className="text-white text-sm font-medium">{plan.label}</span>
           </button>
         ))}
-        <button className="bg-[#00C2FF] hover:bg-[#00A5E0] text-white px-2 py-2 rounded-xl font-semibold transition-all shadow-lg">
-          Connect Wallet
-        </button>
+        
+                            <GoToStakingButton className="btn-primary
+            bg-[#00C2FF] hover:bg-[#00A5E0] text-white px-2 py-2 rounded-xl font-semibold transition-all shadow-lg
+          ">Connect Wallet</GoToStakingButton>
+        
       </div>
 {/* === Наша новая линия-сепаратор === */}
 <div
@@ -113,7 +115,7 @@ useEffect(() => {
 
     {/* Иконка справа */}
     <img
-      src="/decorative/ton5.png"
+      src="/decorative/ton2.png"
       alt="TON"
       className="w-8 h-8"
     />
@@ -207,7 +209,7 @@ useEffect(() => {
   {/* Правая монета */}
   <div className="relative w-[96px] h-[96px] ">
     <Image
-      src="/decorative/ton5.png"
+      src="/decorative/ton6.png"
       alt="Ton Coin Right"
       fill
       style={{ objectFit: "contain" }}

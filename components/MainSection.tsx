@@ -1,7 +1,7 @@
 import React from 'react';
 import Image from 'next/image';
 //import { Button } from '@/components/ui/button';
-import { ChevronRight } from 'lucide-react';
+//import { ChevronRight } from 'lucide-react';
 
 // Import 3D images
 import ton3d1 from '@/assets/Main/Ton 3d 1.png';
@@ -14,6 +14,8 @@ const ellipse5 = '/decorative/ellipse5.png';
 
 // Import SVG icons
 //import GetStartedIcon from '@/assets/Main/Get started.svg';
+import GoToStakingButton from '@/components/GoToStakingButton';
+
 import ReliableIcon from '@/assets/Main/Reliable.svg';
 import ProfitableIcon from '@/assets/Main/Profitable.svg';
 import SimpleIcon from '@/assets/Main/Simple.svg';
@@ -107,7 +109,7 @@ export default function MainSection({className = ''}: MainSectionProps) {
               </p>
               
               <div className="flex items-center gap-10">
-                    {/* Primary button */}
+                    {/* Primary button
                     <button
   type="button"
   className="
@@ -123,7 +125,18 @@ export default function MainSection({className = ''}: MainSectionProps) {
 >
   <span>Get Started</span>
   <ChevronRight className="w-5 h-5 text-white" />
-</button>
+</button> */}
+                    <GoToStakingButton className="btn-primary
+    w-64 h-16
+    bg-gradient-to-r from-sky-600 to-sky-400
+    rounded-2xl
+    shadow-[0px_21px_40px_rgba(6,173,252,0.19)]
+    shadow-[inset_5px_11px_30px_rgba(56,172,234,1)]
+    inline-flex items-center justify-center gap-6
+    text-white text-lg font-semibold font-inter leading-loose
+    transition-transform hover:scale-105
+  ">Get Started</GoToStakingButton>
+
 <button
   type="button"
   className="

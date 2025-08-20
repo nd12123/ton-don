@@ -198,7 +198,7 @@ export default function FAQSection() {
       {/* 2) Плавающие ton сверху */}
       <div className="pointer-events-none absolute top-[-10px] left-2/5 w-40 h-40 opacity-60 animate-float-slow">
         <NextImage
-          src="/decorative/ton5.png"
+          src="/decorative/ton2.png"
           alt=""
           fill
           style={{ objectFit: "contain" }}
@@ -206,7 +206,7 @@ export default function FAQSection() {
       </div>
       <div className="pointer-events-none absolute top-[-10px] left-1/4 w-60 h-60 opacity-65 animate-float-slow delay-2000">
         <NextImage
-          src="/decorative/ton4.png"
+          src="/decorative/ton4.svg"
           alt=""
           fill
           style={{ objectFit: "contain" }}

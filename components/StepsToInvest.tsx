@@ -72,9 +72,9 @@ export default function StepsToInvest() {
         />
 </div>
 
-<div className="absolute top-[20%] right-[30%] opacity-90 z-[5]">
+<div className="absolute top-[20%] right-[30%] opacity-90 z-[5] animate-float-slow  delay-1000">
       <Image
-        src="/decorative/ton5.png"
+        src="/decorative/ton4.svg"
         alt="TON Coin Right"
         width={125}
         height={125}
@@ -143,8 +143,7 @@ export default function StepsToInvest() {
             objectPosition: "left center",  
           }}
         />
-        {/**
-         * 
+        
         <Image
           src={rightCorner}
           alt="corner"
@@ -157,8 +156,9 @@ export default function StepsToInvest() {
             objectPosition: "right center",  
           }}
         />
-         */}
-        </div>
+        {/**
+         * 
+
         <div
   className="absolute right-0 top-[30px] opacity-60 animate-float-slow delay-2000 pointer-events-none"
   style={{
@@ -174,6 +174,9 @@ export default function StepsToInvest() {
     style={{ objectFit: "contain", objectPosition: "right center" }}
   />
 </div>
+         */}
+        </div>
+        
 
 
       {/* 3) Контейнер с тремя «шагами» py-20 */}
@@ -233,12 +236,12 @@ export default function StepsToInvest() {
       <div className="absolute inset-0 pointer-events-none">
         {/* === Плавающие монеты === */}
       {/* Левая монета (ton4) — верхний левый угол */}
-      <div className="absolute top-[0px] right-[160px] w-[200px] h-[200px] opacity-100  z-[5]">
+      <div className="absolute top-[0px] right-[160px] w-[200px] h-[200px] opacity-100  z-[5]"> 
         <Image
-          src="/decorative/ton4.png"
+          src="/decorative/ton22.svg" //png
           alt="TON Coin Left"
           fill
-          style={{ objectFit: "contain" }} //animate-float-slow
+          style={{ objectFit: "contain", mixBlendMode: "screen" }} // animate-float-slow
         />
       </div>
         
@@ -260,7 +263,7 @@ export default function StepsToInvest() {
       <div className="absolute top-[-150px] right-[-150px] w-full h-full opacity-100 z-[5]">
         <Image
           src={centerSphere}
-          alt="TON Coin Left"
+          alt="Sphere"
           fill
           style={{ objectFit: "contain",
             mixBlendMode: "screen"

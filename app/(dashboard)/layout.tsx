@@ -2,11 +2,15 @@
 import { useSyncOnChain } from "@/lib/hooks/useSyncOnChain";
 
 import { ThemeProvider } from "next-themes";
-import ThemeToggle from "@/components/ThemeToggle";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-import MobileLayout from "@/components/MobileLayout";
+//import ThemeToggle from "@/components/ThemeToggle";
+//import Link from "next/link";
+//import { usePathname } from "next/navigation";
+import Header from "@/components/header";
+//import MobileLayout from "@/components/MobileLayout";
 //import Footer from "@/components/Footer";
+            //<Footer />
+
+/*
 const menu = [
   { name: "Главная", href: "/" },
   { name: "Стейкинг", href: "/staking" },
@@ -14,21 +18,23 @@ const menu = [
   { name: "Поддержка", href: "/support" },
   { name: "Кабинет", href: "/profile" },
 ];
+*/
 
 export default function Layout({ children }: { children: React.ReactNode }) {
-  const pathname = usePathname();
+  //const pathname = usePathname();
 
   useSyncOnChain(30_000)
 
   return (
     <ThemeProvider attribute="class">
+      <Header />
       <div className="min-h-screen flex bg-gray-50 text-black dark:bg-gray-900 dark:text-gray-100">
         {/* Сайдбар не нужен, он в МобилЛейаут */}
         
 {/* Нужно кнопку с кошельком добавить наверх */}
         {/* Контент */}
         <div className="flex-1 flex flex-col">
-          {/* Верхний бар */}
+          {/* Верхний бар 
           <div className="container mx-auto px-4  md:px-6 py-4 border-b border-gray-200 dark:border-gray-700">
             <div className="flex items-center justify-between px-6 py-4">
               <nav className="flex gap-6 text-sm">
@@ -47,17 +53,17 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                 ))}
               </nav>
 
-              {/* Переключатель темы */}
+              //Переключатель темы
               <ThemeToggle />
             </div>
-          </div>
+          </div>*/}
 
-          {/* Основной контент */}
-          <MobileLayout><main className="p-6">{children}</main>
-          </MobileLayout>
+          {/* Основной контент <MobileLayout>          </MobileLayout>*/}
+          <main className="p-6">{children}</main>
           
         </div>
       </div>
     </ThemeProvider>
+    
   );
 }

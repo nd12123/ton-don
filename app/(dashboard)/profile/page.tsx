@@ -1,46 +1,203 @@
-// app/profile/page.tsx
-"use client"
+// app/(dashboard)/profile/page.tsx
+"use client";
 
-import { Button } from "@/components/ui/button"
+import { useState, useMemo } from "react";
+import { useStakeStore, StakeRecord } from "@/lib/store";
+import { InfoCard } from "@/components/InfoCard";
+import { Table, Tbody, Td, Th, Thead, Tr } from "@/components/ui/table";
+import { motion } from "framer-motion";
+import { Award } from "lucide-react";
+import DashboardStats from "@/components/DashboardStats";
+import { useTonPrice } from "@/lib/hooks/useTonPrice";
+import { PLANS} from "@/components/Plans"; // убедитесь, что PLANS экспортируется из этого модуля
+import { WithdrawModal } from "@/components/WithdrawModal";
+
+import { useStakeContract } from "@/lib/ton/useContract";
+
+//import { useTonConnectUI } from "@tonconnect/ui-react";
+import { supabase } from "@/lib/supabase";
+
+import { useTonAddress } from "@tonconnect/ui-react";
 
 export default function ProfilePage() {
-  const walletAddress = "EQC5...SAD3" // заменить позже на actual wallet
-  const balance = "1,430.23 TON"
+  const { withdrawAmount } = useStakeContract(); //withdrawTarget
+
+
+
+  //const [tonConnect] = useTonConnectUI();
+
+  // Локальный стейт для модалки
+  const [modalOpen, setModalOpen] = useState(false);
+  const [selectedStake, setSelectedStake] = useState<StakeRecord | null>(null);
+
+  const address = useTonAddress();
+  const fetchHistory = useStakeStore((s) => s.fetchHistory);
+  //const withdrawStake = useStakeStore((s) => s.withdrawStake);
+
+// Обработчик вывода
+    const handleWithdraw = async (stake: StakeRecord, amt: number) => {
+  try {
+    if (amt <= 0 || amt > stake.amount) {
+      return;
+    }
+
+    // вызываем метод контракта (ничего не возвращает)
+    await withdrawAmount(amt);
+
+    // обновляем запись в базе: уменьшаем сумму, отмечаем статус
+    const newAmount = stake.amount - amt;
+    await supabase
+      .from('stakes')
+      .update({
+        amount: newAmount,
+        status: newAmount > 0 ? 'active' : 'completed',
+      })
+      .eq('id', stake.id);
+
+    // перезагружаем историю
+    await fetchHistory(address);
+  } catch (err) {
+    console.error('Withdraw failed', err);
+    alert('Не удалось выполнить вывод: ' + err);
+  } finally {
+    setModalOpen(false);
+  }
+};
+
+
+
+  // получаем историю из стора
+  const history = useStakeStore((s) => s.history as StakeRecord[]);
+
+  // курс TON -> USD
+  const priceUsd = useTonPrice();
+
+  // 1) Всего застейкано
+  const totalStaked = useMemo(
+    () => history.reduce((sum, item) => sum + item.amount, 0),
+    [history]
+  );
+
+  // 2) Общий доход по завершённым стейкам
+  const totalCompletedRewards = useMemo(() => {
+    return history
+      .filter((h) => h.status === "completed")
+      .reduce((sum, h) => {
+        const reward = h.amount * (h.apr / 100) * (h.duration / 365);
+        return sum + reward;
+      }, 0);
+  }, [history]);
+
+  // 3) Ежедневный доход по активным стейкам
+  const dailyIncome = useMemo(() => {
+    return history
+      .filter((h) => h.status === "active")
+      .reduce((sum, h) => sum + h.amount * (h.apr / 100) / 365, 0);
+  }, [history]);
+
+  // для DashboardStats используем текущий депозит как totalStaked
+  const deposit = totalStaked;
 
   return (
-    <main className="min-h-screen bg-[#0A1329] text-white py-20 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-4xl mx-auto space-y-12">
-        <section className="bg-[#131B3A] p-6 rounded-2xl shadow-lg">
-          <h2 className="text-2xl font-bold mb-2">Wallet</h2>
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
-            <p className="text-gray-300">{walletAddress}</p>
-            <Button className="mt-4 sm:mt-0">Disconnect</Button>
-          </div>
-        </section>
+    <main className="max-w-4xl mx-auto px-4 py-10 space-y-8">
+      <motion.h1
+        className="text-3xl font-bold"
+        initial={{ opacity: 0, y: -10 }}
+        animate={{ opacity: 1, y: 0 }}
+      >
+        Мой профиль
+      </motion.h1>
 
-        <section className="bg-[#131B3A] p-6 rounded-2xl shadow-lg">
-          <h2 className="text-2xl font-bold mb-4">Your Balance</h2>
-          <p className="text-4xl text-[#3C7EFF] font-bold">{balance}</p>
-        </section>
+      {/* 0) Блок общей статистики */}
+      <DashboardStats
+        balanceTon={totalStaked}
+        dailyIncomeTon={dailyIncome}
+        totalIncomeTon={totalCompletedRewards}
+        priceUsd={priceUsd}
+        deposit={deposit}
+        plans={PLANS}
+      />
 
-        <section className="bg-[#131B3A] p-6 rounded-2xl shadow-lg">
-          <h2 className="text-2xl font-bold mb-4">Staking History</h2>
-          <ul className="space-y-4">
-            <li className="flex justify-between text-sm text-gray-300">
-              <span>12.05.2025</span>
-              <span>+300 TON</span>
-            </li>
-            <li className="flex justify-between text-sm text-gray-300">
-              <span>28.04.2025</span>
-              <span>+500 TON</span>
-            </li>
-            <li className="flex justify-between text-sm text-gray-300">
-              <span>01.04.2025</span>
-              <span>+100 TON</span>
-            </li>
-          </ul>
-        </section>
-      </div>
+      {/* 1) Короткая сводка */}
+      <section className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+        <InfoCard
+          title="Всего застейкано"
+          value={`${totalStaked.toFixed(2)} TON`}
+          Icon={Award}
+          subtitle={`≈ $${(totalStaked * priceUsd).toFixed(2)}`}
+        />
+        <InfoCard
+          title="Награды получены"
+          value={`${totalCompletedRewards.toFixed(2)} TON`}
+          Icon={Award}
+          subtitle={`≈ $${(totalCompletedRewards * priceUsd).toFixed(2)}`}
+        />
+      </section>
+
+      {/* 2) Таблица истории */}
+      <section>
+        <h2 className="text-xl font-semibold mb-4 text-gray-600">История стейков</h2>
+        {history.length === 0 ? (
+          <p className="text-gray-600">Пока нет операций стейка.</p>
+        ) : (
+          <Table>
+            <Thead>
+              <Tr>
+                <Th className="text-gray-600">Валидатор</Th>
+                <Th className="text-gray-600">Сумма</Th>
+                <Th className="text-gray-600" >Дата</Th>
+                <Th className="text-gray-600" >Статус</Th>
+                <Th className="text-gray-600" >Вывести TON</Th>
+              </Tr>
+            </Thead>
+            <Tbody>
+              {history.map((h) => {
+                const date = new Date(h.created_at).toLocaleDateString("ru-RU");
+                return (
+                  <Tr key={h.id}>
+                    <Td>{h.validator}</Td>
+                    <Td>{h.amount.toFixed(2)} TON</Td>
+                    <Td>{date}</Td>
+                    <Td
+                      className={
+                        h.status === "active"
+                          ? "text-green-600"
+                          : "text-gray-500"
+                      }
+                    >
+                      {h.status === "active" ? "Активен" : "Завершён"}
+                    </Td>
+
+                    <Td>
+                    {h.status === "active" && (
+                      <button
+                        onClick={() => {
+                          setSelectedStake(h);
+                          setModalOpen(true);
+                        }}
+                        className="text-sm text-blue-600 hover:underline"
+                      >
+                        Withdraw
+                      </button>
+                    )}
+                  </Td>
+                  </Tr>
+                );
+              })}
+            </Tbody>
+          </Table>
+        )}
+      </section>
+
+
+      {selectedStake && (
+        <WithdrawModal
+        open={modalOpen}
+        onClose={() => setModalOpen(false)}
+        stake={selectedStake}
+        onConfirm={handleWithdraw}
+      />
+      )}
     </main>
-  )
+  );
 }
