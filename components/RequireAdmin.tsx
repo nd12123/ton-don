@@ -1,40 +1,27 @@
 // components/RequireAdmin.tsx
 "use client";
+import { ReactNode } from "react";
+import { useTonWallet } from "@tonconnect/ui-react";
+import { useTonReady } from "@/lib/ton/useTonReady";
 
-import { useEffect, useRef } from "react";
-import { useRouter } from "next/navigation";
-import { useUserRole } from "@/lib/hooks/useUser";
+export function RequireAdmin({ children }: { children: ReactNode }) {
+  const wallet = useTonWallet();
+  const ready = useTonReady();
 
-export function RequireAdmin({ children }: { children: React.ReactNode }) {
-  const { isLoggedIn, isAdmin, isLoading } = useUserRole();
-  const router = useRouter();
+  // Провайдер не смонтирован (не должен случаться, если обёрнут root'ом)
+  if (wallet === undefined) {
+    return <div className="p-4 text-red-600">TonConnect provider не найден.</div>;
+  }
 
-  // Флаг: был ли хоть один раз успешный connect
-  const hasEverConnected = useRef(false);
-  // Редиректим только один раз
-  const hasRedirected = useRef(false);
+  // Ждём восстановления — показываем лишь лоадер, НО НЕ «Подключить»
+  if (!ready) {
+    return <div className="p-6 text-sm text-gray-500">Восстанавливаем подключение…</div>;
+  }
 
-  // Как только isLoggedIn становится true — запоминаем, что подсоединились
-  useEffect(() => {
-    if (isLoggedIn) {
-      hasEverConnected.current = true;
-    }
-  }, [isLoggedIn]);
+  // Готово, но кошелёк не подключён — тут уже можно рендерить кнопку/текст
+  if (!wallet?.account) {
+    return <div className="p-6">Подключите кошелёк в шапке.</div>;
+  }
 
-  // Когда уже подключались хотя бы раз, и данные загрузились, но не админ — редирект
-  useEffect(() => {
-    if (
-      hasEverConnected.current && // юзер уже пытался зайти
-      !isLoading &&               // TonConnect UI уже отработал
-      hasEverConnected.current && // ещё раз для ясности
-      !isAdmin &&                 // это не админ
-      !hasRedirected.current      // редирект ещё не был
-    ) {
-      hasRedirected.current = true;
-      router.replace("/");
-    }
-  }, [isLoading, isAdmin, router]);
-
-  // Всегда рендерим children — они могут содержать кнопку Connect Wallet
   return <>{children}</>;
 }

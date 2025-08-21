@@ -1,5 +1,44 @@
 // app/layout.tsx
 import type { Metadata } from "next";
+import "./globals.css";
+import { Toaster } from "react-hot-toast";
+import ThemeProviderWrapper from "@/components/ThemeProviderWrapper";
+import ClientProviders from "@/components/ClientProviders";
+//import TonDebugReset from "@/components/TonDebugReset";
+/*
+import { Inter } from 'next/font/google';
+const inter = Inter({
+  subsets: ['latin'],
+  variable: '--font-inter',
+  weight: ['400','500','700'],
+}); */
+
+export const metadata: Metadata = {
+  title: "TON Stake",
+  description: "Stake your TON securely and earn rewards",
+};
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <html lang="en" suppressHydrationWarning>
+      <body className="min-h-screen flex flex-col overflow-x-hidden" // ${inter.variable} font-inter
+      > 
+        <ThemeProviderWrapper>
+          <ClientProviders>
+                 {/* <TonDebugReset /> удалить после подтверждения, что шум ушёл */}
+
+            <Toaster position="top-right" />
+            <main className="flex-grow">{children}</main>
+          </ClientProviders>
+        </ThemeProviderWrapper>
+      </body>
+    </html>
+  );
+}
+
+
+/*
+import type { Metadata } from "next";
 //import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import {Toaster} from "react-hot-toast"
@@ -34,14 +73,6 @@ export default function RootLayout({
   return (
       <html lang="en" suppressHydrationWarning>
       <body
-      /* {`
-          container mx-auto px-4 py-10 flex flex-col min-h-screen 
-          bg-white text-black
-          dark:bg-gray-900 dark:text-gray-100
-          ${geistSans.variable} ${geistMono.variable}
-
-          bg-bg-light
-        `}*/
         className={`
           ${inter.variable} font-inter
           bg-page-noise bg-repeat bg-fixed
@@ -53,17 +84,13 @@ export default function RootLayout({
         `}
         suppressHydrationWarning
       >
-{/* фоновая “точка света” слева, перенести потом */}
 <div
     className="absolute inset-0 pointer-events-none"
-    style={{ /** позволяет подсветить угло основной страницы, мб нужно для плавности
-      background:
-        "radial-gradient(ellipse at bottom left, rgba(0,194,255,0.2), transparent 60%)", */
+    style={{ 
     }}
   />
         <ThemeProviderWrapper>
           <TonProviderWrapper>
-            {/* глобальный контейнер для тостов */}
             <Toaster
               position="top-right"
               toastOptions={{
@@ -73,8 +100,6 @@ export default function RootLayout({
                 error:   { iconTheme: { primary: '#EF4444', secondary: '#ffffff' } },
               }}
             />
-            {/* menu on the left: 
-          <MobileLayout></MobileLayout> */}
             <main className="flex-grow">{children}</main>
           </TonProviderWrapper>
         </ThemeProviderWrapper>
@@ -82,3 +107,4 @@ export default function RootLayout({
     </html>
   );
 }
+  */

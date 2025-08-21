@@ -17,6 +17,9 @@ import Header from "@/components/header";
 //              <TonProviderWrapper>
 //              </TonProviderWrapper>
 
+//import ClientProviders from "@/components/ClientProviders";
+      //<ClientProviders>
+      //</ClientProviders>
 /*
 const menu = [
   { name: "Главная", href: "/" },

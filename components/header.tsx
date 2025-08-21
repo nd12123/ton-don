@@ -4,7 +4,9 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 //import ThemeToggle from "@/components/ThemeToggle";
 import WalletConnect from "@/components/WalletConnect";
-
+//import TonDebug from "@/components/TonDebug"
+import ResetTon from "@/components/ResetTon"
+import ClientOnly from "@/components/ClientOnly"
 const navLinks = [
   { name: "Home", href: "/" },
   { name: "Staking", href: "/staking" },
@@ -48,7 +50,12 @@ export default function Header() {
 
         {/* Кнопка подключения кошелька */}
         <div>
-          <WalletConnect />
+          
+      <ClientOnly>
+        <WalletConnect />
+      </ClientOnly>
+          {/**<TonDebug /> */}
+          <ResetTon />
         </div>
       </div>
     </header>

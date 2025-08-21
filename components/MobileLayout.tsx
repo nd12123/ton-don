@@ -1,26 +1,27 @@
 // components/Layout.tsx
+//NO USE
 "use client";
 
 import { useState, useEffect } from "react";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { Menu, X } from "lucide-react";
-import ThemeToggle from "@/components/ThemeToggle";
-import {TonProviderWrapper} from "@/components/TonProviderWrapper";
+//import Link from "next/link";
+//import { usePathname } from "next/navigation";
+//import { Menu, X } from "lucide-react";
+//import ThemeToggle from "@/components/ThemeToggle";
+//import {TonProviderWrapper} from "@/components/TonProviderWrapper";
 //import Footer from "@/components/Footer";
-import { motion } from "framer-motion";
-
+//import { motion } from "framer-motion";
+/*
 const menu = [
   { name: "Главная", href: "/" },
   { name: "Стейкинг", href: "/staking" },
   { name: "История", href: "/history" },
   { name: "Поддержка", href: "/support" },
   { name: "Кабинет", href: "/profile" },
-];
+];*/
 
-export default function MobileLayout({ children }: { children: React.ReactNode }) {
-  const pathname = usePathname();
-  const [mobileOpen, setMobileOpen] = useState(false);
+export default function MobileLayout({  }: { children: React.ReactNode }) { //children
+  //const pathname = usePathname();
+  const [mobileOpen] = useState(false); //setMobileOpen
 
   useEffect(() => {
     document.body.style.overflow = mobileOpen ? "hidden" : "";
@@ -30,9 +31,13 @@ export default function MobileLayout({ children }: { children: React.ReactNode }
   }, [mobileOpen]);
 
   return (
+    {/** 
     <TonProviderWrapper>
+    </TonProviderWrapper>*/
+
+    /**
+      
       <div className="min-h-screen flex flex-col bg-gray-50 dark:bg-gray-900 text-black dark:bg-gray-900 dark:text-gray-100">
-        {/* Mobile Top Bar */}
         <div className="md:hidden flex items-center justify-between px-4 py-3 border-b border-gray-200 dark:border-gray-700 overflow-hidden">
           <Menu className="w-6 h-6 cursor-pointer" onClick={() => setMobileOpen(true)} />
           <Link href="/" className="text-xl font-bold">
@@ -61,10 +66,8 @@ export default function MobileLayout({ children }: { children: React.ReactNode }
             ))}
           </aside>
           
-          */}
           
 
-          {/* Mobile Menu Overlay */}
           {mobileOpen && (
             <motion.nav>
             <div className="fixed inset-0 z-50 flex overflow-hidden">
@@ -97,12 +100,11 @@ export default function MobileLayout({ children }: { children: React.ReactNode }
             </div>
             </motion.nav>
           )}
-          {/* Main Content */}
           <div className="flex-1 flex flex-col">
             <main className="flex-grow p-6">{children}</main>
           </div>
         </div>
       </div>
-    </TonProviderWrapper>
+       */}
   );
 }

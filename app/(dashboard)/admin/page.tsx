@@ -3,30 +3,29 @@ import { Jetton } from "@/components/Jetton";
 import { Button } from "@/components/ui/button";
 
 import { FlexBoxCol, FlexBoxRow } from "../../../components/styled/styled";
-import {TonConnectButton, CHAIN } from "@tonconnect/ui-react"
-import { useTonConnect } from "@/lib/ton/useTonConnect";
+import { CHAIN, useTonWallet } from "@tonconnect/ui-react" //TonConnectButton
+//import { useTonConnect } from "@/lib/ton/useTonConnect";
+
 import { Address } from "@ton/core";
 
 import { RequireAdmin } from "@/components/RequireAdmin"
 
 export default function AdminPage(){
-      const {network, wallet} = useTonConnect()
+      const wallet = useTonWallet()
 
     return(
         <RequireAdmin>
                 <FlexBoxCol>
                   <FlexBoxRow>
-                    <TonConnectButton/>
+                    {/*<TonConnectButton/>*/}
                     <Button>
-                      {network
-                        ? network === CHAIN.MAINNET
-                          ? "mainnet"
-                          : "testnet"
-                        : "N/A"}
+            {wallet?.account?.chain === CHAIN.MAINNET ? "mainnet"
+              : wallet?.account?.chain === CHAIN.TESTNET ? "testnet"
+              : "N/A"}
                     </Button>
                     <Button>
                       {wallet
-                          ? Address.parse(wallet as string).toString()
+                          ? Address.parse(wallet.account.address).toString()
                         : "N/A"}
                     </Button>
                   </FlexBoxRow>
