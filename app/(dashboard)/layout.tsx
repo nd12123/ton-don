@@ -1,7 +1,11 @@
 "use client";
-import { useSyncOnChain } from "@/lib/hooks/useSyncOnChain";
+//import { useSyncOnChain } from "@/lib/hooks/useSyncOnChain";
 
-import { ThemeProvider } from "next-themes";
+import ThemeProviderWrapper from "@/components/ThemeProviderWrapper";
+    //<ThemeProvider attribute="class">
+    //</ThemeProvider>
+
+
 //import ThemeToggle from "@/components/ThemeToggle";
 //import Link from "next/link";
 //import { usePathname } from "next/navigation";
@@ -9,6 +13,9 @@ import Header from "@/components/header";
 //import MobileLayout from "@/components/MobileLayout";
 //import Footer from "@/components/Footer";
             //<Footer />
+//import {TonProviderWrapper} from "@/components/TonProviderWrapper";
+//              <TonProviderWrapper>
+//              </TonProviderWrapper>
 
 /*
 const menu = [
@@ -23,10 +30,10 @@ const menu = [
 export default function Layout({ children }: { children: React.ReactNode }) {
   //const pathname = usePathname();
 
-  useSyncOnChain(30_000)
+  //useSyncOnChain(30_000)
 
   return (
-    <ThemeProvider attribute="class">
+    <ThemeProviderWrapper>
       <Header />
       <div className="min-h-screen flex bg-gray-50 text-black dark:bg-gray-900 dark:text-gray-100">
         {/* Сайдбар не нужен, он в МобилЛейаут */}
@@ -63,7 +70,6 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           
         </div>
       </div>
-    </ThemeProvider>
-    
+</ThemeProviderWrapper>
   );
 }

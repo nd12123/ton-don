@@ -1,4 +1,5 @@
 // lib/hooks/useSyncOnChain.ts
+/*
 "use client";
 import { useEffect } from "react";
 import { useStakeStore } from "@/lib/store";
@@ -37,3 +38,4 @@ export function useSyncOnChain(pollInterval = 30000) {
     };
   }, [pollInterval]);
 }
+  */
