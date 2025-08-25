@@ -1,4 +1,5 @@
 "use client";
+import Link from "next/link";
 
 import { ShieldCheck, Activity, Clock, ArrowRight } from "lucide-react";
 
@@ -49,6 +50,9 @@ export default function WhyUs() {
             </div>
 
             {/* Ссылка внизу */}
+            
+        <Link href="#calculate-plans" //scroll={false}
+        >
             <button
               type="button"
               className="
@@ -61,6 +65,7 @@ export default function WhyUs() {
               <span>Explore options</span>
               <ArrowRight size={16} />
             </button>
+            </Link>
           </div>
         ))}
       </div>

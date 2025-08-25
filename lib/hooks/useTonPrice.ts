@@ -11,7 +11,7 @@ export function useTonPrice() {
     async function load() {
       try {
         // любой надёжный эндпоинт; пример — tonapi.io. Подставь свой.
-        const res = await fetch("/api/ton-price"); // проксируй через свой API-route
+        const res = await fetch("/api/ton-price"); // проксируй через свой API-route ???
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
         const ct = res.headers.get("content-type") || "";
         if (!ct.includes("application/json")) throw new Error("Not JSON");

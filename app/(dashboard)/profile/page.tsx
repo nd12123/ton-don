@@ -1,7 +1,7 @@
 // app/(dashboard)/profile/page.tsx
 "use client";
 
-import { useState, useMemo } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { useStakeStore, StakeRecord } from "@/lib/store";
 import { InfoCard } from "@/components/InfoCard";
 import { Table, Tbody, Td, Th, Thead, Tr } from "@/components/ui/table";
@@ -19,10 +19,19 @@ import { supabase } from "@/lib/supabase";
 
 import { useTonAddress } from "@tonconnect/ui-react";
 
+// +++
+import {
+  actualProfit,
+  dailyIncomeActive,
+  totalEarnedSoFar,
+  //isMature,
+  balanceActive,
+  displayStatus
+} from "@/lib/earnings";
+
+
 export default function ProfilePage() {
   const { withdrawAmount } = useStakeContract(); //withdrawTarget
-
-
 
   //const [tonConnect] = useTonConnectUI();
 
@@ -65,6 +74,13 @@ export default function ProfilePage() {
 };
 
 
+  // ❶ Подтягиваем историю при появлении адреса (и при его смене)
+  useEffect(() => {
+    if (!address) return;
+    fetchHistory(address);
+
+
+  }, [address, fetchHistory]);
 
   // получаем историю из стора
   const history = useStakeStore((s) => s.history as StakeRecord[]);
@@ -78,25 +94,23 @@ export default function ProfilePage() {
     [history]
   );
 
-  // 2) Общий доход по завершённым стейкам
-  const totalCompletedRewards = useMemo(() => {
-    return history
-      .filter((h) => h.status === "completed")
-      .reduce((sum, h) => {
-        const reward = h.amount * (h.apr / 100) * (h.duration / 365);
-        return sum + reward;
-      }, 0);
-  }, [history]);
 
-  // 3) Ежедневный доход по активным стейкам
-  const dailyIncome = useMemo(() => {
-    return history
-      .filter((h) => h.status === "active")
-      .reduce((sum, h) => sum + h.amount * (h.apr / 100) / 365, 0);
-  }, [history]);
 
   // для DashboardStats используем текущий депозит как totalStaked
   const deposit = totalStaked;
+
+
+
+
+  
+// было: dailyIncome: useMemo(... активные ... /365, 0)
+// стало: сумма дневных доходов по активным (apr — дневной %)
+const dailyIncome = useMemo(() => dailyIncomeActive(history), [history]);
+const balance = useMemo(() => balanceActive(history), [history]);
+
+// было: totalCompletedRewards по завершённым
+// стало: «сколько реально заработано на текущий момент» (и активные, и завершённые)
+const earnedNow = useMemo(() => totalEarnedSoFar(history), [history]);
 
   return (
     <main className="max-w-4xl mx-auto px-4 py-10 space-y-8">
@@ -110,9 +124,9 @@ export default function ProfilePage() {
 
       {/* 0) Блок общей статистики */}
       <DashboardStats
-        balanceTon={totalStaked}
+        balanceTon={balance}
         dailyIncomeTon={dailyIncome}
-        totalIncomeTon={totalCompletedRewards}
+        totalIncomeTon={earnedNow}
         priceUsd={priceUsd}
         deposit={deposit}
         plans={PLANS}
@@ -128,9 +142,9 @@ export default function ProfilePage() {
         />
         <InfoCard
           title="Награды получены"
-          value={`${totalCompletedRewards.toFixed(2)} TON`}
+          value={`${earnedNow.toFixed(2)} TON`}
           Icon={Award}
-          subtitle={`≈ $${(totalCompletedRewards * priceUsd).toFixed(2)}`}
+          subtitle={`≈ $${(earnedNow * priceUsd).toFixed(2)}`}
         />
       </section>
 
@@ -147,17 +161,21 @@ export default function ProfilePage() {
                 <Th className="text-gray-600">Сумма</Th>
                 <Th className="text-gray-600" >Дата</Th>
                 <Th className="text-gray-600" >Статус</Th>
+                <Th className="text-gray-600">Профит</Th>
                 <Th className="text-gray-600" >Вывести TON</Th>
               </Tr>
             </Thead>
             <Tbody>
               {history.map((h) => {
                 const date = new Date(h.created_at).toLocaleDateString("ru-RU");
+
                 return (
                   <Tr key={h.id}>
                     <Td>{h.validator}</Td>
                     <Td>{h.amount.toFixed(2)} TON</Td>
                     <Td>{date}</Td>
+                    <Td>{displayStatus(h)}</Td>
+                    {/**
                     <Td
                       className={
                         h.status === "active"
@@ -166,8 +184,8 @@ export default function ProfilePage() {
                       }
                     >
                       {h.status === "active" ? "Активен" : "Завершён"}
-                    </Td>
-
+                    </Td> */}
+<Td>{actualProfit(h).toFixed(2)} TON</Td>
                     <Td>
                     {h.status === "active" && (
                       <button
@@ -201,3 +219,27 @@ export default function ProfilePage() {
     </main>
   );
 }
+
+
+
+  // 2) Общий доход по завершённым стейкам
+  /*
+  const totalCompletedRewards = useMemo(() => {
+    return history
+      .filter((h) => h.status === "completed")
+      .reduce((sum, h) => {
+        const reward = h.amount * (h.apr / 100) * (h.duration); // / 365
+        return sum + reward;
+      }, 0);
+  }, [history]);
+    const calcRowProfit = (r: StakeRecord) => (r.amount * (r.apr / 100) * r.duration);
+  */
+
+  // 3) Ежедневный доход по активным стейкам
+  /*
+  const dailyIncome = useMemo(() => {
+    return history
+      .filter((h) => h.status === "active")
+      .reduce((sum, h) => sum + h.amount * (h.apr / 100), 0); // / 365
+  }, [history]);
+*/

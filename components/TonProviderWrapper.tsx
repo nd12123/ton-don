@@ -1,4 +1,4 @@
-
+/*
 "use client"
 
 import { TonConnectUIProvider } from "@tonconnect/ui-react" //CHAIN
@@ -28,6 +28,10 @@ export function TonProviderWrapper({ children }: { children: React.ReactNode }) 
     </TonConnectUIProvider>
   )
 }
+*/
+
+
+
 /*
 'use client';
 

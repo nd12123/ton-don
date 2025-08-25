@@ -181,8 +181,8 @@ export default function Footer({ className = "" }: { className?: string }) {
             <Link href="/profile" className="hover:text-white transition-colors">
               Profile
             </Link>
-            <Link href="/faq" className="hover:text-white transition-colors">
-              FAQ
+            <Link href="/support" className="hover:text-white transition-colors">
+              Support
             </Link>
           </nav>
 

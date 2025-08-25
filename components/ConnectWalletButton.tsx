@@ -1,11 +1,10 @@
 import React from 'react';
 import { Wallet } from 'lucide-react';
-
+import GoToStakingButton from "@/components/GoToStakingButton"
 export default function ConnectWalletButton() {
   return (
-    <button
-      type="button"
-      className="
+    
+    <GoToStakingButton className="btn-primary
         relative flex items-center justify-center
         w-52 h-11
         rounded-xl
@@ -21,6 +20,6 @@ export default function ConnectWalletButton() {
       <span className="text-white text-lg font-semibold font-['Inter'] leading-tight">
         Connect Wallet
       </span>
-    </button>
+    </GoToStakingButton>
   );
 }

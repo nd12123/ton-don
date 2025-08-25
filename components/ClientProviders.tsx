@@ -1,4 +1,5 @@
 // components/ClientProviders.tsx
+
 "use client";
 
 import { useEffect, useState } from "react";
@@ -25,8 +26,8 @@ export default function ClientProviders({ children }: { children: React.ReactNod
       manifestUrl="https://staking-mocha-iota.vercel.app/tonconnect-manifest.json"
       actionsConfiguration={{ twaReturnUrl }}
       // при необходимости можно временно отключить авто-восстановление
-      // restoreConnection={false}
-      walletsListConfiguration={{ }} //includeWallets: ["tonkeeper"] 
+       restoreConnection={false}
+      //walletsListConfiguration={{ }} //includeWallets: ["tonkeeper"] 
     >
       {children}
     </TonConnectUIProvider>

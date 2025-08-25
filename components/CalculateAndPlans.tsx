@@ -35,7 +35,8 @@ export default function CalculateAndPlans() {
   const dailyEarnings = useMemo(() => (amount * (apr/100)) / 365, [amount, apr]);
 
   return ( //py-20 pt-[200px] lg:pt-[375px]
-    <section id="calculate-plans" className="relative overflow-hidden text-white pb-7 pt-0">
+    <section id="calculate-plans" className="relative overflow-hidden text-white pb-7 pt-0   scroll-mt-12" //lg:
+    >
       {/* — плавный градиент сверху в центре для плавного стыка
       
   <div

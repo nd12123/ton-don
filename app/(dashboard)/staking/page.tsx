@@ -38,7 +38,7 @@ export default function StakingPage() {
   // рассчитываем доходность
   const apr = PLANS[selectedPlanId].apr;
   const dailyEarnings = useMemo(
-    () => (stakeAmount * (apr / 100)) / 365,
+    () => (stakeAmount * (apr / 100)), // / 365
     [stakeAmount, apr]
   );
   const weeklyEarnings = dailyEarnings * 7;

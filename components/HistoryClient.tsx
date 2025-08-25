@@ -11,6 +11,8 @@ import { supabase } from "@/lib/supabase";
 import { useStakeStore, StakeRecord } from "@/lib/store";
 import Skeleton from "@/components/ui/Skeleton";
 
+import { plannedProfit } from "@/lib/earnings";
+
 
 import { useTonAddress } from "@tonconnect/ui-react";    // чтобы получить адрес кошелька 
 
@@ -150,6 +152,9 @@ export default function HistoryClient() {
               </div>
               <div className="text-sm text-gray-600 dark:text-gray-400 mt-1">
                 {r.amount} TON • {new Date(r.created_at).toLocaleDateString()}
+              </div>
+              <div className="text-sm text-gray-700 dark:text-gray-200 mt-2">
+                Плановый доход: <b>{plannedProfit(r).toFixed(2)} TON</b>
               </div>
             </div>
           ))}

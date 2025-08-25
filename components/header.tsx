@@ -5,18 +5,29 @@ import { usePathname } from "next/navigation";
 //import ThemeToggle from "@/components/ThemeToggle";
 import WalletConnect from "@/components/WalletConnect";
 //import TonDebug from "@/components/TonDebug"
-import ResetTon from "@/components/ResetTon"
+//import ResetTon from "@/components/ResetTon"
 import ClientOnly from "@/components/ClientOnly"
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
+
 const navLinks = [
   { name: "Home", href: "/" },
   { name: "Staking", href: "/staking" },
   { name: "History", href: "/history" },
   { name: "Support", href: "/support" },
   { name: "Profile", href: "/profile" },
+  { name: "Admin", href: "/admin" },
 ];
 
 export default function Header() {
   const pathname = usePathname();
+
+  const router = useRouter();
+
+  useEffect(() => {
+    router.prefetch("/admin/stakes"); // разогреть админку без видимой ссылки
+  }, [router]);
+
 
   return (
     <header className="
@@ -54,8 +65,8 @@ export default function Header() {
       <ClientOnly>
         <WalletConnect />
       </ClientOnly>
-          {/**<TonDebug /> */}
-          <ResetTon />
+          {/**<TonDebug />
+          <ResetTon /> */}
         </div>
       </div>
     </header>
