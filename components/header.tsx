@@ -65,7 +65,8 @@ export default function Header() {
       <ClientOnly>
         <WalletConnect />
       </ClientOnly>
-          {/**<TonDebug />
+          {/**
+      <TonDebug />
           <ResetTon /> */}
         </div>
       </div>

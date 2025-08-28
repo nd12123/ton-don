@@ -5,13 +5,14 @@ import { Toaster } from "react-hot-toast";
 import ThemeProviderWrapper from "@/components/ThemeProviderWrapper";
 import ClientProviders from "@/components/ClientProviders";
 //import TonDebugReset from "@/components/TonDebugReset";
-/*
 import { Inter } from 'next/font/google';
+
 const inter = Inter({
   subsets: ['latin'],
   variable: '--font-inter',
   weight: ['400','500','700'],
-}); */
+});
+/* */
 
 export const metadata: Metadata = {
   title: "TON Stake",
@@ -21,7 +22,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className="min-h-screen flex flex-col overflow-x-hidden" // ${inter.variable} font-inter
+      <body className="${inter.variable} font-inter min-h-screen flex flex-col overflow-x-hidden" // ${inter.variable} font-inter
       > 
         <ThemeProviderWrapper>
           <ClientProviders>

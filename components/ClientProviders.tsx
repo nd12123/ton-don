@@ -25,8 +25,8 @@ export default function ClientProviders({ children }: { children: React.ReactNod
     <TonConnectUIProvider
       manifestUrl="https://staking-mocha-iota.vercel.app/tonconnect-manifest.json"
       actionsConfiguration={{ twaReturnUrl }}
-      // при необходимости можно временно отключить авто-восстановление
-       restoreConnection={false}
+      // при необходимости можно временно отключить авто-восстановление //false
+       restoreConnection={true}
       //walletsListConfiguration={{ }} //includeWallets: ["tonkeeper"] 
     >
       {children}

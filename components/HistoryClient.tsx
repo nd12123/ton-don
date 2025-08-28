@@ -4,89 +4,98 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import {
-    RealtimePostgresChangesPayload,
+  RealtimePostgresChangesPayload,
   RealtimeChannel,
 } from "@supabase/supabase-js";
 import { supabase } from "@/lib/supabase";
 import { useStakeStore, StakeRecord } from "@/lib/store";
 import Skeleton from "@/components/ui/Skeleton";
-
 import { plannedProfit } from "@/lib/earnings";
-
-
-import { useTonAddress } from "@tonconnect/ui-react";    // чтобы получить адрес кошелька 
+import { useTonAddress, useIsConnectionRestored } from "@tonconnect/ui-react";
 
 type Filter = "all" | "active" | "completed";
 
 export default function HistoryClient() {
-  const address = useTonAddress();  // EQ… строка или undefined
+  const restored = useIsConnectionRestored();        // ← ждём восстановление TC
+  const address = useTonAddress();                   // EQ... | undefined | ''
 
   const history      = useStakeStore((s) => s.history);
   const loading      = useStakeStore((s) => s.loading);
   const fetchHistory = useStakeStore((s) => s.fetchHistory);
 
   const [filter, setFilter] = useState<Filter>("all");
-  const [search, setSearch] = useState<string>("");
+  const [search, setSearch] = useState("");
 
   useEffect(() => {
-    // 1) первоначальный дамп
+    // ждём пока TonConnect восстановится и появится адрес
+    if (!restored) return;
+    if (!address) return;
+
+    // очистим прошлые данные (чтобы не мигало «ничего не найдено» на чужих данных)
+    useStakeStore.setState({ history: [], loading: true });
+
+    // 1) первичная загрузка
     fetchHistory(address);
 
-    // 2) создаём канал для real-time
+    // 2) realtime только по этому адресу
+    // ВАЖНО: замените 'owner' на реальное поле в вашей таблице (например wallet, user, account и т.п.)
     const channel: RealtimeChannel = supabase
-      .channel("public:stakes") // схема "public", таблица "stakes"
+      .channel(`public:stakes:${address}`)
       .on<StakeRecord>(
         "postgres_changes",
-        { event: "INSERT", schema: "public", table: "stakes" },
+        { event: "INSERT", schema: "public", table: "stakes", filter: `owner=eq.${address}` },
         (payload: RealtimePostgresChangesPayload<StakeRecord>) => {
-                 // приведение к нужному типу
-                     const rec = payload.new as StakeRecord;
-                     useStakeStore.setState((state) => ({
-                       history: [rec, ...state.history],
-         }));
+          const rec = payload.new as StakeRecord;
+          useStakeStore.setState((state) => ({ history: [rec, ...state.history] }));
         }
       )
       .on<StakeRecord>(
         "postgres_changes",
-        { event: "UPDATE", schema: "public", table: "stakes" },
+        { event: "UPDATE", schema: "public", table: "stakes", filter: `owner=eq.${address}` },
         (payload: RealtimePostgresChangesPayload<StakeRecord>) => {
-                     const rec = payload.new as StakeRecord;
-                     useStakeStore.setState((state) => ({
-                       history: state.history.map((r) =>
-                         r.id === rec.id ? rec : r
-                       ),
-                     }));
-                    }
+          const rec = payload.new as StakeRecord;
+          useStakeStore.setState((state) => ({
+            history: state.history.map((r) => (r.id === rec.id ? rec : r)),
+          }));
+        }
       )
       .subscribe();
 
-    // 3) отписка при размонтировании
     return () => {
-      channel.unsubscribe();
+      // корректно отписываемся при смене адреса/размонте
+      supabase.removeChannel(channel);
+      // альтернативно: channel.unsubscribe();
     };
-  }, [fetchHistory, address]); //fetchHistory
+  }, [restored, address, fetchHistory]);
 
-  // Скелетоны, пока идёт первая загрузка
-  if (loading && history.length === 0) {
+  // ====== Рендер с правильными состояниями ======
+
+  // пока TonConnect восстанавливается — просто скелетон (или ваш лоадер)
+  if (!restored) {
     return (
       <div className="max-w-4xl mx-auto px-4 py-10 space-y-4">
-        {[1, 2, 3].map((i) => (
-          <Skeleton key={i} className="h-16 w-full" />
-        ))}
+        {[1, 2, 3].map((i) => <Skeleton key={i} className="h-16 w-full" />)}
       </div>
     );
   }
 
-  // Фильтрация по статусу и поиску
-  const filtered = history
-    .filter((r) => {
-      if (filter === "active") return r.status === "active";
-      if (filter === "completed") return r.status === "completed";
-      return true;
-    })
-    .filter((r) =>
-      r.validator.toLowerCase().includes(search.trim().toLowerCase())
+  // TonConnect восстановился, но кошелёк не подключён
+  if (!address) {
+    return <p className="text-gray-500 text-sm px-4 py-10">Подключите кошелёк в шапке.</p>;
+  }
+
+  // первая загрузка именно для ТЕКУЩЕГО адреса
+  if (loading && history.length === 0) {
+    return (
+      <div className="max-w-4xl mx-auto px-4 py-10 space-y-4">
+        {[1, 2, 3].map((i) => <Skeleton key={i} className="h-16 w-full" />)}
+      </div>
     );
+  }
+
+  const filtered = history
+    .filter((r) => (filter === "active" ? r.status === "active" : filter === "completed" ? r.status === "completed" : true))
+    .filter((r) => r.validator?.toLowerCase().includes(search.trim().toLowerCase()));
 
   return (
     <motion.main
@@ -106,25 +115,20 @@ export default function HistoryClient() {
       />
 
       <div className="flex gap-3 text-sm">
-        {(
-          [
-            ["all", "Все"],
-            ["active", "Активные"],
-            ["completed", "Завершённые"],
-          ] as [Filter, string][]
-        ).map(([key, label]) => (
-          <button
-            key={key}
-            onClick={() => setFilter(key)}
-            className={`px-3 py-1 rounded-md border transition-colors ${
-              filter === key
-                ? "bg-blue-500 text-white border-blue-500"
-                : "bg-gray-50 text-gray-700 border-gray-300 hover:bg-gray-100 dark:bg-gray-800 dark:text-gray-300 dark:border-gray-700 dark:hover:bg-gray-700"
-            }`}
-          >
-            {label}
-          </button>
-        ))}
+        {([["all","Все"],["active","Активные"],["completed","Завершённые"]] as [Filter,string][])
+          .map(([key,label]) => (
+            <button
+              key={key}
+              onClick={() => setFilter(key)}
+              className={`px-3 py-1 rounded-md border transition-colors ${
+                filter === key
+                  ? "bg-blue-500 text-white border-blue-500"
+                  : "bg-gray-50 text-gray-700 border-gray-300 hover:bg-gray-100 dark:bg-gray-800 dark:text-gray-300 dark:border-gray-700 dark:hover:bg-gray-700"
+              }`}
+            >
+              {label}
+            </button>
+          ))}
       </div>
 
       {filtered.length === 0 ? (
@@ -132,21 +136,14 @@ export default function HistoryClient() {
       ) : (
         <div className="grid grid-cols-1 gap-4">
           {filtered.map((r: StakeRecord) => (
-            <div
-              key={r.id}
-              className="border border-gray-200 rounded-xl p-4 bg-gray-50 shadow-sm dark:bg-gray-800 dark:border-gray-700"
-            >
+            <div key={r.id} className="border border-gray-200 rounded-xl p-4 bg-gray-50 shadow-sm dark:bg-gray-800 dark:border-gray-700">
               <div className="flex justify-between items-center">
-                <div className="text-sm font-medium dark:text-gray-100">
-                  {r.validator}
-                </div>
-                <span
-                  className={`px-2 py-1 text-xs rounded-full ${
-                    r.status === "active"
-                      ? "bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-300"
-                      : "bg-gray-100 text-gray-500 dark:bg-gray-700 dark:text-gray-300"
-                  }`}
-                >
+                <div className="text-sm font-medium dark:text-gray-100">{r.validator}</div>
+                <span className={`px-2 py-1 text-xs rounded-full ${
+                  r.status === "active"
+                    ? "bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-300"
+                    : "bg-gray-100 text-gray-500 dark:bg-gray-700 dark:text-gray-300"
+                }`}>
                   {r.status === "active" ? "Активен" : "Завершён"}
                 </span>
               </div>

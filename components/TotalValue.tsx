@@ -8,6 +8,7 @@ import ton3d7 from "@/assets/TotalValue/Ton 3d 7.svg";
 import leftSphere from "@/assets/TotalValue/Ellipse9.png";
 import rightSphere from "@/assets/TotalValue/Ellipse10.png";
 import GoToStakingButton from '@/components/GoToStakingButton';
+import TotalValueWidget from '@/components/TotalValueWidget'
 
 export default function TotalValue() {
   return (
@@ -114,17 +115,8 @@ export default function TotalValue() {
       <div className="container mx-auto px-4 text-center py-10">
         <p className="text-lg text-[#4DC0F5]">Total Value</p>
 
-        <div className="mt-4 flex items-center justify-center">
-          <Image
-            src="/decorative/ton-icon.svg"
-            alt="TON icon"
-            width={48}
-            height={48}
-          />
-          <h2 className="ml-2 text-[90px] leading-[90px] font-bold text-[#4DC0F5]">
-            124&nbsp;000&nbsp;TON
-          </h2>
-        </div>
+        <TotalValueWidget/>
+        
 
         <p className="mt-6 max-w-2xl mx-auto text-base text-gray-300">
           TonStake.ai automates your income&nbsp;– over $2 million TON is

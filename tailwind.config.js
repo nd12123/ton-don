@@ -1,4 +1,5 @@
 const tokens = require('./design-tokens.json');
+//const defaultTheme = require('tailwindcss/defaultTheme')
 
 module.exports = {
   content: [ "./app/**/*.{js,ts,jsx,tsx}", "./components/**/*.{js,ts,jsx,tsx}" ],
@@ -39,10 +40,13 @@ module.exports = {
       boxShadow: tokens.shadow,
 
       // вот добавляем fontFamily
+      /*
       fontFamily: {
         sans: ['var(--font-inter)', 'sans-serif'],  // теперь font-sans → Inter по умолчанию он везде
-        inter: ['var(--font-inter)', 'sans-serif'],
+        //inter: ['var(--font-inter)', 'sans-serif'],
+        inter: ['var(--font-inter)', ...defaultTheme.fontFamily.sans],
       },
+      */
     }
   },
   plugins: [],

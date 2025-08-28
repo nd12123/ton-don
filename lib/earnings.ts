@@ -14,7 +14,7 @@ function normalizeApr(apr: number): number {
 function elapsedDays(fromISO: string, to: Date = new Date()): number {
   const from = new Date(fromISO);
   const diff = Math.floor((to.getTime() - from.getTime()) / MS_PER_DAY);
-  return Math.max(0, diff);
+  return Math.max(0, diff + 1); // по идее не должно быть ' + 1 '
 }
 
 /** Дневной доход для строки (годовая ставка / 365) */

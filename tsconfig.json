@@ -23,5 +23,5 @@
     }
   },
   "include": ["next-env.d.ts", "tests/StakeContract.spec.ts", "build/StakeContract/StakeContract_StakeContract.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "tailwind.config.js", "scripts/deployStakeContract.ts"],
-  "exclude": ["node_modules"]
+  "exclude": ["**/*.test.ts", "**/*.test.tsx", "tests", "node_modules"]
 }
