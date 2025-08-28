@@ -62,8 +62,8 @@ export default function MainSection({className = ''}: MainSectionProps) {
 */}
 
 {/* 1) Расположение «здесь иконки» в контейнере */}
-<div className="max-w-7xl mx-auto mb-8  md:pl-[90px]">
-        <div className="flex items-center gap-16">
+<div className="max-w-7xl mx-auto mb-8  md:pl-[90px] sm:pl-[5px]">
+        <div className="flex items-center md:gap-16 sm:gap-4">
           <div className="flex items-center gap-2">
             <Image src={ReliableIcon} alt="Reliable" width={24} height={24} />
             <span className="text-lg font-medium">Reliable</span>

@@ -13,57 +13,6 @@
     "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 }
 
-/* #0B1128
-:root { 
-
-  
-  --bg-dark-start: #0A1329;
-  --bg-dark-end:   #050813;
-
-  --accent-100: "#00BFFF";
-  --accent-200: "#00C2FF";
-  --gray-800: "#0F1B3F";
-  --gray-700: "#142144";
-
-
-  --color-primary-start:   #5C7CFA;
-  --color-primary-end:     #6B35F3;
-  --color-accent:          #3B82F6;
-  --bg-dark:               #0A1329;
-  --bg-light:              #F5F5FA;
-  --text-primary:          #111827;
-  --text-secondary:        #6B7280;
-  --gray-100:              #F3F4F6;
-  --gray-200:              #E5E7EB;
-  --gray-900:              #111827;
-
-  --space-xxs: 4px;
-  --space-xs:  8px;
-  --space-sm:  12px;
-  --space-md:  16px;
-  --space-lg:  24px;
-  --space-xl:  32px;
-  --space-2xl: 40px;
-  --space-3xl: 64px;
-
-  --fs-h1:  64px; 
-  --fs-h2:  48px; 
-  --fs-h3:  32px; 
-  --fs-body:16px; 
-  --fs-sm:  14px; 
-
-  --radius-sm:  4px;
-  --radius-md:  8px;
-  --radius-lg: 16px;
-  --radius-round:50%;
-
-  --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
-  --shadow-md: 0 4px 16px rgba(0,0,0,0.1);
-  --shadow-lg: 0 8px 24px rgba(0,0,0,0.2);
-}
-
-
-*/
 @media (prefers-color-scheme: dark) {
   :root {
     --bg-dark:   #F5F5FA;
@@ -176,25 +125,6 @@ body::before {
   overflow: hidden;
 }
 
-/* tailwind.config.js — добавьте в extend.backgroundImage, либо просто в globals.css */
-/*
-.section-mask {
-  -webkit-mask-image: linear-gradient(
-    to bottom,
-    transparent 0%,
-    black 0%,
-    black 90%,
-    transparent 100%
-  );
-  mask-image: linear-gradient(
-    to bottom,
-    transparent 0%,
-    black 0%,
-    black 30%,
-    transparent 100%
-  );
-}
-*/
 .section-mask {
   position: relative;
   /* обязательно: чтобы дочерний ::before позиционировался относительно этого блока */
@@ -236,16 +166,6 @@ header {
 main {
   padding-top: var(--header-height);
 }
-/**
-
-footer {
-  background-color: rgba(11, 17, 40, 1);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  border-top: 1px solid rgba(255,255,255,0.1);
-  z-index: 10;
-}
-*/
 
 
 
@@ -269,8 +189,6 @@ footer {
   animation: float-slow 8s ease-in-out infinite;
 }
 
-
-/* globals.css */
 
 .step-card {
   /* вешаем один и тот же маск-файл, но «растягиваем» его в 3 раза по горизонтали */
@@ -309,12 +227,13 @@ input[type='range'] {
   cursor: pointer;
 }
 
-/* Ось — яркая, с фоном */
+/* Ось — яркая, с фоном 
+выглядит норм только на больших экранах  border-radius: 999px;*/
 input[type='range']::-webkit-slider-runnable-track {
   height: 7px;
   background: url('/decorative/Rectangle3.png') no-repeat;
   background-size: 100% 100%;
-  border-radius: 999px;
+  border-radius: 100%; /*скорее всего не работает*/
 }
 
 /* Ползунок — светлый, как в фигме */
@@ -463,6 +382,102 @@ input[type="range"]::-moz-range-thumb:hover {
   box-shadow: 0 0 10px rgba(0, 194, 255, 0.8);
 }
 
+.bg-step-overlay::before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 300px;
+  height: 300px;
+  background-image: url("/decorative/ellipse5.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: bottom left;
+  opacity: 0.6;
+  z-index: -1;
+}
+
+/**
+
+footer {
+  background-color: rgba(11, 17, 40, 1);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-top: 1px solid rgba(255,255,255,0.1);
+  z-index: 10;
+}
+*/
+/* tailwind.config.js — добавьте в extend.backgroundImage, либо просто в globals.css */
+/*
+.section-mask {
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    black 0%,
+    black 90%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    black 0%,
+    black 30%,
+    transparent 100%
+  );
+}
+*/
+/* #0B1128
+:root { 
+
+  
+  --bg-dark-start: #0A1329;
+  --bg-dark-end:   #050813;
+
+  --accent-100: "#00BFFF";
+  --accent-200: "#00C2FF";
+  --gray-800: "#0F1B3F";
+  --gray-700: "#142144";
+
+
+  --color-primary-start:   #5C7CFA;
+  --color-primary-end:     #6B35F3;
+  --color-accent:          #3B82F6;
+  --bg-dark:               #0A1329;
+  --bg-light:              #F5F5FA;
+  --text-primary:          #111827;
+  --text-secondary:        #6B7280;
+  --gray-100:              #F3F4F6;
+  --gray-200:              #E5E7EB;
+  --gray-900:              #111827;
+
+  --space-xxs: 4px;
+  --space-xs:  8px;
+  --space-sm:  12px;
+  --space-md:  16px;
+  --space-lg:  24px;
+  --space-xl:  32px;
+  --space-2xl: 40px;
+  --space-3xl: 64px;
+
+  --fs-h1:  64px; 
+  --fs-h2:  48px; 
+  --fs-h3:  32px; 
+  --fs-body:16px; 
+  --fs-sm:  14px; 
+
+  --radius-sm:  4px;
+  --radius-md:  8px;
+  --radius-lg: 16px;
+  --radius-round:50%;
+
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+  --shadow-md: 0 4px 16px rgba(0,0,0,0.1);
+  --shadow-lg: 0 8px 24px rgba(0,0,0,0.2);
+}
+
+
+*/
+
     /* Левый верх — мягкая затемнёнка 
     radial-gradient(
       at left top,
@@ -524,22 +539,6 @@ input[type="range"]::-moz-range-thumb:hover {
 }
 
 */
-.bg-step-overlay::before {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 300px;
-  height: 300px;
-  background-image: url("/decorative/ellipse5.png");
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: bottom left;
-  opacity: 0.6;
-  z-index: -1;
-}
-
-
 
 /*
 
