@@ -94,7 +94,8 @@ export default function MainSection({className = ''}: MainSectionProps) {
   </div>
         {/* Левый столбец */}
           <div className="space-y-6 max-w-[811px]">
-              <h1
+              
+      {/*<h1
                 className="text-8xl font-bold leading-[90px]"
                 style={{ fontSize: "70px", lineHeight: "68px" }}
               >
@@ -102,7 +103,17 @@ export default function MainSection({className = ''}: MainSectionProps) {
                 <span className="whitespace-nowrap">
         <span className="text-[#00C2FF]">Easily</span>&nbsp;&amp;&nbsp;<span className="text-[#00C2FF]">Securely</span>
       </span>
-      </h1>
+      </h1> ГЛАВНЫЙ ФИКС: резиновый размер и переносы */}
+          <h1 className="font-bold leading-[0.95] tracking-[-0.02em]">
+            <span className="block text-[clamp(32px,9vw,64px)]">Stake TON</span>
+            <span className="block text-[clamp(28px,8.5vw,60px)]">
+              <span className="sm:whitespace-nowrap">
+                <span className="text-[#00C2FF]">Easily</span>
+                &nbsp;&amp;&nbsp;
+                <span className="text-[#00C2FF]">Securely</span>
+              </span>
+            </span>
+          </h1>
               <p className="text-lg text-gray-300 max-w-lg">
                 Stake your TON tokens securely and earn passive income with our
                 audited smart contracts.
