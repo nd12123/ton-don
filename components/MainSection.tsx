@@ -63,7 +63,7 @@ export default function MainSection({className = ''}: MainSectionProps) {
 
 {/* 1) Расположение «здесь иконки» в контейнере */}
 <div className="max-w-7xl mx-auto mb-8  md:pl-[90px] sm:pl-[5px]">
-        <div className="flex items-center md:gap-16 sm:gap-4">
+        <div className="flex items-center md:gap-16 sm:gap-8 gap-16">
           <div className="flex items-center gap-2">
             <Image src={ReliableIcon} alt="Reliable" width={24} height={24} />
             <span className="text-lg font-medium">Reliable</span>
@@ -83,7 +83,7 @@ export default function MainSection({className = ''}: MainSectionProps) {
 <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center  md:pl-[90px]">
   {/* === Абсолютный эллипс за текстом === */}
   <div
-    className="pointer-events-none absolute top-[30px] left-[50px] w-[600px] h-[600px] opacity-90 -z-10"
+    className="pointer-events-none absolute top-[30px] md:left-[50px] sm:left-[15px] md:w-[600px] sm:w-[100px] md:h-[600px] sm:h-[100px] opacity-90 -z-10"
   >
     <Image
       src="/decorative/ellipse10.png"
