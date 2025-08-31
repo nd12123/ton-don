@@ -118,45 +118,7 @@ export default function StepsToInvest() {
 
  {/* ========== ОБКАТЫВАЕМ КОНТЕНТ В RELATIVE-wrapper ========== */}
  <div className="relative mt-12">
-        {/* 1) фон-изображение – ровно под гридом
         
-        <div className="absolute inset-x-0 top-0 flex justify-center pointer-events-none z-[-1]"
-                  style={{ height: 350 }}>
-          <Image
-            src="/decorative/step-mask.svg"
-            alt="steps background"
-            fill
-            style={{
-              objectFit: "contain",
-              objectPosition: "center center",  // по центру по X, сверху по Y
-            }}
-          />
-        <Image
-          src={leftCorner}
-          alt="corner"
-          fill
-          height= {350}
-          width={100}
-          className="absolute left-0  top-[30px] opacity-60 animate-float-slow delay-2000" //w-16 h-16  left-8 top-1/2 
-          style={{
-            objectFit: "contain",
-            objectPosition: "left center",  
-          }}
-        />
-        
-        <Image
-          src={rightCorner}
-          alt="corner"
-          fill
-          height= {350}
-          width={60}
-          className="absolute right-0  top-[30px]  opacity-60 animate-float-slow delay-2000" //right-8 top-1/3 w-20 h-20
-          style={{
-            objectFit: "contain",
-            objectPosition: "right center",  
-          }}
-        />
-      </div> */}
         
 {/* 1) фон-изображение – ровно под гридом, уже на мобилках */}
 <div
@@ -197,7 +159,8 @@ export default function StepsToInvest() {
 
       {/* 3) Контейнер с тремя «шагами» py-20 */}
       <div className="relative z-10 max-w-6xl mx-auto px-4 mt-12 "> 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-5" >
+        <div className="grid grid-cols-3 gap-5"  //grid-cols-1 md: ...3
+        >
           {steps.map((step, idx) => (
             <div key={step.id} className="relative group" >
               {/* 
@@ -289,27 +252,7 @@ export default function StepsToInvest() {
       </div>
        
     </div>
-      {/* 5) Кнопка «Connect Wallet» снизу 
-      <div className="relative z-10 mt-16 flex justify-center py-7">
-        <Link href="/connect" 
-            className="
-              inline-flex items-center 
-              bg-[#00BFFF] hover:bg-[#00A5E0] 
-              text-white 
-              font-medium 
-              rounded-full 
-              px-6 py-3 
-              text-lg 
-              transition 
-              shadow-lg
-            "
-          >
-            <span className="mr-2">💼</span>
-            Connect Wallet
-        </Link>
-      </div> 
-*/}
-{/** */}
+      
 <div className="relative z-10 flex justify-center py-7"//mt-16
 >
   <ConnectWalletButton />
@@ -340,6 +283,64 @@ export default function StepsToInvest() {
     
   );
 }
+{/*
+        <div className="absolute inset-x-0 top-0 flex justify-center pointer-events-none z-[-1]"
+                  style={{ height: 350 }}>
+          <Image
+            src="/decorative/step-mask.svg"
+            alt="steps background"
+            fill
+            style={{
+              objectFit: "contain",
+              objectPosition: "center center",  // по центру по X, сверху по Y
+            }}
+          />
+        <Image
+          src={leftCorner}
+          alt="corner"
+          fill
+          height= {350}
+          width={100}
+          className="absolute left-0  top-[30px] opacity-60 animate-float-slow delay-2000" //w-16 h-16  left-8 top-1/2 
+          style={{
+            objectFit: "contain",
+            objectPosition: "left center",  
+          }}
+        />
+        
+        <Image
+          src={rightCorner}
+          alt="corner"
+          fill
+          height= {350}
+          width={60}
+          className="absolute right-0  top-[30px]  opacity-60 animate-float-slow delay-2000" //right-8 top-1/3 w-20 h-20
+          style={{
+            objectFit: "contain",
+            objectPosition: "right center",  
+          }}
+        />
+      </div> */}
+      {/* 5) Кнопка «Connect Wallet» снизу 
+      <div className="relative z-10 mt-16 flex justify-center py-7">
+        <Link href="/connect" 
+            className="
+              inline-flex items-center 
+              bg-[#00BFFF] hover:bg-[#00A5E0] 
+              text-white 
+              font-medium 
+              rounded-full 
+              px-6 py-3 
+              text-lg 
+              transition 
+              shadow-lg
+            "
+          >
+            <span className="mr-2">💼</span>
+            Connect Wallet
+        </Link>
+      </div> 
+*/}
 {/**
          * 
 
