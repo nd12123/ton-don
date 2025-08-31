@@ -336,6 +336,7 @@ input[type='range']::-moz-range-thumb {
     );
 */
 }
+.text-balance { text-wrap: balance; }
 
 /* Глобальный стиль для слайдеров (тонкие направляющие + не пиксельный кружок) */
 input[type="range"] {

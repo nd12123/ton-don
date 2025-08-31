@@ -108,7 +108,7 @@ export default function CalculateAndPlans() {
   </div>
 </div>
 {/* --- Главный текст из макета Figma --- */}
-<div className="max-w-6xl mx-auto px-4 mb-12 relative z-10">
+<div className="max-w-6xl mx-auto px-4 relative z-10 pb-8 md:pb-16"> 
   <h1 className="font-inter font-bold text-[70px] leading-[68px] text-white">
     Choose a <span className="text-[#00C2FF]">plan</span> and<br/>
     <span className="text-[#00C2FF]">Calculate</span> your <span className="text-[#00C2FF]">Profit</span>
@@ -141,9 +141,9 @@ export default function CalculateAndPlans() {
 </div>
 
 
-      <div className="max-w-6xl mx-auto px-4 pb-6">
+      <div className="max-w-6xl mx-auto px-2 md:px-6 pb-6">
         {/* === 3) Карточки планов === */}
-        <div className="grid grid-cols-3 gap-x-16 gap-y-8 mb-16" //grid-cols-1 md: 
+        <div className="grid grid-cols-3 gap-x-4 md:gap-x-16 gap-y-4 md:gap-y-8 mb-4 md:mb-16" //grid-cols-1 md: 
         >
           {PLANS.map((plan, idx) => (
             <PlanCard
