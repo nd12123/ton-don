@@ -166,7 +166,7 @@ export default function StepsToInvest() {
 
 
       {/* 3) Контейнер с тремя «шагами» py-20 */}
-      <div className="relative z-10  mx-auto px-0 mt-12 " //max-w-6xl px-4
+      <div className="relative z-10  mx-auto px-0 md:px-4 md:max-w-6xl mt-12 " //max-w-6xl px-4
       > 
         <div className="grid grid-cols-3 gap-1 md:gap-5"  //grid-cols-1 md: ...3
         >
