@@ -114,8 +114,6 @@ export default function StepsToInvest() {
       </div>
 </div>
 
-
-
  {/* ========== ОБКАТЫВАЕМ КОНТЕНТ В RELATIVE-wrapper ========== */}
  <div className="relative mt-12 px-0">
         
@@ -166,60 +164,33 @@ export default function StepsToInvest() {
 
 
 
-      {/* 3) Контейнер с тремя «шагами» py-20 */}
-      <div className="relative z-10  mx-auto px-1 md:px-4 md:max-w-6xl mt-12 " //max-w-6xl px-4
-      > 
-        <div className="grid grid-cols-3 gap-1 md:gap-5"  //grid-cols-1 md: ...3
+{/* 3) Контейнер с тремя «шагами» */}
+<div className="relative z-10 mx-auto px-3 sm:px-4 md:max-w-6xl mt-8 sm:mt-12">
+  <div className="grid grid-cols-1 md:grid-cols-3 gap-3 sm:gap-5">
+    {steps.map((step) => (
+      <div key={step.id} className="relative group">
+        <div
+          className="
+            bg-transparent rounded-2xl
+            p-4 sm:p-6 lg:p-10
+            h-full flex flex-col
+            hover:shadow-xl transition
+          "
         >
-          {steps.map((step, idx) => (
-            <div key={step.id} className="relative group" >
-              {/* 
-                3.1) Сам «блок» шага: фон ярко-синего цвета с лёгкой тенью.
-                     Скругляем углы: слева и справа слегка волнистые (имитация «зубцов»),
-                     но для простоты здесь скругление сделано обычным border-radius.
-                     Если вам нужна именно форма «как в макете» (с зубчиками), 
-                     можно сделать SVG-маску, но для начала часто хватает 
-                     простого округления углов.
-              */}
-              <div
-                  className="
-                    bg-transparent    /* фон убрали, теперь виден только SVG */
-                    rounded-2xl 
-                    p-10 
-                    h-full
-                    flex flex-col /*justify-start */
-                    hover:shadow-xl transition
-                  "
-              >
-                {/* Номер шага */}
-                <div className="text-m md:text-4xl font-bold mb-4 py-0 md:py-6">{step.id.toString().padStart(2, "0")}</div>
-
-                {/* Текст шага */}
-                <h3 className="text-s md:text-2xl font-semibold mb-0 md:mb-2">{step.title}</h3>
-                <p className="text-xxs md:text-s">{step.description}</p>
-              </div>
-
-              {/* 
-                3.2) Вертикальная пунктирная линия между карточками (кроме последнего)
-                    – делаем позиционированный div с высотой равной блоку шагов 
-                    – с border-left: 2px dashed white/серый (или tailwind-классом)
-              */}
-              {idx < steps.length - 1 && (
-                <div
-                  /*className="
-                    hidden md:block 
-                    absolute 
-                    top-1/4 
-                    right-0 
-                    h-1/2 
-                    border-r-2 border-dashed border-white/50
-                  " */
-                />
-              )}
-            </div>
-          ))}
+          <div className="text-2xl sm:text-3xl md:text-4xl font-bold mb-2 sm:mb-4">
+            {step.id.toString().padStart(2, '0')}
+          </div>
+          <h3 className="text-lg sm:text-xl md:text-2xl font-semibold mb-1 sm:mb-2">
+            {step.title}
+          </h3>
+          <p className="text-sm sm:text-base text-white/90">
+            {step.description}
+          </p>
         </div>
       </div>
+    ))}
+  </div>
+</div>
 
       {/* 4) Абсолютно позиционированные «плавающие» 3D-монетки */}
       <div className="absolute inset-0 pointer-events-none">
@@ -267,6 +238,17 @@ export default function StepsToInvest() {
 >
   <ConnectWalletButton />
 </div>
+
+</div>
+
+    </section>
+    
+  );
+}
+
+
+
+
 {/**
 <div className="w-44 h-10 relative bg-[radial-gradient(ellipse_72.70%_100.11%_at_50.00%_50.00%,_#009BEF_0%,_#3CBAFF_100%)] rounded-xl shadow-[0px_11px_21px_0px_rgba(56,172,234,0.18)] overflow-hidden">
   <div className="w-32 h-4 left-[35px] top-[12px] absolute justify-center text-white text-base font-semibold font-['Inter'] leading-loose">Connect Wallet</div>
@@ -287,12 +269,36 @@ export default function StepsToInvest() {
   />
  */}
 
-</div>
+{/**
+      <div className="relative z-10  mx-auto px-1 md:px-4 md:max-w-6xl mt-12 " //max-w-6xl px-4
+      > 
+        <div className="grid grid-cols-3 gap-1 md:gap-5"  //grid-cols-1 md: ...3
+        >
+          {steps.map((step, idx) => (
+            <div key={step.id} className="relative group" >
+              <div
+                  className="
+                    bg-transparent    
+                    rounded-2xl 
+                    p-10 
+                    h-full
+                    flex flex-col 
+                    hover:shadow-xl transition
+                  "
+              >
+                <div className="text-m md:text-4xl font-bold mb-4 py-0 md:py-6">{step.id.toString().padStart(2, "0")}</div>
 
-    </section>
-    
-  );
-}
+                <h3 className="text-s md:text-2xl font-semibold mb-0 md:mb-2">{step.title}</h3>
+                <p className="text-xxs md:text-s">{step.description}</p>
+              </div>
+              {idx < steps.length - 1 && (
+                <div
+                />
+              )}
+            </div>
+          ))}
+        </div>
+      </div> */}
 {/*
         <div className="absolute inset-x-0 top-0 flex justify-center pointer-events-none z-[-1]"
                   style={{ height: 350 }}>
