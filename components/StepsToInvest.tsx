@@ -124,7 +124,7 @@ export default function StepsToInvest() {
 <div
   className="
     absolute inset-x-0 top-0
-    h-[280px] md:h-[350px]
+    h-[80px] md:h-[350px]
     pointer-events-none z-[-1] overflow-hidden
   "
 >
