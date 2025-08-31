@@ -118,7 +118,8 @@ export default function StepsToInvest() {
 
  {/* ========== ОБКАТЫВАЕМ КОНТЕНТ В RELATIVE-wrapper ========== */}
  <div className="relative mt-12">
-        {/* 1) фон-изображение – ровно под гридом */}
+        {/* 1) фон-изображение – ровно под гридом
+        
         <div className="absolute inset-x-0 top-0 flex justify-center pointer-events-none z-[-1]"
                   style={{ height: 350 }}>
           <Image
@@ -130,7 +131,6 @@ export default function StepsToInvest() {
               objectPosition: "center center",  // по центру по X, сверху по Y
             }}
           />
-           {/* Мелкие corner слева и справа */}
         <Image
           src={leftCorner}
           alt="corner"
@@ -156,28 +156,44 @@ export default function StepsToInvest() {
             objectPosition: "right center",  
           }}
         />
-        {/**
-         * 
+      </div> */}
+        
+{/* 1) фон-изображение – ровно под гридом, уже на мобилках */}
+<div
+  className="
+    absolute top-0
+    left-1/2 -translate-x-1/2   /* центрируем на мобилках */
+    w-[92vw] h-[280px]          /* мобилка: узко и ниже */
+    pointer-events-none z-[-1] overflow-hidden
 
-        <div
-  className="absolute right-0 top-[30px] opacity-60 animate-float-slow delay-2000 pointer-events-none"
-  style={{
-    width: "150px",
-    height: "350px"
-  }}
+    md:inset-x-0 md:translate-x-0  /* десктоп: прибиваем к краям */
+    md:w-auto md:h-[350px]         /* и выше фон */
+  "
 >
+  <Image
+    src="/decorative/step-mask.svg"
+    alt="steps background"
+    fill
+    style={{ objectFit: "contain", objectPosition: "center center" }}
+  />
+
+  {/* Мелкие corner слева и справа */}
+  <Image
+    src={leftCorner}
+    alt="corner"
+    fill
+    className="absolute left-0 top-[30px] opacity-60 animate-float-slow delay-2000"
+    style={{ objectFit: "contain", objectPosition: "left center" }}
+  />
+
   <Image
     src={rightCorner}
     alt="corner"
-    width={120}
-    height={350}
+    fill
+    className="absolute right-0 top-[30px] opacity-60 animate-float-slow delay-2000"
     style={{ objectFit: "contain", objectPosition: "right center" }}
   />
 </div>
-         */}
-        </div>
-        
-
 
       {/* 3) Контейнер с тремя «шагами» py-20 */}
       <div className="relative z-10 max-w-6xl mx-auto px-4 mt-12 "> 
@@ -324,7 +340,25 @@ export default function StepsToInvest() {
     
   );
 }
+{/**
+         * 
 
+        <div
+  className="absolute right-0 top-[30px] opacity-60 animate-float-slow delay-2000 pointer-events-none"
+  style={{
+    width: "150px",
+    height: "350px"
+  }}
+>
+  <Image
+    src={rightCorner}
+    alt="corner"
+    width={120}
+    height={350}
+    style={{ objectFit: "contain", objectPosition: "right center" }}
+  />
+</div>
+         */}
       {/*
       <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-b from-transparent to-[#0A0D1C] z-0" />
 <div
