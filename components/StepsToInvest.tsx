@@ -114,6 +114,8 @@ export default function StepsToInvest() {
       </div>
 </div>
 
+
+
  {/* ========== ОБКАТЫВАЕМ КОНТЕНТ В RELATIVE-wrapper ========== */}
  <div className="relative mt-12 px-0">
         
@@ -164,6 +166,38 @@ export default function StepsToInvest() {
 
 
 
+      {/* 3) Контейнер с тремя «шагами» py-20 */}
+      <div className="relative z-10  mx-auto px-1 md:px-4 md:max-w-6xl mt-12 " //max-w-6xl px-4
+      > 
+        <div className="grid grid-cols-3 gap-1 md:gap-5"  //grid-cols-1 md: ...3
+        >
+          {steps.map((step, idx) => (
+            <div key={step.id} className="relative group" >
+              <div
+                  className="
+                    bg-transparent    /* фон убрали, теперь виден только SVG */
+                    rounded-2xl 
+                    p-10 
+                    h-full
+                    flex flex-col /*justify-start */
+                    hover:shadow-xl transition
+                  "
+              >
+                {/* Номер шага */}
+                <div className="text-m md:text-4xl font-bold mb-4 py-0 md:py-6">{step.id.toString().padStart(2, "0")}</div>
+
+                {/* Текст шага */}
+                <h3 className="text-s md:text-2xl font-semibold mb-0 md:mb-2">{step.title}</h3>
+                <p className="text-xxs md:text-s">{step.description}</p>
+              </div>
+              {idx < steps.length - 1 && (
+                <div
+                />
+              )}
+            </div>
+          ))}
+        </div>
+      </div>
 {/* 3) Контейнер с тремя «шагами» */}
 <div className="relative z-10 mx-auto px-3 sm:px-4 md:max-w-6xl mt-8 sm:mt-12">
   <div className="grid grid-cols-1 md:grid-cols-3 gap-3 sm:gap-5">
@@ -238,17 +272,6 @@ export default function StepsToInvest() {
 >
   <ConnectWalletButton />
 </div>
-
-</div>
-
-    </section>
-    
-  );
-}
-
-
-
-
 {/**
 <div className="w-44 h-10 relative bg-[radial-gradient(ellipse_72.70%_100.11%_at_50.00%_50.00%,_#009BEF_0%,_#3CBAFF_100%)] rounded-xl shadow-[0px_11px_21px_0px_rgba(56,172,234,0.18)] overflow-hidden">
   <div className="w-32 h-4 left-[35px] top-[12px] absolute justify-center text-white text-base font-semibold font-['Inter'] leading-loose">Connect Wallet</div>
@@ -269,37 +292,12 @@ export default function StepsToInvest() {
   />
  */}
 
-{/**
-  //Right and working desktop version maybe should bring it back
-      <div className="relative z-10  mx-auto px-1 md:px-4 md:max-w-6xl mt-12 " //max-w-6xl px-4
-      > 
-        <div className="grid grid-cols-3 gap-1 md:gap-5"  //grid-cols-1 md: ...3
-        >
-          {steps.map((step, idx) => (
-            <div key={step.id} className="relative group" >
-              <div
-                  className="
-                    bg-transparent    
-                    rounded-2xl 
-                    p-10 
-                    h-full
-                    flex flex-col 
-                    hover:shadow-xl transition
-                  "
-              >
-                <div className="text-m md:text-4xl font-bold mb-4 py-0 md:py-6">{step.id.toString().padStart(2, "0")}</div>
+</div>
 
-                <h3 className="text-s md:text-2xl font-semibold mb-0 md:mb-2">{step.title}</h3>
-                <p className="text-xxs md:text-s">{step.description}</p>
-              </div>
-              {idx < steps.length - 1 && (
-                <div
-                />
-              )}
-            </div>
-          ))}
-        </div>
-      </div> */}
+    </section>
+    
+  );
+}
 {/*
         <div className="absolute inset-x-0 top-0 flex justify-center pointer-events-none z-[-1]"
                   style={{ height: 350 }}>
