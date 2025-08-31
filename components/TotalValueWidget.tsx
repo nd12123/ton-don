@@ -27,7 +27,7 @@ export default function TotalValueWidget() {
       className="
         ml-2 mt-4
         flex items-center justify-center
-        text-[90px] leading-[90px]
+        text-[60px] leading-[60px] md:text-[90px] md:leading-[90px]
         font-black tracking-tight tabular-nums
         text-transparent bg-clip-text
         bg-gradient-to-b from-sky-400 to-cyan-500

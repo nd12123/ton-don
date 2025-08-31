@@ -182,10 +182,10 @@ export default function StepsToInvest() {
                   "
               >
                 {/* Номер шага */}
-                <div className="text-4xl font-bold mb-4 py-6">{step.id.toString().padStart(2, "0")}</div>
+                <div className="text-2xl md:text-4xl font-bold mb-4 py-4 md:py-6">{step.id.toString().padStart(2, "0")}</div>
 
                 {/* Текст шага */}
-                <h3 className="text-2xl font-semibold mb-2">{step.title}</h3>
+                <h3 className="text-xl md:text-2xl font-semibold mb-2">{step.title}</h3>
                 <p className="text-base">{step.description}</p>
               </div>
 
