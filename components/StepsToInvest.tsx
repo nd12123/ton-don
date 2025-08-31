@@ -117,15 +117,15 @@ export default function StepsToInvest() {
 
 
  {/* ========== ОБКАТЫВАЕМ КОНТЕНТ В RELATIVE-wrapper ========== */}
- <div className="relative mt-12">
+ <div className="relative mt-12 px-0">
         
         
 {/* 1) фон-изображение – под гридом, уже на мобилках */}
 <div
   className="
     absolute top-0
-    left-1/2 -translate-x-1/2
-    w-[92vw] h-[280px]           /* мобилка: уже, ниже */
+    /* left-1/2 -translate-x-1/2 */
+     h-[280px]          /*w-[92vw] мобилка: уже, ниже */
     pointer-events-none z-[-1] overflow-hidden
     md:inset-x-0 md:translate-x-0
     md:w-auto md:h-[350px]
@@ -140,7 +140,7 @@ export default function StepsToInvest() {
 
   {/* Левый корнер: делаем узким на мобиле */}
   <div className="absolute left-0 top-0 h-full">
-    <div className="relative h-full w-[18vw] min-w-[28px] md:w-[180px] lg:w-[220px]">
+    <div className="relative h-full w-[18vw] min-w-[18px] md:w-[180px] lg:w-[220px]">
       <Image
         src={leftCorner}
         alt="corner"
@@ -153,7 +153,7 @@ export default function StepsToInvest() {
 
   {/* Правый корнер: симметрично */}
   <div className="absolute right-0 top-0 h-full">
-    <div className="relative h-full w-[18vw] min-w-[28px] md:w-[180px] lg:w-[220px]">
+    <div className="relative h-full w-[18vw] min-w-[18px] md:w-[180px] lg:w-[220px]">
       <Image
         src={rightCorner}
         alt="corner"
@@ -191,11 +191,11 @@ export default function StepsToInvest() {
                   "
               >
                 {/* Номер шага */}
-                <div className="text-l md:text-4xl font-bold mb-4 py-0 md:py-6">{step.id.toString().padStart(2, "0")}</div>
+                <div className="text-m md:text-4xl font-bold mb-4 py-0 md:py-6">{step.id.toString().padStart(2, "0")}</div>
 
                 {/* Текст шага */}
-                <h3 className="text-m md:text-2xl font-semibold mb-0 md:mb-2">{step.title}</h3>
-                <p className="text-xs">{step.description}</p>
+                <h3 className="text-s md:text-2xl font-semibold mb-0 md:mb-2">{step.title}</h3>
+                <p className="text-xxs md:text-s">{step.description}</p>
               </div>
 
               {/* 
