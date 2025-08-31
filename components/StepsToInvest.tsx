@@ -166,8 +166,9 @@ export default function StepsToInvest() {
 
 
       {/* 3) Контейнер с тремя «шагами» py-20 */}
-      <div className="relative z-10 max-w-6xl mx-auto px-4 mt-12 "> 
-        <div className="grid grid-cols-3 gap-5"  //grid-cols-1 md: ...3
+      <div className="relative z-10  mx-auto px-0 mt-12 " //max-w-6xl px-4
+      > 
+        <div className="grid grid-cols-3 gap-1 md:gap-5"  //grid-cols-1 md: ...3
         >
           {steps.map((step, idx) => (
             <div key={step.id} className="relative group" >
@@ -190,11 +191,11 @@ export default function StepsToInvest() {
                   "
               >
                 {/* Номер шага */}
-                <div className="text-l md:text-4xl font-bold mb-4 py-4 md:py-6">{step.id.toString().padStart(2, "0")}</div>
+                <div className="text-l md:text-4xl font-bold mb-4 py-0 md:py-6">{step.id.toString().padStart(2, "0")}</div>
 
                 {/* Текст шага */}
-                <h3 className="text-m md:text-2xl font-semibold mb-2">{step.title}</h3>
-                <p className="text-s">{step.description}</p>
+                <h3 className="text-m md:text-2xl font-semibold mb-0 md:mb-2">{step.title}</h3>
+                <p className="text-xs">{step.description}</p>
               </div>
 
               {/* 
