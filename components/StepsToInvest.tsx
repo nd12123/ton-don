@@ -40,7 +40,7 @@ export default function StepsToInvest() {
 
   return (
     <section
-          className="relative  text-white py-10" // pb-10 overflow-hidden
+          className="relative  text-white py-10 overflow-x-clip" // pb-10 overflow-hidden
 
           //style={{
             /* 
@@ -260,7 +260,8 @@ export default function StepsToInvest() {
         />
       </div>
 
-      <div className="absolute top-[-150px] right-[-150px] w-full h-full opacity-100 z-[5]">
+      <div className="absolute top-[-150px] right-[-150px] w-full h-full opacity-100 z-[5]" // -150 растягивает экран на мобилке
+      >
         <Image
           src={centerSphere}
           alt="Sphere"
