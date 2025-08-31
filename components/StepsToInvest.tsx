@@ -120,50 +120,50 @@ export default function StepsToInvest() {
  <div className="relative mt-12 px-0">
         
         
-{/* 1) фон-изображение – под гридом, уже на мобилках */}
+{/* 1) фон-изображение – под гридом */}
 <div
   className="
-    absolute top-0
-     inset-x-0
-    /* left-1/2 -translate-x-1/2 */
-     h-[280px]          /*w-[92vw] мобилка: уже, ниже */
+    absolute inset-x-0 top-0
+    h-[280px] md:h-[350px]
     pointer-events-none z-[-1] overflow-hidden
-    md:inset-x-0 md:translate-x-0
-    md:w-auto md:h-[350px]
   "
 >
   <Image
     src="/decorative/step-mask.svg"
     alt="steps background"
     fill
-    style={{ objectFit: 'contain', objectPosition: 'center center' }}
+    priority
+    sizes="100vw"
+    className="object-cover md:object-contain object-center"
   />
 
-  {/* Левый корнер: делаем узким на мобиле */}
-  <div className="absolute inset-y-0 left-0 top-0 h-full">
-    <div className="relative h-full w-[18vw] min-w-[18px] md:w-[180px] lg:w-[220px]">
+  {/* Левый корнер вплотную к краю, узкий на мобиле */}
+  <div className="absolute inset-y-0 left-0 w-[18vw] max-w-[180px] min-w-[18px]">
+    <div className="relative h-full w-full">
       <Image
         src={leftCorner}
         alt="corner"
         fill
-        style={{ objectFit: 'contain', objectPosition: 'left center' }}
-        // priority
+        sizes="(min-width: 768px) 180px, 18vw"
+        className="object-contain object-left"
       />
     </div>
   </div>
 
-  {/* Правый корнер: симметрично */}
-  <div className="absolute inset-y-0 right-0 top-0 h-full">
-    <div className="relative h-full w-[18vw] min-w-[18px] md:w-[180px] lg:w-[220px]">
+  {/* Правый корнер симметрично */}
+  <div className="absolute inset-y-0 right-0 w-[18vw] max-w-[180px] min-w-[18px]">
+    <div className="relative h-full w-full">
       <Image
         src={rightCorner}
         alt="corner"
         fill
-        style={{ objectFit: 'contain', objectPosition: 'right center' }}
+        sizes="(min-width: 768px) 180px, 18vw"
+        className="object-contain object-right"
       />
     </div>
   </div>
 </div>
+
 
 
       {/* 3) Контейнер с тремя «шагами» py-20 */}
