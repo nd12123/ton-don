@@ -9,6 +9,8 @@ import WalletConnect from "@/components/WalletConnect";
 import ClientOnly from "@/components/ClientOnly"
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
+import MobileNav from "@/components/MobileNav";
+
 
 const navLinks = [
   { name: "Home", href: "/" },
@@ -30,6 +32,8 @@ export default function Header() {
 
 
   return (
+    <>
+    <MobileNav />
     <header className="
       fixed top-0 left-0 w-full z-50
       bg-[#0B1128] backdrop-blur-sm 
@@ -71,5 +75,6 @@ export default function Header() {
         </div>
       </div>
     </header>
+    </>
   );
 }
