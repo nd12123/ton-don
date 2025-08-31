@@ -124,6 +124,7 @@ export default function StepsToInvest() {
 <div
   className="
     absolute top-0
+     inset-x-0
     /* left-1/2 -translate-x-1/2 */
      h-[280px]          /*w-[92vw] мобилка: уже, ниже */
     pointer-events-none z-[-1] overflow-hidden
@@ -139,7 +140,7 @@ export default function StepsToInvest() {
   />
 
   {/* Левый корнер: делаем узким на мобиле */}
-  <div className="absolute left-0 top-0 h-full">
+  <div className="absolute inset-y-0 left-0 top-0 h-full">
     <div className="relative h-full w-[18vw] min-w-[18px] md:w-[180px] lg:w-[220px]">
       <Image
         src={leftCorner}
@@ -152,7 +153,7 @@ export default function StepsToInvest() {
   </div>
 
   {/* Правый корнер: симметрично */}
-  <div className="absolute right-0 top-0 h-full">
+  <div className="absolute inset-y-0 right-0 top-0 h-full">
     <div className="relative h-full w-[18vw] min-w-[18px] md:w-[180px] lg:w-[220px]">
       <Image
         src={rightCorner}
@@ -166,7 +167,7 @@ export default function StepsToInvest() {
 
 
       {/* 3) Контейнер с тремя «шагами» py-20 */}
-      <div className="relative z-10  mx-auto px-0 md:px-4 md:max-w-6xl mt-12 " //max-w-6xl px-4
+      <div className="relative z-10  mx-auto px-1 md:px-4 md:max-w-6xl mt-12 " //max-w-6xl px-4
       > 
         <div className="grid grid-cols-3 gap-1 md:gap-5"  //grid-cols-1 md: ...3
         >
