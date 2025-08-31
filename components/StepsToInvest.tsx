@@ -83,8 +83,8 @@ export default function StepsToInvest() {
 </div>
 
       {/* 2) Заголовок + кнопка „See Plans“ */}
-      {/* 2.1) Заголовок */}
-<div className="max-w-6xl mx-auto px-4 relative z-10 text-left">
+      {/* 2.1) Заголовок px-4 */}
+<div className="max-w-6xl mx-auto px-0 relative z-10 text-left"> 
   <h2 className="text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight font-inter">
     3 Easy steps to invest<br/>
      in <span className="text-[#00C2FF]">TonStake.Ai</span>
@@ -120,42 +120,50 @@ export default function StepsToInvest() {
  <div className="relative mt-12">
         
         
-{/* 1) фон-изображение – ровно под гридом, уже на мобилках */}
+{/* 1) фон-изображение – под гридом, уже на мобилках */}
 <div
   className="
     absolute top-0
-    left-1/2 -translate-x-1/2   /* центрируем на мобилках */
-    w-[92vw] h-[280px]          /* мобилка: узко и ниже */
+    left-1/2 -translate-x-1/2
+    w-[92vw] h-[280px]           /* мобилка: уже, ниже */
     pointer-events-none z-[-1] overflow-hidden
-
-    md:inset-x-0 md:translate-x-0  /* десктоп: прибиваем к краям */
-    md:w-auto md:h-[350px]         /* и выше фон */
+    md:inset-x-0 md:translate-x-0
+    md:w-auto md:h-[350px]
   "
 >
   <Image
     src="/decorative/step-mask.svg"
     alt="steps background"
     fill
-    style={{ objectFit: "contain", objectPosition: "center center" }}
+    style={{ objectFit: 'contain', objectPosition: 'center center' }}
   />
 
-  {/* Мелкие corner слева и справа */}
-  <Image
-    src={leftCorner}
-    alt="corner"
-    fill
-    className="absolute left-0 top-[30px] opacity-60 animate-float-slow delay-2000"
-    style={{ objectFit: "contain", objectPosition: "left center" }}
-  />
+  {/* Левый корнер: делаем узким на мобиле */}
+  <div className="absolute left-0 top-0 h-full">
+    <div className="relative h-full w-[18vw] min-w-[56px] md:w-[180px] lg:w-[220px]">
+      <Image
+        src={leftCorner}
+        alt="corner"
+        fill
+        style={{ objectFit: 'contain', objectPosition: 'left center' }}
+        // priority
+      />
+    </div>
+  </div>
 
-  <Image
-    src={rightCorner}
-    alt="corner"
-    fill
-    className="absolute right-0 top-[30px] opacity-60 animate-float-slow delay-2000"
-    style={{ objectFit: "contain", objectPosition: "right center" }}
-  />
+  {/* Правый корнер: симметрично */}
+  <div className="absolute right-0 top-0 h-full">
+    <div className="relative h-full w-[18vw] min-w-[56px] md:w-[180px] lg:w-[220px]">
+      <Image
+        src={rightCorner}
+        alt="corner"
+        fill
+        style={{ objectFit: 'contain', objectPosition: 'right center' }}
+      />
+    </div>
+  </div>
 </div>
+
 
       {/* 3) Контейнер с тремя «шагами» py-20 */}
       <div className="relative z-10 max-w-6xl mx-auto px-4 mt-12 "> 
@@ -182,10 +190,10 @@ export default function StepsToInvest() {
                   "
               >
                 {/* Номер шага */}
-                <div className="text-2xl md:text-4xl font-bold mb-4 py-4 md:py-6">{step.id.toString().padStart(2, "0")}</div>
+                <div className="text-l md:text-4xl font-bold mb-4 py-4 md:py-6">{step.id.toString().padStart(2, "0")}</div>
 
                 {/* Текст шага */}
-                <h3 className="text-xl md:text-2xl font-semibold mb-2">{step.title}</h3>
+                <h3 className="text-m md:text-2xl font-semibold mb-2">{step.title}</h3>
                 <p className="text-base">{step.description}</p>
               </div>
 
