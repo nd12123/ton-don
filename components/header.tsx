@@ -35,6 +35,7 @@ export default function Header() {
     <>
     <MobileNav />
     <header className="
+    hidden md:block
       fixed top-0 left-0 w-full z-50
       bg-[#0B1128] backdrop-blur-sm 
     " //border-b  border-white/10
