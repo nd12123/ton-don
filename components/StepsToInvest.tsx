@@ -140,7 +140,7 @@ export default function StepsToInvest() {
 
   {/* Левый корнер: делаем узким на мобиле */}
   <div className="absolute left-0 top-0 h-full">
-    <div className="relative h-full w-[18vw] min-w-[56px] md:w-[180px] lg:w-[220px]">
+    <div className="relative h-full w-[18vw] min-w-[28px] md:w-[180px] lg:w-[220px]">
       <Image
         src={leftCorner}
         alt="corner"
@@ -153,7 +153,7 @@ export default function StepsToInvest() {
 
   {/* Правый корнер: симметрично */}
   <div className="absolute right-0 top-0 h-full">
-    <div className="relative h-full w-[18vw] min-w-[56px] md:w-[180px] lg:w-[220px]">
+    <div className="relative h-full w-[18vw] min-w-[28px] md:w-[180px] lg:w-[220px]">
       <Image
         src={rightCorner}
         alt="corner"
@@ -194,7 +194,7 @@ export default function StepsToInvest() {
 
                 {/* Текст шага */}
                 <h3 className="text-m md:text-2xl font-semibold mb-2">{step.title}</h3>
-                <p className="text-base">{step.description}</p>
+                <p className="text-s">{step.description}</p>
               </div>
 
               {/* 
