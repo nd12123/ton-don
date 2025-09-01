@@ -49,26 +49,26 @@ export default function PlanCard({
           />
         </div>
       </div>
-      <h3 className="text-3xl font-semibold">{title}</h3>
+      <h3 className="text:xl md:text-3xl font-semibold">{title}</h3>
 
       {/* процент и подпись */}
       <div className="flex flex-col space-y-1 mb-6">
-        <span className="text-sm text-gray-300">Your profit</span>
+        <span className="text-[10px] md:text-sm text-gray-300">Your profit</span>
           <div className="mt-1 flex items-baseline space-x-2">
-            <span className="text-3xl font-bold text-accent-200">{dailyProfit}%</span>
-            <span className="text-sm text-gray-300">Per day</span>
+            <span className="text-xl md:text-3xl font-bold text-accent-200">{dailyProfit}%</span>
+            <span className="text-xs text-gray-300">Per day</span>
           </div>
       </div>
 
       {/* диапазон инвестиций */}
       <div className="flex flex-col space-y-1 mb-6">
-        <span className="text-sm text-gray-300">Investments for all time</span>
-        <span className="text-base font-medium text-xl text-accent-200">{rangeText}</span>
+        <span className="text-[16px] md:text-sm text-gray-300">Investments for all time</span>
+        <span className="text-sm md:text-base  lg:text-xl font-medium text-accent-200">{rangeText}</span>
       </div>
       
       {/* —–––– Разделительная линия —–––– */}
 <div
-        className="w-full border-b my-4"
+        className="w-full border-b my-1 md:my-4"
         style={{ borderColor: "rgba(16,95,150,1)" }}
       />
         {/* кнопка без текста, разный фон по isActive */}

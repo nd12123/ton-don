@@ -72,7 +72,7 @@ export default function StepsToInvest() {
         />
 </div>
 
-<div className="absolute top-[20%] right-[30%] opacity-90 z-[5] animate-float-slow  delay-1000">
+<div className="absolute top-[15%] md:top-[20%] right-[20%] md:right-[30%] opacity-90 z-[5] animate-float-slow  delay-1000">
       <Image
         src="/decorative/ton4.svg"
         alt="TON Coin Right"
@@ -138,26 +138,26 @@ export default function StepsToInvest() {
   />
 
   {/* Левый корнер вплотную к краю, узкий на мобиле */}
-  <div className="absolute inset-y-0 left-0 w-[18vw] max-w-[180px] min-w-[18px]">
+  <div className="absolute inset-y-0 left-0 w-[8vw] max-w-[180px] min-w-[18px]">
     <div className="relative h-full w-full">
       <Image
         src={leftCorner}
         alt="corner"
         fill
-        sizes="(min-width: 768px) 180px, 18vw"
+        sizes="(min-width: 768px) 180px, 8vw"
         className="object-contain object-left"
       />
     </div>
   </div>
 
   {/* Правый корнер симметрично */}
-  <div className="absolute inset-y-0 right-0 w-[18vw] max-w-[180px] min-w-[18px]">
+  <div className="absolute inset-y-0 right-0 w-[8vw] max-w-[180px] min-w-[18px]">
     <div className="relative h-full w-full">
       <Image
         src={rightCorner}
         alt="corner"
         fill
-        sizes="(min-width: 768px) 180px, 18vw"
+        sizes="(min-width: 768px) 180px, 8vw"
         className="object-contain object-right"
       />
     </div>
@@ -167,29 +167,36 @@ export default function StepsToInvest() {
 
 
       {/* 3) Контейнер с тремя «шагами» py-20 */}
-      <div className="relative z-10  mx-auto px-1 md:px-4 md:max-w-6xl mt-12 " //max-w-6xl px-4
+      <div className="relative z-10  mx-auto px-4 md:px-6 md:max-w-6xl mt-1 md:mt-12 " //max-w-6xl px-4
       > 
         <div className="grid grid-cols-3 gap-1 md:gap-5"  //grid-cols-1 md: ...3
         >
           {steps.map((step, idx) => (
             <div key={step.id} className="relative group" >
               <div
-                  className="
-                    bg-transparent    /* фон убрали, теперь виден только SVG */
-                    rounded-2xl 
-                    p-10 
-                    h-full
-                    flex flex-col /*justify-start */
-                    hover:shadow-xl transition
-                  "
-              >
-                {/* Номер шага */}
-                <div className="text-m md:text-4xl font-bold mb-4 py-0 md:py-6">{step.id.toString().padStart(2, "0")}</div>
+  className="
+    bg-transparent rounded-2xl
+    p-1 md:p-10 h-full
+    hover:shadow-xl transition
+  "
+>
+  {/* Номер + тайтл: одна строка на мобиле, столбцом на md+ */}
+  <div className="flex items-baseline gap-2 md:block">
+    <div className="w-7 flex-none text-xs md:text-4xl font-bold tabular-nums leading-none md:mb-4 md:py-6">
+      {step.id.toString().padStart(2, "0")}
+    </div>
 
-                {/* Текст шага */}
-                <h3 className="text-s md:text-2xl font-semibold mb-0 md:mb-2">{step.title}</h3>
-                <p className="text-xxs md:text-s">{step.description}</p>
-              </div>
+    <h3 className=" text-[12px] md:text-2xl font-semibold leading-none md:leading-snug" //whitespace-nowrap md:whitespace-normal
+    >
+      {step.title}
+    </h3>
+  </div>
+
+  <p className="mt-1 md:mt-2 text-[11px] md:text-base">
+    {step.description}
+  </p>
+</div>
+
               {idx < steps.length - 1 && (
                 <div
                 />
@@ -198,39 +205,13 @@ export default function StepsToInvest() {
           ))}
         </div>
       </div>
-{/* 3) Контейнер с тремя «шагами» */}
-<div className="relative z-10 mx-auto px-3 sm:px-4 md:max-w-6xl mt-8 sm:mt-12">
-  <div className="grid grid-cols-1 md:grid-cols-3 gap-3 sm:gap-5">
-    {steps.map((step) => (
-      <div key={step.id} className="relative group">
-        <div
-          className="
-            bg-transparent rounded-2xl
-            p-4 sm:p-6 lg:p-10
-            h-full flex flex-col
-            hover:shadow-xl transition
-          "
-        >
-          <div className="text-2xl sm:text-3xl md:text-4xl font-bold mb-2 sm:mb-4">
-            {step.id.toString().padStart(2, '0')}
-          </div>
-          <h3 className="text-lg sm:text-xl md:text-2xl font-semibold mb-1 sm:mb-2">
-            {step.title}
-          </h3>
-          <p className="text-sm sm:text-base text-white/90">
-            {step.description}
-          </p>
-        </div>
-      </div>
-    ))}
-  </div>
-</div>
+
 
       {/* 4) Абсолютно позиционированные «плавающие» 3D-монетки */}
       <div className="absolute inset-0 pointer-events-none">
         {/* === Плавающие монеты === */}
       {/* Левая монета (ton4) — верхний левый угол */}
-      <div className="absolute top-[0px] right-[160px] w-[200px] h-[200px] opacity-100  z-[5]"> 
+      <div className="absolute top-[0px] right-[40px] md:right-[160px]  w-[80px] h-[80px] md:w-[200px] md:h-[200px] opacity-100  z-[5]"> 
         <Image
           src="/decorative/ton22.svg" //png
           alt="TON Coin Left"
@@ -240,13 +221,13 @@ export default function StepsToInvest() {
       </div>
         
               {/* Главная центральная монета — выше всех фонов, под текстом justify-center inset-x-0*/}
-      <div className="absolute  top-[-120px] right-[36%] z-0 flex  pointer-events-none">
+      <div className="absolute w-[100px] h-[100px] md:w-[300px] md:h-[300px] top-[0px] md:top-[-120px] right-[36%] z-0 flex opacity-80 md:opacity-100 pointer-events-none">
         <Image
           src={coinLarge}
           alt="Ton Coin"
-          width={300}
-          height={300}
-          className="opacity-100" //animate-float-slow
+          //width={300}
+          //height={300}
+          //className="opacity-100" //animate-float-slow
           style={{
             objectFit: "contain",
             mixBlendMode: "screen"
@@ -254,7 +235,7 @@ export default function StepsToInvest() {
         />
       </div>
 
-      <div className="absolute top-[-150px] right-[-150px] w-full h-full opacity-100 z-[5]" // -150 растягивает экран на мобилке
+      <div className="absolute top-[-150px] right-[-150px] md:right-[-150px] w-full h-full md:opacity-100 z-[5]" // -150 растягивает экран на мобилке
       >
         <Image
           src={centerSphere}

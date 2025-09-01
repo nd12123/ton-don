@@ -21,7 +21,7 @@ import CalculateAndPlans from "@/components/CalculateAndPlans";
 //import SectionWithFade from '@/components/SectionWithFade';
 //import Calculator from "@/components/Calculator";       <Calculator />
 
-import Steps from "@/components/StepsMobile";
+//import Steps from "@/components/StepsMobile";
 
 
 export default function InteractivePage() {
@@ -83,7 +83,6 @@ export default function InteractivePage() {
 
 
       <StepsToInvest />
-      <Steps />
       {/* <StepsFinal /> */}
       {/* Секция “Calculate & Plans” */}
       <CalculateAndPlans />

@@ -143,7 +143,7 @@ export default function CalculateAndPlans() {
 
       <div className="max-w-6xl mx-auto px-2 md:px-6 pb-6">
         {/* === 3) Карточки планов === */}
-        <div className="grid grid-cols-3 gap-x-4 md:gap-x-16 gap-y-4 md:gap-y-8 mb-4 md:mb-16" //grid-cols-1 md: 
+        <div className="grid grid-cols-3 gap-x-2 md:gap-x-4 md:gap-x-16 gap-y-4 md:gap-y-8 mb-4 md:mb-16" //grid-cols-1 md: 
         >
           {PLANS.map((plan, idx) => (
             <PlanCard
