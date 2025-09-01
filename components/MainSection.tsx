@@ -38,16 +38,16 @@ export default function MainSection({className = ''}: MainSectionProps) {
       ].join(" ")}
     >
 
-<div className="absolute bottom-0 left-0 w-1/2 h-full pointer-events-none">
+<div className="absolute bottom-0 left-0 w-full md:w-1/2 h-full pointer-events-none">
         <Image
           src={ellipse6}
           alt=""
           fill
-          style={{ objectFit: 'cover', objectPosition: 'left bottom', opacity: 0.45 }}
+          style={{ objectFit: 'cover', objectPosition: 'left bottom', opacity: 0.55 }}
         />
       </div>
 
-      <div className="absolute bottom-0 right-0 w-1/2 h-full pointer-events-none">
+      <div className="absolute bottom-0 right-0 w-full md:w-1/2 h-full pointer-events-none">
         <Image
           src={ellipse5}
           alt=""

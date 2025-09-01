@@ -48,7 +48,7 @@ export default function TotalValue() {
       </div>
 
       {/* 3) Боковые эллипсы (сферы) */}
-      <div className="absolute top-0 left-0 w-1/2 h-full pointer-events-none z-0">
+      <div className="absolute top-0 left-0 w-full md:w-1/2 h-full pointer-events-none z-0">
         <Image
           src="/decorative/Ellipse60.png"
           alt="left glow"
@@ -62,7 +62,7 @@ export default function TotalValue() {
           }}
         />
       </div>
-      <div className="absolute top-0 right-0 w-1/2 h-full pointer-events-none z-0">
+      <div className="absolute top-0 right-0 w-full w-full md:w-1/2 h-full pointer-events-none z-0">
         <Image
           src="/decorative/Ellipse50.png"
           alt="right glow"
