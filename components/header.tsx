@@ -34,6 +34,7 @@ export default function Header() {
   return (
     <>
     <MobileNav />
+      <div className="md:hidden h-[calc(56px+env(safe-area-inset-top))]" aria-hidden />
     <header className="
     hidden md:block
       fixed top-0 left-0 w-full z-50

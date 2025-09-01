@@ -1,58 +1,68 @@
 "use client";
-//import { useSyncOnChain } from "@/lib/hooks/useSyncOnChain";
 
+import Image from "next/image";
 import ThemeProviderWrapper from "@/components/ThemeProviderWrapper";
-    //<ThemeProvider attribute="class">
-    //</ThemeProvider>
-
-
-//import ThemeToggle from "@/components/ThemeToggle";
-//import Link from "next/link";
-//import { usePathname } from "next/navigation";
 import Header from "@/components/header";
-//import MobileLayout from "@/components/MobileLayout";
-//import Footer from "@/components/Footer";
-            //<Footer />
-//import {TonProviderWrapper} from "@/components/TonProviderWrapper";
-//              <TonProviderWrapper>
-//              </TonProviderWrapper>
-
-//import ClientProviders from "@/components/ClientProviders";
-      //<ClientProviders>
-      //</ClientProviders>
-/*
-const menu = [
-  { name: "Главная", href: "/" },
-  { name: "Стейкинг", href: "/staking" },
-  { name: "История", href: "/history" },
-  { name: "Поддержка", href: "/support" },
-  { name: "Кабинет", href: "/profile" },
-];
-*/
 
 export default function Layout({ children }: { children: React.ReactNode }) {
-  //const pathname = usePathname();
-
-  //useSyncOnChain(30_000)
-
   return (
     <ThemeProviderWrapper>
-      <Header />
-      <div className="min-h-screen flex bg-gray-50 text-black dark:bg-gray-900 dark:text-gray-100">
-        {/* Сайдбар не нужен, он в МобилЛейаут */}
-        
-{/* Нужно кнопку с кошельком добавить наверх */}
-        {/* Контент */}
-        <div className="flex-1 flex flex-col">
+      {/* создаём собственный стек слоёв для безопасного z-index */}
+      <div className="relative isolate min-h-dvh bg-[#0B1028] text-white">
+        {/* ===== Global dashboard background (под всем контентом) ===== */}
+        <div className="pointer-events-none fixed inset-0 -z-10">
+          {/* Горизонт */}
+          <Image
+            src="/decorative/radius-bg.png" //save svg? /horizon-bg.svg
+            alt=""
+            fill
+            sizes="100vw"
+            style={{ objectFit: "cover", objectPosition:"center top", opacity: 0.45 }}
+            priority
+          />
+          {/* Лёгкие звёзды */}
+          <Image
+            src="/decorative/starsbg1.png"
+            alt=""
+            fill
+            sizes="100vw"
+            style={{ objectFit: "cover", opacity: 0.12 }}
+          />
+          {/* Левое свечение */}
+          <div className="absolute inset-y-0 left-0 w-full">
+            <Image
+              src="/decorative/Ellipse60.png"
+              alt=""
+              fill
+              sizes="50vw"
+              style={{ objectFit: "cover", objectPosition: "left top", opacity: 0.35 }}
+            />
+          </div>
+          {/* Правое свечение */}
+          <div className="absolute inset-y-0 right-0 w-full">
+            <Image
+              src="/decorative/Ellipse50.png"
+              alt=""
+              fill
+              sizes="50vw"
+              style={{ objectFit: "cover", objectPosition: "right top", opacity: 0.35 }}
+            />
+          </div>
+        </div>
 
-          {/* Основной контент <MobileLayout>          </MobileLayout>*/}
-          <main className="p-6">{children}</main>
-          
+        {/* Шапка сверху — поверх фона */}
+        <Header />
+
+        {/* Контент дэшборда */}
+        <div className="relative z-10">
+          {/* отступ от фиксированного хедера */}
+          <main className="p-6 pt-[72px] md:pt-[84px]">{children}</main>
         </div>
       </div>
-</ThemeProviderWrapper>
+    </ThemeProviderWrapper>
   );
 }
+
 
 
           {/* Верхний бар 

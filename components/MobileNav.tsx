@@ -59,8 +59,12 @@ export default function MobileNav() {
 
   return (
     <>
-      {/* верхняя мобильная панель */}
-      <div className="md:hidden sticky top-0 z-40 bg-black/40 backdrop-blur border-b border-white/10">
+      {/* верхняя мобильная панель sticky */}
+      {/*"md:hidden fixed top-0 z-40 bg-black/40 backdrop-blur border-b border-white/10" */}
+    <div className="md:hidden
+    fixed top-0 left-0 right-0 z-50
+    bg-[#0B1128]/90 backdrop-blur border-b border-white/10
+    pt-[env(safe-area-inset-top)]">
         <div className="flex items-center justify-between px-4 py-3">
           <button
             aria-label="Open menu"

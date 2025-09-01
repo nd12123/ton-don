@@ -19,6 +19,7 @@ import { supabase } from "@/lib/supabase";
 
 import { useTonAddress } from "@tonconnect/ui-react";
 
+import ProfileHistory from "@/components/ProfileHistory"
 // +++
 import {
   actualProfit,
@@ -94,15 +95,9 @@ export default function ProfilePage() {
     [history]
   );
 
-
-
   // для DashboardStats используем текущий депозит как totalStaked
   const deposit = totalStaked;
 
-
-
-
-  
 // было: dailyIncome: useMemo(... активные ... /365, 0)
 // стало: сумма дневных доходов по активным (apr — дневной %)
 const dailyIncome = useMemo(() => dailyIncomeActive(history), [history]);
@@ -114,6 +109,8 @@ const earnedNow = useMemo(() => totalEarnedSoFar(history), [history]);
 
   return (
     <main className="max-w-4xl mx-auto px-4 py-10 space-y-8">
+          {/**      <ProfileTop /><section className="relative overflow-hidden rounded-[24px] border border-sky-500/30 bg-[#091634]/70 p-5 md:p-6">*/}
+
       <motion.h1
         className="text-3xl font-bold"
         initial={{ opacity: 0, y: -10 }}
@@ -132,7 +129,7 @@ const earnedNow = useMemo(() => totalEarnedSoFar(history), [history]);
         plans={PLANS}
       />
 
-      {/* 1) Короткая сводка */}
+      {/* 1) Короткая сводка
       <section className="grid grid-cols-1 sm:grid-cols-2 gap-6">
         <InfoCard
           title="Всего застейкано"
@@ -146,9 +143,9 @@ const earnedNow = useMemo(() => totalEarnedSoFar(history), [history]);
           Icon={Award}
           subtitle={`≈ $${(earnedNow * priceUsd).toFixed(2)}`}
         />
-      </section>
+      </section> */}
 
-      {/* 2) Таблица истории */}
+      {/* 2) Таблица истории 
       <section>
         <h2 className="text-xl font-semibold mb-4 text-gray-600">История стейков</h2>
         {history.length === 0 ? (
@@ -175,16 +172,6 @@ const earnedNow = useMemo(() => totalEarnedSoFar(history), [history]);
                     <Td>{h.amount.toFixed(2)} TON</Td>
                     <Td>{date}</Td>
                     <Td>{displayStatus(h)}</Td>
-                    {/**
-                    <Td
-                      className={
-                        h.status === "active"
-                          ? "text-green-600"
-                          : "text-gray-500"
-                      }
-                    >
-                      {h.status === "active" ? "Активен" : "Завершён"}
-                    </Td> */}
 <Td>{actualProfit(h).toFixed(2)} TON</Td>
                     <Td>
                     {h.status === "active" && (
@@ -205,7 +192,19 @@ const earnedNow = useMemo(() => totalEarnedSoFar(history), [history]);
             </Tbody>
           </Table>
         )}
-      </section>
+      </section>*/}
+{/** history client */}
+      <section>
+  <h2 className="text-xl font-semibold mb-4 text-gray-600">История стейков</h2>
+  <ProfileHistory
+    history={history}
+    onWithdrawClick={(stake: StakeRecord) => {
+      setSelectedStake(stake);
+      setModalOpen(true);
+    }}
+  />
+</section> 
+
 
 
       {selectedStake && (

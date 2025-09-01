@@ -15,7 +15,7 @@ export function InfoCard({
   Icon,
 }: InfoCardProps) {
   return (
-    <div className="bg-white dark:bg-gray-800 border dark:border-gray-700 p-6 rounded-xl shadow">
+                            <div className="rounded-2xl border border-sky-400/25 bg-white/5 p-4">
       {Icon && <Icon className="w-6 h-6 mb-2 text-blue-500" />}
       <h4 className="text-sm text-gray-500 dark:text-gray-400">{title}</h4>
       <p className="text-xl font-bold mt-1">{value}</p>
@@ -24,4 +24,5 @@ export function InfoCard({
       )}
     </div>
   );
+  {/**    <div className="bg-white dark:bg-gray-800 border dark:border-gray-700 p-6 rounded-xl shadow"> */}
 }
