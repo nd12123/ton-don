@@ -8,23 +8,47 @@ import WalletConnect from "@/components/WalletConnect";
 //import ResetTon from "@/components/ResetTon"
 import ClientOnly from "@/components/ClientOnly"
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import MobileNav from "@/components/MobileNav";
 import Image from "next/image";
+import { useTonWallet } from "@tonconnect/ui-react";
 
+function useIsAdmin() {
+  const wallet = useTonWallet();
+  const addr = wallet?.account?.address ?? null;
+
+  // список админов через env: NEXT_PUBLIC_ADMIN_ADDRESSES="EQxxx,EQyyy"
+  const admins = useMemo(() => {
+    const raw = process.env.NEXT_PUBLIC_ADMIN_ADDRESSES || "";
+    return raw
+      .split(",")
+      .map(s => s.trim())
+      .filter(Boolean)
+      .map(s => s.toLowerCase());
+  }, []);
+
+  if (!addr) return false;
+  return admins.includes(addr.toLowerCase());
+}
 
 const navLinks = [
+  
   { name: "Home", href: "/" },
   { name: "Staking", href: "/staking" },
   //{ name: "History", href: "/history" },
   { name: "Profile", href: "/profile" },
-  { name: "Admin", href: "/admin" },
+  //{ name: "Admin", href: "/admin" },
   { name: "Support", href: "/support" },
 ];
 
 export default function Header() {
   const pathname = usePathname();
+  const isAdmin = useIsAdmin();
 
+  if (isAdmin) {
+    navLinks.push({ name: "Admin", href: "/admin/stakes" });
+  }
+  
   const router = useRouter();
 
   useEffect(() => {

@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import ThemeProviderWrapper from "@/components/ThemeProviderWrapper";
-import Header from "@/components/header";
+//import Header from "@/components/header";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
@@ -50,8 +50,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           </div>
         </div>
 
-        {/* Шапка сверху — поверх фона */}
-        <Header />
+        {/* Шапка сверху — поверх фона  <Header />*/}
+       
 
         {/* Контент дэшборда */}
         <div className="relative z-10">

@@ -9,6 +9,7 @@ import { CHAIN, useTonWallet } from "@tonconnect/ui-react" //TonConnectButton
 import { Address } from "@ton/core";
 
 import { RequireAdmin } from "@/components/RequireAdmin"
+import AdminStakesTable from "@/components/AdminStakesTable";
 
 export default function AdminPage(){
       const wallet = useTonWallet()
@@ -30,6 +31,10 @@ export default function AdminPage(){
                     </Button>
                   </FlexBoxRow>
                   <Jetton />
+    <main className="max-w-7xl mx-auto px-4 py-10 space-y-6">
+      <h1 className="text-2xl font-bold">Admin · Stakes</h1>
+      <AdminStakesTable />
+    </main>
                   {/*<StakePanel />*/}
                 </FlexBoxCol>
         </RequireAdmin>

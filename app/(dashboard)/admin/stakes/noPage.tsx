@@ -1,4 +1,6 @@
+/*
 "use client";
+
 import { useEffect, useState } from "react";
 import { supabase } from "@/lib/supabase";
 import { Table, Thead, Tbody, Tr, Th, Td } from "@/components/ui/table";
@@ -99,3 +101,4 @@ export default function AdminStakesPage() {
   </RequireAdmin>
   );
 }
+  */

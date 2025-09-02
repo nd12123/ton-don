@@ -2,7 +2,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import Header from "@/components/header";
+//import Header from "@/components/header";
 import MainSection from "@/components/MainSection";
 import TotalValue from "@/components/TotalValue";
 import WhyUs from "@/components/WhyUs";
@@ -46,9 +46,10 @@ export default function InteractivePage() {
 
   return (
     <>
-      <Header />
 
 {/**
+ *       <Header />
+
       <SectionWrapper>
       </SectionWrapper> */}
       <MainSection/>  {/**className="main" */}
