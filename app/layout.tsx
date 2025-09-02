@@ -1,11 +1,47 @@
 // app/layout.tsx
-import type { Metadata } from "next";
 import "./globals.css";
 import { Toaster } from "react-hot-toast";
 import ThemeProviderWrapper from "@/components/ThemeProviderWrapper";
 import ClientProviders from "@/components/ClientProviders";
 //import TonDebugReset from "@/components/TonDebugReset";
 import { Inter } from 'next/font/google';
+// app/layout.tsx
+import type { Metadata, Viewport } from "next";
+
+export const metadata: Metadata = {
+  metadataBase: new URL("https://your-domain.tld"), // поменяй
+  title: {
+    default: "TON Stake",
+    template: "%s · TON Stake",
+  },
+  description: "Stake TON easily & securely. Earn passive income with TON.",
+  keywords: ["TON", "staking", "crypto", "DeFi", "Toncoin"],
+  icons: {
+    icon: [
+      { url: "/favicon.ico" }
+    ],
+    apple: [{ url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" }], //favicon?
+    shortcut: ["/favicon.ico"]
+  },
+  openGraph: { //noIdea
+    type: "website",
+    url: "https://your-domain.tld",
+    siteName: "TON Stake",
+    title: "Stake TON easily & securely",
+    description: "Our AI finds the most profitable nodes for staking.",
+    images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "TON Stake" }],
+  },
+  manifest: "/site.webmanifest",
+  //themeColor: "#0B1028", //unsupported&
+  robots: { index: true, follow: true }
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  themeColor: "#0B1028",
+  colorScheme: "dark"
+};
 
 const inter = Inter({
   subsets: ['latin'],
@@ -14,10 +50,6 @@ const inter = Inter({
 });
 /* */
 
-export const metadata: Metadata = {
-  title: "TON Stake",
-  description: "Stake your TON securely and earn rewards",
-};
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (

@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
 import { useTonWallet } from "@tonconnect/ui-react";
 import ConnectWalletButton from "@/components/ConnectWalletButton";
-
+import Image from "next/image";
 type NavItem = { name: string; href: string };
 
 function useIsAdmin() {
@@ -66,7 +66,7 @@ export default function MobileNav() {
     fixed top-0 left-0 right-0 z-50
     bg-[#0B1128]/90 backdrop-blur border-b border-white/10
     pt-[env(safe-area-inset-top)]">
-        <div className="flex items-center justify-between px-4 py-3">
+        <div className="flex items-center justify-between px-2 py-3">
           <button
             aria-label="Open menu"
             className="inline-flex items-center gap-2"
@@ -74,15 +74,32 @@ export default function MobileNav() {
           >
             <Menu className="w-6 h-6 text-white" />
           </button>
-
-          <Link href="/" className="text-white font-bold text-lg">
-            TON Stake
-          </Link>
-
+<Link href="/" className="flex items-center gap-2 text-white font-bold text-lg">
+  <Image src="/favicon.svg" alt="TON Stake" width={20} height={20} className="rounded-md" />
+  <span>TON Stake</span>
+</Link>
           {/* Кнопка кошелька справа, как в десктопе */}
-          <div className="shrink-0">
-            <ConnectWalletButton />
-          </div>
+          {/* Кнопка кошелька справа (мобайл компактная) */}
+<div
+  className="
+    shrink-0
+    [&_button]:!h-8 [&_a]:!h-8                      /* ниже ~в 2 раза */
+    [&_button]:!px-3 [&_a]:!px-3                    /* уже */
+    [&_button]:!text-sm [&_a]:!text-sm
+    [&_button]:!rounded-lg [&_a]:!rounded-lg
+    [&_button]:!min-w-0 [&_a]:!min-w-0
+    [&_button]:!w-auto [&_a]:!w-auto
+    [&_svg]:!w-4 [&_svg]:!h-4
+    md:[&_button]:h-10 md:[&_a]:h-10                /* десктоп как было */
+    md:[&_button]:px-5 md:[&_a]:px-5
+    md:[&_button]:text-base md:[&_a]:text-base
+    md:[&_button]:rounded-xl md:[&_a]:rounded-xl
+    md:[&_svg]:w-5 md:[&_svg]:h-5
+  "
+>
+  <ConnectWalletButton />
+</div>
+
         </div>
       </div>
 

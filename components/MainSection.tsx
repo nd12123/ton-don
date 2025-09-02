@@ -31,7 +31,7 @@ export default function MainSection({className = ''}: MainSectionProps) {
       className={[
         "relative", //чтобы рисунки на границах отрисовывались только один раз
         " text-white",       // базовые стили 
-        "px-4 pt-20 sm:px-6 lg:px-8 pb-32",          // pt-20 паддинги
+        "px-4 md:pt-20 sm:px-6 lg:px-8 pb-32",          // pt-20 паддинги
         //"bg-bg-dark",
         //"main",
         className                       // ваши дополнительные классы
@@ -60,10 +60,11 @@ export default function MainSection({className = ''}: MainSectionProps) {
       {/* Контейнер 
       <div className="relative z-10 max-w-7xl mx-auto px-4 lg:px-8 py-20"></div>
 */}
-
+{/* === HERO wrapper: управляем порядком на mobile/desktop === */}
 {/* 1) Расположение «здесь иконки» в контейнере */}
-<div className="max-w-7xl mx-auto mb-8  md:pl-[90px] sm:pl-[5px] px-2">
-        <div className="flex items-center md:gap-16 sm:gap-8 gap-10">
+<div className=" /*relative z-10 flex flex-col  */
+max-w-7xl mx-auto mb-8  md:pl-[90px] sm:pl-[5px] px-2">
+        <div className="/*order-1 md:order-2*/ flex md:items-center md:gap-16 sm:gap-8 gap-10">
           <div className="flex items-center gap-2">
             <Image src={ReliableIcon} alt="Reliable" width={24} height={24} />
             <span className="text-lg font-medium">Reliable</span>
@@ -80,10 +81,10 @@ export default function MainSection({className = ''}: MainSectionProps) {
       </div>
 
 {/* 2) Основной грид: слева текст + кнопки, справа 3D-монеты */}
-<div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center  md:pl-[90px]">
+<div className="/*order-2 md:order-1*/ max-w-7xl mx-auto md:grid md:grid-cols-1 lg:grid-cols-2 md:gap-12 items-center  md:pl-[90px]">
   {/* === Абсолютный эллипс за текстом === */}
   <div
-    className="pointer-events-none absolute top-[30px] md:left-[50px] sm:left-[15px] md:w-[600px] sm:w-[100px] md:h-[600px] sm:h-[100px] opacity-90 -z-10"
+    className="pointer-events-none absolute top-[50%] right-[30%] md:top-[30px] md:left-[50px] md:w-[600px] sm:w-[180px] md:h-[600px] sm:h-[100px] opacity-90 -z-10" //sm:left-[15px]
   >
     <Image
       src="/decorative/ellipse10.png"
@@ -93,7 +94,7 @@ export default function MainSection({className = ''}: MainSectionProps) {
     />
   </div>
         {/* Левый столбец */}
-        <div className="space-y-6 max-w-[811px] text-center md:text-left mx-auto md:mx-0">
+        <div className="space-y-6 md:max-w-[811px] text-center md:text-left mx-auto md:mx-0">
               
       {/*<h1
                 className="text-8xl font-bold leading-[90px]"
@@ -106,17 +107,26 @@ export default function MainSection({className = ''}: MainSectionProps) {
       </h1> ГЛАВНЫЙ ФИКС: резиновый размер и переносы */}
       <h1 className="font-bold leading-[0.95] tracking-[-0.02em]">
             {/* центрируем ТОЛЬКО первую строку на мобиле */}
-            <span className="block text-[clamp(32px,9vw,64px)] text-center md:text-left">
-              Stake TON
-            </span>
+            <h1 className="font-bold leading-[0.95] tracking-[-0.02em]">
+  {/* Mobile: каждое слово — с новой строки */}
+  <span className="block md:hidden">
+    <span className="block text-[clamp(44px,12vw,72px)] text-left">Stake</span>
+    <span className="block text-[clamp(44px,12vw,72px)] text-left">TON</span>
+    <span className="block text-[clamp(40px,11vw,64px)] text-left text-[#00C2FF]">Easily</span>
+    <span className="block text-[clamp(40px,11vw,64px)] text-left text-[#00C2FF]">Securely</span>
+  </span>
 
-            <span className="block text-[clamp(28px,8.5vw,60px)]">
-              <span className="sm:whitespace-nowrap">
-                <span className="text-[#00C2FF]">Easily</span>
-                &nbsp;&amp;&nbsp;
-                <span className="text-[#00C2FF]">Securely</span>
-              </span>
-            </span>
+  {/* Desktop: как было — “Stake TON” затем “Easily & Securely” */}
+  <span className="hidden md:block">
+    <span className="block text-[clamp(32px,9vw,64px)]">Stake TON</span>
+    <span className="block text-[clamp(28px,8.5vw,60px)]">
+      <span className="text-[#00C2FF]">Easily</span>
+      &nbsp;&amp;&nbsp;
+      <span className="text-[#00C2FF]">Securely</span>
+    </span>
+  </span>
+</h1>
+
           </h1>
               <p className="text-lg text-gray-300 max-w-lg">
                 Stake your TON tokens securely and earn passive income with our
@@ -167,33 +177,32 @@ export default function MainSection({className = ''}: MainSectionProps) {
 >
   <Image src={AuditedIcon} alt="Audited by Certik" />
 </button>
-
 </div>
-        </div>
+ </div>
 
-        <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute inset-0 pointer-events-none overflow-x-clip">
         <Image
           src={centralSphere}
           alt=""
-          className="absolute top-[0%] right-[20px] w-[45%] opacity-50 animate-float"
+          className="absolute top-[0%] md:right-[20px] w-[45%] opacity-50 animate-float"
         />
         <Image
           src={ton3d3}
           alt=""
-          className="absolute top-[3%] right-[16%] w-[17%] opacity-90 animate-float delay-4000"
+          className="absolute top-[15%] right-[-45px] w-[30%] md:top-[3%] md:right-[16%] md:w-[17%] opacity-90 animate-float delay-4000"
         />
         <Image
           src={ton3d1}
           alt=""
-          className="absolute top-[23%] right-[26%] w-[10%] opacity-80 animate-float"
+          className="absolute right-[10%] bottom-[30%] w-[30%] md:top-[23%] md:right-[26%] md:w-[10%] opacity-80 animate-float"
         />
         <Image
           src={ton3d2}
           alt=""
-          className="absolute bottom-[5%] right-[10%] w-[28%] opacity-90 animate-float delay-2000"
+          className="absolute bottom-[-5%] right-[-10px] w-[60%] md:bottom-[5%] md:right-[10%] md:w-[28%] opacity-90 animate-float delay-2000"
         />
       </div>
-      </div>
+  </div>
       {/* в конце MainSection, перед закрывающим </section>: 
 <div
   className="absolute inset-x-0 bottom-0 h-24 pointer-events-none z-20"

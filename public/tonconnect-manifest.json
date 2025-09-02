@@ -3,7 +3,7 @@
   "url": "https://staking-mocha-iota.vercel.app/",
   "description": "Stake your TON tokens securely",
   "name": "TON Stake",
-  "iconUrl": "https://staking-mocha-iota.vercel.app/decorative/ton-icon.svg",
+  "iconUrl": "https://staking-mocha-iota.vercel.app/decorative/favicon.svg",
   "termsOfUseUrl": "https://example.com/terms",
   "privacyPolicyUrl": "https://example.com/privacy",
   "permissions": ["tonClient"],              

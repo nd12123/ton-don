@@ -3,21 +3,20 @@
 import { useDailyGrowingMetric } from "@/lib/hooks/useDailyGrowingMetric";
 import Image from "next/image";
 
-
 function formatTon(n: number, decimals = 0) {
   const s = new Intl.NumberFormat("ru-RU", {
     minimumFractionDigits: decimals,
     maximumFractionDigits: decimals,
   }).format(n);
-  return s.replace(/\s/g, "\u00A0"); // неразрывные пробелы
+  return s.replace(/\s/g, "\u00A0");
 }
 
 export default function TotalValueWidget() {
   const tvl = useDailyGrowingMetric({
-    base: 1200,
+    base: 37000,
     startDate: "2025-08-20T00:00:00Z",
     minStep: 60,
-    maxStep: 180,
+    maxStep: 300,
     seed: "ton-stake",
     tickMs: 5000,
   });
@@ -25,28 +24,33 @@ export default function TotalValueWidget() {
   return (
     <h2
       className="
-        ml-2 mt-4
-        flex items-center justify-center
-        text-[60px] leading-[60px] md:text-[90px] md:leading-[90px]
+        mt-4
+        flex items-center justify-center gap-2 md:gap-4
+        whitespace-nowrap
         font-black tracking-tight tabular-nums
-        text-transparent bg-clip-text
-        bg-gradient-to-b from-sky-400 to-cyan-500
-        drop-shadow-[0_0_20px_rgba(56,189,248,0.35)]
+        text-[clamp(48px,11vw,60px)] leading-[0.95]
+        md:text-[200px] md:leading-[0.95]
         select-none
       "
     >
-              <Image
-                src="/decorative/ton-icon.svg"
-                alt="TON icon"
-                width={60}
-                height={60}
-                // { maximumFractionDigits: 2 }
-              /> 
-      {formatTon(Math.round(tvl), 0)}&nbsp;
-      <span className="text-sky-300/90">TON</span>
+      <Image
+        src="/decorative/favicon.svg"
+        alt="TON icon"
+        width={60}
+        height={60}
+        className="w-[clamp(28px,8vw,60px)] h-[clamp(28px,8vw,60px)]"
+        priority
+      />
+      <span
+        className="
+          text-transparent bg-clip-text
+          bg-gradient-to-b from-sky-400 to-cyan-500
+          drop-shadow-[0_0_20px_rgba(56,189,248,0.35)]
+        "
+      >
+        {formatTon(Math.round(tvl), 0)}
+      </span>
+      <span className="text-sky-300/90 text-[0.45em] md:text-[0.5em] ml-1">TON</span>
     </h2>
   );
 }
-
-
-

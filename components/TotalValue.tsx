@@ -95,11 +95,6 @@ export default function TotalValue() {
           className="absolute bottom-[0%] right-[9%] w-[25%] opacity-100 animate-float delay-2000  z-10"
         />
         <Image
-          src={leftSphere}
-          alt=""
-          className="absolute bottom-[0%] right-[7%] w-[30%] opacity-80 z-5"
-        />
-        <Image
           src={ton3d7}
           alt=""
           className="absolute top-[0%] left-[10%] w-[12%] opacity-100 animate-float delay-2000 z-10"
@@ -108,6 +103,11 @@ export default function TotalValue() {
           src={rightSphere}
           alt=""
           className="absolute top-[0%] left-[8%] w-[15%] opacity-60 z-5"
+        />
+        <Image
+          src={leftSphere}
+          alt=""
+          className="absolute bottom-[0%] right-[7%] w-[30%] opacity-80 z-5"
         />
       </div>
 

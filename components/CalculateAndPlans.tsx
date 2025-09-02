@@ -161,31 +161,34 @@ export default function CalculateAndPlans() {
           ))}
         </div>
 
+{/* Mobile-only */}
+<div className="md:hidden">
+  <CalculatorTest
+    amount={amount}
+    onAmountChange={handleAmountChange}
+    sliderMin={PLANS[0].min}
+    sliderMax={5000}
+    days={days}
+    onDaysChange={setDays}
+    apr={apr}
+    dailyEarnings={dailyEarnings}
+  />
+</div>
 
-        {/* === 4) Калькулятор === */}
-        <Calculator
-          amount={amount}
-          onAmountChange={handleAmountChange}
-          sliderMin={PLANS[0].min}
-          sliderMax={5000}
-          days={days}
-          onDaysChange={setDays}
-          apr={apr}
-          dailyEarnings={dailyEarnings}
-        />
-      </div>
-
-<CalculatorTest
-          amount={amount}
-          onAmountChange={handleAmountChange}
-          sliderMin={PLANS[0].min}
-          sliderMax={5000}
-          days={days}
-          onDaysChange={setDays}
-          apr={apr}
-          dailyEarnings={dailyEarnings}
-        />
-      
+{/* Desktop-only */}
+<div className="hidden md:block">
+  <Calculator
+    amount={amount}
+    onAmountChange={handleAmountChange}
+    sliderMin={PLANS[0].min}
+    sliderMax={5000}
+    days={days}
+    onDaysChange={setDays}
+    apr={apr}
+    dailyEarnings={dailyEarnings}
+  />
+</div>
+</div>
 
       {/* 5) Левый «сфера-хвост» */}
       <div className="absolute bottom-0 left-0 w-full h-full pointer-events-none -z-10">

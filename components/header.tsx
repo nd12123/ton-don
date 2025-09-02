@@ -10,6 +10,7 @@ import ClientOnly from "@/components/ClientOnly"
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import MobileNav from "@/components/MobileNav";
+import Image from "next/image";
 
 
 const navLinks = [
@@ -44,9 +45,10 @@ export default function Header() {
       <div className=" mx-auto px-4 md:px-8 py-3 flex items-center justify-between"//max-w-6xl
       >
         {/* Лого */}
-        <Link href="/" className="text-xl font-bold text-white">
-          TON Stake
-        </Link>
+        <Link href="/" className="flex items-center gap-2 text-xl font-bold text-white">
+  <Image src="/favicon.svg" alt="TON Stake" width={22} height={22} className="rounded-md" />
+  <span>TON Stake</span>
+</Link>
 
         {/* Навигация */}
         <nav className="hidden sm:flex gap-8 text-sm">
