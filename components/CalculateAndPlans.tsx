@@ -4,6 +4,8 @@ import React, { useState, useMemo } from "react";
 import Image from "next/image";
 import PlanCard from "./PlanCard";
 import Calculator from "./Calculator";
+import CalculatorTest from "./CalculatorTest";
+
 
 import tonTop from "@/assets/Calculator/ton.svg"
 import sphere from "@/assets/Calculator/Ellipse9.png"
@@ -172,6 +174,18 @@ export default function CalculateAndPlans() {
           dailyEarnings={dailyEarnings}
         />
       </div>
+
+<CalculatorTest
+          amount={amount}
+          onAmountChange={handleAmountChange}
+          sliderMin={PLANS[0].min}
+          sliderMax={5000}
+          days={days}
+          onDaysChange={setDays}
+          apr={apr}
+          dailyEarnings={dailyEarnings}
+        />
+      
 
       {/* 5) Левый «сфера-хвост» */}
       <div className="absolute bottom-0 left-0 w-full h-full pointer-events-none -z-10">

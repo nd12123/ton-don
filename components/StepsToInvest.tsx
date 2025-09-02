@@ -116,10 +116,10 @@ export default function StepsToInvest() {
 
 
 
- {/* ========== ОБКАТЫВАЕМ КОНТЕНТ В RELATIVE-wrapper ========== */}
- <div className="relative mt-12 px-0">
-        
-        
+ {/* ========== ОБКАТЫВАЕМ КОНТЕНТ В RELATIVE-wrapper ========== md:max-w-6xl */}
+     
+<div className="relative mt-12 px-0">
+
 {/* 1) фон-изображение – под гридом */}
 <div
   className="
@@ -138,7 +138,7 @@ export default function StepsToInvest() {
   />
 
   {/* Левый корнер вплотную к краю, узкий на мобиле */}
-  <div className="absolute inset-y-0 left-0 w-[8vw] max-w-[180px] min-w-[18px]">
+  <div className="absolute inset-y-0 left-0 w-[8vw]  max-w-[180px] min-w-[18px]">
     <div className="relative h-full w-full">
       <Image
         src={leftCorner}
@@ -166,6 +166,7 @@ export default function StepsToInvest() {
 
 
 
+
       {/* 3) Контейнер с тремя «шагами» py-20 */}
       <div className="relative z-10  mx-auto px-4 md:px-6 md:max-w-6xl mt-1 md:mt-12 " //max-w-6xl px-4
       > 
@@ -180,21 +181,21 @@ export default function StepsToInvest() {
     hover:shadow-xl transition
   "
 >
-  {/* Номер + тайтл: одна строка на мобиле, столбцом на md+ */}
-  <div className="flex items-baseline gap-2 md:block">
-    <div className="w-7 flex-none text-xs md:text-4xl font-bold tabular-nums leading-none md:mb-4 md:py-6">
-      {step.id.toString().padStart(2, "0")}
-    </div>
-
-    <h3 className=" text-[12px] md:text-2xl font-semibold leading-none md:leading-snug" //whitespace-nowrap md:whitespace-normal
-    >
-      {step.title}
-    </h3>
+ {/* Номер + тайтл: на мобиле только номер, на md+ добавляем тайтл */}
+<div className="flex items-baseline gap-2 md:block">
+  <div className="w-7 flex-none text-xs md:text-4xl font-bold tabular-nums leading-none md:mb-4 md:py-6">
+    {step.id.toString().padStart(2, "0")}
   </div>
 
-  <p className="mt-1 md:mt-2 text-[11px] md:text-base">
-    {step.description}
-  </p>
+  <h3 className="hidden md:block text-2xl font-semibold leading-snug">
+    {step.title}
+  </h3>
+</div>
+
+<p className="mt-1 md:mt-2 text-[11px] md:text-base">
+  {step.description}
+</p>
+
 </div>
 
               {idx < steps.length - 1 && (
@@ -279,6 +280,45 @@ export default function StepsToInvest() {
     
   );
 }
+{/**
+   <div className="relative z-[30] mx-auto px-4 md:px-6  mt-1 md:mt-12">
+
+<div className="absolute inset-x-0 top-0 h-[clamp(240px,45vw,720px)] z-[20] pointer-events-none overflow-visible">
+  <Image
+    src="/decorative/step-mask.svg"
+    alt="steps background"
+    fill
+    priority
+    sizes="100vw"
+    className="object-cover md:object-contain object-center"
+  />
+</div>
+<div className="absolute inset-x-0 top-0 h-[clamp(240px,45vw,720px)] z-[10] pointer-events-none">
+<div className="absolute inset-y-0 left-0 pointer-events-none [transform:translateX(-2px)_scaleX(.62)] origin-left">
+  <div className="relative h-full w-[180px]">
+    <Image
+      src={leftCorner}
+      alt=""
+      fill
+      className="object-contain object-left select-none"
+      priority
+    />
+  </div>
+</div>
+
+<div className="absolute inset-y-0 right-0 pointer-events-none [transform:translateX(2px)_scaleX(.62)] origin-right">
+  <div className="relative h-full w-[180px]">
+    <Image
+      src={rightCorner}
+      alt=""
+      fill
+      className="object-contain object-right select-none"
+      priority
+    />
+  </div>
+</div>
+
+</div> */}
 {/*
         <div className="absolute inset-x-0 top-0 flex justify-center pointer-events-none z-[-1]"
                   style={{ height: 350 }}>

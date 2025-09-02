@@ -1,15 +1,15 @@
-// components/PlanCard.tsx
 import React from "react";
 import Image from "next/image";
+import GoToStakingButton from "@/components/GoToStakingButton";
+import { useRouter } from 'next/navigation';
 
 type PlanCardProps = {
   title: string;
-  dailyProfit: number;      // в процентах, например 4 или 10
-  rangeText: string;        // текст «10–899 TON» или «1900+ TON»
-  iconSrc: string;          // путь к иконке (например «/decorative/plan-heart.svg»)
-  isActive: boolean;        // подсвечивать ли карту
-  //bgSrc: string;
-  onSelect?: () => void;    // колбэк при клике (если нужно)
+  dailyProfit: number;   // 4 | 7 | 10 (процент в день)
+  rangeText: string;     // "1–999 TON" / "2000+ TON"
+  iconSrc: string;       // путь к иконке
+  isActive: boolean;
+  onSelect?: () => void; // выбрать план
 };
 
 export default function PlanCard({
@@ -19,101 +19,105 @@ export default function PlanCard({
   iconSrc,
   isActive,
   onSelect,
-  //bgSrc,
 }: PlanCardProps) {
+  const router = useRouter();
   return (
     <div
-      onClick={onSelect}
-      className={`
-        relative flex flex-col p-6 rounded-2xl cursor-pointer transition
-        border-2 border-accent-200 hover:scale-105 hover:border-sky-400
-        outline outline-1 outline-offset-[-1px] outline-sky-500
-        shadow-[0px_4px_32px_0px_rgba(52,177,212,0.30)]
-        bg-plan-${title.toLowerCase()} 
-        ${isActive
-          ? "border-2 border-sky-400"
-          : "transform transition-transform duration-200 ease-out border border-white/20"}
-
-        /* shadow-neon hover:z-10*/ 
-      `}
+      // Кликабельной оставим только неактивную карточку
+      onClick={!isActive ? onSelect : undefined}
+      className={[
+        "relative flex flex-col",
+        "p-4 md:p-6",
+        "rounded-3xl md:rounded-2xl",
+        "transition",
+        "bg-plan-" + title.toLowerCase(),
+        isActive
+          ? "border-2 border-sky-400 shadow-[0_8px_32px_rgba(61,212,255,.30)]"
+          : "border border-white/20 hover:border-sky-400/60",
+        "outline outline-1 outline-offset-[-1px] outline-sky-500/40",
+      ].join(" ")}
     >
-      {/* иконка + заголовок */}
-      <div className="flex items-center mb-4">
-        <div className="flex-shrink-0 w-10 h-10 bg-accent-200 rounded-full flex items-center justify-center mr-3">
-          <Image
-            src={iconSrc}
-            alt={`${title} icon`}
-            width={48}
-            height={48}
-            className="object-contain"
-          />
+      {/* Иконка + заголовок */}
+<div className="mb-2 md:mb-4 flex flex-col md:flex-row md:items-center">
+  <div
+    className="
+      relative flex-shrink-0
+      w-12 h-12 md:w-14 md:h-14
+      rounded-full overflow-hidden
+      bg-white/5
+      ring-1 ring-sky-400/50
+      shadow-[0_6px_24px_rgba(61,212,255,.35)]
+      backdrop-blur-[2px]
+      md:mr-3
+    "
+  >
+    <Image
+      src={iconSrc}
+      alt={`${title} icon`}
+      fill
+      className="object-contain p-2"
+    />
+  </div>
+
+  {/* заголовок: ниже на мобиле, справа на десктопе */}
+  <h3 className="mt-1 md:mt-3 text-lg md:text-2xl font-semibold">
+    {title}
+  </h3>
+</div>
+
+
+      {/* Процент */}
+      <div className="flex flex-col space-y-1 mb-3 md:mb-6">
+        <span className="text-[10px] md:text-sm text-gray-300">Your profit</span>
+        <div className="mt-0.5 flex items-baseline gap-2">
+          <span className="text-xl md:text-3xl font-bold text-accent-200">{dailyProfit}%</span>
+          <span className="text-[10px] text-gray-300">Per day</span>
         </div>
       </div>
-      <h3 className="text:xl md:text-3xl font-semibold">{title}</h3>
 
-      {/* процент и подпись */}
-      <div className="flex flex-col space-y-1 mb-6">
-        <span className="text-[10px] md:text-sm text-gray-300">Your profit</span>
-          <div className="mt-1 flex items-baseline space-x-2">
-            <span className="text-xl md:text-3xl font-bold text-accent-200">{dailyProfit}%</span>
-            <span className="text-xs text-gray-300">Per day</span>
-          </div>
+      {/* Диапазон */}
+      <div className="flex flex-col space-y-1 md-0 md:mb-6">
+        <span className="text-[12px] md:text-sm text-gray-300">Investments for all time</span>
+        <span className="text-sm md:text-base lg:text-xl font-medium text-accent-200">
+          {rangeText}
+        </span>
       </div>
 
-      {/* диапазон инвестиций */}
-      <div className="flex flex-col space-y-1 mb-6">
-        <span className="text-[16px] md:text-sm text-gray-300">Investments for all time</span>
-        <span className="text-sm md:text-base  lg:text-xl font-medium text-accent-200">{rangeText}</span>
-      </div>
-      
-      {/* —–––– Разделительная линия —–––– */}
+      {/* Divider */}
 <div
-        className="w-full border-b my-1 md:my-4"
-        style={{ borderColor: "rgba(16,95,150,1)" }}
-      />
-        {/* кнопка без текста, разный фон по isActive */}
-        <div className="mt-auto">
-        <button
-          className={ //w-full
-            `h-12 w-3/4 rounded-lg transition 
-            bg-center bg-cover
-            ${isActive
-              ? "bg-[url('/decorative/btn-select.svg')]"   // фон для выбранного
-              : "bg-[url('/decorative/btn.svg')]"    // фон для невыбранного
-            }
-          `}
-          aria-label={isActive ? "Selected" : "Select plan"}
-        />
-      </div>
-      {/**
-      <div className="mt-auto">
-        <button
-          className={`
-            w-full py-2 text-sm font-medium rounded-lg transition
-            ${isActive
-              ? "border-2 border-accent-100 bg-accent-200 bg-light hover:bg-accent-200/80 text-white shadow-neon"
-              : "bg-gradient-to-r from-accent-100 to-accent-200 hover:from-accent-200/80 hover:to-accent-100 text-white shadow-lg"
-            }
-          `}
-        >
-          {isActive ? "Selected" : "Start Invest Now"}
-        </button>
-      </div>
-       * 
-       */}
-      {/** ${isActive
-          ? "border-2 border-accent-200 bg-accent-200/10 shadow-neon"
-          : "border border-white/20 bg-gradient-to-b from-gray-800 to-gray-700 hover:border-accent-200 hover:bg-accent-200/5 hover:shadow-neon/50"
-        }*/}
+  className="w-full border-b my-0.5 md:my-4"
+  style={{ borderColor: "rgba(16,95,150,1)" }}
+/>
 
-      {/* Фон-картинка
-      <div className="absolute inset-0 -z-10">
-        <img
-          //src={bgSrc}
-          alt=""
-          className="w-full h-full object-cover"
-        />
-      </div>  */}
+      {/* Кнопка */}{/* CTA */}
+<div className="mt-auto flex justify-center">
+  {/* Mobile: простая кнопка с текстом */}
+  <button
+    type="button"
+    onClick={onSelect}
+    className={`md:hidden h-11 w-full rounded-lg text-sm font-semibold transition
+      focus:outline-none focus:ring-2 focus:ring-sky-400/60
+      ${isActive
+        ? "bg-sky-500 text-white shadow-[0_0_20px_rgba(56,172,234,0.45)]"
+        : "bg-white/10 text-sky-200 border border-white/10 hover:bg-white/15"}`}
+    aria-pressed={isActive}
+  >
+    Invest
+  </button>
+
+  {/* Desktop: декоративная кнопка как прежде */}
+  <button
+    type="button"
+    onClick={() => (isActive ? router.push('/staking') : onSelect?.())}
+    className={`hidden md:block h-12 w-3/4 rounded-lg transition bg-center bg-cover md:min-w-[150px]
+      ${isActive
+        ? "bg-[url('/decorative/btn-select.svg')]"
+        : "bg-[url('/decorative/btn.svg')]"}`}
+    aria-label={isActive ? "Selected" : "Select plan"}
+    aria-pressed={isActive}
+  />
+</div>
+
     </div>
   );
 }

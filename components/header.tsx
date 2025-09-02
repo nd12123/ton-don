@@ -15,10 +15,10 @@ import MobileNav from "@/components/MobileNav";
 const navLinks = [
   { name: "Home", href: "/" },
   { name: "Staking", href: "/staking" },
-  { name: "History", href: "/history" },
-  { name: "Support", href: "/support" },
+  //{ name: "History", href: "/history" },
   { name: "Profile", href: "/profile" },
   { name: "Admin", href: "/admin" },
+  { name: "Support", href: "/support" },
 ];
 
 export default function Header() {

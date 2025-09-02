@@ -22,12 +22,12 @@ import { useTonAddress } from "@tonconnect/ui-react";
 import ProfileHistory from "@/components/ProfileHistory"
 // +++
 import {
-  actualProfit,
+  //actualProfit,
   dailyIncomeActive,
   totalEarnedSoFar,
   //isMature,
   balanceActive,
-  displayStatus
+  //displayStatus
 } from "@/lib/earnings";
 
 

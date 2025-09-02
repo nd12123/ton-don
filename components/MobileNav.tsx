@@ -48,9 +48,10 @@ export default function MobileNav() {
   const items: NavItem[] = [
     { name: "Home", href: "/" },
     { name: "Staking", href: "/staking" },
-    { name: "History", href: "/history" },
-    { name: "Support", href: "/support" },
+    //{ name: "History", href: "/history" },
     { name: "Profile", href: "/profile" },
+    { name: "Support", href: "/support" },
+
     // Admin добавим ниже условно
   ];
   if (isAdmin) {

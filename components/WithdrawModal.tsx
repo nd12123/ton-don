@@ -1,71 +1,99 @@
 "use client";
 import { Dialog } from "@headlessui/react";
-import { useState } from "react";
-//import { supabase } from "@/lib/supabase";
-import { StakeRecord } from "@/lib/store"; // создайте общий тип
+import { useMemo, useState } from "react";
+import { StakeRecord } from "@/lib/store";
+import { actualProfit } from "@/lib/earnings";
 
 interface Props {
   open: boolean;
   onClose: () => void;
   stake: StakeRecord;
-  /**
-   * Вызывается, когда пользователь вводит сумму и жмёт «Withdraw»
-   * @param stake — вся запись, из которой можно взять id, wallet, amount и т.д.
-   * @param amount — сколько вывести
-   */
   onConfirm: (stake: StakeRecord, amount: number) => void;
 }
 
 export function WithdrawModal({ open, onClose, stake, onConfirm }: Props) {
+  const [submitting, setSubmitting] = useState(false);
 
+  // профит к выводу (на всякий – не больше депозита и не меньше 0)
+  const profitTon = useMemo(() => {
+    const p = Number(actualProfit(stake)) || 0;
+    return Math.max(0, Math.min(p, stake.amount));
+  }, [stake]);
 
-  const [amount, setAmount] = useState<number>(0);
+  const fullTon = stake.amount;
 
-  return ( //<Transition appear show={open} as={Fragment}> ... </Transition>
-      <Dialog as="div" className="relative z-50" onClose={onClose} open={open}>
-        <div className="fixed inset-0 bg-black/40" />
+  const fmt = (n: number) => n.toLocaleString(undefined, { maximumFractionDigits: 6 });
 
-        <div className="fixed inset-0 flex items-center justify-center p-4">
-          <Dialog.Panel className="w-full max-w-md bg-white dark:bg-gray-800 rounded-xl p-6 shadow-xl">
-            <Dialog.Title className="text-lg font-bold mb-4 dark:text-gray-100">
-              Withdraw from <strong>{stake.validator}</strong>
-            </Dialog.Title>
+  const handle = async (amount: number) => {
+    try {
+      setSubmitting(true);
+      await Promise.resolve(onConfirm(stake, amount));
+    } finally {
+      setSubmitting(false);
+    }
+  };
 
-            <p className="text-sm text-gray-700 dark:text-gray-300 mb-4">
-              Your stake: <strong>{stake.amount} TON</strong>
-            </p>
+  return (
+    <Dialog as="div" className="relative z-50" onClose={submitting ? () => {} : onClose} open={open}>
+      {/* overlay */}
+      <div className="fixed inset-0 bg-black/40" />
 
-            <label className="block mb-2 text-sm dark:text-gray-200">
-              Amount to withdraw
-            </label>
-            <input
-              type="number"
-              min={0}
-              max={stake.amount}
-              value={amount}
-              onChange={(e) => setAmount(Number(e.target.value))}
-              className="w-full p-2 border rounded mb-4 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100"
-            />
+      <div className="fixed inset-0 flex items-center justify-center p-4">
+        <Dialog.Panel className="w-full max-w-md rounded-xl p-6 shadow-xl bg-white dark:bg-gray-800">
+          <Dialog.Title className="text-lg font-bold mb-4 dark:text-gray-100">
+            Withdraw from <strong>{stake.validator}</strong>
+          </Dialog.Title>
 
-            <div className="flex justify-end gap-3">
-              <button
-                onClick={onClose}
-                className="px-4 py-2 border rounded text-gray-600 hover:bg-gray-100 dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-700"
-              >
-                Cancel
-              </button>
-              <button
-                onClick={() => onConfirm(stake, amount)}
-                className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
-              >
-                Withdraw
-              </button>
+          <div className="space-y-2 text-sm">
+            <div className="flex justify-between">
+              <span className="text-gray-600 dark:text-gray-300">Your stake</span>
+              <span className="font-medium dark:text-gray-100">{fmt(fullTon)} TON</span>
             </div>
-          </Dialog.Panel>
-        </div>
-      </Dialog>
-  );
+            <div className="flex justify-between">
+              <span className="text-gray-600 dark:text-gray-300">Available profit</span>
+              <span className="font-medium dark:text-gray-100">
+                {fmt(profitTon)} TON
+              </span>
+            </div>
+          </div>
 
+          <div className="mt-6 flex flex-wrap gap-3 justify-end">
+            <button
+              onClick={onClose}
+              disabled={submitting}
+              className="px-4 py-2 rounded border dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
+            >
+              Cancel
+            </button>
+
+            <button
+              onClick={() => handle(profitTon)}
+              disabled={submitting || profitTon <= 0}
+              className={`px-4 py-2 rounded text-white transition
+                ${profitTon > 0
+                  ? "bg-emerald-600 hover:bg-emerald-700"
+                  : "bg-emerald-600/50 cursor-not-allowed"}`}
+              title={profitTon > 0 ? "" : "No profit to withdraw yet"}
+            >
+              Withdraw profit ({fmt(profitTon)} TON)
+            </button>
+
+            <button
+              onClick={() => handle(fullTon)}
+              disabled={submitting || fullTon <= 0}
+              className={`px-4 py-2 rounded text-white transition
+                ${fullTon > 0
+                  ? "bg-blue-600 hover:bg-blue-700"
+                  : "bg-blue-600/50 cursor-not-allowed"}`}
+            >
+              Withdraw full ({fmt(fullTon)} TON)
+            </button>
+          </div>
+        </Dialog.Panel>
+      </div>
+    </Dialog>
+  );
+}
 
   /*
   const [amount, setAmount] = useState(stake.amount);
@@ -123,4 +151,4 @@ export function WithdrawModal({ open, onClose, stake, onConfirm }: Props) {
     </Dialog>
   );
   */
-}
+

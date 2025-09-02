@@ -62,8 +62,8 @@ export default function MainSection({className = ''}: MainSectionProps) {
 */}
 
 {/* 1) Расположение «здесь иконки» в контейнере */}
-<div className="max-w-7xl mx-auto mb-8  md:pl-[90px] sm:pl-[5px]">
-        <div className="flex items-center md:gap-16 sm:gap-8 gap-16">
+<div className="max-w-7xl mx-auto mb-8  md:pl-[90px] sm:pl-[5px] px-2">
+        <div className="flex items-center md:gap-16 sm:gap-8 gap-10">
           <div className="flex items-center gap-2">
             <Image src={ReliableIcon} alt="Reliable" width={24} height={24} />
             <span className="text-lg font-medium">Reliable</span>
@@ -93,7 +93,7 @@ export default function MainSection({className = ''}: MainSectionProps) {
     />
   </div>
         {/* Левый столбец */}
-          <div className="space-y-6 max-w-[811px]">
+        <div className="space-y-6 max-w-[811px] text-center md:text-left mx-auto md:mx-0">
               
       {/*<h1
                 className="text-8xl font-bold leading-[90px]"
@@ -104,8 +104,12 @@ export default function MainSection({className = ''}: MainSectionProps) {
         <span className="text-[#00C2FF]">Easily</span>&nbsp;&amp;&nbsp;<span className="text-[#00C2FF]">Securely</span>
       </span>
       </h1> ГЛАВНЫЙ ФИКС: резиновый размер и переносы */}
-          <h1 className="font-bold leading-[0.95] tracking-[-0.02em]">
-            <span className="block text-[clamp(32px,9vw,64px)]">Stake TON</span>
+      <h1 className="font-bold leading-[0.95] tracking-[-0.02em]">
+            {/* центрируем ТОЛЬКО первую строку на мобиле */}
+            <span className="block text-[clamp(32px,9vw,64px)] text-center md:text-left">
+              Stake TON
+            </span>
+
             <span className="block text-[clamp(28px,8.5vw,60px)]">
               <span className="sm:whitespace-nowrap">
                 <span className="text-[#00C2FF]">Easily</span>
@@ -119,7 +123,7 @@ export default function MainSection({className = ''}: MainSectionProps) {
                 audited smart contracts.
               </p>
               
-              <div className="flex items-center gap-10">
+          <div className="flex flex-col sm:flex-row items-center sm:items-start justify-center md:justify-start gap-4 sm:gap-6">
                     {/* Primary button
                     <button
   type="button"
@@ -138,7 +142,7 @@ export default function MainSection({className = ''}: MainSectionProps) {
   <ChevronRight className="w-5 h-5 text-white" />
 </button> */}
                     <GoToStakingButton className="btn-primary
-    w-64 h-16
+    w-full sm:w-64 h-16
     bg-gradient-to-r from-sky-600 to-sky-400
     rounded-2xl
     shadow-[0px_21px_40px_rgba(6,173,252,0.19)]
