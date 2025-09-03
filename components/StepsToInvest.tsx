@@ -7,8 +7,8 @@ import Link from "next/link";
 
 // Пути к вашим файлам. Поместите картинки в папку /public/decorative/
 import coinLarge from "@/assets/StepsToInvest/ton2.png";
-import leftCorner from "@/assets/StepsToInvest/leftCorner.svg"
-import rightCorner from "@/assets/StepsToInvest/rightCorner.svg";
+import rightCorner from "@/assets/StepsToInvest/rightCorner.svg"
+import leftCorner from "@/assets/StepsToInvest/leftCorner.svg";
 
 import rightCornerBottom from "@/public/decorative/ellipse5.png";
 import centerSphere from "@/public/decorative/Ellipse51.png";
@@ -70,9 +70,8 @@ export default function StepsToInvest() {
         </div>
       </div>
 
-      {/* ОБКАТЫВАЕМ КОНТЕНТ В RELATIVE-wrapper */}
 {/* ОБКАТЫВАЕМ КОНТЕНТ В RELATIVE-wrapper */}
-<div className="relative mt-8 md:mt-12 px-0 h-[120px] md:h-[350px]">
+<div className="relative mt-8 md:mt-4 px-0 h-[120px] md:h-[350px]">
   {/* фон-изображение – под гридом */}
   <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden">
     <Image
@@ -83,44 +82,48 @@ export default function StepsToInvest() {
       sizes="100vw"
       className="object-cover md:object-contain object-center"
     />
+{/* Левый корнер */}
+<div className="absolute inset-y-0 left-0 w-[10vw] md:left-[-50px] md:w-[180px] lg:w-[220px] min-w-[60px]">
+  <div className="relative h-full w-full">
+    {/* mobile */}
+    <Image
+      src="/decorative/mobile/StepsLeftMobile.png"
+      alt="corner mobile"
+      fill
+      className="object-cover object-left md:hidden"
+    />
+    {/* desktop */}
+    <Image
+      src={leftCorner}
+      alt="corner left"
+      fill
+      sizes="(min-width:1024px) 220px, (min-width:768px) 180px, 10vw"
+      className="object-contain object-left hidden md:block md:left-[-50px]"
+    />
+  </div>
+</div>
 
-    {/* Левый корнер */}
-    <div className="absolute inset-y-0 left-0 max-w-[180px] min-w-[18px]">
-      <div className="relative h-full w-full">
-        <Image
-          src="/decorative/mobile/StepsLeftMobile.png"
-          alt="corner mobile"
-          fill
-          className="object-cover object-left md:hidden"
-        />
-        <Image
-          src={leftCorner}
-          alt="corner"
-          fill
-          sizes="(min-width: 768px) 180px, 8vw"
-          className="object-cover object-left hidden md:block"
-        />
-      </div>
-    </div>
+{/* Правый корнер */}
+<div className="absolute inset-y-0 right-0 md:right-[-50px] w-[10vw] md:w-[180px] lg:w-[220px] min-w-[60px]">
+  <div className="relative h-full w-full">
+    {/* mobile */}
+    <Image
+      src="/decorative/mobile/StepsRightMobile.png"
+      alt="corner mobile"
+      fill
+      className="object-cover object-right md:hidden"
+    />
+    {/* desktop */}
+    <Image
+      src={rightCorner}
+      alt="corner right"
+      fill
+      sizes="(min-width:1024px) 220px, (min-width:768px) 180px, 10vw"
+      className="object-contain object-right hidden md:block md:right-[-50px]"
+    />
+  </div>
+</div>
 
-    {/* Правый корнер */}
-    <div className="absolute inset-y-0 right-0 w-[8vw] max-w-[180px] min-w-[18px]">
-      <div className="relative h-full w-full">
-        <Image
-          src="/decorative/mobile/StepsRightMobile.png"
-          alt="corner mobile"
-          fill
-          className="object-cover object-right md:hidden"
-        />
-        <Image
-          src={rightCorner}
-          alt="corner"
-          fill
-          sizes="(min-width: 768px) 180px, 8vw"
-          className="object-cover object-right hidden md:block"
-        />
-      </div>
-    </div>
   </div>
 
 
@@ -130,7 +133,7 @@ export default function StepsToInvest() {
         {/* Контейнер с тремя «шагами» */}
     
 <div className="absolute inset-0 z-10 flex items-center">
-  <div className="w-full mx-auto py-16 px-4 md:px-8 md:max-w-6xl">
+  <div className="w-full mx-auto py-8 md:py-4 px-4 md:px-8 md:max-w-6xl">
     <div className="grid grid-cols-3 gap-4 md:gap-5">
       {/* ...твои шаги без дополнительных mt-8/md:mt-12 ... */}
             {steps.map((step, idx) => (
@@ -138,14 +141,14 @@ export default function StepsToInvest() {
                 <div
                   className="
                     bg-transparent rounded-2xl
-                    p-4 md:p-10
+                    p-4 md:p-4
                     h-[110px] md:h-full
                     flex flex-col justify-top
                     hover:shadow-xl transition
                   "
                 >
-                  <div className="flex items-baseline gap-2 md:block justify-center md:justify-start">
-                    <div className="w-7 flex-none text-xs md:text-4xl font-bold tabular-nums leading-none md:mb-4 md:py-6">
+                  <div className="flex items-baseline gap-2 md:block sm:justify-center md:justify-start">
+                    <div className="w-7 flex-none text-xs md:text-4xl font-bold tabular-nums leading-none md:mb-2 md:py-4">
                       {step.id.toString().padStart(2, "0")}
                     </div>
 
