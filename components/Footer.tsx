@@ -147,7 +147,7 @@ export default function Footer({ className = "" }: { className?: string }) {
           <div className="flex items-center gap-6">
             <div className="flex items-center gap-2">
               <Image src={logoSvg} alt="TONStake.ai" width={32} height={32} />
-              <span className="text-xl font-semibold">TON Stake Ai</span>
+              <span className="text-xl font-semibold">TON Stake</span>
             </div>
 
             <div
@@ -166,7 +166,7 @@ export default function Footer({ className = "" }: { className?: string }) {
                 height={50}
               />
               {/**/}
-              <span className="text-sm text-[#A0B0D8]">Audited by Certik</span>
+              <span className="text-[12px] md:text-sm text-[#A0B0D8]">Audited by Certik</span>
             </div>
           </div>
 

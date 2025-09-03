@@ -4,7 +4,7 @@ import React, { useState, useMemo } from "react";
 import Image from "next/image";
 import PlanCard from "./PlanCard";
 import Calculator from "./Calculator";
-import CalculatorTest from "./CalculatorTest";
+import CalculatorTest from "./CalculatorMobile";
 
 
 import tonTop from "@/assets/Calculator/ton.svg"

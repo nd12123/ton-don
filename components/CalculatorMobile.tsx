@@ -51,40 +51,46 @@ export default function Calculator({
     >
       {/* layout: на мобиле — столбцы, на десктопе — три колонки */}
       <div className="grid grid-cols-1 lg:grid-cols-[220px,minmax(0,1fr),320px] gap-4 md:gap-6 items-stretch">
-        {/* =========== ПЛАНЫ =========== */}
-        <div className="flex flex-col">
-          <div className="flex gap-2 md:gap-3 lg:flex-col">
-            {PLANS.map((p) => {
-              const active = p.label === selectedPlan;
-              return (
-                <button
-                  key={p.label}
-                  onClick={() => {
-                    setSelectedPlan(p.label);
-                    onAmountChange(p.min);
-                  }}
-                  className={`flex items-center gap-2 rounded-xl px-3 py-2 md:px-4 md:py-3 border transition
-                    ${active ? "border-sky-400 bg-sky-400/15" : "border-white/15 hover:border-sky-400/60"}
-                  `}
-                >
-                  {/* иконка */}
-                  <img src={p.iconSrc} alt="" className="w-5 h-5 md:w-6 md:h-6" />
-                  <span className="text-sm md:text-base">{p.label}</span>
-                </button>
-              );
-            })}
-          </div>
+      {/* =========== ПЛАНЫ =========== */}
+<div className="w-full">
+  {/* mobile: 2 колонки, sm+: 3, lg+: одна колонка-стек */}
+  <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-1 gap-2 w-full">
+    {PLANS.map((p) => {
+      const active = p.label === selectedPlan;
+      return (
+        <button
+          key={p.label}
+          onClick={() => {
+            setSelectedPlan(p.label);
+            onAmountChange(p.min);
+          }}
+          aria-pressed={active}
+          className={`col-span-1
+            last:col-span-2 sm:last:col-span-1 lg:last:col-span-1
+            w-full inline-flex items-center justify-center gap-2
+            px-4 py-2 md:px-4 md:py-3 rounded-xl border transition
+            ${active ? "border-sky-400 bg-sky-400/15" : "border-white/15 hover:border-sky-400/60"}
+          `}
+        >
+          <img src={p.iconSrc} alt="" className="w-5 h-5 md:w-6 md:h-6 shrink-0" />
+          <span className="text-sm md:text-base font-semibold">{p.label}</span>
+        </button>
+      );
+    })}
+  </div>
 
-          <div className="mt-3 md:mt-4 lg:mt-auto">
-            <GoToStakingButton className="
-              w-full h-11 rounded-xl font-semibold
-              bg-[#00C2FF] hover:bg-[#00A5E0] text-white
-              shadow-[0_10px_30px_rgba(0,194,255,0.35)]
-            ">
-              Connect Wallet
-            </GoToStakingButton>
-          </div>
-        </div>
+  <div className="mt-3 md:mt-4 lg:mt-auto">
+    <GoToStakingButton
+      className="
+        w-full h-11 rounded-xl font-semibold
+        bg-[#00C2FF] hover:bg-[#00A5E0] text-white
+        shadow-[0_10px_30px_rgba(0,194,255,0.35)]
+      "
+    >
+      Connect Wallet
+    </GoToStakingButton>
+  </div>
+</div>
 
         {/* вертикальный разделитель — только на lg+ */}
         <div className="hidden lg:block w-px my-1 bg-[rgba(59,71,114,1)]" />

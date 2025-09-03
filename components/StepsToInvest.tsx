@@ -72,7 +72,7 @@ export default function StepsToInvest() {
         />
 </div>
 
-<div className="absolute top-[15%] md:top-[20%] right-[20%] md:right-[30%] opacity-90 z-[5] animate-float-slow  delay-1000">
+<div className="absolute top-[15%] md:top-[20%] right-[10%] md:right-[30%] opacity-90 z-[5] animate-float-slow  delay-1000">
       <Image
         src="/decorative/ton4.svg"
         alt="TON Coin Right"
@@ -84,7 +84,7 @@ export default function StepsToInvest() {
 
       {/* 2) Заголовок + кнопка „See Plans“ */}
       {/* 2.1) Заголовок px-4 */}
-<div className="max-w-6xl mx-auto px-0 relative z-10 text-left"> 
+<div className="max-w-6xl mx-auto px-2 relative z-10 text-left"> 
   <h2 className="text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight font-inter">
     3 Easy steps to invest<br/>
      in <span className="text-[#00C2FF]">TonStake.Ai</span>
@@ -165,54 +165,49 @@ export default function StepsToInvest() {
 </div>
 
 
-
-
-      {/* 3) Контейнер с тремя «шагами» py-20 */}
-      <div className="relative z-10  mx-auto px-4 md:px-6 md:max-w-6xl mt-1 md:mt-12 " //max-w-6xl px-4
-      > 
-        <div className="grid grid-cols-3 gap-1 md:gap-5"  //grid-cols-1 md: ...3
+{/* 3) Контейнер с тремя «шагами» */}
+<div className="relative z-10 mx-auto px-6 md:px-8 md:max-w-6xl mt-1 md:mt-12">
+  <div className="grid grid-cols-3 gap-1 md:gap-5" // items-stretch
+  >
+    {steps.map((step, idx) => (
+      <div key={step.id} className="relative group h-full">
+        <div
+          className="
+            bg-transparent rounded-2xl
+            p-2 md:p-10
+            h-[110px] md:h-full
+            flex flex-col justify-top/**center*/
+            hover:shadow-xl transition
+          "
         >
-          {steps.map((step, idx) => (
-            <div key={step.id} className="relative group" >
-              <div
-  className="
-    bg-transparent rounded-2xl
-    p-1 md:p-10 h-full
-    hover:shadow-xl transition
-  "
->
- {/* Номер + тайтл: на мобиле только номер, на md+ добавляем тайтл */}
-<div className="flex items-baseline gap-2 md:block">
-  <div className="w-7 flex-none text-xs md:text-4xl font-bold tabular-nums leading-none md:mb-4 md:py-6">
-    {step.id.toString().padStart(2, "0")}
-  </div>
-
-  <h3 className="hidden md:block text-2xl font-semibold leading-snug">
-    {step.title}
-  </h3>
-</div>
-
-<p className="mt-1 md:mt-2 text-[11px] md:text-base">
-  {step.description}
-</p>
-
-</div>
-
-              {idx < steps.length - 1 && (
-                <div
-                />
-              )}
+          {/* Номер + тайтл: на мобиле только номер, на md+ добавляем тайтл */}
+          <div className="flex items-baseline gap-2 md:block justify-center md:justify-start">
+            <div className="w-7 flex-none text-xs md:text-4xl font-bold tabular-nums leading-none md:mb-4 md:py-6">
+              {step.id.toString().padStart(2, "0")}
             </div>
-          ))}
+
+            <h3 className="hidden md:block text-2xl font-semibold leading-snug">
+              {step.title}
+            </h3>
+          </div>
+
+          <p className="mt-1 md:mt-2 text-[11px] md:text-base text-center md:text-left">
+            {step.description}
+          </p>
         </div>
+
+        {idx < steps.length - 1 && <div />}
       </div>
+    ))}
+  </div>
+</div>
 
 
       {/* 4) Абсолютно позиционированные «плавающие» 3D-монетки */}
       <div className="absolute inset-0 pointer-events-none">
         {/* === Плавающие монеты === */}
       {/* Левая монета (ton4) — верхний левый угол */}
-      <div className="absolute top-[0px] right-[40px] md:right-[160px]  w-[80px] h-[80px] md:w-[200px] md:h-[200px] opacity-100  z-[5]"> 
+      <div className="absolute top-[-25px] right-[0px] md:right-[160px]  w-[56px] h-[56px] md:w-[200px] md:h-[200px] opacity-100  z-[5]"> 
         <Image
           src="/decorative/ton22.svg" //png
           alt="TON Coin Left"
@@ -222,7 +217,7 @@ export default function StepsToInvest() {
       </div>
         
               {/* Главная центральная монета — выше всех фонов, под текстом justify-center inset-x-0*/}
-      <div className="absolute w-[100px] h-[100px] md:w-[300px] md:h-[300px] top-[0px] md:top-[-120px] right-[36%] z-0 flex opacity-80 md:opacity-100 pointer-events-none">
+      <div className="absolute w-[78px] h-[78px] md:w-[300px] md:h-[300px] top-[-40px] md:top-[-120px] right-[20%] md:right-[36%] z-0 flex opacity-80 md:opacity-100 pointer-events-none">
         <Image
           src={coinLarge}
           alt="Ton Coin"
@@ -236,7 +231,7 @@ export default function StepsToInvest() {
         />
       </div>
 
-      <div className="absolute top-[-150px] right-[-150px] md:right-[-150px] w-full h-full md:opacity-100 z-[5]" // -150 растягивает экран на мобилке
+      <div className="absolute md:top-[-150px] right-[50px] top-[-20px] md:right-[-150px] w-full h-full md:opacity-100 z-[5]" // -150 растягивает экран на мобилке
       >
         <Image
           src={centerSphere}
