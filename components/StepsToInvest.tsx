@@ -1,281 +1,243 @@
 // components/StepsToInvest.tsx
-"use client";
+// "use client";
 
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 
 // Пути к вашим файлам. Поместите картинки в папку /public/decorative/
-import coinLarge from "@/assets/StepsToInvest/ton2.png";//"/decorative/ton2.png"; // большая монета
-//import coinSmall from "@/assets/StepsToInvest/ton1.png";//"/decorative/ton3.png"; // мелкие монеты
-import leftCorner from "@/assets/StepsToInvest/leftCorner.svg";
+import coinLarge from "@/assets/StepsToInvest/ton2.png";
+import leftCorner from "@/assets/StepsToInvest/leftCorner.svg"
 import rightCorner from "@/assets/StepsToInvest/rightCorner.svg";
 
 import rightCornerBottom from "@/public/decorative/ellipse5.png";
 import centerSphere from "@/public/decorative/Ellipse51.png";
-
-//import WalletConnect from "@/components/WalletConnect";
+// import WalletConnect from "@/components/WalletConnect";
 import ConnectWalletButton from "@/components/ConnectWalletButton";
-
 
 export default function StepsToInvest() {
   // Структура трёх шагов (номер, заголовок, описание).
   const steps = [
-    {
-      id: 1,
-      title: "Choose Plan",
-      description: "Select the plan that suits you best",
-    },
-    {
-      id: 2,
-      title: "Make a Deposit",
-      description: "Deposit at least 10 TON",
-    },
-    {
-      id: 3,
-      title: "Receive Dividends",
-      description: "Earn rewards and withdraw anytime",
-    },
+    { id: 1, title: "Choose Plan", description: "Select the plan that suits you best" },
+    { id: 2, title: "Make a Deposit", description: "Deposit at least 10 TON" },
+    { id: 3, title: "Receive Dividends", description: "Earn rewards and withdraw anytime" },
   ];
 
   return (
-    <section
-          className="relative  text-white py-10 overflow-x-clip" // pb-10 overflow-hidden
-
-          //style={{
-            /* 
-             1) основной фон из одного SVG 
-             2) по центру, без повторов, растягиваем именно на width=100%, а height подгоняется автоматически 
-            */
-            //backgroundImage: `url("/decorative/step-mask.svg")`,
-            //backgroundRepeat: "no-repeat",
-            //backgroundPosition: "center center",
-            //backgroundSize: "auto 350px",
-            //backgroundColor: "#0A1329", // на случай, если SVG не загрузится
-          //}}
-          >
-      {/* 1) Фоновый «баграунд» со скруглёнными боковинами (если нужен) */}
-      <div className="absolute inset-0 pointer-events-none">
-        {/* 
-          – Если в Figma фон «переходит» с одного оттенка синего в другой, 
-            можно залить градиентом (как выше в `bg-gradient-to-br`).
-          – Если у вас есть статический фон (например, SVG-обвод, «волнистая» граница),
-            можно добавить его сюда через <Image> или вставить SVG.
-        */}
-      </div>
-
+    <section className="relative text-white py-10 overflow-x-clip">
       <div className="absolute top-0 right-0 w-full h-full pointer-events-none z-0">
-      <Image
+        <Image
           src={rightCornerBottom}
           alt="corner"
-          className="absolute right-0 bottom-0 w-full h-full opacity-10" //bottom-right 
+          className="absolute right-0 bottom-0 w-full h-full opacity-10"
         />
-</div>
-
-<div className="absolute top-[15%] md:top-[20%] right-[10%] md:right-[30%] opacity-90 z-[5] animate-float-slow  delay-1000">
-      <Image
-        src="/decorative/ton4.svg"
-        alt="TON Coin Right"
-        width={125}
-        height={125}
-        //className="absolute top-[20px] right-[20%] opacity-65 animate-float-slow animate-float-slow  delay-1000"
-      />
-</div>
-
-      {/* 2) Заголовок + кнопка „See Plans“ */}
-      {/* 2.1) Заголовок px-4 */}
-<div className="max-w-6xl mx-auto px-2 relative z-10 text-left"> 
-  <h2 className="text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight font-inter">
-    3 Easy steps to invest<br/>
-     in <span className="text-[#00C2FF]">TonStake.Ai</span>
-  </h2>
-  
-      {/* 5) Кнопка „See Plans“ */}
-      <div className="relative z-10 mt-6 flex justify-left">
-        <Link href="#calculate-plans" //scroll={false}
-        >
-          <a
-            className="
-              w-52 h-11
-              relative
-              bg-[radial-gradient(ellipse_179.05%_152.88%_at_74.38%_155.56%,_#3DD4FF_0%,_#0098EA_100%)]
-              rounded-xl
-              shadow-[0px_4px_27.6px_0px_rgba(61,212,255,0.42)]
-              outline outline-1 outline-offset-[-1px] outline-sky-400
-              overflow-hidden
-              flex items-center justify-center
-            "
-          >
-            <span className="text-white text-lg font-semibold font-['Inter'] leading-loose">
-              See Plans
-            </span>
-          </a>
-        </Link>
       </div>
-</div>
 
+      <div className="absolute top-[15%] md:top-[20%] right-[10%] md:right-[30%] opacity-90 z-[5] animate-float-slow delay-1000">
+        <Image
+          src="/decorative/ton4.svg"
+          alt="TON Coin Right"
+          width={125}
+          height={125}
+        />
+      </div>
 
+      {/* Заголовок + кнопка „See Plans“ */}
+      <div className="max-w-6xl mx-auto px-2 relative z-10 text-left">
+        <h2 className="text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight font-inter">
+          3 Easy steps to invest<br />
+          in <span className="text-[#00C2FF]">TonStake.Ai</span>
+        </h2>
 
- {/* ========== ОБКАТЫВАЕМ КОНТЕНТ В RELATIVE-wrapper ========== md:max-w-6xl */}
-     
-<div className="relative mt-12 px-0">
+        <div className="relative z-10 mt-2 md:mt-6 flex justify-left">
+          <Link href="#calculate-plans">
+            <a
+              className="
+                w-52 h-11 relative
+                bg-[radial-gradient(ellipse_179.05%_152.88%_at_74.38%_155.56%,_#3DD4FF_0%,_#0098EA_100%)]
+                rounded-xl
+                shadow-[0px_4px_27.6px_0px_rgba(61,212,255,0.42)]
+                outline outline-1 outline-offset-[-1px] outline-sky-400
+                overflow-hidden
+                flex items-center justify-center
+              "
+            >
+              <span className="text-white text-lg font-semibold font-['Inter'] leading-loose">
+                See Plans
+              </span>
+            </a>
+          </Link>
+        </div>
+      </div>
 
-{/* 1) фон-изображение – под гридом */}
-<div
-  className="
-    absolute inset-x-0 top-0
-    h-[80px] md:h-[350px]
-    pointer-events-none z-[-1] overflow-hidden
-  "
->
-  <Image
-    src="/decorative/step-mask.svg"
-    alt="steps background"
-    fill
-    priority
-    sizes="100vw"
-    className="object-cover md:object-contain object-center"
-  />
+      {/* ОБКАТЫВАЕМ КОНТЕНТ В RELATIVE-wrapper */}
+{/* ОБКАТЫВАЕМ КОНТЕНТ В RELATIVE-wrapper */}
+<div className="relative mt-8 md:mt-12 px-0 h-[120px] md:h-[350px]">
+  {/* фон-изображение – под гридом */}
+  <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden">
+    <Image
+      src="/decorative/step-mask.svg"
+      alt="steps background"
+      fill
+      priority
+      sizes="100vw"
+      className="object-cover md:object-contain object-center"
+    />
 
-  {/* Левый корнер вплотную к краю, узкий на мобиле */}
-  <div className="absolute inset-y-0 left-0 w-[8vw]  max-w-[180px] min-w-[18px]">
-    <div className="relative h-full w-full">
-      <Image
-        src={leftCorner}
-        alt="corner"
-        fill
-        sizes="(min-width: 768px) 180px, 8vw"
-        className="object-contain object-left"
-      />
+    {/* Левый корнер */}
+    <div className="absolute inset-y-0 left-0 max-w-[180px] min-w-[18px]">
+      <div className="relative h-full w-full">
+        <Image
+          src="/decorative/mobile/StepsLeftMobile.png"
+          alt="corner mobile"
+          fill
+          className="object-cover object-left md:hidden"
+        />
+        <Image
+          src={leftCorner}
+          alt="corner"
+          fill
+          sizes="(min-width: 768px) 180px, 8vw"
+          className="object-cover object-left hidden md:block"
+        />
+      </div>
+    </div>
+
+    {/* Правый корнер */}
+    <div className="absolute inset-y-0 right-0 w-[8vw] max-w-[180px] min-w-[18px]">
+      <div className="relative h-full w-full">
+        <Image
+          src="/decorative/mobile/StepsRightMobile.png"
+          alt="corner mobile"
+          fill
+          className="object-cover object-right md:hidden"
+        />
+        <Image
+          src={rightCorner}
+          alt="corner"
+          fill
+          sizes="(min-width: 768px) 180px, 8vw"
+          className="object-cover object-right hidden md:block"
+        />
+      </div>
     </div>
   </div>
 
-  {/* Правый корнер симметрично */}
-  <div className="absolute inset-y-0 right-0 w-[8vw] max-w-[180px] min-w-[18px]">
-    <div className="relative h-full w-full">
-      <Image
-        src={rightCorner}
-        alt="corner"
-        fill
-        sizes="(min-width: 768px) 180px, 8vw"
-        className="object-contain object-right"
-      />
-    </div>
-  </div>
-</div>
 
+        {/* Контейнер с тремя «шагами» 
+        <div className="relative z-10 mx-auto px-6 md:px-8 md:max-w-6xl mt-8 md:mt-12">
+          <div className="grid grid-cols-3 gap-1 md:gap-5">*/}
+        {/* Контейнер с тремя «шагами» */}
+    
+<div className="absolute inset-0 z-10 flex items-center">
+  <div className="w-full mx-auto py-16 px-4 md:px-8 md:max-w-6xl">
+    <div className="grid grid-cols-3 gap-4 md:gap-5">
+      {/* ...твои шаги без дополнительных mt-8/md:mt-12 ... */}
+            {steps.map((step, idx) => (
+              <div key={step.id} className="relative group h-full">
+                <div
+                  className="
+                    bg-transparent rounded-2xl
+                    p-4 md:p-10
+                    h-[110px] md:h-full
+                    flex flex-col justify-top
+                    hover:shadow-xl transition
+                  "
+                >
+                  <div className="flex items-baseline gap-2 md:block justify-center md:justify-start">
+                    <div className="w-7 flex-none text-xs md:text-4xl font-bold tabular-nums leading-none md:mb-4 md:py-6">
+                      {step.id.toString().padStart(2, "0")}
+                    </div>
 
-{/* 3) Контейнер с тремя «шагами» */}
-<div className="relative z-10 mx-auto px-6 md:px-8 md:max-w-6xl mt-1 md:mt-12">
-  <div className="grid grid-cols-3 gap-1 md:gap-5" // items-stretch
-  >
-    {steps.map((step, idx) => (
-      <div key={step.id} className="relative group h-full">
-        <div
-          className="
-            bg-transparent rounded-2xl
-            p-2 md:p-10
-            h-[110px] md:h-full
-            flex flex-col justify-top/**center*/
-            hover:shadow-xl transition
-          "
-        >
-          {/* Номер + тайтл: на мобиле только номер, на md+ добавляем тайтл */}
-          <div className="flex items-baseline gap-2 md:block justify-center md:justify-start">
-            <div className="w-7 flex-none text-xs md:text-4xl font-bold tabular-nums leading-none md:mb-4 md:py-6">
-              {step.id.toString().padStart(2, "0")}
-            </div>
+                    <h3 className="hidden md:block text-2xl font-semibold leading-snug">
+                      {step.title}
+                    </h3>
+                  </div>
 
-            <h3 className="hidden md:block text-2xl font-semibold leading-snug">
-              {step.title}
-            </h3>
+                  <p className="mt-1 md:mt-2 text-[11px] md:text-base text-center md:text-left">
+                    {step.description}
+                  </p>
+                </div>
+
+                {idx < steps.length - 1 && <div />}
+              </div>
+            ))}
           </div>
-
-          <p className="mt-1 md:mt-2 text-[11px] md:text-base text-center md:text-left">
-            {step.description}
-          </p>
         </div>
 
-        {idx < steps.length - 1 && <div />}
+        {/* Абсолютно позиционированные «плавающие» 3D-монетки */}
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute top-[-15px] right-[0px] md:right-[160px] w-[56px] h-[56px] md:w-[200px] md:h-[200px] opacity-100 z-[5]">
+            <Image
+              src="/decorative/ton22.svg"
+              alt="TON Coin Left"
+              fill
+              style={{ objectFit: "contain", mixBlendMode: "screen" }}
+            />
+          </div>
+
+          <div className="absolute w-[78px] h-[78px] md:w-[300px] md:h-[300px] top-[-20px] md:top-[-120px] right-[20%] md:right-[36%] z-0 flex opacity-80 md:opacity-100 pointer-events-none">
+            <Image
+              src={coinLarge}
+              alt="Ton Coin"
+              style={{ objectFit: "contain", mixBlendMode: "screen" }}
+            />
+          </div>
+
+          <div className="absolute md:top-[-150px] right-[50px] top-[-120px] md:right-[-150px] w-full h-full md:opacity-100 z-[5]">
+            <Image
+              src={centerSphere}
+              alt="Sphere"
+              fill
+              style={{ objectFit: "contain", mixBlendMode: "screen" }}
+            />
+          </div>
+        </div>
+  </div>
+</div>
+        <div className="relative z-10 flex justify-center py-7">
+          <ConnectWalletButton />
+        </div>
+    </section>
+  );
+}
+
+{/**
+  // Контейнер с тремя «шагами» — поверх маски, выровнен по центру 
+  <div className="absolute inset-0 z-10 flex items-center">
+    <div className="w-full mx-auto px-6 md:px-8 md:max-w-6xl">
+      <div className="grid grid-cols-3 gap-1 md:gap-5">
+        {steps.map((step) => (
+          <div key={step.id} className="relative group h-full">
+            <div
+              className="
+                bg-transparent rounded-2xl
+                p-2 md:p-10
+                h-[110px] md:h-full
+                flex flex-col justify-top
+                hover:shadow-xl transition
+              "
+            >
+              <div className="flex items-baseline gap-2 md:block justify-center md:justify-start">
+                <div className="w-7 flex-none text-xs md:text-4xl font-bold tabular-nums leading-none md:mb-4 md:py-6">
+                  {step.id.toString().padStart(2, '0')}
+                </div>
+                <h3 className="hidden md:block text-2xl font-semibold leading-snug">
+                  {step.title}
+                </h3>
+              </div>
+              <p className="mt-1 md:mt-2 text-[11px] md:text-base text-center md:text-left">
+                {step.description}
+              </p>
+            </div>
+          </div>
+        ))}
       </div>
-    ))}
+    </div>
   </div>
 </div>
 
 
-      {/* 4) Абсолютно позиционированные «плавающие» 3D-монетки */}
-      <div className="absolute inset-0 pointer-events-none">
-        {/* === Плавающие монеты === */}
-      {/* Левая монета (ton4) — верхний левый угол */}
-      <div className="absolute top-[-25px] right-[0px] md:right-[160px]  w-[56px] h-[56px] md:w-[200px] md:h-[200px] opacity-100  z-[5]"> 
-        <Image
-          src="/decorative/ton22.svg" //png
-          alt="TON Coin Left"
-          fill
-          style={{ objectFit: "contain", mixBlendMode: "screen" }} // animate-float-slow
-        />
-      </div>
-        
-              {/* Главная центральная монета — выше всех фонов, под текстом justify-center inset-x-0*/}
-      <div className="absolute w-[78px] h-[78px] md:w-[300px] md:h-[300px] top-[-40px] md:top-[-120px] right-[20%] md:right-[36%] z-0 flex opacity-80 md:opacity-100 pointer-events-none">
-        <Image
-          src={coinLarge}
-          alt="Ton Coin"
-          //width={300}
-          //height={300}
-          //className="opacity-100" //animate-float-slow
-          style={{
-            objectFit: "contain",
-            mixBlendMode: "screen"
-          }}
-        />
-      </div>
-
-      <div className="absolute md:top-[-150px] right-[50px] top-[-20px] md:right-[-150px] w-full h-full md:opacity-100 z-[5]" // -150 растягивает экран на мобилке
-      >
-        <Image
-          src={centerSphere}
-          alt="Sphere"
-          fill
-          style={{ objectFit: "contain",
-            mixBlendMode: "screen"
-           }} 
-        />
-      </div>
-       
-    </div>
-      
-<div className="relative z-10 flex justify-center py-7"//mt-16
->
-  <ConnectWalletButton />
-</div>
-{/**
-<div className="w-44 h-10 relative bg-[radial-gradient(ellipse_72.70%_100.11%_at_50.00%_50.00%,_#009BEF_0%,_#3CBAFF_100%)] rounded-xl shadow-[0px_11px_21px_0px_rgba(56,172,234,0.18)] overflow-hidden">
-  <div className="w-32 h-4 left-[35px] top-[12px] absolute justify-center text-white text-base font-semibold font-['Inter'] leading-loose">Connect Wallet</div>
-  <div className="w-4 h-4 left-[11.35px] top-[11.43px] absolute bg-white" />
-</div>
-
- * 
-//{  === Плавный переход снизу в следующую секцию ===  }
-  <div
-    className="absolute bottom-0 left-0 w-full h-8 pointer-events-none z-0 opacity-20"
-    style={{
-      // 1) плавный переход от цвета секции Steps (снизу) вверх в прозрачность
-      background: "linear-gradient(to bottom, transparent, black 40%)", //rgba(10,19,41,1)
-      // 2) по горизонтали «стираем» его к правому краю, чтобы справа он полностью исчезал
-      WebkitMaskImage: "linear-gradient(to right, black 30%, transparent 100%)",
-      maskImage:       "linear-gradient(to right, black 30%, transparent 100%)",
-    }}
-  />
- */}
-
-</div>
-
-    </section>
-    
-  );
-}
-{/**
    <div className="relative z-[30] mx-auto px-4 md:px-6  mt-1 md:mt-12">
 
 <div className="absolute inset-x-0 top-0 h-[clamp(240px,45vw,720px)] z-[20] pointer-events-none overflow-visible">
