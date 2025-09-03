@@ -107,19 +107,21 @@ max-w-7xl mx-auto mb-8  md:pl-[90px] sm:pl-[5px] px-2">
       </h1> ГЛАВНЫЙ ФИКС: резиновый размер и переносы */}
       <h1 className="font-bold leading-[0.95] tracking-[-0.02em]">
             {/* центрируем ТОЛЬКО первую строку на мобиле */}
-            <h1 className="font-bold leading-[0.95] tracking-[-0.02em]">
+            <h1 className="font-bold" // leading-[0.95] tracking-[-0.02em]
+            >
   {/* Mobile: каждое слово — с новой строки */}
-  <span className="block md:hidden">
-    <span className="block text-[clamp(44px,12vw,72px)] text-left">Stake</span>
-    <span className="block text-[clamp(44px,12vw,72px)] text-left">TON</span>
-    <span className="block text-[clamp(40px,11vw,64px)] text-left text-[#00C2FF]">Easily</span>
-    <span className="block text-[clamp(40px,11vw,64px)] text-left text-[#00C2FF]">Securely</span>
+  <span className="block md:hidden " //leading-[1.02] tracking-[0]
+  >
+    <span className="block text-[clamp(75px,12vw,56px)] text-left">Stake</span>
+    <span className="block text-[clamp(75px,12vw,56px)] text-left">TON</span>
+    <span className="block text-[clamp(75px,11vw,50px)] text-left text-[#00C2FF]">Easily</span>
+    <span className="block text-[clamp(75px,11vw,50px)] text-left text-[#00C2FF]">Securely</span>
   </span>
 
-  {/* Desktop: как было — “Stake TON” затем “Easily & Securely” */}
-  <span className="hidden md:block">
-    <span className="block text-[clamp(32px,9vw,64px)]">Stake TON</span>
-    <span className="block text-[clamp(28px,8.5vw,60px)]">
+  {/* desktop */}
+  <span className="hidden md:block leading-[75px] tracking-[0]">
+    <span className="block text-[74px]">Stake TON</span>
+    <span className="block text-[74px]">
       <span className="text-[#00C2FF]">Easily</span>
       &nbsp;&amp;&nbsp;
       <span className="text-[#00C2FF]">Securely</span>
@@ -127,13 +129,14 @@ max-w-7xl mx-auto mb-8  md:pl-[90px] sm:pl-[5px] px-2">
   </span>
 </h1>
 
+
           </h1>
-              <p className="text-lg text-gray-300 max-w-lg">
+              <p className="text-[15px] md:text-lg  text-gray-300 max-w-lg">
                 Stake your TON tokens securely and earn passive income with our
                 audited smart contracts.
               </p>
               
-          <div className="flex flex-col sm:flex-row items-center sm:items-start justify-center md:justify-start gap-4 sm:gap-6">
+          <div className="flex flex-col sm:flex-row md:items-center md:justify-center sm:items-start  md:justify-start gap-4 sm:gap-6">
                     {/* Primary button
                     <button
   type="button"
@@ -152,7 +155,7 @@ max-w-7xl mx-auto mb-8  md:pl-[90px] sm:pl-[5px] px-2">
   <ChevronRight className="w-5 h-5 text-white" />
 </button> */}
                     <GoToStakingButton className="btn-primary
-    w-full sm:w-64 h-16
+    w-[132px] sm:w-[132px] sm:left-0 h-12 
     bg-gradient-to-r from-sky-600 to-sky-400
     rounded-2xl
     shadow-[0px_21px_40px_rgba(6,173,252,0.19)]
@@ -165,18 +168,35 @@ max-w-7xl mx-auto mb-8  md:pl-[90px] sm:pl-[5px] px-2">
 <button
   type="button"
   className="
-    w-64 h-16
+    md:w-64 sm:left-[0px] sm:w-[70px] sm:h-[30px] h-8 md:h-16
     bg-transparent
-    border-2 border-sky-400
+     border-0 border-sky-400 
     rounded-2xl
-    inline-flex items-center justify-center gap-2
+    md:inline-flex md:items-center md:justify-center
     text-white text-lg font-semibold font-inter leading-loose
     transition
-    hover:bg-white hover:text-sky-600
+    /*hover:bg-white hover:text-sky-600 */
   "
+  aria-label="Audited by Certik"
 >
-  <Image src={AuditedIcon} alt="Audited by Certik" />
+  {/* mobile icon */}
+  <Image
+    src="/decorative/mobile/audited-by-certik.svg"
+    alt="Audited by Certik"
+    width={140}
+    height={40}
+    className="md:hidden md:h-6 w-auto sm:left-0"
+    priority
+  />
+
+  {/* desktop icon */}
+  <Image
+    src={AuditedIcon}
+    alt="Audited by Certik"
+    className="hidden md:block md:h-8 w-auto"
+  />
 </button>
+
 </div>
  </div>
 
@@ -194,12 +214,12 @@ max-w-7xl mx-auto mb-8  md:pl-[90px] sm:pl-[5px] px-2">
         <Image
           src={ton3d1}
           alt=""
-          className="absolute right-[10%] bottom-[30%] w-[30%] md:top-[23%] md:right-[26%] md:w-[10%] opacity-80 animate-float"
+          className="absolute right-[15%] bottom-[20%] w-[30%] md:top-[23%] md:right-[26%] md:w-[10%] opacity-80 animate-float"
         />
         <Image
           src={ton3d2}
           alt=""
-          className="absolute bottom-[-5%] right-[-10px] w-[60%] md:bottom-[5%] md:right-[10%] md:w-[28%] opacity-90 animate-float delay-2000"
+          className="absolute bottom-[-5%] right-[-60px] w-[60%] md:bottom-[5%] md:right-[10%] md:w-[28%] opacity-90 animate-float delay-2000"
         />
       </div>
   </div>
