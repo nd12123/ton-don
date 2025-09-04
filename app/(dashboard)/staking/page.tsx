@@ -6,7 +6,7 @@ import DashboardStats from '@/components/DashboardStats';
 import { PLANS, type Plan } from '@/components/Plans'; // ⬅️ используем готовые
 import { StakeModal } from '@/components/StakeModal';
 import { Button } from '@/components/ui/button';
-
+import Image from 'next/image';
 import {
   balanceActive,
   dailyIncomeActive,
@@ -89,7 +89,8 @@ useEffect(() => {
   };
 
   return (
-    <main className="min-h-screen px-4 py-10 text-white">
+    <main className="min-h-screen  text-white" //px-4 py-10
+    >
       <h1 className="text-4xl font-bold mb-8">Stats after stake</h1>
 
       {/* ВЕРХНЯЯ СТАТИСТИКА — показывает "как станет" с учётом текущего ввода */}
@@ -106,7 +107,7 @@ useEffect(() => {
       <section>
         <h2 className="text-3xl font-bold mb-6">Add to staking</h2>
 
-        <div className="grid md:grid-cols-2 gap-8">
+<div className="grid md:grid-cols-2 gap-8 items-start">
           {/* Левая половина: слайдеры и предварительные расчёты */}
           <div className="rounded-3xl border border-blue-700 bg-[#001E3C]/60 p-6">
             <div className="mb-4">
@@ -161,22 +162,58 @@ useEffect(() => {
             </Button>
           </div>
 
-          {/* Правая половина: карточка Daily Income */}
-          <div className="relative rounded-3xl border border-blue-700 bg-[#001E3C]/60 p-6 flex flex-col">
-            <div className="absolute right-4 top-4 bg-blue-700 text-white py-1 px-2 rounded-md">
-              {apr}%
-            </div>
-            <h3 className="text-xl font-semibold mb-2">Daily Income</h3>
-            <p className="text-3xl font-bold mb-2">
-              ${(dailyIncomeTon * TON_PRICE).toFixed(2)}
-            </p>
-            <p className="text-sm mb-4">{dailyIncomeTon.toFixed(2)} TON</p>
-            <p className="text-xs text-blue-300">
-              TonStake.ai automates your income — over $2 million TON is already making a
-              profit on our algorithms. Start with 10 TON and watch your capital grow!
-            </p>
-          </div>
-        </div>
+          {/* Правая половина: карточка Daily Income */}{/* Правая половина: карточка Daily Income */}
+<div className="relative w-full max-w-[620px] overflow-hidden rounded-[28px]
+                aspect-[625/420] md:aspect-[640/420]">
+  {/* Фон — немного уменьшен и полностью внутри рамки */}
+  <Image
+    src="/staking/daily-bg.svg"
+    alt=""
+    fill
+    priority
+    className="pointer-events-none select-none object-contain transform-gpu
+               scale-[1.18] md:scale-[1.25] origin-center top-0"
+  />
+
+  {/* Контент (всё лежит на фоне, нижняя граница выше) */}
+  <div className="absolute inset-[5%] z-10 flex flex-col  md:py-20 md:mx-15">
+    {/* APR бейдж — оставил как был, ты подправишь при желании */}
+    <div className="absolute right-0 top-0 rounded-xl bg-white text-[#0A6CFF]
+                    font-bold leading-none text-[18px] md:text-2xl py-1 px-3 md:py-2 md:ml-[12px] md:px-4 shadow">
+      {apr}%
+    </div>
+
+    <h3 className="text-lg md:text-xl font-semibold leading-tight mb-1.5 mt-1.5">Daily Income</h3>
+
+    <p className="font-bold mb-0.5 text-[24px] md:text-[36px]">
+      ${(dailyIncomeTon * TON_PRICE).toFixed(2)}
+    </p>
+
+    <p className="font-semibold leading-tight text-[13px] md:text-[16px] mb-2"// text-[#00C2FF]
+    >
+      {dailyIncomeTon.toFixed(2)} TON
+    </p>
+
+    <p className="mt-auto md:mb-12 text-[11px] text-[20px] pb-6 md:pb-12 mb:py-15 md:text-sm leading-snug text-blue-50/90 max-w-[38rem]">
+      TonStake.ai automates your income — over $2 million TON is already making a
+      profit on our algorithms. Start with 10 TON and watch your capital grow!
+    </p>
+
+    {/* монетка — без выхода за низ */}
+    <Image
+      src="/decorative/ton22.svg"
+      alt=""
+      width={138}
+      height={138}
+      className="pointer-events-none select-none absolute right-4 bottom-1 md:right-8 md:bottom-2"
+    />
+  </div>
+</div>
+
+
+
+
+</div>
       </section>
 
       {/* модалка подтверждения */}

@@ -120,14 +120,22 @@ const earnedNow = useMemo(() => totalEarnedSoFar(history), [history]);
       </motion.h1>
 
       {/* 0) Блок общей статистики */}
-      <DashboardStats
-        balanceTon={balance}
-        dailyIncomeTon={dailyIncome}
-        totalIncomeTon={earnedNow}
-        priceUsd={priceUsd}
-        deposit={deposit}
-        plans={PLANS}
-      />
+     <DashboardStats
+  balanceTon={balance}
+  dailyIncomeTon={dailyIncome}
+  totalIncomeTon={earnedNow}
+  priceUsd={priceUsd}
+  deposit={deposit}
+  plans={PLANS}
+  /*
+  icons={{
+    balance: "/decorative/Profilebalance.svg",
+    daily: "/decorative/profile/daily.svg",
+    total: "/decorative/profile/total.svg",
+  }}
+*/
+  />
+
 
       {/* 1) Короткая сводка
       <section className="grid grid-cols-1 sm:grid-cols-2 gap-6">
