@@ -2,7 +2,7 @@ import React from 'react';
 import Image from 'next/image';
 //import { Button } from '@/components/ui/button';
 //import { ChevronRight } from 'lucide-react';
-
+import Link from 'next/link';
 // Import 3D images
 import ton3d1 from '@/assets/Main/Ton 3d 1.png';
 import ton3d2 from '@/assets/Main/Ton 3d 2.png';
@@ -81,23 +81,36 @@ export default function MainSection({className = ''}: MainSectionProps) {
 */}
 {/* === HERO wrapper: управляем порядком на mobile/desktop === */}
 {/* 1) Расположение «здесь иконки» в контейнере */}
-<div className=" /*relative z-10 flex flex-col  */
-max-w-7xl mx-auto mb-8  md:pl-[90px] sm:pl-[5px] px-2">
-        <div className="/*order-1 md:order-2*/ flex md:items-center md:gap-16 sm:gap-8 gap-10">
-          <div className="flex items-center gap-2">
-            <Image src={ReliableIcon} alt="Reliable" width={24} height={24} />
-            <span className="text-lg font-medium">Reliable</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <Image src={ProfitableIcon} alt="Profitable" width={24} height={24} />
-            <span className="text-lg font-medium">Profitable</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <Image src={SimpleIcon} alt="Simple" width={24} height={24} />
-            <span className="text-lg font-medium">Simple</span>
-          </div>
-        </div>
-      </div>
+<div className="max-w-7xl mx-auto mb-8 md:pl-[90px] sm:pl-[5px] px-2">
+  <div className="flex md:items-center md:gap-16 sm:gap-8 gap-10">
+    <Link
+      href="#total-value"
+      aria-label="Go to Total Value"
+      className="flex items-center gap-2 group rounded-lg outline-none focus-visible:ring-2 focus-visible:ring-sky-400/60 transition-transform hover:scale-[1.02] active:scale-[0.99]"
+    >
+      <Image src={ReliableIcon} alt="Reliable" width={24} height={24} />
+      <span className="text-lg font-medium group-hover:text-sky-300">Reliable</span>
+    </Link>
+
+    <Link
+      href="#calculate-plans"
+      aria-label="Go to Calculator"
+      className="flex items-center gap-2 group rounded-lg outline-none focus-visible:ring-2 focus-visible:ring-sky-400/60 transition-transform hover:scale-[1.02] active:scale-[0.99]"
+    >
+      <Image src={ProfitableIcon} alt="Profitable" width={24} height={24} />
+      <span className="text-lg font-medium group-hover:text-sky-300">Profitable</span>
+    </Link>
+
+    <Link
+      href="#steps"
+      aria-label="Go to Steps"
+      className="flex items-center gap-2 group rounded-lg outline-none focus-visible:ring-2 focus-visible:ring-sky-400/60 transition-transform hover:scale-[1.02] active:scale-[0.99]"
+    >
+      <Image src={SimpleIcon} alt="Simple" width={24} height={24} />
+      <span className="text-lg font-medium group-hover:text-sky-300">Simple</span>
+    </Link>
+  </div>
+</div>
 
 {/* 2) Основной грид: слева текст + кнопки, справа 3D-монеты */}
 <div className="/*order-2 md:order-1*/ max-w-7xl mx-auto md:grid md:grid-cols-1 lg:grid-cols-2 md:gap-12 items-center  md:pl-[90px]">
@@ -225,6 +238,12 @@ max-w-7xl mx-auto mb-8  md:pl-[90px] sm:pl-[5px] px-2">
           alt=""
           className="absolute top-[20%] md:right-[20px] w-[65%] md:w-[45%] opacity-30 md:opacity-50 animate-float"
         />
+        {/** 
+        <Image
+          src={centralSphere}
+          alt=""
+          className="sm:hidden md:block absolute md:top-[20%] md:right-[25%] md:w-[100%] md:opacity-90 animate-float"
+        />*/}
         <Image
           src={ton3d3}
           alt=""
@@ -233,7 +252,7 @@ max-w-7xl mx-auto mb-8  md:pl-[90px] sm:pl-[5px] px-2">
         <Image
           src={ton3d1}
           alt=""
-          className="absolute right-[15%] bottom-[20%] w-[30%] md:top-[22%] md:right-[26%] md:w-[10%]  2xl:bottom-[18%] 2xl:right-[28] 2xl:w-[13%] opacity-80 animate-float"
+          className="absolute right-[15%] bottom-[20%] w-[30%] md:top-[22%] md:right-[26%] md:w-[10%]  2xl:bottom-[18%] 2xl:right-[28%] 2xl:w-[13%] opacity-80 animate-float"
         />
         <Image
           src={ton3d2}

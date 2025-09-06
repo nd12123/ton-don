@@ -4,6 +4,8 @@
 import React, { useState } from 'react';
 import NextImage from 'next/image';           // << вот так
 import { ChevronDown, ChevronUp } from 'lucide-react';
+import { motion, useReducedMotion } from "framer-motion";
+
 //import SectionWithFade from "@/components/SectionWithFade";
 
 // пути к вашим PNG/SVG теперь станут строкой или React-компонентом
@@ -55,6 +57,14 @@ export default function FAQSection() {
   const toggleIndex = (idx: number) =>
     setOpenIndex(prev => (prev === idx ? null : idx));
 
+  
+  const spring = {
+    type: "spring",
+    stiffness: 320,
+    damping: 34,
+    mass: 0.6,
+  } as const;
+
   return (
     <section
       className={[
@@ -105,7 +115,65 @@ export default function FAQSection() {
         <p className="text-center text-gray-300 mb-12">
           Quick answers to popular questions...
         </p>
+        
+        {/* layout-анимация грида: перестройка без «рывков» */}
+        <motion.div
+          layout
+          transition={spring}
+          className="grid grid-cols-1 md:grid-cols-2 gap-6"
+        >
+          {faqs.map((item, idx) => {
+            const isOpen = openIndex === idx;
+            return (
+              <motion.article
+                key={idx}
+                layout
+                transition={spring}
+                className={[
+                  "relative rounded-xl overflow-hidden border",
+                  isOpen
+                    ? "bg-gradient-to-r from-[#00BFFF] to-[#009FEF] border-sky-400 text-white"
+                    : "bg-[#0A1329] border-[#00BFFF] text-white",
+                  "will-change-transform",
+                ].join(" ")}
+              >
+                <button
+                  onClick={() => setOpenIndex(isOpen ? null : idx)}
+                  className="w-full flex items-center justify-between px-6 py-4 font-medium text-left"
+                >
+                  <span className="text-lg sm:text-xl pr-3">{item.question}</span>
+                  <motion.span
+                    aria-hidden
+                    animate={{ rotate: isOpen ? 180 : 0 }}
+                    transition={{ duration: 0.18, ease: "easeOut" }}
+                    className="shrink-0"
+                  >
+                    <ChevronDown className="w-6 h-6" />
+                  </motion.span>
+                </button>
 
+                {/* вместо max-height — height:auto с framer-motion */}
+                <motion.div
+                  initial={false}
+                  animate={isOpen ? "open" : "closed"}
+                  variants={{
+                    open: { height: "auto", opacity: 1 },
+                    closed: { height: 0, opacity: 0.6 },
+                  }}
+                  transition={{ duration: 0.28, ease: "easeOut" }}
+                  style={{ overflow: "hidden" }}
+                >
+                  <div className="px-6 pb-5">
+                    <p className="text-gray-100 leading-relaxed">{item.answer}</p>
+                  </div>
+                </motion.div>
+              </motion.article>
+            );
+          })}
+        </motion.div>
+      </div>
+{/**
+ * 
         <div className="grid grid-cols-1 md:grid-cols-2 auto-rows-min gap-8">
           {faqs.map((item, idx) => {
             const isOpen = openIndex === idx;
@@ -143,6 +211,7 @@ export default function FAQSection() {
           })}
         </div>
       </div>
+ */}
 
 <div className="absolute inset-0 -z-10 pointer-events-none" style={{}} />
 

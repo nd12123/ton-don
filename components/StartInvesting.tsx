@@ -1,12 +1,64 @@
 // components/StartInvesting.tsx
-import React from "react";
-//import Link from "next/link";
-//import Image from "next/image";
+import { FloatingStakeNow } from "./FloatingStakeNow";
 
-type StartInvestingProps = { className?: string };
-
-export default function StartInvesting({ className = "" }: StartInvestingProps) {
+export default function StartInvesting({ className = "" }: { className?: string }) {
   return (
+    <section className={["relative z-[5] text-white", className].join(" ")}>
+      {/* Обёртка с пропорциями исходника (подгони ratio под свой SVG) */}
+      <div
+        className="
+          relative mx-auto
+          w-[min(92vw,1100px)]
+          aspect-[1359/768]
+          bg-no-repeat bg-center
+          bg-[length:90%] md:bg-[length:85%] lg:bg-[length:80%]
+        "
+        style={{ backgroundImage: "url('/decorative/StartInvestingFull.svg')" }}
+      >
+        {/* Кнопка поверх фона — фиксируем точку якоря в процентах */}
+        <FloatingStakeNow
+          href="/staking"
+          className="
+            absolute z-10
+            left-[9%] bottom-[31%]
+            md:left-[9%] md:bottom-[14%]
+            lg:left-[13%] lg:bottom-[36%]
+          "
+        />
+      </div>
+    </section>
+  );
+}
+
+      {/* 2) Горизонт (основной фон) 
+      <div
+        className="
+          relative z-10 flex items-center h-full pb-3
+          pl-[10%]          
+        "
+      >
+        <div className="">
+          <h2 className="text-5xl sm:text-4xl font-bold">Start investing now!</h2>
+          <p className="text-base text-3xl">
+            Start earning in 2 clicks — your first income tomorrow
+          </p>
+          <Link
+          href="/staking"
+          className="
+            ml-auto                   //pr-[15%]  кнопка прижата вправо 
+            inline-flex items-center
+            bg-white text-[#00BFFF]   // белый фон, синий текст 
+            font-medium rounded-full
+            shadow-[0_0_30px_rgba(0,191,255,0.5)] // яркая синяя аура 
+            transition-shadow
+            duration-300
+          "
+        >
+          Stake Now →
+        </Link>
+        </div>
+      </div>
+        */}
     /*
 <section
 className={
@@ -39,53 +91,3 @@ className={
   </div>
 </div>
 */
-<section
-className={
-  `relative overflow-visible text-white z-[5] pb-10` +
-//h-[800px] sm:h-[550px]
-  `h-[400px] sm:h-[300px] opacity-90` +
-  className
-}
-  style={{
-    //backgroundColor: "#0A1329",   // запасной цвет
-    //backgroundImage: `url("/decorative/stakeNow.png")`, 
-    backgroundImage: `url("/decorative/StartInvestingFull.svg")`, 
-    backgroundRepeat: "no-repeat",
-    backgroundPosition: "center center",
-    objectFit: "cover",
-    backgroundSize: "100% 100%"
-    //backgroundSize: "calc(100% + 100px) 100%", // точные размеры: ширина 100%, высота 
-  }}
->
-      {/* 2) Горизонт (основной фон) 
-      <div
-        className="
-          relative z-10 flex items-center h-full pb-3
-          pl-[10%]          
-        "
-      >
-        <div className="">
-          <h2 className="text-5xl sm:text-4xl font-bold">Start investing now!</h2>
-          <p className="text-base text-3xl">
-            Start earning in 2 clicks — your first income tomorrow
-          </p>
-          <Link
-          href="/staking"
-          className="
-            ml-auto                   //pr-[15%]  кнопка прижата вправо 
-            inline-flex items-center
-            bg-white text-[#00BFFF]   // белый фон, синий текст 
-            font-medium rounded-full
-            shadow-[0_0_30px_rgba(0,191,255,0.5)] // яркая синяя аура 
-            transition-shadow
-            duration-300
-          "
-        >
-          Stake Now →
-        </Link>
-        </div>
-      </div>
-        */}
-    </section>
-  );
-}

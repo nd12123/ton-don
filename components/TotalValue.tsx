@@ -12,7 +12,7 @@ import TotalValueWidget from '@/components/TotalValueWidget'
 
 export default function TotalValue() {
   return (
-    <section className="relative overflow-hidden text-white py-32">
+    <section id="total-value" className="relative overflow-hidden text-white py-32  scroll-smooth">
       {/* 1) Фон горизонта (полупрозрачный) */}
       <div className="absolute inset-0 -z-20">
         <Image

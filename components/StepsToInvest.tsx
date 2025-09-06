@@ -26,7 +26,7 @@ export default function StepsToInvest() {
   ];
 
   return (
-    <section className="relative text-white py-10 overflow-x-clip">
+    <section id="steps" className="relative text-white py-10 overflow-x-clip  scroll-mt-12">
       <div className="absolute top-0 right-0 w-full h-full pointer-events-none z-0">
         <Image
           src={rightCornerBottom}
