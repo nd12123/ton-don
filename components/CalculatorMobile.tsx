@@ -79,7 +79,7 @@ export default function Calculator({
     })}
   </div>
 
-  <div className="mt-3 md:mt-4 lg:mt-auto">
+  <div className="mt-2 md:mt-4 lg:mt-auto">
     <GoToStakingButton
       className="
         w-full h-11 rounded-xl font-semibold
@@ -96,14 +96,14 @@ export default function Calculator({
         <div className="hidden lg:block w-px my-1 bg-[rgba(59,71,114,1)]" />
 
         {/* =========== СЛАЙДЕРЫ =========== */}
-        <div className="flex flex-col gap-5 md:gap-6">
+        <div className="flex flex-col gap-3 md:gap-6">
           {/* Amount */}
           <div>
-            <label className="block text-sm text-white/70 mb-2">
+            <label className="block text-sm text-white/70 mb-1">
               Deposit amount
             </label>
 
-            <div className="flex items-center gap-4 bg-[#1A2037] rounded-2xl px-3 md:px-4 py-2 md:py-3">
+            <div className="flex items-center gap-2 bg-[#1A2037] rounded-2xl px-3 md:px-4 py-2 md:py-3">
               <input
                 type="number"
                 value={amount}
@@ -129,11 +129,11 @@ export default function Calculator({
 
           {/* Days */}
           <div>
-            <label className="block text-sm text-white/70 mb-2">
+            <label className="block text-sm text-white/70 mb-1">
               Deposit duration
             </label>
 
-            <div className="flex items-center gap-4 bg-[#1A2037] rounded-2xl px-3 md:px-4 py-2 md:py-3">
+            <div className="flex items-center gap-2 bg-[#1A2037] rounded-2xl px-3 md:px-4 py-2 md:py-3">
               <input
                 type="number"
                 value={days}
@@ -169,22 +169,22 @@ export default function Calculator({
             className="opacity-100 pointer-events-none"
           />
           {/* контент */}
-          <div className="relative z-10 p-4 md:p-5">
+          <div className="relative z-10 p-1 md:p-5">
             <div className="grid grid-rows-3 divide-y divide-white/15 text-center">
-              <div className="py-3">
-                <p className="text-xs md:text-sm text-white/75">In 1 day</p>
+              <div className="py-1">
+                <p className="text-sm md:text-sm text-white/75">In 1 day</p>
                 <p className="text-lg md:text-xl font-semibold">
                   +{dailyEarnings.toFixed(2)} TON
                 </p>
               </div>
-              <div className="py-3">
-                <p className="text-xs md:text-sm text-white/75">In 7 days</p>
+              <div className="py-1">
+                <p className="text-sm md:text-sm text-white/75">In 7 days</p>
                 <p className="text-lg md:text-xl font-semibold">
                   +{(dailyEarnings * 7).toFixed(2)} TON
                 </p>
               </div>
-              <div className="py-3">
-                <p className="text-xs md:text-sm text-white/75">Investment period</p>
+              <div className="py-1">
+                <p className="text-sm md:text-sm text-white/75">Investment period</p>
                 <p className="text-lg md:text-xl font-semibold">
                   +{(dailyEarnings * days).toFixed(2)} TON
                 </p>

@@ -18,7 +18,7 @@ import ConnectWalletButton from "@/components/ConnectWalletButton";
 export default function StepsToInvest() {
   // Структура трёх шагов (номер, заголовок, описание).
   const steps = [
-    { id: 1, title: "Choose Plan", description: "Select the plan that suits you best" },
+    { id: 1, title: "Choose Plan", description: "Select a plan that suits you best" },
     { id: 2, title: "Make a Deposit", description: "Deposit at least 10 TON" },
     { id: 3, title: "Receive Dividends", description: "Earn rewards and withdraw anytime" },
   ];
@@ -33,7 +33,7 @@ export default function StepsToInvest() {
         />
       </div>
 
-      <div className="absolute top-[15%] md:top-[20%] right-[10%] md:right-[30%] opacity-90 z-[5] animate-float-slow delay-1000">
+      <div className="absolute top-[15%] md:top-[10%] right-[10%] md:right-[30%] opacity-90 z-[5] animate-float-slow delay-1000">
         <Image
           src="/decorative/ton4.svg"
           alt="TON Coin Right"
@@ -44,16 +44,16 @@ export default function StepsToInvest() {
 
       {/* Заголовок + кнопка „See Plans“ */}
       <div className="max-w-6xl mx-auto px-2 relative z-10 text-left">
-        <h2 className="text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight font-inter">
+        <h2 className="text-4xl sm:text-[28px] md:text-5xl lg:text-6xl md:font-extrabold leading-tight font-inter">
           3 Easy steps to invest<br />
           in <span className="text-[#00C2FF]">TonStake.Ai</span>
         </h2>
 
-        <div className="relative z-10 mt-2 md:mt-6 flex justify-left">
+        <div className="relative z-10 mt-4 mb-3 md:mt-6 flex justify-left">
           <Link href="#calculate-plans">
             <a
               className="
-                w-52 h-11 relative
+                w-28 h-8 md:w-52 md:h-11 relative
                 bg-[radial-gradient(ellipse_179.05%_152.88%_at_74.38%_155.56%,_#3DD4FF_0%,_#0098EA_100%)]
                 rounded-xl
                 shadow-[0px_4px_27.6px_0px_rgba(61,212,255,0.42)]
@@ -62,7 +62,7 @@ export default function StepsToInvest() {
                 flex items-center justify-center
               "
             >
-              <span className="text-white text-lg font-semibold font-['Inter'] leading-loose">
+              <span className="text-white text-lg md:font-semibold font-['Inter'] leading-loose">
                 See Plans
               </span>
             </a>
@@ -74,55 +74,62 @@ export default function StepsToInvest() {
 <div className="relative mt-8 md:mt-4 px-0 h-[120px] md:h-[350px]">
   {/* фон-изображение – под гридом */}
   <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden">
-    <Image
-      src="/decorative/step-mask.svg"
-      alt="steps background"
-      fill
-      priority
-      sizes="100vw"
-      className="object-cover md:object-contain object-center"
-    />
-{/* Левый корнер */}
-<div className="absolute inset-y-0 left-0 w-[10vw] md:left-[-50px] md:w-[180px] lg:w-[220px] min-w-[60px]">
-  <div className="relative h-full w-full">
-    {/* mobile */}
-    <Image
-      src="/decorative/mobile/StepsLeftMobile.png"
-      alt="corner mobile"
-      fill
-      className="object-cover object-left md:hidden"
-    />
-    {/* desktop */}
-    <Image
-      src={leftCorner}
-      alt="corner left"
-      fill
-      sizes="(min-width:1024px) 220px, (min-width:768px) 180px, 10vw"
-      className="object-contain object-left hidden md:block md:left-[-50px]"
-    />
-  </div>
-</div>
 
-{/* Правый корнер */}
-<div className="absolute inset-y-0 right-0 md:right-[-50px] w-[10vw] md:w-[180px] lg:w-[220px] min-w-[60px]">
-  <div className="relative h-full w-full">
-    {/* mobile */}
-    <Image
-      src="/decorative/mobile/StepsRightMobile.png"
-      alt="corner mobile"
-      fill
-      className="object-cover object-right md:hidden"
-    />
-    {/* desktop */}
-    <Image
-      src={rightCorner}
-      alt="corner right"
-      fill
-      sizes="(min-width:1024px) 220px, (min-width:768px) 180px, 10vw"
-      className="object-contain object-right hidden md:block md:right-[-50px]"
-    />
+  {/* ✅ Сужаем ТОЛЬКО маску по бокам на мобиле (6–8vw — подбери по вкусу) */}
+  <div className="absolute inset-y-0 left-[1vw] right-[1vw] md:left-[-35px] md:right-0">
+    <div className="relative h-full w-full">
+      <Image
+        src="/decorative/step-mask.svg"
+        alt="steps background"
+        fill
+        priority
+        sizes="100vw"
+        className="object-contain"  // object-contain, чтобы маска не прилипала к краям
+      />
+    </div>
   </div>
-</div>
+
+  {/* Левый корнер */}
+  <div className="absolute inset-y-0 left-0 w-[8vw] md:left-[-50px] md:w-[180px] lg:w-[220px] md:min-w-[60px]">
+    <div className="relative h-full w-full">
+      {/* mobile */}
+      <Image
+        src="/decorative/mobile/StepsLeftMobile.png"
+        alt="corner mobile"
+        fill
+        className="object-cover object-left md:hidden"
+      />
+      {/* desktop */}
+      <Image
+        src={leftCorner}
+        alt="corner left"
+        fill
+        sizes="(min-width:1024px) 220px, (min-width:768px) 180px, 10vw"
+        className="object-contain object-left hidden md:block"
+      />
+    </div>
+  </div>
+
+  {/* Правый корнер */}
+  <div className="absolute inset-y-0 right-0 w-[10vw] md:right-[-50px] md:w-[180px] lg:w-[220px] md:min-w-[60px]">
+    <div className="relative h-full w-full">
+      {/* mobile */}
+      <Image
+        src="/decorative/mobile/StepsRightMobile.png"
+        alt="corner mobile"
+        fill
+        className="object-cover object-right md:hidden"
+      />
+      {/* desktop */}
+      <Image
+        src={rightCorner}
+        alt="corner right"
+        fill
+        sizes="(min-width:1024px) 220px, (min-width:768px) 180px, 10vw"
+        className="object-contain object-right hidden md:block"
+      />
+    </div>
+  </div>
 
   </div>
 
@@ -131,33 +138,37 @@ export default function StepsToInvest() {
         <div className="relative z-10 mx-auto px-6 md:px-8 md:max-w-6xl mt-8 md:mt-12">
           <div className="grid grid-cols-3 gap-1 md:gap-5">*/}
         {/* Контейнер с тремя «шагами» */}
+
+
     
 <div className="absolute inset-0 z-10 flex items-center">
-  <div className="w-full mx-auto py-8 md:py-4 px-4 md:px-8 md:max-w-6xl">
-    <div className="grid grid-cols-3 gap-4 md:gap-5">
+  <div className="w-full mx-auto py-8 md:py-0 md:pl-18 px-8  md:max-w-6xl">
+    <div className="grid grid-cols-3 gap-2 md:gap-5 " //left-[24px] right-[1vw] md:left-20 md:right-20
+    >
       {/* ...твои шаги без дополнительных mt-8/md:mt-12 ... */}
             {steps.map((step, idx) => (
-              <div key={step.id} className="relative group h-full">
+              <div key={step.id} className="relative group h-full sm:mt-9 md:mt-0">
                 <div
                   className="
+                  md:pb-16 pl-3 pb-3 md:pl-1 
                     bg-transparent rounded-2xl
-                    p-4 md:p-4
-                    h-[110px] md:h-full
+                    sm:h-[110px] sm:w-[110px] md:w-[320px] md:h-[200px] md:h-full
                     flex flex-col justify-top
-                    hover:shadow-xl transition
+                    /*md:hover:shadow-xl*/ transition
                   "
                 >
                   <div className="flex items-baseline gap-2 md:block sm:justify-center md:justify-start">
-                    <div className="w-7 flex-none text-xs md:text-4xl font-bold tabular-nums leading-none md:mb-2 md:py-4">
+                    <div className="w-7 flex-none text-m md:text-4xl font-bold tabular-nums leading-none md:mb-2 md:py-4">
                       {step.id.toString().padStart(2, "0")}
                     </div>
 
-                    <h3 className="hidden md:block text-2xl font-semibold leading-snug">
+                    <h3 className="hidden md:block text-xl md:text-2xl font-semibold leading-snug">
                       {step.title}
                     </h3>
                   </div>
 
-                  <p className="mt-1 md:mt-2 text-[11px] md:text-base text-center md:text-left">
+                  <p className="mt-1 md:mt-2 text-[11px] md:text-base text-left" //text-center md:
+                  >
                     {step.description}
                   </p>
                 </div>
@@ -170,7 +181,7 @@ export default function StepsToInvest() {
 
         {/* Абсолютно позиционированные «плавающие» 3D-монетки */}
         <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute top-[-15px] right-[0px] md:right-[160px] w-[56px] h-[56px] md:w-[200px] md:h-[200px] opacity-100 z-[5]">
+          <div className="absolute top-[-5px] right-[15px] md:right-[160px] w-[56px] h-[56px] md:w-[200px] md:h-[200px] opacity-100 z-[5]">
             <Image
               src="/decorative/ton22.svg"
               alt="TON Coin Left"
@@ -179,7 +190,7 @@ export default function StepsToInvest() {
             />
           </div>
 
-          <div className="absolute w-[78px] h-[78px] md:w-[300px] md:h-[300px] top-[-20px] md:top-[-120px] right-[20%] md:right-[36%] z-0 flex opacity-80 md:opacity-100 pointer-events-none">
+          <div className="absolute w-[78px] h-[78px] md:w-[300px] md:h-[300px] top-[-20px] md:top-[-120px] right-[30%] md:right-[36%] z-0 flex opacity-100 md:opacity-100 pointer-events-none">
             <Image
               src={coinLarge}
               alt="Ton Coin"
@@ -187,7 +198,7 @@ export default function StepsToInvest() {
             />
           </div>
 
-          <div className="absolute md:top-[-150px] right-[50px] top-[-120px] md:right-[-150px] w-full h-full md:opacity-100 z-[5]">
+          <div className="absolute md:top-[-150px] right-[-10px] top-[-30px] md:right-[-150px] w-full h-full md:opacity-100 z-[5]">
             <Image
               src={centerSphere}
               alt="Sphere"

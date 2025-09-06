@@ -1,4 +1,3 @@
-import React from "react";
 import Image from "next/image";
 import GoToStakingButton from "@/components/GoToStakingButton";
 import { useRouter } from 'next/navigation';
@@ -38,14 +37,15 @@ export default function PlanCard({
       ].join(" ")}
     >
       {/* Иконка + заголовок */}
-<div className="mb-2 md:mb-4 flex flex-col md:flex-row md:items-center">
+<div className="mb-1 md:mb-4 flex flex-col md:flex-row md:items-center">
   <div
     className="
+      grid place-items-center
       relative flex-shrink-0
       w-12 h-12 md:w-14 md:h-14
-      rounded-full overflow-hidden
+      rounded-s overflow-hidden
       bg-white/5
-      ring-1 ring-sky-400/50
+      border-1 border-sky-400/50
       shadow-[0_6px_24px_rgba(61,212,255,.35)]
       backdrop-blur-[2px]
       md:mr-3
@@ -55,21 +55,21 @@ export default function PlanCard({
       src={iconSrc}
       alt={`${title} icon`}
       fill
-      className="object-contain p-2"
+      className="object-contain "
     />
   </div>
 
   {/* заголовок: ниже на мобиле, справа на десктопе */}
-  <h3 className="mt-1 md:mt-3 text-lg md:text-2xl font-semibold">
+  <h3 className="mt-1 md:mt-3 text-[15px] md:text-2xl font-semibold">
     {title}
   </h3>
 </div>
 
 
       {/* Процент */}
-      <div className="flex flex-col space-y-1 mb-3 md:mb-6">
+      <div className="flex flex-col pt-0 md:space-y-1 pb-0 md:mb-6">
         <span className="text-[10px] md:text-sm text-gray-300">Your profit</span>
-        <div className="mt-0.5 flex items-baseline gap-2">
+        <div className="md:mt-0.5 flex items-baseline gap-1 md:gap-2">
           <span className="text-xl md:text-3xl font-bold text-accent-200">{dailyProfit}%</span>
           <span className="text-[10px] text-gray-300">Per day</span>
         </div>
@@ -95,7 +95,7 @@ export default function PlanCard({
   <button
     type="button"
     onClick={onSelect}
-    className={`md:hidden h-11 w-full rounded-lg text-sm font-semibold transition
+    className={`md:hidden h-6 w-full rounded-lg text-sm font-semibold transition
       focus:outline-none focus:ring-2 focus:ring-sky-400/60
       ${isActive
         ? "bg-sky-500 text-white shadow-[0_0_20px_rgba(56,172,234,0.45)]"
@@ -109,7 +109,7 @@ export default function PlanCard({
   <button
     type="button"
     onClick={() => (isActive ? router.push('/staking') : onSelect?.())}
-    className={`hidden md:block h-12 w-3/4 rounded-lg transition bg-center bg-cover md:min-w-[150px]
+    className={`hidden md:block h-8 w-3/4 md:h-12 md:w-3/4 rounded-lg transition bg-center bg-cover md:min-w-[150px]
       ${isActive
         ? "bg-[url('/decorative/btn-select.svg')]"
         : "bg-[url('/decorative/btn.svg')]"}`}

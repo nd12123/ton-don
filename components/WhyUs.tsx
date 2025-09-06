@@ -27,7 +27,7 @@ export default function WhyUs() {
   <div
     className="
       max-w-6xl mx-auto
-      grid grid-cols-1 sm:grid-cols-3 gap-8 px-4
+      grid grid-cols-1 sm:grid-cols-3 md:gap-8 gap-4 px-4
       justify-items-center sm:justify-items-stretch
     "
   >
@@ -36,32 +36,33 @@ export default function WhyUs() {
         key={f.title}
         className="
           relative
-          w-full max-w-xs h-60
+          w-full max-w-xs h-55 md:h-60
           bg-[radial-gradient(ellipse_at_top_right,_#2C3553_0%,_#1A223E_100%)]
           rounded-3xl
           outline outline-1 outline-offset-[-1px] outline-sky-500
           overflow-hidden
           flex flex-col
-          mx-auto sm:mx-0
+          md:mx-auto sm:mx-0
         "
       >
         {/* Иконка + Заголовок + Описание */}
         <div className="p-4 md:p-6 flex-1 flex flex-col">
-          <div className="mb-4 flex justify-center">{f.icon}</div>
-          <h4 className="text-white text-2xl font-semibold mb-2 font-inter text-center sm:text-left">
+          <div className="mb-1 md:mb-4 flex justify-center">{f.icon}</div>
+          <h4 className="text-white text-xl md:text-2xl font-semibold mb-2 font-inter text-center sm:text-left">
             {f.title}
           </h4>
-          <p className="text-gray-300 text-base font-medium flex-1 leading-relaxed font-inter text-center sm:text-left">
+          <p className="text-gray-300 text-base font-medium  md:flex-1 leading-relaxed font-inter text-center sm:text-left">
             {f.description}
           </p>
         </div>
 
+        <div className="p-4 md:p-0">
         <Link href="#calculate-plans">
           <button
             type="button"
             className="
-              absolute bottom-4 left-1/2 -translate-x-1/2 sm:translate-x-0 sm:left-6
-              inline-flex items-center gap-2
+              absolute bottom-5 left-1/2 -translate-x-1/2 sm:translate-x-0 sm:left-6
+              inline-flex items-center gap-1 md:gap-2 
               text-sky-400 text-base font-bold font-inter
               hover:underline transition
             "
@@ -70,6 +71,7 @@ export default function WhyUs() {
             <ArrowRight size={16} />
           </button>
         </Link>
+              </div>
       </div>
     ))}
   </div>

@@ -111,7 +111,7 @@ export default function CalculateAndPlans() {
 </div>
 {/* --- Главный текст из макета Figma --- */}
 <div className="max-w-6xl mx-auto px-4 relative z-10 pb-8 md:pb-16"> 
-  <h1 className="font-inter font-bold text-[70px] leading-[68px] text-white">
+  <h1 className="font-inter font-bold text-[50px] leading-[48px] md:text-[70px] md:leading-[68px] text-white">
     Choose a <span className="text-[#00C2FF]">plan</span> and<br/>
     <span className="text-[#00C2FF]">Calculate</span> your <span className="text-[#00C2FF]">Profit</span>
   </h1>

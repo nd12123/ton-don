@@ -8,9 +8,12 @@ import ton3d1 from '@/assets/Main/Ton 3d 1.png';
 import ton3d2 from '@/assets/Main/Ton 3d 2.png';
 import ton3d3 from '@/assets/Main/Ton 3d 3.png';
 import centralSphere from '@/assets/Main/Ellipse10.png';
+import centralRightSphere from '@/assets/Main/EllipseMainRight.png';
+import centralLeftSphere from '@/assets/Main/EllipseMainLeft.png';
 
 const ellipse6 = '/decorative/ellipse6.png';
 const ellipse5 = '/decorative/ellipse5.png';
+
 
 // Import SVG icons
 //import GetStartedIcon from '@/assets/Main/Get started.svg';
@@ -56,6 +59,22 @@ export default function MainSection({className = ''}: MainSectionProps) {
         />
       </div>
 
+      <div className="absolute top-[30%] right-0 w-full md:w-1/2 h-full pointer-events-none">
+        <Image
+          src={centralRightSphere}
+          alt=""
+          fill
+          style={{ objectFit: 'cover', objectPosition: 'right center', opacity: 0.9 }}        />
+        </div>
+        <div className="absolute top-[30%] left-0 w-full md:w-1/2 h-full pointer-events-none">
+        <Image
+          src={centralLeftSphere}
+          alt=""
+          fill
+          style={{ objectFit: 'cover', objectPosition: 'left center', opacity: 0.9 }}
+          //className="absolute top-[30%] left-0 w-[65%] md:w-[45%] opacity-90 animate-float z-10"
+        />
+        </div>
      
       {/* Контейнер 
       <div className="relative z-10 max-w-7xl mx-auto px-4 lg:px-8 py-20"></div>
@@ -204,7 +223,7 @@ max-w-7xl mx-auto mb-8  md:pl-[90px] sm:pl-[5px] px-2">
         <Image
           src={centralSphere}
           alt=""
-          className="absolute top-[0%] md:right-[20px] w-[45%] opacity-50 animate-float"
+          className="absolute top-[20%] md:right-[20px] w-[65%] md:w-[45%] opacity-30 md:opacity-50 animate-float"
         />
         <Image
           src={ton3d3}
