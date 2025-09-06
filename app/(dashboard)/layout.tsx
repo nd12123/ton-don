@@ -56,7 +56,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         {/* Контент дэшборда */}
         <div className="relative z-10">
           {/* отступ от фиксированного хедера */}
-          <main className="p-6 pt-[72px] md:pt-[84px]">{children}</main>
+          <main className="p-6 pt-[4px] md:pt-[8px]">{children}</main>
         </div>
       </div>
     </ThemeProviderWrapper>

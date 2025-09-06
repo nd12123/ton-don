@@ -6,12 +6,14 @@ import Image from "next/image";
 import Link from "next/link";
 
 // Пути к вашим файлам. Поместите картинки в папку /public/decorative/
-import coinLarge from "@/assets/StepsToInvest/ton2.png";
+//import coinLarge from "@/assets/StepsToInvest/ton2.png";
 import rightCorner from "@/assets/StepsToInvest/rightCorner.svg"
 import leftCorner from "@/assets/StepsToInvest/leftCorner.svg";
 
 import rightCornerBottom from "@/public/decorative/ellipse5.png";
 import centerSphere from "@/public/decorative/Ellipse51.png";
+import coinLarge from '@/assets/StepsToInvest/stepsTon.svg';
+
 // import WalletConnect from "@/components/WalletConnect";
 import ConnectWalletButton from "@/components/ConnectWalletButton";
 

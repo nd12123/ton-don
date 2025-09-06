@@ -7,7 +7,7 @@ import Image from 'next/image';
 import ton3d1 from '@/assets/Main/Ton 3d 1.png';
 import ton3d2 from '@/assets/Main/Ton 3d 2.png';
 import ton3d3 from '@/assets/Main/Ton 3d 3.png';
-import centralSphere from '@/assets/Main/stepsTon.svg';
+import centralSphere from '@/assets/Main/Ellipse10.png';
 import centralRightSphere from '@/assets/Main/EllipseMainRight.png';
 import centralLeftSphere from '@/assets/Main/EllipseMainLeft.png';
 
@@ -228,17 +228,17 @@ max-w-7xl mx-auto mb-8  md:pl-[90px] sm:pl-[5px] px-2">
         <Image
           src={ton3d3}
           alt=""
-          className="absolute top-[15%] right-[-45px] w-[30%] md:top-[3%] md:right-[16%] md:w-[17%] opacity-90 animate-float delay-4000"
+          className="absolute top-[15%] right-[-45px] w-[30%] md:top-[3%] md:right-[16%] md:w-[17%]  xl:top-[2%] 3xl:top-[0%] xl:right-[16%] 3xl:right-[13%] 3xl:w-[18%] opacity-90 animate-float delay-4000"
         />
         <Image
           src={ton3d1}
           alt=""
-          className="absolute right-[15%] bottom-[20%] w-[30%] md:top-[23%] md:right-[26%] md:w-[10%] opacity-80 animate-float"
+          className="absolute right-[15%] bottom-[20%] w-[30%] md:top-[23%] md:right-[26%] md:w-[10%]  2xl:bottom-[18%] 2xl:right-[28] 2xl:w-[13%] opacity-80 animate-float"
         />
         <Image
           src={ton3d2}
           alt=""
-          className="absolute bottom-[-5%] right-[-60px] w-[60%] md:bottom-[5%] md:right-[10%] md:w-[28%] opacity-90 animate-float delay-2000"
+          className="absolute bottom-[-5%] right-[-60px] w-[60%] md:bottom-[9%] md:right-[10%] 3xl:bottom-[-2%] 3xl:right-[8%] md:w-[28%] 3xl:h-[30%] opacity-90 animate-float delay-2000"
         />
       </div>
   </div>

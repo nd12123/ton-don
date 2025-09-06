@@ -46,8 +46,8 @@ export default function PlanCard({
         {/* Иконка + заголовок */}
         <div className="mb-1 flex items-center gap-3">
           {/* Квадрат без свечения */}
-          <div className="grid place-items-center w-12 h-12 rounded-md bg-white/5 border border-white/10">
-            <div className="relative w-8 h-8">
+          <div className="grid place-items-center w-12 h-12 bg-white/5 border border-white/10">
+            <div className="relative w-10 h-10">
               <Image src={iconSrc} alt={`${title} icon`} fill className="object-contain" />
             </div>
           </div>
@@ -117,15 +117,13 @@ export default function PlanCard({
 
         {/* Иконка + заголовок как в твоём примере (с круглым акцентом) */}
         <div className="flex items-center mb-4">
-          <div className="flex-shrink-0 w-10 h-10 bg-accent-200 rounded-full flex items-center justify-center mr-3">
             <Image
               src={iconSrc}
               alt={`${title} icon`}
-              width={28}
-              height={28}
+              width={36}
+              height={36}
               className="object-contain"
             />
-          </div>
           <h3 className="text-3xl font-semibold">{title}</h3>
         </div>
 
