@@ -59,14 +59,14 @@ export default function MainSection({className = ''}: MainSectionProps) {
         />
       </div>
 
-      <div className="absolute top-[30%] right-0 w-full md:w-1/2 h-full pointer-events-none">
+      <div className=" md:hidden absolute top-[30%] right-0 w-full md:w-1/2 h-full pointer-events-none">
         <Image
           src={centralRightSphere}
           alt=""
           fill
           style={{ objectFit: 'cover', objectPosition: 'right center', opacity: 0.9 }}        />
         </div>
-        <div className="absolute top-[30%] left-0 w-full md:w-1/2 h-full pointer-events-none">
+        <div className="md:hidden absolute top-[30%] left-0 w-full md:w-1/2 h-full pointer-events-none">
         <Image
           src={centralLeftSphere}
           alt=""

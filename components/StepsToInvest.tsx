@@ -142,23 +142,24 @@ export default function StepsToInvest() {
 
     
 <div className="absolute inset-0 z-10 flex items-center">
-  <div className="w-full mx-auto py-8 md:py-0 md:pl-18 px-8  md:max-w-6xl">
-    <div className="grid grid-cols-3 gap-2 md:gap-5 " //left-[24px] right-[1vw] md:left-20 md:right-20
+  <div className="w-full mx-auto py-8 md:py-0 md:pl-18 px-4  md:max-w-6xl">
+    <div className="grid grid-cols-3 gap-0 md:gap-5 " //left-[24px] right-[1vw] md:left-20 md:right-20
     >
       {/* ...твои шаги без дополнительных mt-8/md:mt-12 ... */}
             {steps.map((step, idx) => (
               <div key={step.id} className="relative group h-full sm:mt-9 md:mt-0">
                 <div
                   className="
-                  md:pb-16 pl-3 pb-3 md:pl-1 
+                  md:pb-16 pl-5 pb-3 md:pl-1 
                     bg-transparent rounded-2xl
-                    sm:h-[110px] sm:w-[110px] md:w-[320px] md:h-[200px] md:h-full
+                    sm:h-[110px] sm:w-[80px] md:w-[320px] md:h-[200px] md:h-full
                     flex flex-col justify-top
                     /*md:hover:shadow-xl*/ transition
                   "
                 >
                   <div className="flex items-baseline gap-2 md:block sm:justify-center md:justify-start">
-                    <div className="w-7 flex-none text-m md:text-4xl font-bold tabular-nums leading-none md:mb-2 md:py-4">
+                    <div className=" flex-none text-m md:text-4xl font-bold tabular-nums leading-none md:mb-2 md:py-4" //w-7
+                    >
                       {step.id.toString().padStart(2, "0")}
                     </div>
 
@@ -167,7 +168,7 @@ export default function StepsToInvest() {
                     </h3>
                   </div>
 
-                  <p className="mt-1 md:mt-2 text-[11px] md:text-base text-left" //text-center md:
+                  <p className="mt-1 md:mt-2 text-[10px] md:text-base text-left" //text-center md:
                   >
                     {step.description}
                   </p>
