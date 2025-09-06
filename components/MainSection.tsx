@@ -233,12 +233,12 @@ max-w-7xl mx-auto mb-8  md:pl-[90px] sm:pl-[5px] px-2">
         <Image
           src={ton3d1}
           alt=""
-          className="absolute right-[15%] bottom-[20%] w-[30%] md:top-[23%] md:right-[26%] md:w-[10%]  2xl:bottom-[18%] 2xl:right-[28] 2xl:w-[13%] opacity-80 animate-float"
+          className="absolute right-[15%] bottom-[20%] w-[30%] md:top-[22%] md:right-[26%] md:w-[10%]  2xl:bottom-[18%] 2xl:right-[28] 2xl:w-[13%] opacity-80 animate-float"
         />
         <Image
           src={ton3d2}
           alt=""
-          className="absolute bottom-[-5%] right-[-60px] w-[60%] md:bottom-[9%] md:right-[10%] 3xl:bottom-[-2%] 3xl:right-[8%] md:w-[28%] 3xl:h-[30%] opacity-90 animate-float delay-2000"
+          className="absolute bottom-[-5%] right-[-60px] w-[60%] md:bottom-[7%] md:right-[10%] 3xl:bottom-[-2%] 3xl:right-[8%] md:w-[28%] 3xl:h-[30%] opacity-90 animate-float delay-2000"
         />
       </div>
   </div>
