@@ -7,7 +7,7 @@ import Image from 'next/image';
 import ton3d1 from '@/assets/Main/Ton 3d 1.png';
 import ton3d2 from '@/assets/Main/Ton 3d 2.png';
 import ton3d3 from '@/assets/Main/Ton 3d 3.png';
-import centralSphere from '@/assets/Main/Ellipse10.png';
+import centralSphere from '@/assets/Main/stepsTon.svg';
 import centralRightSphere from '@/assets/Main/EllipseMainRight.png';
 import centralLeftSphere from '@/assets/Main/EllipseMainLeft.png';
 
