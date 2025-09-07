@@ -74,13 +74,13 @@ export default function FAQSection() {
         //'overflow-hidden',
         'bg-faq-gradient',
         //'horizon',
-        'py-10'
+        'py-6 md:py-10'
       ].join(' ')}
       >
         {/* — Усиленный фэйд вверх для FAQ */}
 {/* — Плавный фэйд сверху для стыка Калькулятора → FAQ */}
 <div
-  className="absolute top-0 left-0 w-full h-24 pointer-events-none z-[-1] opacity-30"
+  className="absolute hidden md:block  top-0 left-0 w-full h-24 pointer-events-none z-[-1] opacity-30"
   style={{
     backgroundImage: [
       // 0) чуть более лёгкая «чёрная» полоса сверху
@@ -97,6 +97,35 @@ export default function FAQSection() {
          transparent 70%
        )`,
       // 2) основной линейный фейд сверху вниз
+      `linear-gradient(
+         to top,
+         rgba(10, 19, 41, 1) 0%,
+         rgba(10, 19, 41, 0) 100%
+       )`
+    ].join(', ')
+  }}
+/>
+{/* — Плавный фэйд сверху для стыка Калькулятора → FAQ mobile */}
+<div
+  className="absolute block md:hidden top-0 left-0 w-full h-24 pointer-events-none z-[-1] opacity-30"
+  style={{
+    backgroundImage: [
+      // 0) чуть более лёгкая «чёрная» полоса сверху
+      `linear-gradient(
+         to bottom,
+         rgba(0, 0, 0, 0.3) 0%,
+         rgba(0, 0, 0, 0.15) 8%,
+         transparent 30%
+       )`,
+      // 1) смягчённый радиальный блик в левом верхнем углу
+      `radial-gradient(
+         circle at top left,
+         rgba(10, 19, 41, 0.7) 0%,
+         transparent 70%
+       )`,
+      // 2) основной линейный фейд сверху вниз
+      /*
+       */
       `linear-gradient(
          to top,
          rgba(10, 19, 41, 1) 0%,
@@ -237,7 +266,7 @@ export default function FAQSection() {
   />
 </div>
         */}
-      <div className="absolute bottom-0 left-0 w-full h-full pointer-events-none z-0">
+      <div className="absolute bottom-0 left-0 w-full h-[20%] md:w-full md:h-full opacity-100 md:opacity-90 pointer-events-none z-0">
   <NextImage
     src={sphere}
     alt=""
@@ -245,13 +274,13 @@ export default function FAQSection() {
     style={{
       objectFit: "cover",
       objectPosition: "left bottom",
-      opacity: 0.9,
+      //opacity: 0.9,
     }}
   />
 </div>
 
 
-<div className="absolute top-0 right-0 h-full w-full pointer-events-none z-0">
+<div className="hidden md:block absolute top-0 right-0 h-full w-full pointer-events-none z-0">
   <NextImage
     src={sphereRightTop}
     alt=""
@@ -297,12 +326,12 @@ export default function FAQSection() {
         src="/decorative/starsbg1.png"       // укажите свой файл со звёздами stars-bg ?
         alt=""
         fill
-        className="pointer-events-none"
-        style={{ objectFit: "cover", objectPosition: "center top", opacity: "0.1" }}
+        className="pointer-events-none opacity-10 md:opacity-10"
+        style={{ objectFit: "cover", objectPosition: "center top" }}
       />
 
 <div
-  className="absolute inset-x-0 bottom-0 h-32 pointer-events-none -z-10"
+  className="absolute hidden md:block inset-x-0 bottom-0 h-3 md:h-32 pointer-events-none -z-10" //w-1/2 md:w-full
   style={{
     background: `
       linear-gradient(
@@ -310,8 +339,6 @@ export default function FAQSection() {
     `,
   }}
 />
-
-
     </section>
 
   );

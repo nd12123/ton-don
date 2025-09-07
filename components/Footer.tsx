@@ -101,12 +101,12 @@ export default function Footer({ className = "" }: { className?: string }) {
         <Image
           src={sphereUpperLeft}
           alt=""
-          className="absolute left-0 top-0 w-full h-auto opacity-85"
+          className="absolute left-0 top-0 w-full h-auto opactity-74 md:opacity-85"
         />
         <Image
           src={sphereUpperRight}
           alt=""
-          className="absolute right-0 top-0 w-full h-auto opacity-[05%]"
+          className="hidden md:block absolute right-0 top-0 w-full h-auto opacity-[05%]"
         />
 
 
@@ -120,7 +120,7 @@ export default function Footer({ className = "" }: { className?: string }) {
         <Image
           src={tonCoin1}
           alt=""
-          className="absolute w-32 h-32 top-[5%] right-[3%] opacity-60 animate-float-slow"
+          className="absolute w-16 h-16 md:w-32 md:h-32 top-[5%] right-[3%] opacity-60 animate-float-slow"
         />
         <Image
           src={tonCoin2}
@@ -133,7 +133,7 @@ export default function Footer({ className = "" }: { className?: string }) {
           1) CTA-блок «Start investing now!»
           mb-16
          ========================= */}
-      <div className="relative z-10 pb-6 mt-[100px]">
+      <div className="relative z-10 mt-6 sm:mt-8 lg:mt-10 pb-3">
         {/* здесь ваш компонент StartInvesting */}
       <StartInvesting />
       </div>
@@ -142,16 +142,16 @@ export default function Footer({ className = "" }: { className?: string }) {
           2) Основной футер: логотип, навигация, соцсети 
          ========================= */}
       <div className="relative z-10 border-t border-[#1F2A44] pt-3 pb-3">
-        <div className="container mx-auto px-4 flex flex-col lg:flex-row items-center justify-between gap-6">
+        <div className="container mx-auto px-4 flex flex-col lg:flex-row items-center justify-between gap-2 md:gap-6">
           {/* левый блок */}
-          <div className="flex items-center gap-6">
+          <div className="flex items-center gap-4 md:gap-6">
             <div className="flex items-center gap-2">
               <Image src={logoSvg} alt="TONStake.ai" width={32} height={32} />
-              <span className="text-xl font-semibold">TON Stake</span>
+              <span className="text-xl whitespace-nowrap font-semibold">TON Stake</span>
             </div>
 
             <div
-            className="h-6 border-l-4 border-transparent mx-4"
+            className="h-6 border-l-2 md:border-l-4 border-transparent mx-1 md:mx-4"
             style={{
               borderImageSlice: 1,
               borderImageSource:
@@ -187,7 +187,7 @@ export default function Footer({ className = "" }: { className?: string }) {
           </nav>
 
           {/* соцкнопки */}
-          <div className="flex items-center gap-4 py-2">
+          <div className="flex items-center gap-1 md:gap-4 py-0 md:py-2">
             <Link
               href="/support"
             >
@@ -212,7 +212,7 @@ export default function Footer({ className = "" }: { className?: string }) {
       {/* =========================
           3) Копирайт
          ========================= */}
-      <div className="relative z-10 border-t border-[#1F2A44] mt-4 pt-4 pb-1">
+      <div className="relative z-10 border-t border-[#1F2A44] md:mt-4 pt-4 pb-1">
         <div className="container mx-auto px-4 flex flex-col-reverse lg:flex-row items-center justify-between gap-4 text-sm text-[#A0B0D8]">
           <p>© 2025 Orbi Ton | All Rights Reserved</p>
           <div className="flex gap-4">
