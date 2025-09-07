@@ -4,31 +4,72 @@ import { FloatingStakeNow } from "./FloatingStakeNow";
 export default function StartInvesting({ className = "" }: { className?: string }) {
   return (
     <section className={["relative z-[5] text-white", className].join(" ")}>
-      {/* Обёртка с пропорциями исходника (подгони ratio под свой SVG) */}
+      {/* Блок с фоном баннера */}
       <div
         className="
           relative mx-auto
           w-[min(92vw,1100px)]
           aspect-[1359/768]
           bg-no-repeat bg-center
-          bg-[length:90%] md:bg-[length:85%] lg:bg-[length:80%]
+          bg-[length:100%] md:bg-[length:85%] lg:bg-[length:80%]
         "
-        style={{ backgroundImage: "url('/decorative/StartInvestingFull.svg')" }}
+        style={{ backgroundImage: "url('/decorative/StartNow.svg')" }}
       >
-        {/* Кнопка поверх фона — фиксируем точку якоря в процентах */}
-        <FloatingStakeNow
-          href="/staking"
+        {/* Контент поверх фона */}
+        <div
           className="
-            absolute z-10
-            left-[9%] bottom-[31%]
-            md:left-[9%] md:bottom-[14%]
-            lg:left-[13%] lg:bottom-[36%]
+            absolute inset-0
+            flex items-start
           "
-        />
+        >
+          {/* Левая колонка с текстом */}
+          <div
+            className="
+              // якорим блок примерно как на макете
+              pl-[2%] pt-[15%]
+              md:pl-[7%] md:pt-[10%]
+              lg:pl-[8%] lg:pt-[9%]
+              max-w-[min(88%,640px)]
+            "
+          >
+            {/* Заголовок */}
+            <h1
+              className="
+                font-bold md:font-extrabold leading-[0.95] tracking-[-0.02em]
+                md:text-[clamp(28px,8.2vw,92px)]
+                text-[clamp(20px,6vw,70px)]
+              "
+            >
+              Start investing<br />now!
+            </h1>
+
+            {/* Подзаголовок */}
+            <p
+              className="
+                pt-1 md:mt-4
+                text-white/90
+                text-[clamp(10px,2vw,22px)]
+              "
+            >
+              Start earning in 2 clicks – your first income tomorrow
+            </p>
+
+            {/* Кнопка под текстом (чуть ниже, по центру не нужно — как в рефе слева) */}
+            <FloatingStakeNow
+              href="/staking"
+              className="
+              pt-1 left-[5px]
+                mb-7 md:mt-6
+                inline-block
+              "
+            />
+          </div>
+        </div>
       </div>
     </section>
   );
 }
+
 
       {/* 2) Горизонт (основной фон) 
       <div

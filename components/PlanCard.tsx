@@ -32,8 +32,8 @@ export default function PlanCard({
       <div
         onClick={!isActive ? onSelect : undefined}
         className={[
-          "md:hidden relative flex flex-col",
-          "p-3 rounded-3xl transition",
+          "md:hidden relative flex flex-col gap-y-[2px]",
+          "p-2 md:p-3 rounded-3xl transition",
           `bg-plan-${title.toLowerCase()}`,
           isActive
             ? "border-2 border-sky-400 shadow-[0_8px_32px_rgba(61,212,255,.30)]"
@@ -44,54 +44,53 @@ export default function PlanCard({
         ].join(" ")}
       >
         {/* Иконка + заголовок */}
-        <div className="mb-1 flex items-center gap-1 md:gap-3">
+        <div className="pb-0 md:mb-1 flex items-center gap-1 md:gap-3">
           {/* Квадрат без свечения */}
-          <div className="grid place-items-center rounded-xl w-10 h-10 md:w-12 md:h-12 bg-white/5 " //border border-white/10
+          <div className="grid place-items-center rounded-xl w-6 h-6 md:w-12 md:h-12 bg-white/5 pl-1" //border border-white/10
           >
-            <div className="relative w-9 h-9 md:w-10 md:h-10">
+            <div className="relative w-6 h-6 md:w-10 md:h-10 text-l">
               <Image src={iconSrc} alt={`${title} icon`} fill className="object-contain" />
             </div>
           </div>
 
-          <h3 className="md:p-4 text-[15px] font-semibold">{title}</h3>
+          <h3 className="px-2 md:p-4 text-[15px] font-semibold">{title}</h3>
         </div>
 
         {/* Процент */}
         <div className="pt-0">
-          <span className="text-[10px] text-gray-300">Your profit</span>
+          <span className="text-[11px] text-gray-300">Your profit</span>
           <div className="flex items-baseline gap-1">
             <span className="text-xl font-bold text-accent-200">{dailyProfit}%</span>
-            <span className="text-[10px] text-gray-300">Per day</span>
+            <span className="text-[11px] text-gray-300">Per day</span>
           </div>
         </div>
 
         {/* Диапазон */}
-        <div className="mt-2">
-          <span className="text-[12px] text-gray-300 block">Investments for all time</span>
-          <span className="text-sm font-medium text-accent-200">{rangeText}</span>
+        <div className="pt-1">
+          <span className="text-[9.5px] text-gray-300 block">Investments for all time</span>
+          <span className="text-[14px] md:text-m font-medium text-accent-200">{rangeText}</span>
         </div>
 
         {/* Divider */}
-        <div className="w-full border-b my-2" style={{ borderColor: "rgba(16,95,150,1)" }} />
+        <div className="hidden md:block w-full border-b my-2" style={{ borderColor: "rgba(16,95,150,1)" }} />
 
         {/* CTA (текстовая кнопка) */}
-        <div className="mt-auto">
-          <button
-            type="button"
-            onClick={onSelect}
-            className={`h-9 w-full rounded-lg text-sm font-semibold transition
-              focus:outline-none focus:ring-2 focus:ring-sky-400/60
-              ${isActive
-                ? "bg-sky-500 text-white shadow-[0_0_20px_rgba(56,172,234,0.45)]"
-                : "bg-white/10 text-sky-200 border border-white/10 hover:bg-white/15 active:scale-[0.99]"}`
-            }
-            aria-pressed={isActive}
-          >
-            Invest
-          </button>
-        </div>
-      </div>
-
+       
+  <div className="mt-auto flex justify-center pb-0">
+    <button
+      type="button"
+      onClick={onSelect}
+      className={`h-6 w-3/4 rounded-lg text-[11px] font-semibold transition
+        focus:outline-none focus:ring-2 focus:ring-sky-400/60
+        ${isActive
+          ? "bg-sky-500 text-white shadow-[0_0_20px_rgba(56,172,234,0.45)]"
+          : "bg-white/10 text-sky-200 border border-white/10 hover:bg-white/15 active:scale-[0.99]"}`}
+      aria-pressed={isActive}
+    >
+      Invest
+    </button>
+  </div>
+</div>
       {/* ———————————— DESKTOP VARIANT ———————————— */}
       <div
         onClick={onSelect}
@@ -117,19 +116,19 @@ export default function PlanCard({
         </div>
 
         {/* Иконка + заголовок как в твоём примере (с круглым акцентом) */}
-        <div className="flex items-center mb-4">
+        <div className="flex items-center w-16 h-16 md:w-36 md:h-36 pb-2 md:mb-4">
             <Image
               src={iconSrc}
               alt={`${title} icon`}
-              width={36}
-              height={36}
+              //width={36}
+              //height={36}
               className="object-contain"
             />
-          <h3 className="text-3xl font-semibold">{title}</h3>
+          <h3 className="text-xl md:text-3xl font-semibold">{title}</h3>
         </div>
 
         {/* Процент и подпись */}
-        <div className="flex flex-col space-y-1 mb-6">
+        <div className="flex flex-col space-y-1 mb-1 md:mb-6">
           <span className="text-sm text-gray-300">Your profit</span>
           <div className="mt-1 flex items-baseline space-x-2">
             <span className="text-3xl font-bold text-accent-200">{dailyProfit}%</span>
@@ -138,13 +137,13 @@ export default function PlanCard({
         </div>
 
         {/* Диапазон инвестиций */}
-        <div className="flex flex-col space-y-1 mb-6">
+        <div className="flex flex-col space-y-1 md-1 md:mb-6">
           <span className="text-sm text-gray-300">Investments for all time</span>
           <span className="text-xl font-medium text-accent-200">{rangeText}</span>
         </div>
 
         {/* Divider */}
-        <div className="w-full border-b my-4" style={{ borderColor: "rgba(16,95,150,1)" }} />
+        <div className="sm:hidden md:block w-full border-b my-4" style={{ borderColor: "rgba(16,95,150,1)" }} />
 
         {/* Кнопка без текста (фон меняется по isActive) */}
         <div className="mt-auto">

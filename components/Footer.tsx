@@ -125,7 +125,7 @@ export default function Footer({ className = "" }: { className?: string }) {
         <Image
           src={tonCoin2}
           alt=""
-          className="absolute w-32 h-32 bottom-[30%] left-[4%] opacity-50 animate-float-slow delay-3000"
+          className="absolute w-32 h-32 bottom-[44%] left-[4%] opacity-50 animate-float-slow delay-3000"
         />
       </div>
 
