@@ -73,7 +73,7 @@ export default function StepsToInvest() {
       </div>
 
 {/* ОБКАТЫВАЕМ КОНТЕНТ В RELATIVE-wrapper */}
-<div className="relative mt-8 md:mt-4 px-0 h-[120px] md:h-[350px]">
+<div className="relative mt-8 md:mt-4 px-0 h-[120px] md:h-[350px] z-10">
   {/* фон-изображение – под гридом */}
   <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden">
 
@@ -215,6 +215,13 @@ export default function StepsToInvest() {
         <div className="relative z-10 flex justify-center py-7">
           <ConnectWalletButton />
         </div>
+        
+      <div //LOOKS fine on Mobile
+        className="  absolute bottom-0 left-0 w-full h-full pointer-events-none -z-5 opacity-65" //hidden md:block
+        style={{
+          background: "linear-gradient(to top, #020614 0%, #060E21 6%, #0B1028 15%)", //#010512
+        }}
+      />
     </section>
   );
 }

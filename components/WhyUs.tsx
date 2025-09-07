@@ -71,18 +71,31 @@ function FeatureCard({
     </div>
   );
 }
-
 export default function WhyUs() {
   return (
-    <section className="py-20 bg-bg-dark relative overflow-hidden">
+    <section
+      id="why-us"
+      className="relative overflow-hidden"
+    >
+      <div
+  className="absolute top-0 left-0 w-full h-full pointer-events-none -z-10 opacity-85"
+  style={{
+    // последний стоп два раза — чтобы «полка» цвета была ровной
+    background:
+      "linear-gradient(to bottom, #010512  0%, #050C1E 20%, #060E21 42%, #0A1324 80%, #0A1324 100%)",
+  }}
+/>
+
       <div
         className="
+          relative z-10 py-8
           max-w-6xl mx-auto
           grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-8 px-4
           justify-items-center sm:justify-items-stretch
         "
       >
-        {/* первые 3 карточки — видны везде */}
+        
+        {/* первые 3 карточки */}
         {features.map((f) => (
           <FeatureCard
             key={f.title}
@@ -92,7 +105,7 @@ export default function WhyUs() {
           />
         ))}
 
-        {/* ещё 3 карточки — показываем только на десктопе (lg+) */}
+        {/* ещё 3 карточки — только на десктопе */}
         <div className="hidden lg:contents">
           {features.map((f, i) => (
             <FeatureCard

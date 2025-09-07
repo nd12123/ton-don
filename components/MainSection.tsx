@@ -41,30 +41,30 @@ export default function MainSection({className = ''}: MainSectionProps) {
       ].join(" ")}
     >
 
-<div className="absolute bottom-0 left-0 w-full md:w-1/2 h-full pointer-events-none">
+      <div className="absolute bottom-0 left-0 w-full md:w-1/2 h-full opacity-75 md:opacity-55 pointer-events-none">
         <Image
           src={ellipse6}
           alt=""
           fill
-          style={{ objectFit: 'cover', objectPosition: 'left bottom', opacity: 0.55 }}
+          style={{ objectFit: 'cover', objectPosition: 'left bottom' }}
         />
       </div>
 
-      <div className="absolute bottom-0 right-0 w-full md:w-1/2 h-full pointer-events-none">
+      <div className="absolute bottom-0 right-0 w-full md:w-1/2 h-full opacity-35 md:opacity-45 pointer-events-none">
         <Image
           src={ellipse5}
           alt=""
           fill
-          style={{ objectFit: 'cover', objectPosition: 'right bottom', opacity: 0.45 }}
+          style={{ objectFit: 'cover', objectPosition: 'right bottom'}}
         />
       </div>
 
-      <div className=" md:hidden absolute top-[30%] right-0 w-full md:w-1/2 h-full pointer-events-none">
+      <div className=" md:hidden absolute top-[30%] right-0 w-full md:w-1/2 md:opacity-90 h-full pointer-events-none">
         <Image
           src={centralRightSphere}
           alt=""
           fill
-          style={{ objectFit: 'cover', objectPosition: 'right center', opacity: 0.9 }}        />
+          style={{ objectFit: 'cover', objectPosition: 'right center' }}        />
         </div>
         <div className="md:hidden absolute top-[30%] left-0 w-full md:w-1/2 h-full pointer-events-none">
         <Image
@@ -82,7 +82,7 @@ export default function MainSection({className = ''}: MainSectionProps) {
 {/* === HERO wrapper: управляем порядком на mobile/desktop === */}
 {/* 1) Расположение «здесь иконки» в контейнере */}
 <div className="max-w-7xl mx-auto mb-8 md:pl-[90px] sm:pl-[5px] px-2">
-  <div className="flex md:items-center md:gap-16 sm:gap-8 gap-10">
+  <div className="flex md:items-center md:gap-16 sm:gap-7 gap-10">
     <Link
       href="#total-value"
       aria-label="Go to Total Value"
@@ -261,7 +261,13 @@ export default function MainSection({className = ''}: MainSectionProps) {
         />
       </div>
   </div>
-      {/* в конце MainSection, перед закрывающим </section>: 
+  <div
+  className="block md:hidden absolute inset-x-0 bottom-0 h-full opacity-[7%] pointer-events-none z-20"
+  style={{
+    background: "linear-gradient(to top, #17DCFF, #0B1028)", //rgba(11,17,40,0)
+  }}
+/>
+      {/* в конце MainSection, перед закрывающим section: 
 <div
   className="absolute inset-x-0 bottom-0 h-24 pointer-events-none z-20"
   style={{
