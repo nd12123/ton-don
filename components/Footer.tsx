@@ -43,7 +43,7 @@ export default function Footer({ className = "" }: { className?: string }) {
      */}
 {/* Fade-in сверху футера */}
 <div
-  className="pointer-events-none absolute bottom-0 left-0 w-full h-48 z-10"
+  className="pointer-events-none absolute bottom-0 left-0 w-full h-48 -z-10"
   style={{
     background: `linear-gradient(to bottom, rgba(3,12,28,0) 0%, rgba(1,6,15,1) 100%)`,
     mixBlendMode: "multiply",
@@ -120,12 +120,12 @@ export default function Footer({ className = "" }: { className?: string }) {
         <Image
           src={tonCoin1}
           alt=""
-          className="absolute w-16 h-16 md:w-32 md:h-32 top-[5%] right-[3%] opacity-60 animate-float-slow"
+          className="absolute w-16 h-16 md:w-32 md:h-32 top-[3%] md:top-[5%] right-[3%] opacity-60 animate-float-slow delay-1000"
         />
         <Image
           src={tonCoin2}
           alt=""
-          className="absolute w-32 h-32 bottom-[44%] left-[4%] opacity-50 animate-float-slow delay-3000"
+          className="absolute w-[100px] h-[100px] bottom-[160px] md:bottom-[40%] left-[6%] md:left-[4%] opacity-50 animate-float-slow delay-3000"
         />
       </div>
 
@@ -141,37 +141,47 @@ export default function Footer({ className = "" }: { className?: string }) {
       {/* =========================
           2) Основной футер: логотип, навигация, соцсети 
          ========================= */}
-      <div className="relative z-10 border-t border-[#1F2A44] pt-3 pb-3">
-        <div className="container mx-auto px-4 flex flex-col lg:flex-row items-center justify-between gap-2 md:gap-6">
+      <div className="relative z-10  pt-0 md:pt-3 pb-0 md:pb-3" //border-t border-[#1F2A44]
+      >
+        <div className="container mx-auto px-2 md:px-4 flex flex-col lg:flex-row items-center justify-between gap-0 md:gap-6">
           {/* левый блок */}
-          <div className="flex items-center gap-4 md:gap-6">
+          <div className="flex items-center gap-1 md:gap-6">
             <div className="flex items-center gap-2">
               <Image src={logoSvg} alt="TONStake.ai" width={32} height={32} />
               <span className="text-xl whitespace-nowrap font-semibold">TON Stake</span>
             </div>
 
             <div
-            className="h-6 border-l-2 md:border-l-4 border-transparent mx-1 md:mx-4"
+            className="-z-10 h-6 border-l-2 md:border-l-4 border-transparent mx-1 md:mx-4 z-0"
             style={{
               borderImageSlice: 1,
               borderImageSource:
                 "linear-gradient(90deg, #021B37 0%, #0099FF 20.19%, #0099FF 81.25%, #021B37 100%)",
             }}
             />
-            <div className="flex items-center gap-2 bg-[#0A1329] px-2 py-1 rounded-lg">
+            <div className="flex items-center gap-1 md:gap-2  py-1 " //bg-[#17DCFF] 0A1329 rounded-lg
+            >
               <Image
                 src={certikBadge}
                 alt="Audited by Certik"
                 width={120}
                 height={50}
               />
-              {/**/}
-              <span className="text-[12px] md:text-sm text-[#A0B0D8]">Audited by Certik</span>
+              {/*              <span className="text-[12px] md:text-sm text-[#A0B0D8]">Audited by Certik</span>*/}
             </div>
+            
+          <div className="flex items-center gap-1 md:gap-4 pt-4 md:py-2">
+            <Link
+              href="/support"
+            >
+              <Image src={supportIcon} alt="Support" width={120} height={50} />
+            </Link>
+          </div>
           </div>
 
           {/* навигация */}
-          <nav className="flex flex-wrap gap-8 text-[#A0B0D8]">
+          <nav className="flex flex-wrap gap-6 md:gap-8 text-[20px] text-white pb-2" //[#A0B0D8]
+          >
             <Link href="/staking" className="hover:text-white transition-colors">
               Staking
             </Link>
@@ -185,14 +195,18 @@ export default function Footer({ className = "" }: { className?: string }) {
               Support
             </Link>
           </nav>
+<div
+  className="w-full my-4"
+  style={{
+    borderStyle: "solid",
+    borderWidth: "1px 0 0 0",
+    borderImageSlice: 1,
+    borderImageSource:
+      "linear-gradient(90deg, #021B37 0%, #0099FF 20.19%, #0099FF 81.25%, #021B37 100%)",
+  }}
+/>
 
-          {/* соцкнопки */}
-          <div className="flex items-center gap-1 md:gap-4 py-0 md:py-2">
-            <Link
-              href="/support"
-            >
-              <Image src={supportIcon} alt="Support" width={120} height={60} />
-            </Link>
+          {/* соцкнопки
             <Link
               href="https://t.me/YourTelegramChannel"
               target="_blank"
@@ -204,26 +218,23 @@ export default function Footer({ className = "" }: { className?: string }) {
                 width={60}
                 height={60}
               />
-            </Link>
-          </div>
+            </Link> */}
         </div>
       </div>
 
       {/* =========================
           3) Копирайт
          ========================= */}
-      <div className="relative z-10 border-t border-[#1F2A44] md:mt-4 pt-4 pb-1">
-        <div className="container mx-auto px-4 flex flex-col-reverse lg:flex-row items-center justify-between gap-4 text-sm text-[#A0B0D8]">
+        <div className="z-10 container mx-auto px-4 flex flex-col-reverse lg:flex-row items-center justify-between gap-1 md:gap-4 text-[12px] text-gray-600">
           <p>© 2025 Orbi Ton | All Rights Reserved</p>
-          <div className="flex gap-4">
-            <Link href="/terms" className="hover:text-white transition-colors">
+          <div className="flex gap-2 md:gap-4">
+            <Link href="/terms" className="hover:text-white transition-colors text-[#A0B0D8]">
               Terms and Conditions
             </Link>
-            <Link href="/privacy" className="hover:text-white transition-colors">
+            <Link href="/privacy" className="hover:text-white transition-colors text-[#A0B0D8]">
               Privacy Policy
             </Link>
           </div>
-        </div>
       </div>
     </footer>
   );
