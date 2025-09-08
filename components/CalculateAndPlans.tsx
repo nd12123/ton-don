@@ -5,6 +5,7 @@ import Image from "next/image";
 import PlanCard from "./PlanCard";
 import Calculator from "./Calculator";
 import CalculatorTest from "./CalculatorMobile";
+import CalculatorHorizontal from "./CalculatorHorizontal";
 
 
 import tonTop from "@/assets/Calculator/ton.svg"
@@ -34,7 +35,7 @@ export default function CalculateAndPlans() {
     if (newIdx !== selectedPlanIdx) setSelectedPlanIdx(newIdx);
   };
   const apr = PLANS[selectedPlanIdx].apr;
-  const dailyEarnings = useMemo(() => (amount * (apr/100)) / 365, [amount, apr]);
+  const dailyEarnings = useMemo(() => (amount * (apr/100)) , [amount, apr]); // /365
 
   return ( //py-20 pt-[200px] lg:pt-[375px]
     <section id="calculate-plans" className="relative overflow-hidden text-white pb-7 pt-0   scroll-mt-12" //lg:
@@ -111,7 +112,7 @@ export default function CalculateAndPlans() {
 </div>
 {/* --- Главный текст из макета Figma --- */}
 <div className="max-w-6xl mx-auto px-4 relative z-10 pb-8 md:pb-16"> 
-  <h1 className="font-inter font-bold text-[50px] leading-[48px] md:text-[70px] md:leading-[68px] text-white">
+  <h1 className="font-inter font-bold text-[38px] leading-[48px] md:text-[70px] md:leading-[68px] text-white">
     Choose a <span className="text-[#00C2FF]">plan</span> and<br/>
     <span className="text-[#00C2FF]">Calculate</span> your <span className="text-[#00C2FF]">Profit</span>
   </h1>
@@ -161,9 +162,9 @@ export default function CalculateAndPlans() {
           ))}
         </div>
 
-{/* Mobile-only */}
+{/* Mobile-only CalculatorTest */}
 <div className="md:hidden">
-  <CalculatorTest
+  <CalculatorHorizontal
     amount={amount}
     onAmountChange={handleAmountChange}
     sliderMin={PLANS[0].min}
@@ -173,6 +174,7 @@ export default function CalculateAndPlans() {
     apr={apr}
     dailyEarnings={dailyEarnings}
   />
+  
 </div>
 
 {/* Desktop-only */}
@@ -231,6 +233,56 @@ export default function CalculateAndPlans() {
 />
 
       </div>
+
+<div className="block md:hidden relative z-10 w-full px-4 pb-2 pt-1 text-white">
+  <div className="grid grid-cols-3 gap-4">
+    {/* Карточка 1 */}
+    <div className="relative group rounded-2xl px-1 py-1 flex flex-col items-center justify-center overflow-hidden min-h-[48px]">
+      {/* Фон-картинка одинаковая у всех трёх */}
+      <Image
+        src="/decorative/Input.svg"
+        alt=""
+        fill
+        priority
+        className="object-cover -z-20 pointer-events-none"
+      />
+      {/* Мягкое свечение поверх фона (но под текстом) */}
+      <div className="absolute inset-0 -z-10 pointer-events-none bg-gradient-to-br from-white/10 to-transparent opacity-70 group-hover:opacity-90 transition-opacity" />
+      
+      <span className="text-[12px] text-white/80">In 1 day</span>
+      <span className="text-m font-medium">+{dailyEarnings.toFixed(2)} TON</span>
+    </div>
+
+    {/* Карточка 2 */}
+    <div className="relative group rounded-2xl px-1 py-1 flex flex-col items-center justify-center overflow-hidden min-h-[48px]">
+      <Image
+        src="/decorative/Input.svg"
+        alt=""
+        fill
+        className="object-cover -z-20 pointer-events-none"
+      />
+      <div className="absolute inset-0 -z-10 pointer-events-none bg-gradient-to-br from-white/10 to-transparent opacity-70 group-hover:opacity-90 transition-opacity" />
+      
+      <span className="text-[12px] text-white/80">In 7 days</span>
+      <span className="text-m font-medium">+{(dailyEarnings * 7).toFixed(2)} TON</span>
+    </div>
+
+    {/* Карточка 3 */}
+    <div className="relative group rounded-2xl px-1 py-1 flex flex-col items-center justify-center overflow-hidden min-h-[48px]">
+      <Image
+        src="/decorative/Input.svg"
+        alt=""
+        fill
+        className="object-cover -z-20 pointer-events-none"
+      />
+      <div className="absolute inset-0 -z-10 pointer-events-none bg-gradient-to-br from-white/10 to-transparent opacity-70 group-hover:opacity-90 transition-opacity" />
+      
+      <span className="text-[10px] text-white/80">Investment period</span>
+      <span className="text-m font-medium">+{(dailyEarnings * days).toFixed(2)} TON</span>
+    </div>
+  </div>
+</div>
+
       {/**
        *  //<div className="absolute bottom-0 left-0 w-full h-30 bg-gradient-to-b from-transparent to-[#0A0D1C] z-0" //<div className="absolute bottom-0 left-0 w-full h-48 bg-gradient-to-b from-[#00C2FF22] to-[#0A0D1C] z-0" />
       />
