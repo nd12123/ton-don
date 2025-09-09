@@ -320,7 +320,7 @@ export default function StepsToInvest() {
 
         {/* Абсолютно позиционированные «плавающие» 3D-монетки */}
         <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute top-[-5px] right-[15px] md:right-[160px] w-[56px] h-[56px] md:w-[200px] md:h-[200px] opacity-100 z-[5]">
+          <div className="absolute top-[30px] right-[15px] md:right-[160px] w-[56px] h-[56px] md:w-[200px] md:h-[200px] opacity-100 z-[5]">
             <Image
               src="/decorative/ton22.svg"
               alt="TON Coin Left"
@@ -329,7 +329,7 @@ export default function StepsToInvest() {
             />
           </div>
 
-          <div className="absolute w-[78px] h-[78px] md:w-[300px] md:h-[300px] top-[-20px] md:top-[-120px] right-[30%] md:right-[36%] z-0 flex opacity-100 md:opacity-100 pointer-events-none">
+          <div className="absolute w-[78px] h-[78px] md:w-[300px] md:h-[300px] top-[15px] md:top-[-120px] right-[28%] md:right-[36%] z-0 flex opacity-100 md:opacity-100 pointer-events-none">
             <Image
               src={coinLarge}
               alt="Ton Coin"
@@ -337,7 +337,7 @@ export default function StepsToInvest() {
             />
           </div>
 
-          <div className="absolute md:top-[-150px] right-[-10px] top-[-30px] md:right-[-150px] w-full h-full md:opacity-100 z-[5]">
+          <div className="absolute md:top-[-150px] right-[-5px] top-[0px] md:right-[-150px] w-full h-full md:opacity-100 z-[5]">
             <Image
               src={centerSphere}
               alt="Sphere"
