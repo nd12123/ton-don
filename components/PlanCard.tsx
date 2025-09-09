@@ -32,7 +32,7 @@ export default function PlanCard({
       <div
         onClick={!isActive ? onSelect : undefined}
         className={[
-          "md:hidden relative flex flex-col gap-y-[2px]",
+          "md:hidden relative flex flex-col gap-y-[3px]",
           "p-2 md:p-3 rounded-3xl transition",
           `bg-plan-${title.toLowerCase()}`,
           isActive
@@ -58,17 +58,17 @@ export default function PlanCard({
 
         {/* Процент */}
         <div className="pt-0">
-          <span className="text-[11px] text-gray-300">Your profit</span>
+          <span className="text-[12px] text-bold text-gray-300">Your profit</span>
           <div className="flex items-baseline gap-1">
             <span className="text-xl font-bold text-accent-200">{dailyProfit}%</span>
             <span className="text-[11px] text-gray-300">Per day</span>
           </div>
         </div>
 
-        {/* Диапазон */}
+        {/* Диапазон for all time*/}
         <div className="pt-1">
-          <span className="text-[9.5px] text-gray-300 block">Investments for all time</span>
-          <span className="text-[13px] md:text-m font-medium text-accent-200">{rangeText}</span>
+          <span className="text-[12px] text-gray-300 block">Total Investments</span>
+          <span className="text-[12px] md:text-m font-bold text-accent-200">{rangeText}</span>
         </div>
 
         {/* Divider */}

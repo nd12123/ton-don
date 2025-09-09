@@ -111,7 +111,7 @@ export default function CalculateAndPlans() {
   </div>
 </div>
 {/* --- Главный текст из макета Figma --- */}
-<div className="max-w-6xl mx-auto px-4 relative z-10 pb-8 md:pb-16"> 
+<div className="max-w-6xl mx-auto px-4 relative z-10 pb-5 md:pb-16"> 
   <h1 className="font-inter font-bold text-[38px] leading-[48px] md:text-[70px] md:leading-[68px] text-white">
     Choose a <span className="text-[#00C2FF]">plan</span> and<br/>
     <span className="text-[#00C2FF]">Calculate</span> your <span className="text-[#00C2FF]">Profit</span>
@@ -146,7 +146,7 @@ export default function CalculateAndPlans() {
 
       <div className="max-w-6xl mx-auto px-2 md:px-6 pb-6">
         {/* === 3) Карточки планов === */}
-        <div className="grid grid-cols-3 gap-x-2 md:gap-x-16 gap-y-[0px] md:gap-y-8 mb-2 md:mb-16" //grid-cols-1 md: 
+        <div className="grid grid-cols-3 gap-x-2 md:gap-x-16 gap-y-[0px] md:gap-y-8 mb-4 md:mb-16" //grid-cols-1 md: 
         >
           {PLANS.map((plan, idx) => (
             <PlanCard
@@ -163,7 +163,7 @@ export default function CalculateAndPlans() {
         </div>
 
 {/* Mobile-only CalculatorTest */}
-<div className="md:hidden">
+<div className="md:hidden mt-1">
   <CalculatorHorizontal
     amount={amount}
     onAmountChange={handleAmountChange}
@@ -234,7 +234,7 @@ export default function CalculateAndPlans() {
 
       </div>
 
-<div className="block md:hidden relative z-10 w-full px-4 pb-2 pt-1 text-white">
+<div className="block md:hidden relative z-10 w-full px-4 pb-2 py-1 text-white">
   <div className="grid grid-cols-3 gap-4">
     {/* Карточка 1 */}
     <div className="relative group rounded-2xl px-1 py-1 flex flex-col items-center justify-center overflow-hidden min-h-[48px]">
@@ -247,10 +247,10 @@ export default function CalculateAndPlans() {
         className="object-cover -z-20 pointer-events-none"
       />
       {/* Мягкое свечение поверх фона (но под текстом) */}
-      <div className="absolute inset-0 -z-10 pointer-events-none bg-gradient-to-br from-white/10 to-transparent opacity-70 group-hover:opacity-90 transition-opacity" />
+      <div className="py-3 absolute inset-0 -z-10 pointer-events-none bg-gradient-to-br from-white/10 to-transparent opacity-70 group-hover:opacity-90 transition-opacity" />
       
-      <span className="text-[12px] text-white/80">In 1 day</span>
-      <span className="text-m font-medium">+{dailyEarnings.toFixed(2)} TON</span>
+      <span className="text-m text-white/80">In 1 day</span>
+      <span className="text-m font-bold">+{dailyEarnings.toFixed(2)} TON</span>
     </div>
 
     {/* Карточка 2 */}

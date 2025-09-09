@@ -111,7 +111,7 @@ export default function StepsToInvest() {
   <div className="relative h-full w-auto top-[54px]" //h-[100% + 50px]  w-full
   >
     <Image
-      src="/decorative/StepsMobile.svg"
+      src="/decorative/StepsMobileBg.svg"
       alt="steps background"
       fill
       priority
@@ -331,7 +331,7 @@ export default function StepsToInvest() {
 
           <div className="absolute w-[78px] h-[78px] md:w-[300px] md:h-[300px] top-[15px] md:top-[-120px] right-[28%] md:right-[36%] z-0 flex opacity-100 md:opacity-100 pointer-events-none">
             <Image
-              src={coinLarge}
+              src="/decorative/ton2.png"//{coinLarge}
               alt="Ton Coin"
               style={{ objectFit: "contain", mixBlendMode: "screen" }}
             />
