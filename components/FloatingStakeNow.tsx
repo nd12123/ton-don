@@ -17,7 +17,7 @@ export function FloatingStakeNow({ href = "/staking", className = "" }: Props) {
       <span
         className="
           relative inline-flex items-center gap-1 md:gap-2 text-5 md:text-15 py-0 md:py-2
-          h-6 md:h-20 w-15 md:w-42 px-2 md:px-1 rounded md:rounded
+          h-5 md:h-20 w-15 md:w-42 px-2 md:px-1 rounded md:rounded
           bg-gray-100 md:bg-white text-sky-500 font-semibold
           shadow-[0_0_35px_rgba(0,191,255,0.55)]
         "

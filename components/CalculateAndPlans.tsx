@@ -99,7 +99,7 @@ export default function CalculateAndPlans() {
     />
   </div>
  {/* небольшая TON-иконка справа от текста */}
- <div className="absolute w-[160px] h-[160px] top-[5px] right-[450px] ml-4 z-[2]">
+ <div className="absolute h-[48px] md:h-[160px] md:w-[160px] w-[48px] top-[15px] right-[35px] md:right-[450px] ml-4 z-[2]">
     <Image
       src={tonTop}        // или тот файл, который у тебя для маленькой монеты
       alt="TON Icon"
@@ -112,7 +112,7 @@ export default function CalculateAndPlans() {
 </div>
 {/* --- Главный текст из макета Figma --- */}
 <div className="max-w-6xl mx-auto px-4 relative z-10 pb-5 md:pb-16"> 
-  <h1 className="font-inter font-bold text-[38px] leading-[48px] md:text-[70px] md:leading-[68px] text-white">
+  <h1 className="font-inter font-bold text-[30px] leading-[32px] md:text-[70px] md:leading-[68px] text-white">
     Choose a <span className="text-[#00C2FF]">plan</span> and<br/>
     <span className="text-[#00C2FF]">Calculate</span> your <span className="text-[#00C2FF]">Profit</span>
   </h1>

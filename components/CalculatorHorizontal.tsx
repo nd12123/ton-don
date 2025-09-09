@@ -52,7 +52,7 @@ useEffect(() => {
       px-1  gap-1 flex flex-row  justify-between  backdrop-blur-sm
       bg-[radial-gradient(ellipse_90.67%_90.68%_at_51.85%_6.45%,_#3E5C89_0%,_#171E38_100%)]
       shadow-[1px_15px_48.9px_0px_rgba(61,212,255,0.18)]
-      outline outline-[3px] outline-offset-[-3px] outline-sky-400
+      outline outline-[2px] outline-offset-[-2px] outline-sky-400
       "      //py-10 md:py-14 ?? bg-[url('/ticket-bg.png')] bg-cover bg-center bg-[#101426]/80 shadow-[0_0_60px_#00C2FF33] //flex-col lg:
     >
       {/* Левая секция — планы */}

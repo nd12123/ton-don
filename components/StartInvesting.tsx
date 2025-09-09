@@ -35,9 +35,10 @@ export default function StartInvesting({ className = "" }: { className?: string 
             {/* Заголовок */}
             <h1
               className="
+              pt-1
                 font-bold md:font-extrabold leading-[0.95] tracking-[-0.02em]
                 md:text-[clamp(28px,8.2vw,92px)]
-                text-[clamp(20px,6vw,70px)]
+                text-[clamp(18px,6vw,70px)]
               "
             >
               Start investing<br />now!
@@ -46,7 +47,7 @@ export default function StartInvesting({ className = "" }: { className?: string 
             {/* Подзаголовок */}
             <p
               className="
-                pt-1 md:mt-4
+                pt-0 md:mt-4
                 text-white/90
                 text-[clamp(10px,2vw,22px)]
               "
@@ -58,7 +59,7 @@ export default function StartInvesting({ className = "" }: { className?: string 
             <FloatingStakeNow
               href="/staking"
               className="
-              pt-1 left-[5px]
+              pt-2 left-[5px]
                 mb-7 md:mt-6
                 inline-block
               "

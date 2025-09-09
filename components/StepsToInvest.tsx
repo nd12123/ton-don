@@ -107,63 +107,61 @@ export default function StepsToInvest() {
     </div>
   </div>
 {/* Mobile background */}
-<div className="block md:hidden absolute inset-0">
-  <div className="relative h-full w-auto top-[54px]" //h-[100% + 50px]  w-full
-  >
+{/* Mobile background (с ручкой масштаба) */}
+<div className="block md:hidden absolute inset-0 [--bg-scale:0.90]">
+  <div className="relative h-full w-full top-[25px]">
     <Image
       src="/decorative/StepsMobileBg.svg"
       alt="steps background"
       fill
       priority
-      sizes="80vw"
-      className="object-cover"   // было object-contain
+      sizes="100vw"
+      className="object-contain origin-center [transform:scale(var(--bg-scale))]"
     />
   </div>
 </div>
 
 
-  {/* Левый корнер */}
-  <div className="absolute inset-y-0 left-[-7px] top-[5px] w-[12vw] md:left-[-50px] md:w-[180px] lg:w-[220px] md:min-w-[60px]">
-    <div className="relative h-[250px] w-full" //full
+{/* MOBILE corners */}
+<div className="absolute inset-0 md:hidden pointer-events-none z-[6]">
+  {/* Левый */}
+  <div className="absolute left-[-2px] top-[56px]">
+    <div
+      className="relative"
+      style={{
+        width: "21vw",
+        aspectRatio: "0.84", // было 210/360 ≈ 0.58 → сделали шире => КОРОЧЕ по высоте
+      }}
     >
-      {/* mobile */}
       <Image
-        src="/decorative/mobile/StepsLeftMobile.png"
-        alt="corner mobile"
+        src="/decorative/mobile/StepsLMob.svg"
+        alt="corner left mobile"
         fill
-        className="object-cover object-left md:hidden"
-      />
-      {/* desktop */}
-      <Image
-        src={leftCorner}
-        alt="corner left"
-        fill
-        sizes="(min-width:1024px) 220px, (min-width:768px) 180px, 10vw"
-        className="object-contain object-left hidden md:block"
+        className="object-contain object-left"
+        priority
       />
     </div>
   </div>
 
-  {/* Правый корнер */}
-  <div className="absolute inset-y-0 right-[-7px] top-[5px] w-[10vw] md:right-[-50px] md:w-[180px] lg:w-[220px] md:min-w-[60px]">
-    <div className="relative h-[250px] w-full">
-      {/* mobile */}
+  {/* Правый */}
+  <div className="absolute right-[-4px] top-[56px]">
+    <div
+      className="relative"
+      style={{
+        width: "21vw",
+        aspectRatio: "0.84", // можно отдельно, если нужно отличаться
+      }}
+    >
       <Image
-        src="/decorative/mobile/StepsRightMobile.png"
-        alt="corner mobile"
+        src="/decorative/mobile/StepsRMob.svg"
+        alt="corner right mobile"
         fill
-        className="object-cover object-right md:hidden"
-      />
-      {/* desktop */}
-      <Image
-        src={rightCorner}
-        alt="corner right"
-        fill
-        sizes="(min-width:1024px) 220px, (min-width:768px) 180px, 10vw"
-        className="object-contain object-right hidden md:block"
+        className="object-contain object-right"
+        priority
       />
     </div>
   </div>
+</div>
 
   </div>
 
@@ -257,7 +255,7 @@ export default function StepsToInvest() {
     <div className="col-start-1 col-end-2 rounded-xl px-2 md:px-3 py-2 md:py-3 flex flex-col justify-center" //       border border-black
     >
       <div className="flex items-baseline gap-2 md:block">
-        <div className="text-l md:text-4xl font-bold leading-none md:mb-2 md:py-4">01</div>
+        <div className="text-2xl md:text-4xl font-bold leading-none md:mb-2 md:py-4">01</div>
         <h3 className="hidden md:block text-xl md:text-2xl font-semibold leading-snug">Choose Plan</h3>
       </div>
       <p className="mt-1 md:mt-2 text-[13px] md:text-base">Select a plan that suits you best</p>
@@ -281,9 +279,9 @@ export default function StepsToInvest() {
 </div>
 
     {/* Шаг 2: 3-й трек (через sep12) */}
-    <div className="col-start-3 col-end-4 rounded-xl px-2 md:px-3 py-2 md:py-3 flex flex-col justify-center ">
+    <div className="col-start-3 col-end-4 rounded-xl px-2 md:px-3 py-2 md:py-3 flex flex-col justify-center-top ">
       <div className="flex items-baseline gap-2 md:block">
-        <div className="text-base md:text-4xl font-bold leading-none md:mb-2 md:py-4">02</div>
+        <div className="text-2xl md:text-4xl font-bold leading-none md:mb-2 md:py-4">02</div>
         <h3 className="hidden md:block text-xl md:text-2xl font-semibold leading-snug">Make a Deposit</h3>
       </div>
       <p className="mt-1 md:mt-2 text-[15px] md:text-base">Deposit at least 10 TON</p>
@@ -292,7 +290,7 @@ export default function StepsToInvest() {
 {/* сепаратор между 2 и 3 (треки g23) */}
 <div
   aria-hidden
-  className="col-start-4 col-end-5 flex items-stretch justify-center py-1"
+  className="col-start-4 col-end-5 flex items-stretch justify-center py-1 pt-3"
 >
   <div
     className="h-full"
@@ -308,7 +306,7 @@ export default function StepsToInvest() {
     {/* Шаг 3: 5-й трек (через sep23) */}
     <div className="col-start-5 col-end-6 rounded-xl px-2 md:px-3 py-2 md:py-3 flex flex-col justify-center">
       <div className="flex items-baseline gap-2 md:block">
-        <div className="text-base md:text-4xl font-bold leading-none md:mb-2 md:py-4">03</div>
+        <div className="text-2xl md:text-4xl font-bold leading-none md:mb-2 md:py-3">03</div>
         <h3 className="hidden md:block text-xl md:text-2xl font-semibold leading-snug">Receive Dividends</h3>
       </div>
       <p className="mt-1 md:mt-2 text-[13px] md:text-base">Earn rewards and withdraw anytime</p>
