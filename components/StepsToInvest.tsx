@@ -46,7 +46,7 @@ export default function StepsToInvest() {
 
       {/* Заголовок + кнопка „See Plans“ */}
       <div className="max-w-6xl mx-auto px-2 relative z-10 text-left font-medium">
-        <h2 className="text-4xl sm:text-[28px] md:text-5xl lg:text-6xl md:font-extrabold leading-tight font-inter">
+        <h2 className="text-4xl sm:text-[28px] md:text-5xl lg:text-6xl md:font-extrabold leading-tight font-inter  font-bold">
           3 Easy steps to invest<br />
           in <span className="text-[#00C2FF]">TonStake.Ai</span>
         </h2>
@@ -216,14 +216,14 @@ export default function StepsToInvest() {
 > */}  
 <div
   className="
-    hidden absolute inset-0 z-10 flex items-center
+    absolute inset-0 z-10 flex items-center
   "
 > 
 <div
     className="
-      w-full mx-auto
+      w-full mx-auto mt-12
       /* ВАЖНО: у грид-контейнера gap по X = 0, сепараторы — отдельные треки */
-      grid gap-x-0 gap-y-0
+      grid gap-x-0 gap-y-4
       px-[var(--pad-l)] pr-[var(--pad-r)]
       [grid-template-columns:var(--c1)_var(--g12)_var(--c2)_var(--g23)_var(--c3)]
       md:[grid-template-columns:var(--c1-md)_var(--g12-md)_var(--c2-md)_var(--g23-md)_var(--c3-md)]
@@ -232,17 +232,17 @@ export default function StepsToInvest() {
     style={
       {
         // поля, чтобы край 1-й/3-й совпал с маской
-        "--pad-l": "22px",
-        "--pad-r": "18px",
+        "--pad-l": "20px",
+        "--pad-r": "20px",
 
         // ширины колонок (доли)
-        "--c1": "1fr",
-        "--c2": ".92fr",
-        "--c3": "1.08fr",
+        "--c1": "1.06fr",
+        "--c2": "1.22fr",
+        "--c3": "1.06fr",
 
         // разные сепараторы
-        "--g12": "0px",
-        "--g23": "20px",
+        "--g12": "4px",
+        "--g23": "16px",
 
         // десктопные значения (если нужно)
         "--c1-md": "1.02fr",
@@ -254,33 +254,68 @@ export default function StepsToInvest() {
     }
   >
     {/* Шаг 1: кладём в 1-й трек */}
-    <div className="col-start-1 col-end-2 rounded-xl px-2 md:px-3 py-2 md:py-3 flex flex-col justify-center">
+    <div className="col-start-1 col-end-2 rounded-xl px-2 md:px-3 py-2 md:py-3 flex flex-col justify-center" //       border border-black
+    >
       <div className="flex items-baseline gap-2 md:block">
-        <div className="text-base md:text-4xl font-bold leading-none md:mb-2 md:py-4">01</div>
+        <div className="text-l md:text-4xl font-bold leading-none md:mb-2 md:py-4">01</div>
         <h3 className="hidden md:block text-xl md:text-2xl font-semibold leading-snug">Choose Plan</h3>
       </div>
-      <p className="mt-1 md:mt-2 text-[10px] md:text-base">Select a plan that suits you best</p>
+      <p className="mt-1 md:mt-2 text-[13px] md:text-base">Select a plan that suits you best</p>
     </div>
 
+{/* сепаратор между 1 и 2 (треки g12) */}
+<div
+  aria-hidden
+  className="col-start-2 col-end-3 flex items-stretch justify-center py-1"
+>
+  <div
+    className="h-full"
+    style={{
+      width: "var(--sepw, 10px)",      // толщина/ширина картинки
+      backgroundImage: "url('/decorative/Separator.svg')",
+      backgroundRepeat: "no-repeat",
+      backgroundPosition: "center",
+      backgroundSize: "auto 100%",
+    }}
+  />
+</div>
+
     {/* Шаг 2: 3-й трек (через sep12) */}
-    <div className="col-start-3 col-end-4 rounded-xl px-2 md:px-3 py-2 md:py-3 flex flex-col justify-center">
+    <div className="col-start-3 col-end-4 rounded-xl px-2 md:px-3 py-2 md:py-3 flex flex-col justify-center ">
       <div className="flex items-baseline gap-2 md:block">
         <div className="text-base md:text-4xl font-bold leading-none md:mb-2 md:py-4">02</div>
         <h3 className="hidden md:block text-xl md:text-2xl font-semibold leading-snug">Make a Deposit</h3>
       </div>
-      <p className="mt-1 md:mt-2 text-[10px] md:text-base">Deposit at least 10 TON</p>
+      <p className="mt-1 md:mt-2 text-[15px] md:text-base">Deposit at least 10 TON</p>
     </div>
 
+{/* сепаратор между 2 и 3 (треки g23) */}
+<div
+  aria-hidden
+  className="col-start-4 col-end-5 flex items-stretch justify-center py-1"
+>
+  <div
+    className="h-full"
+    style={{
+      width: "var(--sepw, 10px)",
+      backgroundImage: "url('/decorative/SeparatorR.svg')",
+      backgroundRepeat: "no-repeat",
+      backgroundPosition: "center",
+      backgroundSize: "auto 100%",
+    }}
+  />
+</div>
     {/* Шаг 3: 5-й трек (через sep23) */}
     <div className="col-start-5 col-end-6 rounded-xl px-2 md:px-3 py-2 md:py-3 flex flex-col justify-center">
       <div className="flex items-baseline gap-2 md:block">
         <div className="text-base md:text-4xl font-bold leading-none md:mb-2 md:py-4">03</div>
         <h3 className="hidden md:block text-xl md:text-2xl font-semibold leading-snug">Receive Dividends</h3>
       </div>
-      <p className="mt-1 md:mt-2 text-[10px] md:text-base">Earn rewards and withdraw anytime</p>
+      <p className="mt-1 md:mt-2 text-[13px] md:text-base">Earn rewards and withdraw anytime</p>
     </div>
   </div>
 </div>
+
 </div>
 
         {/* Абсолютно позиционированные «плавающие» 3D-монетки */}

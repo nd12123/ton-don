@@ -68,7 +68,7 @@ export default function PlanCard({
         {/* Диапазон */}
         <div className="pt-1">
           <span className="text-[9.5px] text-gray-300 block">Investments for all time</span>
-          <span className="text-[14px] md:text-m font-medium text-accent-200">{rangeText}</span>
+          <span className="text-[13px] md:text-m font-medium text-accent-200">{rangeText}</span>
         </div>
 
         {/* Divider */}
