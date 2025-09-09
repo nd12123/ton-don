@@ -45,7 +45,7 @@ export default function StepsToInvest() {
       </div>
 
       {/* Заголовок + кнопка „See Plans“ */}
-      <div className="max-w-6xl mx-auto px-2 relative z-10 text-left">
+      <div className="max-w-6xl mx-auto px-2 relative z-10 text-left font-medium">
         <h2 className="text-4xl sm:text-[28px] md:text-5xl lg:text-6xl md:font-extrabold leading-tight font-inter">
           3 Easy steps to invest<br />
           in <span className="text-[#00C2FF]">TonStake.Ai</span>
@@ -73,7 +73,7 @@ export default function StepsToInvest() {
       </div>
 
 {/* ОБКАТЫВАЕМ КОНТЕНТ В RELATIVE-wrapper */}
-<div className="relative mt-8 md:mt-4 px-0 h-[120px] md:h-[350px] z-10"
+<div className="relative mt-8 md:mt-4 px-0 h-[158px]  md:h-[350px] z-10"
 /* Глобальные переменные подгонки */
         style={
           {
@@ -94,7 +94,7 @@ export default function StepsToInvest() {
   <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden">
 
   {/* ✅ Сужаем ТОЛЬКО маску по бокам на мобиле (6–8vw — подбери по вкусу) */}
-  <div className="absolute inset-y-0 left-[1vw] right-[1vw] md:left-[-35px] md:right-0">
+  <div className="hidden md:block absolute inset-y-0 left-[1vw] right-[1vw] md:left-[-35px] md:right-0">
     <div className="relative h-full w-full">
       <Image
         src="/decorative/step-mask.svg"
@@ -106,10 +106,26 @@ export default function StepsToInvest() {
       />
     </div>
   </div>
+{/* Mobile background */}
+<div className="block md:hidden absolute inset-0">
+  <div className="relative h-full w-auto top-[54px]" //h-[100% + 50px]  w-full
+  >
+    <Image
+      src="/decorative/StepsMobile.svg"
+      alt="steps background"
+      fill
+      priority
+      sizes="80vw"
+      className="object-cover"   // было object-contain
+    />
+  </div>
+</div>
+
 
   {/* Левый корнер */}
-  <div className="absolute inset-y-0 left-0 w-[8vw] md:left-[-50px] md:w-[180px] lg:w-[220px] md:min-w-[60px]">
-    <div className="relative h-full w-full">
+  <div className="absolute inset-y-0 left-[-7px] top-[5px] w-[12vw] md:left-[-50px] md:w-[180px] lg:w-[220px] md:min-w-[60px]">
+    <div className="relative h-[250px] w-full" //full
+    >
       {/* mobile */}
       <Image
         src="/decorative/mobile/StepsLeftMobile.png"
@@ -129,8 +145,8 @@ export default function StepsToInvest() {
   </div>
 
   {/* Правый корнер */}
-  <div className="absolute inset-y-0 right-0 w-[10vw] md:right-[-50px] md:w-[180px] lg:w-[220px] md:min-w-[60px]">
-    <div className="relative h-full w-full">
+  <div className="absolute inset-y-0 right-[-7px] top-[5px] w-[10vw] md:right-[-50px] md:w-[180px] lg:w-[220px] md:min-w-[60px]">
+    <div className="relative h-[250px] w-full">
       {/* mobile */}
       <Image
         src="/decorative/mobile/StepsRightMobile.png"
@@ -192,73 +208,80 @@ export default function StepsToInvest() {
             ))}
           </div>
         {/* Сетка 3х3 поверх маски 
-                  <div className="block md: hidden grid grid-cols-3 gap-3 md:gap-5">
-*/}
-        <div className="absolute inset-0 z-10 flex items-center">
-          <div
-            className="
-              w-full mx-auto
-              grid grid-cols-3
-              gap-y-0 gap-x-[var(--sep)]
-              px-[var(--pad)]
-            "
-          >
-            {/* 1 */}
-            <div
-              className="
-                relative justify-self-start
-                overflow-hidden rounded-xl
-                px-2 py-1 md:px-3 md:py-3
-                flex flex-col items-start justify-center
-              "
-              // уменьшаем ширину только правой кромки
-              style={{ width: "calc(100% - var(--t1))" }}
-            >
-              <div className="flex items-baseline gap-2 md:block">
-                <div className="text-base md:text-4xl font-bold leading-none md:mb-2 md:py-4">01</div>
-                <h3 className="hidden md:block text-xl md:text-2xl font-semibold leading-snug">Choose Plan</h3>
-              </div>
-              <p className="mt-1 md:mt-2 text-[10px] md:text-base">Select a plan that suits you best</p>
-            </div>
+{/* маска уже лежит под этим блоком
+<div
+  className="
+    absolute inset-0 z-10 flex items-center
+  "
+> */}  
+<div
+  className="
+    hidden absolute inset-0 z-10 flex items-center
+  "
+> 
+<div
+    className="
+      w-full mx-auto
+      /* ВАЖНО: у грид-контейнера gap по X = 0, сепараторы — отдельные треки */
+      grid gap-x-0 gap-y-0
+      px-[var(--pad-l)] pr-[var(--pad-r)]
+      [grid-template-columns:var(--c1)_var(--g12)_var(--c2)_var(--g23)_var(--c3)]
+      md:[grid-template-columns:var(--c1-md)_var(--g12-md)_var(--c2-md)_var(--g23-md)_var(--c3-md)]
+    "
+    /* Подгонка числами — меняешь только эти переменные */
+    style={
+      {
+        // поля, чтобы край 1-й/3-й совпал с маской
+        "--pad-l": "22px",
+        "--pad-r": "18px",
 
-            {/* 2 */}
-            <div
-              className="
-                relative justify-self-center
-                overflow-hidden rounded-xl
-                px-2 py-2 md:px-3 md:py-3
-                flex flex-col items-start justify-center
-              "
-              // сужаем с обеих сторон симметрично (центр зафиксирован)
-              style={{ width: "calc(100% - var(--t2))" }}
-            >
-              <div className="flex items-baseline gap-2 md:block">
-                <div className="text-base md:text-4xl font-bold leading-none md:mb-2 md:py-4">02</div>
-                <h3 className="hidden md:block text-xl md:text-2xl font-semibold leading-snug">Make a Deposit</h3>
-              </div>
-              <p className="mt-1 md:mt-2 text-[10px] md:text-base">Deposit at least 10 TON</p>
-            </div>
+        // ширины колонок (доли)
+        "--c1": "1fr",
+        "--c2": ".92fr",
+        "--c3": "1.08fr",
 
-            {/* 3 */}
-            <div
-              className="
-                relative justify-self-end
-                overflow-hidden rounded-xl
-                px-2 py-2 md:px-3 md:py-3
-                flex flex-col items-start justify-center
-              "
-              // уменьшаем ширину левой кромки
-              style={{ width: "calc(100% - var(--t3))" }}
-            >
-              <div className="flex items-baseline gap-2 md:block">
-                <div className="text-base md:text-4xl font-bold leading-none md:mb-2 md:py-4">03</div>
-                <h3 className="hidden md:block text-xl md:text-2xl font-semibold leading-snug">Receive Dividends</h3>
-              </div>
-              <p className="mt-1 md:mt-2 text-[10px] md:text-base">Earn rewards and withdraw anytime</p>
-            </div>
-          </div>
-        </div>
+        // разные сепараторы
+        "--g12": "0px",
+        "--g23": "20px",
+
+        // десктопные значения (если нужно)
+        "--c1-md": "1.02fr",
+        "--c2-md": ".90fr",
+        "--c3-md": "1.08fr",
+        "--g12-md": "16px",
+        "--g23-md": "24px",
+      } as React.CSSProperties
+    }
+  >
+    {/* Шаг 1: кладём в 1-й трек */}
+    <div className="col-start-1 col-end-2 rounded-xl px-2 md:px-3 py-2 md:py-3 flex flex-col justify-center">
+      <div className="flex items-baseline gap-2 md:block">
+        <div className="text-base md:text-4xl font-bold leading-none md:mb-2 md:py-4">01</div>
+        <h3 className="hidden md:block text-xl md:text-2xl font-semibold leading-snug">Choose Plan</h3>
       </div>
+      <p className="mt-1 md:mt-2 text-[10px] md:text-base">Select a plan that suits you best</p>
+    </div>
+
+    {/* Шаг 2: 3-й трек (через sep12) */}
+    <div className="col-start-3 col-end-4 rounded-xl px-2 md:px-3 py-2 md:py-3 flex flex-col justify-center">
+      <div className="flex items-baseline gap-2 md:block">
+        <div className="text-base md:text-4xl font-bold leading-none md:mb-2 md:py-4">02</div>
+        <h3 className="hidden md:block text-xl md:text-2xl font-semibold leading-snug">Make a Deposit</h3>
+      </div>
+      <p className="mt-1 md:mt-2 text-[10px] md:text-base">Deposit at least 10 TON</p>
+    </div>
+
+    {/* Шаг 3: 5-й трек (через sep23) */}
+    <div className="col-start-5 col-end-6 rounded-xl px-2 md:px-3 py-2 md:py-3 flex flex-col justify-center">
+      <div className="flex items-baseline gap-2 md:block">
+        <div className="text-base md:text-4xl font-bold leading-none md:mb-2 md:py-4">03</div>
+        <h3 className="hidden md:block text-xl md:text-2xl font-semibold leading-snug">Receive Dividends</h3>
+      </div>
+      <p className="mt-1 md:mt-2 text-[10px] md:text-base">Earn rewards and withdraw anytime</p>
+    </div>
+  </div>
+</div>
+</div>
 
         {/* Абсолютно позиционированные «плавающие» 3D-монетки */}
         <div className="absolute inset-0 pointer-events-none">

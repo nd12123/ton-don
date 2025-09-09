@@ -34,7 +34,7 @@ export default function MainSection({className = ''}: MainSectionProps) {
       className={[
         "relative", //чтобы рисунки на границах отрисовывались только один раз
         " text-white",       // базовые стили 
-        "px-4 md:pt-20 sm:px-6 lg:px-8 pb-32",          // pt-20 паддинги
+        "pl-1 md:pt-20 sm:px-0 lg:px-8 pb-32",          // pt-20 паддинги
         //"bg-bg-dark",
         //"main",
         className                       // ваши дополнительные классы
@@ -81,8 +81,9 @@ export default function MainSection({className = ''}: MainSectionProps) {
 */}
 {/* === HERO wrapper: управляем порядком на mobile/desktop === */}
 {/* 1) Расположение «здесь иконки» в контейнере */}
-<div className="max-w-7xl mx-auto mb-8 md:pl-[90px] sm:pl-[5px] px-2">
-  <div className="flex md:items-center md:gap-16 sm:gap-7 gap-10">
+<div className="max-w-7xl mx-auto mb-8 md:pl-[90px]  px-2" //sm:pl-[5px]
+>
+  <div className="flex md:items-center md:gap-16 sm:gap-6 gap-10">
     <Link
       href="#total-value"
       aria-label="Go to Total Value"
@@ -104,9 +105,9 @@ export default function MainSection({className = ''}: MainSectionProps) {
     <Link
       href="#steps"
       aria-label="Go to Steps"
-      className="flex items-center gap-2 group rounded-lg outline-none focus-visible:ring-2 focus-visible:ring-sky-400/60 transition-transform hover:scale-[1.02] active:scale-[0.99]"
+      className="pr-2 flex items-center gap-2 group rounded-lg outline-none focus-visible:ring-2 focus-visible:ring-sky-400/60 transition-transform hover:scale-[1.02] active:scale-[0.99]"
     >
-      <Image src={SimpleIcon} alt="Simple" width={24} height={24} />
+      <Image src={SimpleIcon} alt="Simple" width={25} height={25} />
       <span className="text-lg font-medium group-hover:text-sky-300">Simple</span>
     </Link>
   </div>
@@ -126,7 +127,7 @@ export default function MainSection({className = ''}: MainSectionProps) {
     />
   </div>
         {/* Левый столбец */}
-        <div className="space-y-6 md:max-w-[811px] text-center md:text-left mx-auto md:mx-0">
+        <div className="space-y-6 md:max-w-[811px] text-center md:text-left mx-auto md:mx-0 px-2">
               
       {/*<h1
                 className="text-8xl font-bold leading-[90px]"
@@ -252,7 +253,7 @@ export default function MainSection({className = ''}: MainSectionProps) {
         <Image
           src={ton3d1}
           alt=""
-          className="absolute right-[15%] bottom-[20%] w-[30%] md:top-[22%] md:right-[26%] md:w-[10%]  2xl:bottom-[18%] 2xl:right-[28%] 2xl:w-[13%] opacity-80 animate-float"
+          className="absolute right-[15%] bottom-[20%] w-[30%] md:top-[22%] md:right-[26%] md:w-[10%]  2xl:bottom-[18%] 2xl:right-[28%] 2xl:w-[13%] opacity-80 animate-float-slow delay-1000"
         />
         <Image
           src={ton3d2}
