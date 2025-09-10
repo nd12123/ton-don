@@ -51,13 +51,14 @@ export default function TotalValueWidget() {
       > */}
         {/* САМА ЦИФРА — яркий бело-голубой градиент + светящееся свечение */}
       <span
-    className="
-      text-transparent bg-clip-text
-      bg-gradient-to-b from-sky-300 via-sky-400 to-cyan-500
-      drop-shadow-[0_0_10px_rgba(0,194,255,.22)]
-      [text-shadow:0_1px_0_rgba(255,255,255,.25),0_6px_16px_rgba(0,194,255,.25)]
-    "
-  >
+        className="
+          relative
+          text-transparent bg-clip-text
+          bg-[linear-gradient(180deg,#FFFFFF_0%,#EAF9FF_45%,#9EE6FF_72%,#54C9FF_100%)]
+          [text-shadow:0_1px_0_rgba(255,255,255,.9),0_8px_26px_rgba(0,194,255,.45),0_0_2px_rgba(255,255,255,.75)]
+          drop-shadow-[0_0_16px_rgba(0,194,255,.35)]
+        "
+      >
         {formatTon(Math.round(tvl), 0)}
       </span>
       <span className="text-sky-300/90 text-[0.45em] md:text-[0.5em] lg:text-[clamp(60px,11vw,70px)] ml-1">TON</span>
