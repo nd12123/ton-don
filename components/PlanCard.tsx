@@ -139,7 +139,7 @@ export default function PlanCard({
         {/* Диапазон инвестиций */}
         <div className="flex flex-col space-y-1 md-1 md:mb-6">
           <span className="text-sm text-gray-300">Investments for all time</span>
-          <span className="text-xl font-medium text-accent-200">{rangeText}</span>
+          <span className="text-xl font-medium text-accent-200 whitespace-nowrap">{rangeText}</span>
         </div>
 
         {/* Divider */}

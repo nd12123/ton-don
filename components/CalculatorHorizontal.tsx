@@ -58,7 +58,8 @@ useEffect(() => {
     >
       {/* Левая секция — планы */}
 {/* Левая секция — планы (мобилка, без фона у неактивных) */}
-<div className="flex flex-col w-[46%] pl-2 pr-0 pt-0 gap-0 relative overflow-hidden">
+<div className="flex flex-col w-[46%] pl-2 pr-0 pt-0 pb-2 gap-0 relative overflow-visible z-10" //-hidden
+>
   {PLANS.map((plan) => {
     const active = selectedPlan === plan.label;
     return (
@@ -67,8 +68,8 @@ useEffect(() => {
         onClick={() => { onAmountChange(plan.min); setSelectedPlan(plan.label); }}
         aria-pressed={active}
         className={[
-          "relative isolate w-full flex items-center gap-2 px-0 pt-3 pb-1",
-          " ",
+          "relative  w-full flex items-center gap-2 px-0 pt-3 pb-1",
+          " ", //isolate
           // никаких бордеров/маргинов — ряды вплотную
           /* rounded-none first:rounded-t-xl last:rounded-b-xl */
         ].join(" ")}
@@ -83,26 +84,39 @@ useEffect(() => {
             : { background: "transparent" } // <— у неактивных фона нет
         }
       >
-        <img src={plan.iconSrc} alt={plan.label} className="w-5 h-6 shrink-0 pb-2" />
+        <img src={plan.iconSrc} alt={plan.label} className="w-6 h-6 shrink-0 pb-2" />
         <span className="text-white text-[16px] font-semibold leading-none pb-2">{plan.label}</span>
+
+      
+      {/* правая синяя кромка, перекрывает сепаратор на 2px */}
+      {active && (
+        <span
+          aria-hidden
+          className="pointer-events-none absolute top-0 h-full w-[2px] z-20"
+          style={{
+            // смещение вправо (в минус, чтобы выйти за пределы кнопки)
+            right: "calc(var(--overlap, 1px) * -1)", //2px
+            background: "linear-gradient(180deg,#3DD4FF 0%,#0098EA 100%)",
+            boxShadow: "0 0 8px rgba(0,194,255,0.40)",
+          }}
+        />
+      )}
       </button>
     );
   })}
         <div className="px-1 pb-2">
-                            <GoToStakingButton className="btn-primary text-[10px] w-[90%] h-auto
+                            <GoToStakingButton className="btn-primary text-[11px] w-[95%] h-auto
             bg-[#00C2FF] hover:bg-[#00A5E0] text-white px-0 py-0 rounded-xl font-semibold transition-all shadow-lg
           ">Connect Wallet</GoToStakingButton>
         </div>
       </div>
-{/* === Наша новая линия-сепаратор === 
-<div
+{/* === Наша новая линия-сепаратор ===  <div
           className="h-[140px] w-[2px] my-2" //my-3
           style={{ background: "rgba(59, 71, 114, 1)" }}
         />*/}
-{/* Вертикальный сепаратор — БЕЗ отступов сверху/снизу и слева/справа */}
 {/* Вертикальный сепаратор — стык в стык */}
 <div
-  className="self-stretch w-[3px] pt-3 mx-0"
+  className="self-stretch w-[3px] h-[120px] pt-3 mx-0" // mb-3
   style={{ background: "rgba(59,71,114,1)" }}
 />
 
