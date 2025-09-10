@@ -33,10 +33,10 @@ export default function PlanCard({
         onClick={!isActive ? onSelect : undefined}
         className={[
           "md:hidden relative flex flex-col gap-y-[3px]",
-          "p-2 md:p-3 rounded-3xl transition",
+          "p-3 md:p-3 rounded-3xl transition",
           `bg-plan-${title.toLowerCase()}`,
           isActive
-            ? "border-2 border-sky-400 shadow-[0_8px_32px_rgba(61,212,255,.30)]"
+            ? "border-1 border-sky-400 shadow-[0_8px_32px_rgba(61,212,255,.30)]"
             : "border border-white/20 hover:border-sky-400/60",
           "outline outline-1 outline-offset-[-1px] outline-sky-500/40",
           // лёгкая анимация
@@ -44,9 +44,9 @@ export default function PlanCard({
         ].join(" ")}
       >
         {/* Иконка + заголовок */}
-        <div className="pb-0 md:mb-1 flex items-center gap-1 md:gap-3">
+        <div className="pb-0 md:mb-1 flex items-center gap-0.7 md:gap-3">
           {/* Квадрат без свечения */}
-          <div className="grid place-items-center rounded-xl w-6 h-6 md:w-12 md:h-12 bg-white/5 pl-1" //border border-white/10
+          <div className="grid place-items-center rounded-3xl w-6 h-6 md:w-12 md:h-12 bg-white/5 pl-1" //border border-white/10
           >
             <div className="relative w-6 h-6 md:w-10 md:h-10 text-l">
               <Image src={iconSrc} alt={`${title} icon`} fill className="object-contain" />

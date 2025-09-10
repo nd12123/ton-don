@@ -14,6 +14,7 @@ type CalculatorProps = {
   apr: number;
   dailyEarnings: number;
 };
+const PLAN_BG_ACTIVE = "/decorative/plan-row-bg.svg";
 
 const PLANS = [
   { id: 0, label: "Basic", min: 1,  iconSrc: "/decorative/basic icon.svg" },
@@ -49,46 +50,65 @@ useEffect(() => {
   return (
     <div
       className="relative  rounded-[20px] border border-white/10 
-      px-1  gap-1 flex flex-row  justify-between  backdrop-blur-sm
+      pl-1  gap-0 md:gap-2 flex flex-row  /*items-stretch justify-start*/ justify-between   backdrop-blur-sm
       bg-[radial-gradient(ellipse_90.67%_90.68%_at_51.85%_6.45%,_#3E5C89_0%,_#171E38_100%)]
       shadow-[1px_15px_48.9px_0px_rgba(61,212,255,0.18)]
       outline outline-[2px] outline-offset-[-2px] outline-sky-400
       "      //py-10 md:py-14 ?? bg-[url('/ticket-bg.png')] bg-cover bg-center bg-[#101426]/80 shadow-[0_0_60px_#00C2FF33] //flex-col lg:
     >
       {/* Левая секция — планы */}
-      <div className="flex flex-col gap-1 w-[46%] pl-1 pt-2 pr-1"// w-full lg:
+{/* Левая секция — планы (мобилка, без фона у неактивных) */}
+<div className="flex flex-col w-[46%] pl-2 pr-0 pt-2 gap-0 relative overflow-hidden">
+  {PLANS.map((plan) => {
+    const active = selectedPlan === plan.label;
+    return (
+      <button
+        key={plan.label}
+        onClick={() => { onAmountChange(plan.min); setSelectedPlan(plan.label); }}
+        aria-pressed={active}
+        className={[
+          "relative isolate w-full flex items-center gap-2 px-0 pt-2 pb-1",
+          " ",
+          // никаких бордеров/маргинов — ряды вплотную
+          /* rounded-none first:rounded-t-xl last:rounded-b-xl */
+        ].join(" ")}
+        style={
+          active
+            ? {
+                backgroundImage: `url('${PLAN_BG_ACTIVE}')`,
+                backgroundRepeat: "no-repeat",
+                backgroundSize: "100% 100%",
+                backgroundPosition: "center",
+              }
+            : { background: "transparent" } // <— у неактивных фона нет
+        }
       >
-        {PLANS.map((plan) => (
-          <button
-            key={plan.label}
-            onClick={() => {
-              onAmountChange(plan.min);
-              setSelectedPlan(plan.label);
-            }}
-            className={`flex items-center gap-1 px-1 py-1 rounded-lg border transition-all hover:border-[#00C2FF] ${
-              selectedPlan === plan.label
-                ? "bg-[#00C2FF]/20 border-[#00C2FF]"
-                : "border-white/20"
-            }`}
-          >
-            <img src={plan.iconSrc} alt={plan.label} className="w-5 h-5" />
-            <span className="text-white text-[16px] font-medium">{plan.label}</span>
-          </button>
-        ))}
-        
-                            <GoToStakingButton className="btn-primary text-[10px]
-            bg-[#00C2FF] hover:bg-[#00A5E0] text-white px-0 py-1 rounded-xl font-semibold transition-all shadow-lg
+        <img src={plan.iconSrc} alt={plan.label} className="w-5 h-6 shrink-0 pb-2" />
+        <span className="text-white text-[16px] font-semibold leading-none pb-2">{plan.label}</span>
+      </button>
+    );
+  })}
+        <div className=" pb-2">
+                            <GoToStakingButton className="btn-primary text-[11px] w-4/5 h-auto
+            bg-[#00C2FF] hover:bg-[#00A5E0] text-white px-1 py-0 rounded-xl font-semibold transition-all shadow-lg
           ">Connect Wallet</GoToStakingButton>
-        
+        </div>
       </div>
-{/* === Наша новая линия-сепаратор === */}
+{/* === Наша новая линия-сепаратор === 
 <div
           className="h-[140px] w-[2px] my-2" //my-3
           style={{ background: "rgba(59, 71, 114, 1)" }}
-        />
+        />*/}
+{/* Вертикальный сепаратор — БЕЗ отступов сверху/снизу и слева/справа */}
+{/* Вертикальный сепаратор — стык в стык */}
+<div
+  className="self-stretch w-[2px] my-1 mx-0"
+  style={{ background: "rgba(59,71,114,1)" }}
+/>
+
 
       {/* Центральная секция — слайдеры */}
-      <div className="flex flex-col gap-1 w-full relative py-2 px-1">
+      <div className="flex flex-col gap-1 w-full relative py-2 px-2">
   <label className="text-white/80 text-[15px] font-medium">
     Deposit amount
   </label>

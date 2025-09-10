@@ -112,7 +112,7 @@ export default function CalculateAndPlans() {
 </div>
 {/* --- Главный текст из макета Figma --- */}
 <div className="max-w-6xl mx-auto px-4 relative z-10 pb-5 md:pb-16"> 
-  <h1 className="font-inter font-bold text-[30px] leading-[32px] md:text-[70px] md:leading-[68px] text-white">
+  <h1 className="font-inter font-bold text-[32px] leading-[35px] md:text-[70px] md:leading-[68px] text-white">
     Choose a <span className="text-[#00C2FF]">plan</span> and<br/>
     <span className="text-[#00C2FF]">Calculate</span> your <span className="text-[#00C2FF]">Profit</span>
   </h1>
@@ -250,7 +250,7 @@ export default function CalculateAndPlans() {
       <div className="py-3 absolute inset-0 -z-10 pointer-events-none bg-gradient-to-br from-white/10 to-transparent opacity-70 group-hover:opacity-90 transition-opacity" />
       
       <span className="text-m text-white/80">In 1 day</span>
-      <span className="text-m font-bold">+{dailyEarnings.toFixed(2)} TON</span>
+      <span className="text-m font-bold text-center">+{dailyEarnings.toFixed(2)} <br/> TON</span>
     </div>
 
     {/* Карточка 2 */}
@@ -264,7 +264,7 @@ export default function CalculateAndPlans() {
       <div className="absolute inset-0 -z-10 pointer-events-none bg-gradient-to-br from-white/10 to-transparent opacity-70 group-hover:opacity-90 transition-opacity" />
       
       <span className="text-[12px] text-white/80">In 7 days</span>
-      <span className="text-m font-medium">+{(dailyEarnings * 7).toFixed(2)} TON</span>
+      <span className="text-m font-bold text-center">+{(dailyEarnings * 7).toFixed(2)} <br/> TON</span>
     </div>
 
     {/* Карточка 3 */}
@@ -277,8 +277,8 @@ export default function CalculateAndPlans() {
       />
       <div className="absolute inset-0 -z-10 pointer-events-none bg-gradient-to-br from-white/10 to-transparent opacity-70 group-hover:opacity-90 transition-opacity" />
       
-      <span className="text-[10px] text-white/80">Investment period</span>
-      <span className="text-m font-medium">+{(dailyEarnings * days).toFixed(2)} TON</span>
+      <span className="text-[10px]  text-white/80 text-center">Investment period</span>
+      <span className="text-m font-bold text-center">+{(dailyEarnings * days).toFixed(2)} <br/> TON</span>
     </div>
   </div>
 </div>
