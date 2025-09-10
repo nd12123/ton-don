@@ -7,13 +7,15 @@ import Calculator from "./Calculator";
 import CalculatorTest from "./CalculatorMobile";
 import CalculatorHorizontal from "./CalculatorHorizontal";
 
+import { useT } from '@/providers/I18nProvider';
+
 
 import tonTop from "@/assets/Calculator/ton.svg"
 import sphere from "@/assets/Calculator/Ellipse9.png"
 
 const PLANS = [
   { id: 0, label: "Basic",   apr:  4, min:    1, rangeText: "1–999 TON",      iconSrc: "/decorative/basic icon.svg", bgSrc: "/decorative/stepsRight.png"},
-  { id: 1, label: "Pro",     apr:  7, min: 1000, rangeText: "1000–1 999 TON", iconSrc: "/decorative/pro icon.svg", bgSrc: "/decorative/stepsCardBg.svg"   },
+  { id: 1, label: "Pro",     apr:  7, min: 1000, rangeText: "1000–1999 TON", iconSrc: "/decorative/pro icon.svg", bgSrc: "/decorative/stepsCardBg.svg"   },
   { id: 2, label: "Premium", apr: 10, min: 2000, rangeText: "2000+ TON",      iconSrc: "/decorative/super icon.svg", bgSrc: "/decorative/stepsLeft.png" },
 ];
 
@@ -36,6 +38,7 @@ export default function CalculateAndPlans() {
   };
   const apr = PLANS[selectedPlanIdx].apr;
   const dailyEarnings = useMemo(() => (amount * (apr/100)) , [amount, apr]); // /365
+  const t = useT();
 
   return ( //py-20 pt-[200px] lg:pt-[375px]
     <section id="calculate-plans" className="relative overflow-hidden text-white pb-7 pt-0   scroll-mt-12" //lg:
@@ -111,12 +114,17 @@ export default function CalculateAndPlans() {
   </div>
 </div>
 {/* --- Главный текст из макета Figma --- */}
-<div className="max-w-6xl mx-auto px-4 relative z-10 pb-5 md:pb-16"> 
-  <h1 className="font-inter font-bold text-[32px] leading-[35px] md:text-[70px] md:leading-[68px] text-white">
-    Choose a <span className="text-[#00C2FF]">plan</span> and<br/>
-    <span className="text-[#00C2FF]">Calculate</span> your <span className="text-[#00C2FF]">Profit</span>
-  </h1>
-</div>
+  {/* ---- Локализованный заголовок ----
+         Разбиваем на части, чтобы подсветить отдельные слова.
+         Строки сами живут в messages/{locale}.json */}
+      <div className="max-w-6xl mx-auto px-4 relative z-10 pb-7 md:pb-16">
+        <h1 className="font-inter font-bold text-[32px] leading-[35px] md:text-[70px] md:leading-[68px] text-white">
+          {t("calc.h1.choose")}{" "}
+          <span className="text-[#00C2FF]">{t("calc.h1.plan")}</span> {t("calc.h1.and")}<br />
+          <span className="text-[#00C2FF]">{t("calc.h1.calculate")}</span> {t("calc.h1.your")}{" "}
+          <span className="text-[#00C2FF]">{t("calc.h1.profit")}</span>
+        </h1>
+      </div>
       {/* 2) Горизонт (основной фон) */}
       <div className="absolute inset-0 pointer-events-none -z-20 overflow-hidden">
   <div
@@ -146,7 +154,7 @@ export default function CalculateAndPlans() {
 
       <div className="max-w-6xl mx-auto px-2 md:px-6 pb-6">
         {/* === 3) Карточки планов === */}
-        <div className="grid grid-cols-3 gap-x-2 md:gap-x-16 gap-y-[0px] md:gap-y-8 mb-4 md:mb-16" //grid-cols-1 md: 
+        <div className="grid grid-cols-3 gap-x-3 md:gap-x-16 gap-y-2 md:gap-y-8 mb-6 md:mb-16" //grid-cols-1 md: 
         >
           {PLANS.map((plan, idx) => (
             <PlanCard
@@ -234,7 +242,7 @@ export default function CalculateAndPlans() {
 
       </div>
 
-<div className="block md:hidden relative z-10 w-full px-4 pb-2 py-1 text-white">
+<div className="block md:hidden relative z-10 w-full px-4 pb-2 py-2 text-white">
   <div className="grid grid-cols-3 gap-4">
     {/* Карточка 1 */}
     <div className="relative group rounded-2xl px-1 py-1 flex flex-col items-center justify-center overflow-hidden min-h-[48px]">
@@ -249,7 +257,7 @@ export default function CalculateAndPlans() {
       {/* Мягкое свечение поверх фона (но под текстом) */}
       <div className="py-3 absolute inset-0 -z-10 pointer-events-none bg-gradient-to-br from-white/10 to-transparent opacity-70 group-hover:opacity-90 transition-opacity" />
       
-      <span className="text-m text-white/80">In 1 day</span>
+      <span className="text-[10px] text-white/80">In 1 day</span>
       <span className="text-m font-bold text-center">+{dailyEarnings.toFixed(2)} <br/> TON</span>
     </div>
 
@@ -263,7 +271,7 @@ export default function CalculateAndPlans() {
       />
       <div className="absolute inset-0 -z-10 pointer-events-none bg-gradient-to-br from-white/10 to-transparent opacity-70 group-hover:opacity-90 transition-opacity" />
       
-      <span className="text-[12px] text-white/80">In 7 days</span>
+      <span className="text-[10px] text-white/80">In 7 days</span>
       <span className="text-m font-bold text-center">+{(dailyEarnings * 7).toFixed(2)} <br/> TON</span>
     </div>
 
@@ -278,7 +286,7 @@ export default function CalculateAndPlans() {
       <div className="absolute inset-0 -z-10 pointer-events-none bg-gradient-to-br from-white/10 to-transparent opacity-70 group-hover:opacity-90 transition-opacity" />
       
       <span className="text-[10px]  text-white/80 text-center">Investment period</span>
-      <span className="text-m font-bold text-center">+{(dailyEarnings * days).toFixed(2)} <br/> TON</span>
+      <span className="text-m font-bold text-center">+{(dailyEarnings * days).toFixed(0)} <br/> TON</span>
     </div>
   </div>
 </div>

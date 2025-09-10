@@ -1,0 +1,110 @@
+{
+   "common": {
+    "brand": "TON Stake",
+    "nav": {
+      "home": "Главная",
+      "staking": "Стейкинг",
+      "history": "История",
+      "profile": "Профиль",
+      "support": "Поддержка"
+    },
+    "buttons": {
+      "connectWallet": "Подключить кошелёк",
+      "invest": "Инвестировать",
+      "seePlans": "Смотреть планы",
+      "stakeNow": "Начать стейкинг"
+    },
+    "badges": {
+      "auditedByCertik": "Аудит: Certik"
+    },
+    "legal": {
+      "terms": "Условия использования",
+      "privacy": "Политика конфиденциальности",
+      "copyright": "© {year} Orbi Ton | Все права защищены"
+    }
+  },
+
+  "home": {
+    "hero": {
+      "title_html": "Выбери <blue>план</blue> и<br/><blue>посчитай</blue> свою <blue>прибыль</blue>"
+    },
+    "startInvesting": {
+      "title": "Начни инвестировать сейчас!"
+    },
+    "steps": {
+      "title_html": "3 простых шага, чтобы инвестировать<br/>в <blue>TonStake.Ai</blue>",
+      "items": [
+        { "title": "Выбери план", "desc": "Подбери тариф, который подходит тебе" },
+        { "title": "Внеси депозит", "desc": "Минимум 10 TON" },
+        { "title": "Получай дивиденды", "desc": "Зарабатывай и выводи в любой момент" }
+      ]
+    },
+    "plans": {
+      "title": "Планы",
+      "labels": { "basic": "Базовый", "pro": "Про", "premium": "Премиум" },
+      "card": {
+        "yourProfit": "Твоя прибыль",
+        "perDay": "в день",
+        "rangeLabel": "Инвестиции за всё время"
+      }
+    },
+    "calculator": {
+      "depositAmount": "Сумма депозита",
+      "depositDuration": "Срок депозита",
+      "days": "Дней",
+      "in1day": "За 1 день",
+      "in7days": "За 7 дней",
+      "investmentPeriod": "За весь период"
+    }
+  },
+  "calc": {
+    "h1": {
+      "choose": "Выберите",
+      "plan": "план",
+      "and": "и",
+      "calculate": "Рассчитайте",
+      "your": "вашу",
+      "profit": "прибыль"
+    }
+  },
+  "calculator": {
+    "plans": {
+      "basic": "Базовый",
+      "pro": "Про",
+      "premium": "Премиум",
+      "range": {
+        "basic": "1–999 TON",
+        "pro": "1000–1999 TON",
+        "premium": "2000+ TON"
+      }
+    },
+    "metrics": {
+      "in1day": "За 1 день",
+      "in7days": "За 7 дней",
+      "period": "За период"
+    },
+    "depositAmount": "Сумма депозита",
+    "depositDuration": "Срок депозита",
+    "days": "дн.",
+    "connectWallet": "Подключить кошелёк"
+  },
+  "header": {
+    "staking": "Стейкинг",
+    "history": "История",
+    "profile": "Профиль",
+    "support": "Поддержка"
+  },
+  "hero": {
+    "cta": "Начать инвестировать"
+  },
+  "steps": {
+    "title": "3 лёгких шага для инвестиций",
+    "choosePlan": "Выберите план",
+    "makeDeposit": "Внесите депозит",
+    "getDividends": "Получайте дивиденды"
+  },
+  "footer": {
+    "terms": "Условия",
+    "privacy": "Конфиденциальность"
+  }
+}

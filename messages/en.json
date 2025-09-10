@@ -1,0 +1,90 @@
+{
+  "common": {
+    "brand": "TON Stake",
+    "nav": {
+      "home": "Home",
+      "staking": "Staking",
+      "history": "History",
+      "profile": "Profile",
+      "support": "Support"
+    },
+    "buttons": {
+      "connectWallet": "Connect Wallet",
+      "invest": "Invest",
+      "seePlans": "See Plans",
+      "stakeNow": "Stake now"
+    },
+    "badges": {
+      "auditedByCertik": "Audited by Certik"
+    },
+    "legal": {
+      "terms": "Terms and Conditions",
+      "privacy": "Privacy Policy",
+      "copyright": "© {year} Orbi Ton | All Rights Reserved"
+    }
+  },
+
+  "home": {
+    "hero": {
+      "title_html": "Choose a <blue>plan</blue> and<br/><blue>Calculate</blue> your <blue>Profit</blue>"
+    },
+    "startInvesting": {
+      "title": "Start investing now!"
+    },
+    "steps": {
+      "title_html": "3 Easy steps to invest<br/>in <blue>TonStake.Ai</blue>",
+      "items": [
+        { "title": "Choose Plan", "desc": "Select a plan that suits you best" },
+        { "title": "Make a Deposit", "desc": "Deposit at least 10 TON" },
+        { "title": "Receive Dividends", "desc": "Earn rewards and withdraw anytime" }
+      ]
+    },
+    "plans": {
+      "title": "Plans",
+      "labels": { "basic": "Basic", "pro": "Pro", "premium": "Premium" },
+      "card": {
+        "yourProfit": "Your profit",
+        "perDay": "Per day",
+        "rangeLabel": "Investments for all time"
+      }
+    },
+    "calculator": {
+      "depositAmount": "Deposit amount",
+      "depositDuration": "Deposit duration",
+      "days": "Days",
+      "in1day": "In 1 day",
+      "in7days": "In 7 days",
+      "investmentPeriod": "Investment period"
+    }
+  },
+  "header": {
+    "staking": "Staking",
+    "history": "History",
+    "profile": "Profile",
+    "support": "Support"
+  },
+  "hero": {
+    "cta": "Start investing"
+  },
+  "calculator": {
+    "plans": {
+      "basic": "Basic",
+      "pro": "Pro",
+      "premium": "Premium"
+    },
+    "depositAmount": "Deposit amount",
+    "depositDuration": "Deposit duration",
+    "days": "days",
+    "connectWallet": "Connect Wallet"
+  },
+  "steps": {
+    "title": "3 easy steps to invest",
+    "choosePlan": "Choose Plan",
+    "makeDeposit": "Make a Deposit",
+    "getDividends": "Receive Dividends"
+  },
+  "footer": {
+    "terms": "Terms and Conditions",
+    "privacy": "Privacy Policy"
+  }
+}

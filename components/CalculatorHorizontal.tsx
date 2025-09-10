@@ -85,7 +85,7 @@ useEffect(() => {
         }
       >
         <img src={plan.iconSrc} alt={plan.label} className="w-6 h-6 shrink-0 pb-2" />
-        <span className="text-white text-[16px] font-semibold leading-none pb-2">{plan.label}</span>
+        <span className="text-white text-[15px] font-semibold leading-none pb-2">{plan.label}</span>
 
       
       {/* правая синяя кромка, перекрывает сепаратор на 2px */}

@@ -3,7 +3,6 @@ import "./globals.css";
 import { Toaster } from "react-hot-toast";
 import ThemeProviderWrapper from "@/components/ThemeProviderWrapper";
 //import Header from "@/components/header";
-import Header from "@/components/header/HeaderClient"; // <-- клиентский
 
 import ClientProviders from "@/components/ClientProviders";
 //import TonDebugReset from "@/components/TonDebugReset";
@@ -57,13 +56,11 @@ const inter = Inter({
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className="${inter.variable} font-inter min-h-screen flex flex-col overflow-x-hidden" // ${inter.variable} font-inter
-      > 
+      <body className={`${inter.variable} font-inter min-h-screen flex flex-col overflow-x-hidden`}> 
         <ThemeProviderWrapper>
 
           <ClientProviders>
                  {/* <TonDebugReset /> удалить после подтверждения, что шум ушёл */}
-                      <Header />
 
             <Toaster position="top-right" />
             <main className="flex-grow">{children}</main>

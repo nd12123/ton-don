@@ -1,10 +1,16 @@
 // app/page.tsx
+import type { Locale } from "@/lib/i18n/getDictionary";
 import InteractivePage from "./InteractivePage";
+// НИ КАКОГО "use client" здесь!
 
-export default function Page() {
-  return <InteractivePage />;
+export default function Page({
+  // Next 15 типы: params может быть Promise, но если ты его не используешь — можно опустить
+}: {
+  params: Promise<{ locale: Locale }>;
+}) {
+  // Всё уже сделал layout: словарь в провайдере
+  return <InteractivePage  /* locale={locale} */ />;
 }
-
 /*
   useEffect(() => {
     const auto = plansList.find(

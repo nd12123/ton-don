@@ -132,7 +132,7 @@ export default function TotalValue() {
         </p>
 
                     <GoToStakingButton className="btn-primary
-    mt-10 inline-block px-8 py-4 bg-gradient-to-br from-[#00BFFF] to-[#009FEF]
+    mt-10 inline-block md:px-8 px-5 py-3 md:py-4 bg-gradient-to-br from-[#00BFFF] to-[#009FEF]
                      text-white text-lg font-medium rounded-[15px] shadow-lg hover:opacity-90 transition
   ">Start Investing Now</GoToStakingButton>
 

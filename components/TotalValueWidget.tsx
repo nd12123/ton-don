@@ -50,7 +50,7 @@ export default function TotalValueWidget() {
       >
         {formatTon(Math.round(tvl), 0)}
       </span>
-      <span className="text-sky-300/90 text-[0.45em] md:text-[0.5em] ml-1">TON</span>
+      <span className="text-sky-300/90 text-[0.45em] md:text-[0.5em] lg:text-[clamp(60px,11vw,70px)] ml-1">TON</span>
     </h2>
   );
 }

@@ -7,12 +7,13 @@ import { Menu, X } from "lucide-react";
 import { useTonWallet } from "@tonconnect/ui-react";
 import ConnectWalletButton from "@/components/ConnectWalletButton";
 import Image from "next/image";
+import LanguageSwitcher from "./LanguageSwitcher";
+import { useT } from "@/providers/I18nProvider";
 type NavItem = { name: string; href: string };
 
 function useIsAdmin() {
   const wallet = useTonWallet();
   const addr = wallet?.account?.address ?? null;
-
   // список админов через env: NEXT_PUBLIC_ADMIN_ADDRESSES="EQxxx,EQyyy"
   const admins = useMemo(() => {
     const raw = process.env.NEXT_PUBLIC_ADMIN_ADDRESSES || "";
@@ -31,6 +32,7 @@ export default function MobileNav() {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
   const isAdmin = useIsAdmin();
+  const t = useT();
 
   // Блокируем скролл фона при открытом меню
   useEffect(() => {
@@ -45,18 +47,17 @@ export default function MobileNav() {
     setOpen(false);
   }, [pathname]);
 
-  const items: NavItem[] = [
-    { name: "Home", href: "/" },
-    { name: "Staking", href: "/staking" },
-    //{ name: "History", href: "/history" },
-    { name: "Profile", href: "/profile" },
-    { name: "Support", href: "/support" },
-
-    // Admin добавим ниже условно
-  ];
-  if (isAdmin) {
-    items.push({ name: "Admin", href: "/admin/stakes" });
-  }
+ // формируем пункты меню; пересчитываем при смене языка и прав администратора
+  const links = useMemo(() => {
+    const base = [
+      { name: t("common.nav.home"), href: "/" },
+      { name: t("common.nav.staking"), href: "/staking" },
+      //{ name: t("common.nav.history"), href: "/history" },
+      { name: t("common.nav.profile"), href: "/profile" },
+      { name: t("common.nav.support"), href: "/support" }
+    ];
+    return isAdmin ? [...base, { name: "Admin", href: "/admin" }] : base;
+  }, [isAdmin, t]);
 
   return (
     <>
@@ -64,9 +65,9 @@ export default function MobileNav() {
       {/*"md:hidden fixed top-0 z-40 bg-black/40 backdrop-blur border-b border-white/10" */}
     <div className="md:hidden
     fixed top-0 left-0 right-0 z-50
-    bg-[#0B1128]/90 backdrop-blur border-b border-white/10
-    pt-[env(safe-area-inset-top)]">
-        <div className="flex items-center justify-between px-2 py-3">
+    bg-[#0B1128]/90 backdrop-blur border-b border-white/10" //    pt-[env(safe-area-inset-top)]">
+>
+            <div className="flex items-center justify-between px-2 py-3">
           <button
             aria-label="Open menu"
             className="inline-flex items-center gap-2"
@@ -76,7 +77,7 @@ export default function MobileNav() {
           </button>
 <Link href="/" className="flex items-center gap-2 text-white font-bold text-lg">
   <Image src="/favicon.svg" alt="TON Stake" width={20} height={20} className="rounded-md" />
-  <span>TON Stake</span>
+  <span>{t("common.brand")}</span>
 </Link>
           {/* Кнопка кошелька справа, как в десктопе */}
           {/* Кнопка кошелька справа (мобайл компактная) */}
@@ -135,7 +136,7 @@ export default function MobileNav() {
         </div>
 
         <ul className="px-3 py-3 space-y-1">
-          {items.map((item) => {
+          {links.map((item) => {
             const active = pathname === item.href;
             return (
               <li key={item.href}>
@@ -151,6 +152,7 @@ export default function MobileNav() {
               </li>
             );
           })}
+          <LanguageSwitcher />
         </ul>
 
         <div className="mt-auto p-3 border-t border-white/10">

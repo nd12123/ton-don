@@ -166,7 +166,7 @@ export default function MainSection({className = ''}: MainSectionProps) {
           </h1>
               <p className="text-[15px] md:text-lg  text-gray-300 max-w-lg">
                 Stake your TON tokens securely and earn passive income with our
-                audited smart contracts.
+                audited smart contracts
               </p>
               
           <div className="flex flex-col sm:flex-row md:items-center md:justify-center sm:items-start  md:justify-start gap-4 sm:gap-6">

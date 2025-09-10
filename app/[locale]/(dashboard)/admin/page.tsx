@@ -2,7 +2,7 @@
 import { Jetton } from "@/components/Jetton";
 import { Button } from "@/components/ui/button";
 
-import { FlexBoxCol, FlexBoxRow } from "../../../components/styled/styled";
+import { FlexBoxCol, FlexBoxRow } from "../../../../components/styled/styled";
 import { CHAIN, useTonWallet } from "@tonconnect/ui-react" //TonConnectButton
 //import { useTonConnect } from "@/lib/ton/useTonConnect";
 

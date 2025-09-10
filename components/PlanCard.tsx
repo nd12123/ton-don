@@ -3,7 +3,6 @@
 import React from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-
 type PlanCardProps = {
   title: string;
   dailyProfit: number;      // 4 | 7 | 10
@@ -32,7 +31,7 @@ export default function PlanCard({
       <div
         onClick={!isActive ? onSelect : undefined}
         className={[
-          "md:hidden relative flex flex-col gap-y-[3px]",
+          "md:hidden relative flex flex-col gap-y-[3px]", 
           "p-3 md:p-3 rounded-3xl transition",
           `bg-plan-${title.toLowerCase()}`,
           isActive
@@ -67,7 +66,7 @@ export default function PlanCard({
 
         {/* Диапазон for all time*/}
         <div className="pt-1">
-          <span className="text-[11px] text-gray-300 block">Total Investments</span>
+          <span className="text-[10px] text-gray-300 block">Total Investments</span>
           <span className="text-[10px] md:text-m font-bold text-accent-200">{rangeText}</span>
         </div>
 
