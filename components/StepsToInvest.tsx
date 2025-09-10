@@ -47,7 +47,7 @@ export default function StepsToInvest() {
       {/* Заголовок + кнопка „See Plans“ */}
       <div className="max-w-6xl mx-auto px-2 relative z-10 text-left font-medium">
         <h2 className="text-4xl sm:text-[28px] md:text-5xl lg:text-6xl md:font-extrabold leading-tight font-inter  font-bold">
-          3 Easy steps to invest<br />
+          Three Easy steps to invest<br />
           in <span className="text-[#00C2FF]">TonStake</span>
         </h2>
 
