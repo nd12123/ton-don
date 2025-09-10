@@ -35,7 +35,7 @@ export default function StepsToInvest() {
         />
       </div>
 
-      <div className="absolute top-[15%] md:top-[10%] right-[10%] md:right-[30%] opacity-90 z-[5] animate-float-slow delay-1000">
+      <div className="absolute top-[15%] md:top-[10%] right-[6%] md:right-[30%] opacity-90 z-[5] animate-float-slow delay-1000">
         <Image
           src="/decorative/ton4.svg"
           alt="TON Coin Right"
@@ -48,7 +48,7 @@ export default function StepsToInvest() {
       <div className="max-w-6xl mx-auto px-2 relative z-10 text-left font-medium">
         <h2 className="text-4xl sm:text-[28px] md:text-5xl lg:text-6xl md:font-extrabold leading-tight font-inter  font-bold">
           3 Easy steps to invest<br />
-          in <span className="text-[#00C2FF]">TonStake.Ai</span>
+          in <span className="text-[#00C2FF]">TonStake</span>
         </h2>
 
         <div className="relative z-10 mt-4 mb-3 md:mt-6 flex justify-left">

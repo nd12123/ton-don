@@ -58,7 +58,7 @@ useEffect(() => {
     >
       {/* Левая секция — планы */}
 {/* Левая секция — планы (мобилка, без фона у неактивных) */}
-<div className="flex flex-col w-[46%] pl-2 pr-0 pt-0 pb-2 gap-0 relative overflow-visible z-10" //-hidden
+<div className="flex flex-col w-[46%] pl-2 pr-0 pt-0 pb-1 gap-0 relative overflow-visible z-10" //-hidden
 >
   {PLANS.map((plan) => {
     const active = selectedPlan === plan.label;
@@ -104,9 +104,9 @@ useEffect(() => {
       </button>
     );
   })}
-        <div className="px-1 pb-2">
+        <div className="px-1 pb-1">
                             <GoToStakingButton className="btn-primary text-[11px] w-[95%] h-auto
-            bg-[#00C2FF] hover:bg-[#00A5E0] text-white px-0 py-0 rounded-xl font-semibold transition-all shadow-lg
+            bg-[#00C2FF] hover:bg-[#00A5E0] text-white px-1 py-[2px] rounded-xl font-semibold transition-all shadow-lg
           ">Connect Wallet</GoToStakingButton>
         </div>
       </div>
@@ -203,7 +203,7 @@ useEffect(() => {
   </div>
 </div>
 
-<div className="absolute bottom-[-35px] md:bottom-[-50px] right-[205px]  pointer-events-none z-0" //gap-8 
+<div className="absolute bottom-[-35px] md:bottom-[-50px] right-[190px]  pointer-events-none z-0" //gap-8 
 > 
   {/* Центральная монета чуть большего размера animate-float-slow delay-500 */}
   <div className="relative w-[80px] h-[80px]  ">

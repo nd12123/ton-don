@@ -257,7 +257,7 @@ export default function CalculateAndPlans() {
       {/* Мягкое свечение поверх фона (но под текстом) */}
       <div className="py-3 absolute inset-0 -z-10 pointer-events-none bg-gradient-to-br from-white/10 to-transparent opacity-70 group-hover:opacity-90 transition-opacity" />
       
-      <span className="text-[10px] text-white/80">In 1 day</span>
+      <span className="text-[14px] font-semibold text-white/80">In 1 day</span>
       <span className="text-m font-bold text-center">+{dailyEarnings.toFixed(2)} <br/> TON</span>
     </div>
 
@@ -271,7 +271,7 @@ export default function CalculateAndPlans() {
       />
       <div className="absolute inset-0 -z-10 pointer-events-none bg-gradient-to-br from-white/10 to-transparent opacity-70 group-hover:opacity-90 transition-opacity" />
       
-      <span className="text-[10px] text-white/80">In 7 days</span>
+      <span className="text-[14px] font-semibold text-white/80">In 7 days</span>
       <span className="text-m font-bold text-center">+{(dailyEarnings * 7).toFixed(2)} <br/> TON</span>
     </div>
 
@@ -285,7 +285,7 @@ export default function CalculateAndPlans() {
       />
       <div className="absolute inset-0 -z-10 pointer-events-none bg-gradient-to-br from-white/10 to-transparent opacity-70 group-hover:opacity-90 transition-opacity" />
       
-      <span className="text-[10px]  text-white/80 text-center">Investment period</span>
+      <span className="text-[14px] font-semibold text-white/80 text-center">In {days} days</span>
       <span className="text-m font-bold text-center">+{(dailyEarnings * days).toFixed(0)} <br/> TON</span>
     </div>
   </div>

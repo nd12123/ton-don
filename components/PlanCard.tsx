@@ -45,14 +45,14 @@ export default function PlanCard({
         {/* Иконка + заголовок */}
         <div className="pb-0 md:mb-1 flex items-center gap-0.7 md:gap-3">
           {/* Квадрат без свечения */}
-          <div className="grid place-items-center rounded-3xl w-6 h-6 md:w-12 md:h-12 bg-white/5 pl-1" //border border-white/10
+          <div className="grid place-items-center rounded-3xl w-6 h-6 md:w-12 md:h-12 bg-white/5" //border border-white/10
           >
             <div className="relative w-6 h-6 md:w-10 md:h-10 text-l">
               <Image src={iconSrc} alt={`${title} icon`} fill className="object-contain" />
             </div>
           </div>
 
-          <h3 className="px-2 md:p-4 text-[15px] font-semibold">{title}</h3>
+          <h3 className="px-1 md:p-4 text-[15px] font-semibold">{title}</h3>
         </div>
 
         {/* Процент */}
