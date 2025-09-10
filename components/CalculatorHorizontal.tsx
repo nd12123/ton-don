@@ -50,7 +50,7 @@ useEffect(() => {
   return (
     <div
       className="relative  rounded-[20px] border border-white/10 
-      pl-1  gap-0 md:gap-2 flex flex-row  /*items-stretch justify-start*/ justify-between   backdrop-blur-sm
+      pl-0 pt-3 gap-0 md:gap-2 flex flex-row  /*items-stretch justify-start*/ justify-between   backdrop-blur-sm
       bg-[radial-gradient(ellipse_90.67%_90.68%_at_51.85%_6.45%,_#3E5C89_0%,_#171E38_100%)]
       shadow-[1px_15px_48.9px_0px_rgba(61,212,255,0.18)]
       outline outline-[2px] outline-offset-[-2px] outline-sky-400
@@ -58,7 +58,7 @@ useEffect(() => {
     >
       {/* Левая секция — планы */}
 {/* Левая секция — планы (мобилка, без фона у неактивных) */}
-<div className="flex flex-col w-[46%] pl-2 pr-0 pt-2 gap-0 relative overflow-hidden">
+<div className="flex flex-col w-[46%] pl-2 pr-0 pt-0 gap-0 relative overflow-hidden">
   {PLANS.map((plan) => {
     const active = selectedPlan === plan.label;
     return (
@@ -67,7 +67,7 @@ useEffect(() => {
         onClick={() => { onAmountChange(plan.min); setSelectedPlan(plan.label); }}
         aria-pressed={active}
         className={[
-          "relative isolate w-full flex items-center gap-2 px-0 pt-2 pb-1",
+          "relative isolate w-full flex items-center gap-2 px-0 pt-3 pb-1",
           " ",
           // никаких бордеров/маргинов — ряды вплотную
           /* rounded-none first:rounded-t-xl last:rounded-b-xl */
@@ -88,9 +88,9 @@ useEffect(() => {
       </button>
     );
   })}
-        <div className=" pb-2">
-                            <GoToStakingButton className="btn-primary text-[11px] w-4/5 h-auto
-            bg-[#00C2FF] hover:bg-[#00A5E0] text-white px-1 py-0 rounded-xl font-semibold transition-all shadow-lg
+        <div className="px-1 pb-2">
+                            <GoToStakingButton className="btn-primary text-[10px] w-[90%] h-auto
+            bg-[#00C2FF] hover:bg-[#00A5E0] text-white px-0 py-0 rounded-xl font-semibold transition-all shadow-lg
           ">Connect Wallet</GoToStakingButton>
         </div>
       </div>
@@ -102,13 +102,13 @@ useEffect(() => {
 {/* Вертикальный сепаратор — БЕЗ отступов сверху/снизу и слева/справа */}
 {/* Вертикальный сепаратор — стык в стык */}
 <div
-  className="self-stretch w-[2px] my-1 mx-0"
+  className="self-stretch w-[3px] pt-3 mx-0"
   style={{ background: "rgba(59,71,114,1)" }}
 />
 
 
       {/* Центральная секция — слайдеры */}
-      <div className="flex flex-col gap-1 w-full relative py-2 px-2">
+      <div className="flex flex-col gap-1 w-full relative pb-2 px-2">
   <label className="text-white/80 text-[15px] font-medium">
     Deposit amount
   </label>
