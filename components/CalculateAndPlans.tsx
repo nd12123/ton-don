@@ -127,7 +127,7 @@ export default function CalculateAndPlans() {
         </h1>
       </div>
       {/* 2) Горизонт (основной фон) */}
-      <div className="absolute inset-0 pointer-events-none -z-20 overflow-hidden">
+      <div className="md:hidden absolute inset-0 pointer-events-none -z-20 overflow-hidden">
   <div
     style={{
       position: "absolute",
@@ -147,6 +147,61 @@ export default function CalculateAndPlans() {
         //objectPosition: "center top",
         opacity: 0.40, 
         //opacity: 0.9,
+      }}
+    />
+  </div>
+</div>
+
+{/* 2) Фон секции: все слои в одном контейнере + маска по Y */}
+<div
+  className=" hidden md:block
+    absolute inset-0 -z-20 pointer-events-none
+    [--fade:clamp(36px,8vw,120px)]  /* высота растворения сверху/снизу */
+  "
+  style={{
+    WebkitMaskImage:
+      "linear-gradient(to bottom, rgba(0,0,0,0) 0, rgba(0,0,0,1) var(--fade), rgba(0,0,0,1) calc(100% - var(--fade)), rgba(0,0,0,0) 100%)",
+    maskImage:
+      "linear-gradient(to bottom, rgba(0,0,0,0) 0, rgba(0,0,0,1) var(--fade), rgba(0,0,0,1) calc(100% - var(--fade)), rgba(0,0,0,0) 100%)",
+    WebkitMaskRepeat: "no-repeat",
+    maskRepeat: "no-repeat",
+  }}
+>
+  {/* Горизонт */}
+  <Image
+    src="/decorative/radius-bg.png"
+    alt="horizon"
+    fill
+    priority
+    style={{
+      objectFit: "cover",
+      opacity: 0.40,
+    }}
+  />
+
+  {/* Левый «хвост» */}
+  <Image
+    src="/decorative/EllipseLeftPlans.png"
+    alt=""
+    fill
+    style={{
+      objectFit: "contain",
+      objectPosition: "left center",
+      opacity: 0.6,
+    }}
+  />
+
+
+  {/* Звёздная «пылинка» */}
+  <div className="hidden absolute top-0 right-0 w-80 h-80">
+    <Image
+      src="/decorative/stars-bg3.png"
+      alt="stars"
+      fill
+      style={{
+        objectFit: "contain",
+        objectPosition: "right top",
+        opacity: 0.1,
       }}
     />
   </div>
@@ -203,7 +258,7 @@ export default function CalculateAndPlans() {
 </div>
 
 {/* Desktop-only */}
-<div className="hidden md:block">
+<div className="hidden md:block mb-6">
   <Calculator
     amount={amount}
     onAmountChange={handleAmountChange}
@@ -218,7 +273,7 @@ export default function CalculateAndPlans() {
 </div>
 
       {/* 5) Левый «сфера-хвост» */}
-      <div className="absolute bottom-0 left-0 w-full h-full pointer-events-none -z-10">
+      <div className="md:hidden absolute bottom-0 left-0 w-full h-full pointer-events-none -z-10">
         <Image
           src="/decorative/EllipseLeftPlans.png"
           alt=""
@@ -228,7 +283,7 @@ export default function CalculateAndPlans() {
       </div>
 
       {/* 6) Правый «сфера-хвост» */}
-      <div className="absolute bottom-0 right-0 w-full h-full pointer-events-none -z-10">
+      <div className="block md:hidden absolute bottom-0 right-0 w-full h-full pointer-events-none -z-10">
         <Image
           src="/decorative/EllipseRightPlans.png"
           alt=""
@@ -236,10 +291,39 @@ export default function CalculateAndPlans() {
           style={{ objectFit: "cover", objectPosition: "right center", opacity: 0.3 }}
         />
       </div>
+{/* 6) Правый «хвост» — топ-фейд, без фейда снизу */}
+<div className="hidden md:block absolute bottom-0 right-0 w-full h-full pointer-events-none -z-10">
+  <div
+    className="
+      absolute inset-0
+      [--fade-top:clamp(24px,7vw,120px)]   /* высота растворения сверху */
+      md:[--fade-top:clamp(36px,8vw,160px)]
+    "
+    style={{
+      WebkitMaskImage:
+        "linear-gradient(to bottom, rgba(0,0,0,0) 0, rgba(0,0,0,1) var(--fade-top), rgba(0,0,0,1) 100%)",
+      maskImage:
+        "linear-gradient(to bottom, rgba(0,0,0,0) 0, rgba(0,0,0,1) var(--fade-top), rgba(0,0,0,1) 100%)",
+      WebkitMaskRepeat: "no-repeat",
+      maskRepeat: "no-repeat",
+    }}
+  >
+    <Image
+      src="/decorative/EllipseRightPlans.png"
+      alt=""
+      fill
+      style={{
+        objectFit: "cover",
+        objectPosition: "right center",
+        opacity: 0.42,
+      }}
+    />
+  </div>
+</div>
 
       
 {/* 1) Декоративный звёздный шум (сверхвысокий слой, чуть прозрачный)  //w-full h-full inset-0*/}
-<div className="absolute top-0 right-0 w-80 h-80 pointer-events-none -z-30 stars-mask">
+<div className="md:hidden absolute top-0 right-0 w-80 h-80 pointer-events-none -z-30 stars-mask">
 <Image
   src="/decorative/stars-bg3.png"
   alt="stars"

@@ -12,9 +12,9 @@ import TotalValueWidget from '@/components/TotalValueWidget'
 
 export default function TotalValue() {
   return (
-    <section id="total-value" className="relative overflow-hidden text-white py-32  scroll-smooth">
+    <section id="total-value" className=" relative overflow-hidden text-white py-32  scroll-smooth">
       {/* 1) Фон горизонта (полупрозрачный) */}
-      <div className="absolute inset-0 -z-20">
+      <div className="md:hidden absolute inset-0 -z-20">
         <Image
           src="/decorative/horizon-bg.svg"
           alt="horizon"
@@ -34,15 +34,54 @@ export default function TotalValue() {
           background: "linear-gradient(to bottom, #0B1028, rgba(11, 17, 40, 0))",
         }}
       />*/}
+      {/* 1) Фон горизонта c плавным появлением сверху */}
+{/* 1) Горизонт: растворение черного сверху маской */}
+<div className="hidden md:block mt-5 absolute inset-0 -z-20">
+  <Image
+    src="/decorative/horizon-bg.svg"
+    alt="horizon"
+    fill
+    priority
+    style={{
+      objectFit: "cover",
+      objectPosition: "center top",
+      opacity: 0.4,
+
+      // ↓ Плавная альфа-маска: сверху прозрачно → ниже полностью видно
+      WebkitMaskImage:
+        "linear-gradient(to bottom, rgba(0,0,0,0) 0, rgba(0,0,0,1) clamp(24px,6vw,110px))",
+      maskImage:
+        "linear-gradient(to bottom, rgba(0,0,0,0) 0, rgba(0,0,0,1) clamp(24px,6vw,110px))",
+      WebkitMaskRepeat: "no-repeat",
+      maskRepeat: "no-repeat",
+      WebkitMaskSize: "100% 100%",
+      maskSize: "100% 100%",
+    }}
+  />
+      {/* 2) Звёздная текстура */}
+      <div className="hidden md:block absolute inset-0 -z-10 pointer-events-none">
+        <Image
+          src="/decorative/starsbg1.png"
+          alt="stars"
+          fill
+          style={{
+            objectFit: "cover",
+            opacity: 0.1,
+          }}
+        />
+      </div>
+</div>
+
+
       <div
-        className=" hidden md:block absolute top-0 left-0 w-full h-12 md:h-24 pointer-events-none -z-1"
+        className=" hidden md:block  absolute top-0 left-0 w-full h-12 md:h-24 pointer-events-none -z-1" //md:block 
         style={{
           background: "linear-gradient(to bottom, #0B1028, rgba(11, 17, 40, 0))",
         }}
       />
 
       {/* 2) Звёздная текстура */}
-      <div className="absolute inset-0 -z-10 pointer-events-none">
+      <div className="md:hidden absolute inset-0 -z-10 pointer-events-none">
         <Image
           src="/decorative/starsbg1.png"
           alt="stars"
@@ -55,7 +94,7 @@ export default function TotalValue() {
       </div>
 
       {/* 3) Боковые эллипсы (сферы) */}
-      <div className="absolute top-0 left-0 w-full md:w-1/2 h-full opacity-[100%] md:opacity-45 pointer-events-none z-10">
+      <div className="absolute top-0 left-0 w-full md:w-1/2 h-full opacity-[100%] md:opacity-50 pointer-events-none z-10">
         <Image
           src="/decorative/Ellipse60.png"
           alt="left glow"

@@ -80,7 +80,7 @@ export default function FAQSection() {
         {/* — Усиленный фэйд вверх для FAQ */}
 {/* — Плавный фэйд сверху для стыка Калькулятора → FAQ */}
 <div
-  className="absolute hidden md:block  top-0 left-0 w-full h-24 pointer-events-none z-[-1] opacity-30"
+  className="absolute hidden  top-0 left-0 w-full h-24 pointer-events-none z-[-1] opacity-30" // md:block
   style={{
     backgroundImage: [
       // 0) чуть более лёгкая «чёрная» полоса сверху
@@ -266,7 +266,7 @@ export default function FAQSection() {
   />
 </div>
         */}
-      <div className="absolute bottom-0 left-0 w-full h-[20%] md:w-full md:h-full opacity-100 md:opacity-90 pointer-events-none z-0">
+      <div className="absolute bottom-0 left-0 w-full h-[20%] md:w-full md:h-full opacity-100 md:opacity-80 pointer-events-none z-0">
   <NextImage
     src={sphere}
     alt=""
@@ -321,7 +321,21 @@ export default function FAQSection() {
         />
       </div>
 
-
+{/* === FAQ: фон с плавным растворением ТОЛЬКО сверху (desktop), мобилка — без изменений === hidden md:block */}
+<div className="absolute inset-0 -z-10 pointer-events-none">
+  {/* desktop/tablet: топ-фейд маской */}
+  <div
+    className=" absolute inset-0
+               [--fade-top:clamp(28px,7vw,140px)]"
+    style={{
+      WebkitMaskImage:
+        "linear-gradient(to bottom, rgba(0,0,0,0) 0, rgba(0,0,0,1) var(--fade-top), rgba(0,0,0,1) 100%)",
+      maskImage:
+        "linear-gradient(to bottom, rgba(0,0,0,0) 0, rgba(0,0,0,1) var(--fade-top), rgba(0,0,0,1) 100%)",
+      WebkitMaskRepeat: "no-repeat",
+      maskRepeat: "no-repeat",
+    }}
+  >
       <NextImage
         src="/decorative/starsbg1.png"       // укажите свой файл со звёздами stars-bg ?
         alt=""
@@ -329,6 +343,8 @@ export default function FAQSection() {
         className="pointer-events-none opacity-10 md:opacity-10"
         style={{ objectFit: "cover", objectPosition: "center top" }}
       />
+</div>
+</div>
 
 <div
   className="absolute hidden md:block inset-x-0 bottom-0 h-3 md:h-32 pointer-events-none -z-10" //w-1/2 md:w-full

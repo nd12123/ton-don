@@ -27,7 +27,7 @@ export default function StepsToInvest() {
   ];
 */
   return (
-    <section id="steps" className="relative text-white py-10 overflow-x-clip  scroll-mt-12">
+    <section id="steps" className="md: hidden relative text-white py-10 overflow-x-clip  scroll-mt-12">
       <div className="absolute top-0 right-0 w-full h-full pointer-events-none z-0">
         <Image
           src={rightCornerBottom}
@@ -317,7 +317,7 @@ export default function StepsToInvest() {
         </div>
         
       <div //LOOKS fine on Mobile
-        className="  absolute bottom-0 left-0 w-full h-full pointer-events-none -z-5 opacity-65" //hidden md:block
+        className=" md:hidden absolute bottom-0 left-0 w-full h-full pointer-events-none -z-5 opacity-65" //hidden md:block
         style={{
           background: "linear-gradient(to top, #020614 0%, #060E21 6%, #0B1028 15%)", //#010512
         }}

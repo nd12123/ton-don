@@ -44,7 +44,7 @@ export default function MainSection({className = ''}: MainSectionProps) {
       ].join(" ")}
     >
 
-      <div className="absolute bottom-0 left-0 w-full md:w-1/2 h-full opacity-75 md:opacity-55 pointer-events-none">
+      <div className="absolute bottom-0 left-0 w-full md:w-1/2 h-full opacity-75 md:opacity-55 lg:w-3/5 lg:opacity-55 pointer-events-none">
         <Image
           src={ellipse6}
           alt=""
@@ -53,7 +53,7 @@ export default function MainSection({className = ''}: MainSectionProps) {
         />
       </div>
 
-      <div className="absolute bottom-0 right-0 w-full md:w-1/2 h-full opacity-35 md:opacity-45 pointer-events-none">
+      <div className="absolute bottom-0 right-0 w-full md:w-1/2 h-full opacity-35 md:opacity-45 lg:w-1/2 lg:opacity-78 pointer-events-none">
         <Image
           src={ellipse5}
           alt=""
@@ -251,7 +251,7 @@ export default function MainSection({className = ''}: MainSectionProps) {
         <Image
           src={centralSphere}
           alt=""
-          className="absolute top-[20%] md:right-[20px] w-[65%] md:w-[45%] opacity-30 md:opacity-50 animate-float"
+          className="absolute top-[20%] md:top-[20%] md:right-[20px] w-[65%] md:w-[45%] lg:w[30%] lg:top-[0%] opacity-30 md:opacity-50 lg:opacity-35 animate-float"
         />
         {/** 
         <Image
@@ -288,7 +288,13 @@ export default function MainSection({className = ''}: MainSectionProps) {
   style={{
     background: "linear-gradient(to top, #0B1028, rgba(11,17,40,0))",
   }}
-/>*/}
+/>
+<div
+  className="hidden lg:block absolute inset-x-0 bottom-0 h-24 pointer-events-none z-20 opacity-10"
+  style={{
+    background: "linear-gradient(to top, #0B1028, rgba(11,17,40,0))",
+  }}
+  />*/}
     </section>
   );
   
