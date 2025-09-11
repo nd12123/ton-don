@@ -3,8 +3,9 @@
 import React, { useState, useMemo } from "react";
 import Image from "next/image";
 import PlanCard from "./PlanCard";
+import PlanCardDesktop from "./PlanCardDesktop";
 import Calculator from "./Calculator";
-import CalculatorTest from "./CalculatorMobile";
+//import CalculatorTest from "./CalculatorMobile";
 import CalculatorHorizontal from "./CalculatorHorizontal";
 
 import { useT } from '@/providers/I18nProvider';
@@ -90,7 +91,7 @@ export default function CalculateAndPlans() {
 {/* ==== Тон-интро перед основным блоком ==== */}
 <div className="relative mb-8 flex items-center justify-center pointer-events-none">
   {/* Большая полупрозрачная сфера позади текста */}
-  <div className="absolute w-[170px] h-[170px] top-[5px] right-[460px] opacity-99 z-[1]">
+  <div className="absolute w-[170px] h-[170px] top-[5px] right-[32px] md:right-[210px] opacity-99 z-[1]">
     <Image
       src={sphere}
       alt="Background Sphere"
@@ -102,7 +103,7 @@ export default function CalculateAndPlans() {
     />
   </div>
  {/* небольшая TON-иконка справа от текста */}
- <div className="absolute h-[48px] md:h-[160px] md:w-[160px] w-[48px] top-[15px] right-[35px] md:right-[450px] ml-4 z-[2]">
+ <div className="absolute h-[48px] md:h-[160px] md:w-[160px] w-[48px] top-[15px] right-[35px] md:right-[200px] ml-4 z-[2]">
     <Image
       src={tonTop}        // или тот файл, который у тебя для маленькой монеты
       alt="TON Icon"
@@ -154,7 +155,7 @@ export default function CalculateAndPlans() {
 
       <div className="max-w-6xl mx-auto px-2 md:px-6 pb-6">
         {/* === 3) Карточки планов === */}
-        <div className="grid grid-cols-3 gap-x-3 md:gap-x-16 gap-y-2 md:gap-y-8 mb-6 md:mb-16" //grid-cols-1 md: 
+        <div className=" md:hidden grid grid-cols-3 gap-x-3 md:gap-x-16 gap-y-2 md:gap-y-8 mb-6 md:mb-16" //grid-cols-1 md: 
         >
           {PLANS.map((plan, idx) => (
             <PlanCard
@@ -169,6 +170,22 @@ export default function CalculateAndPlans() {
             />
           ))}
         </div>
+        <div className="hidden md:grid grid-cols-3 gap-x-3 md:gap-x-16 gap-y-2 md:gap-y-8 mb-6 md:mb-16" //grid-cols-1 md: 
+        >
+          {PLANS.map((plan, idx) => (
+            <PlanCardDesktop
+              key={plan.id}
+              title={plan.label}
+              dailyProfit={plan.apr}
+              rangeText={plan.rangeText}
+              iconSrc={plan.iconSrc}
+              isActive={idx === selectedPlanIdx}
+              //bgSrc={plan.bgSrc}
+              onSelect={() => handlePlanSelect(idx)}
+            />
+          ))}
+        </div>
+        
 
 {/* Mobile-only CalculatorTest */}
 <div className="md:hidden mt-1">

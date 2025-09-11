@@ -9,6 +9,10 @@ import logoSvg from "@/assets/Footer/Ton image.png";
 import certikBadge from "@/assets/Main/bottom audited by certik.svg";
 import supportIcon from "@/assets/Footer/Support.svg";
 import telegramIcon from "@/assets/Footer/telegram.svg";
+import StartInvestingDesktop from "./StartInvestingDesktop";
+
+// не забудьте импортировать StartInvesting
+import StartInvesting from "./StartInvesting";
 
 // дополнительные декоративные картинки
 // положите их в public/decorative/
@@ -125,7 +129,7 @@ export default function Footer({ className = "" }: { className?: string }) {
         <Image
           src={tonCoin2}
           alt=""
-          className="absolute w-[100px] h-[100px] bottom-[160px] md:bottom-[40%] left-[6%] md:left-[4%] opacity-50 animate-float-slow delay-3000"
+          className="absolute w-[100px] h-[100px] bottom-[160px] md:bottom-[26%] left-[6%] md:left-[3%] opacity-50 animate-float-slow delay-3000"
         />
       </div>
 
@@ -133,94 +137,129 @@ export default function Footer({ className = "" }: { className?: string }) {
           1) CTA-блок «Start investing now!»
           mb-16
          ========================= */}
-      <div className="relative z-10 mt-6 sm:mt-8 lg:mt-10 pb-3">
+      <div className="lg:hidden relative z-10 mt-6 sm:mt-8 lg:mt-10 pb-3">
         {/* здесь ваш компонент StartInvesting */}
       <StartInvesting />
       </div>
+      <StartInvestingDesktop className="hidden lg:block" />
 
-      {/* =========================
-          2) Основной футер: логотип, навигация, соцсети 
-         ========================= */}
-      <div className="relative z-10  pt-0 md:pt-3 pb-0 md:pb-3" //border-t border-[#1F2A44]
-      >
-        <div className="container mx-auto px-2 md:px-4 flex flex-col lg:flex-row items-center justify-between gap-0 md:gap-6">
-          {/* левый блок */}
-          <div className="flex items-center gap-1 md:gap-6">
-            <div className="flex items-center gap-2">
-              <Image src={logoSvg} alt="TONStake.ai" width={32} height={32} />
-              <span className="text-xl whitespace-nowrap font-semibold">TON Stake</span>
-            </div>
+{/* =========================
+    2) Верхняя зона футера
+   ========================= */}
+<div className="relative z-10 pt-0 md:pt-3 pb-0 md:pb-3">
+  <div className="container mx-auto px-2 md:px-4">
 
-            <div
-            className="-z-10 h-6 border-l-2 md:border-l-4 border-transparent mx-1 md:mx-4 z-0"
+    {/* === MOBILE: оставляем как было (никаких изменений) === */}
+    <div className="md:hidden">
+      <div className="flex flex-col items-center justify-between gap-0">
+        {/* левый блок (логотип + палка + Certik + Support) */}
+        <div className="flex items-center gap-1">
+          <div className="flex items-center gap-2">
+            <Image src={logoSvg} alt="TONStake.ai" width={32} height={32} />
+            <span className="text-xl whitespace-nowrap font-semibold">TON Stake</span>
+          </div>
+
+          <div
+            className="-z-10 h-6 border-l-2 border-transparent mx-2"
             style={{
               borderImageSlice: 1,
               borderImageSource:
                 "linear-gradient(90deg, #021B37 0%, #0099FF 20.19%, #0099FF 81.25%, #021B37 100%)",
             }}
-            />
-            <div className="flex items-center gap-1 md:gap-2  py-1 " //bg-[#17DCFF] 0A1329 rounded-lg
-            >
-              <Image
-                src={certikBadge}
-                alt="Audited by Certik"
-                width={120}
-                height={50}
-              />
-              {/*              <span className="text-[12px] md:text-sm text-[#A0B0D8]">Audited by Certik</span>*/}
-            </div>
-            
-          <div className="flex items-center gap-1 md:gap-4 pt-4 md:py-2">
-            <Link
-              href="/support"
-            >
-              <Image src={supportIcon} alt="Support" width={120} height={50} />
-            </Link>
-          </div>
+          />
+
+          <div className="flex items-center">
+            <Image src={certikBadge} alt="Audited by Certik" width={120} height={50} />
           </div>
 
-          {/* навигация */}
-          <nav className="flex flex-wrap gap-6 md:gap-8 text-[20px] text-white pb-2" //[#A0B0D8]
-          >
-            <Link href="/staking" className="hover:text-white transition-colors">
-              Staking
-            </Link>
-            <Link href="/history" className="hover:text-white transition-colors">
-              History
-            </Link>
-            <Link href="/profile" className="hover:text-white transition-colors">
-              Profile
-            </Link>
-            <Link href="/support" className="hover:text-white transition-colors">
-              Support
-            </Link>
-          </nav>
-<div
-  className="w-full my-4"
-  style={{
-    borderStyle: "solid",
-    borderWidth: "1px 0 0 0",
-    borderImageSlice: 1,
-    borderImageSource:
-      "linear-gradient(90deg, #021B37 0%, #0099FF 20.19%, #0099FF 81.25%, #021B37 100%)",
-  }}
-/>
-
-          {/* соцкнопки
-            <Link
-              href="https://t.me/YourTelegramChannel"
-              target="_blank"
-              rel="noreferrer"
-            >
-              <Image
-                src={telegramIcon}
-                alt="Telegram"
-                width={60}
-                height={60}
-              />
-            </Link> */}
+          <Link href="/support" className="ml-1 inline-flex items-center">
+            <Image src={supportIcon} alt="Support" width={120} height={50} />
+          </Link>
         </div>
+
+        {/* навигация (как у вас было) */}
+        <nav className="flex flex-wrap gap-6 text-[20px] text-white pb-2 mt-2">
+          <Link href="/staking" className="hover:text-white transition-colors">Staking</Link>
+          <Link href="/history" className="hover:text-white transition-colors">History</Link>
+          <Link href="/profile" className="hover:text-white transition-colors">Profile</Link>
+          <Link href="/support" className="hover:text-white transition-colors">Support</Link>
+        </nav>
+
+        {/* разделитель */}
+        <div
+          className="w-full my-4"
+          style={{
+            borderStyle: "solid",
+            borderWidth: "1px 0 0 0",
+            borderImageSlice: 1,
+            borderImageSource:
+              "linear-gradient(90deg, #021B37 0%, #0099FF 20.19%, #0099FF 81.25%, #021B37 100%)",
+          }}
+        />
       </div>
+    </div>
+
+  {/* === DESKTOP: слева логотип+Certik, по центру навигация, справа Support === */}
+<div className="hidden md:block">
+  <div className="relative min-h-[64px]">
+    {/* ЛЕВО */}
+    <div className="flex items-center gap-4 min-w-0">
+      <div className="flex items-center gap-2">
+        <Image src={logoSvg} alt="TONStake.ai" width={32} height={32} />
+        <span className="text-xl whitespace-nowrap font-semibold">TON Stake</span>
+      </div>
+
+      <div
+        className="h-6 border-l mx-4"
+        style={{
+          borderWidth: "0 0 0 4px",
+          borderImageSlice: 1,
+          borderImageSource:
+            "linear-gradient(90deg, #021B37 0%, #0099FF 20.19%, #0099FF 81.25%, #021B37 100%)",
+        }}
+      />
+
+      <div className="flex items-center">
+        <Image src={certikBadge} alt="Audited by Certik" width={120} height={50} />
+      </div>
+    </div>
+
+    {/* ЦЕНТР — абсолюто центрированная навигация */}
+    <nav
+      className="
+        absolute left-1/2 -translate-x-1/2
+        flex items-center gap-8 text-[20px] text-white
+      "
+    >
+      <Link href="/staking" className="hover:text-white/90 transition-colors">Staking</Link>
+      <Link href="/history" className="hover:text-white/90 transition-colors">History</Link>
+      <Link href="/profile" className="hover:text-white/90 transition-colors">Profile</Link>
+      <Link href="/support" className="hover:text-white/90 transition-colors">Support</Link>
+    </nav>
+
+    {/* ПРАВО — Support */}
+    <div className="absolute right-0 top-1/2 -translate-y-1/2">
+      <Link href="/support" className="inline-flex items-center">
+        <Image src={supportIcon} alt="Support" width={120} height={50} />
+      </Link>
+    </div>
+  </div>
+
+  {/* Разделительная линия под строкой */}
+  <div
+    className="w-full my-4"
+    style={{
+      borderStyle: "solid",
+      borderWidth: "1px 0 0 0",
+      borderImageSlice: 1,
+      borderImageSource:
+        "linear-gradient(90deg, #021B37 0%, #0099FF 20.19%, #0099FF 81.25%, #021B37 100%)",
+    }}
+  />
+</div>
+
+  </div>
+</div>
 
       {/* =========================
           3) Копирайт
@@ -240,5 +279,18 @@ export default function Footer({ className = "" }: { className?: string }) {
   );
 }
 
-// не забудьте импортировать StartInvesting
-import StartInvesting from "./StartInvesting";
+{/*
+
+          {/* соцкнопки
+            <Link
+              href="https://t.me/YourTelegramChannel"
+              target="_blank"
+              rel="noreferrer"
+            >
+              <Image
+                src={telegramIcon}
+                alt="Telegram"
+                width={60}
+                height={60}
+              />
+            </Link> */}

@@ -1,4 +1,5 @@
 "use client";
+//no use?
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import GoToStakingButton from "./GoToStakingButton";

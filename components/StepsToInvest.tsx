@@ -19,12 +19,13 @@ import ConnectWalletButton from "@/components/ConnectWalletButton";
 
 export default function StepsToInvest() {
   // Структура трёх шагов (номер, заголовок, описание).
+  /*
   const steps = [
     { id: 1, title: "Choose Plan", description: "Select a plan that suits you best" },
     { id: 2, title: "Make a Deposit", description: "Deposit at least 10 TON" },
     { id: 3, title: "Receive Dividends", description: "Earn rewards and withdraw anytime" },
   ];
-
+*/
   return (
     <section id="steps" className="relative text-white py-10 overflow-x-clip  scroll-mt-12">
       <div className="absolute top-0 right-0 w-full h-full pointer-events-none z-0">
@@ -74,8 +75,7 @@ export default function StepsToInvest() {
 
 {/* ОБКАТЫВАЕМ КОНТЕНТ В RELATIVE-wrapper */}
 <div className="relative mt-8 md:mt-4 px-0 h-[158px]  md:h-[350px] z-10"
-/* Глобальные переменные подгонки */
-        style={
+/* Глобальные переменные подгонки  style={
           {
             // поля слева/справа под маску (чтоб край 1-й/3-й совпал)
             // подстрой под свой svg, можно тронуть отдельно для md:
@@ -88,7 +88,8 @@ export default function StepsToInvest() {
             "--t2": "14px",
             "--t3": "0px",
           } as React.CSSProperties
-        }>
+        } */
+       >
   
   {/* фон-изображение – под гридом */}
   <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden">
@@ -169,42 +170,7 @@ export default function StepsToInvest() {
     
 <div className="absolute inset-0 z-10 flex items-center">
   <div className="w-full mx-auto py-0 md:py-0 md:pl-18 pl-7 pr-10  md:max-w-6xl">
-    <div className="hidden md:block grid grid-cols-3 gap-3 md:gap-5 " //gap-4 left-[24px] right-[1vw] md:left-20 md:right-20
-    >
-      {/* ...твои шаги без дополнительных mt-8/md:mt-12 ... */}
-            {steps.map((step, idx) => (
-              <div key={step.id} className="relative group h-full sm:mt-7 md:mt-0">
-                <div
-                  className="
-                  w-full
-                  md:pb-16 pl-0 pb-3 md:pl-1 
-                    bg-transparent rounded-2xl
-                    sm:h-[110px] sm:max-w-[60px] md:w-[320px] md:h-[200px] md:h-full
-                    flex flex-col justify-top
-                    /*md:hover:shadow-xl*/ transition
-                  "
-                >
-                  <div className="flex items-baseline gap-2 md:block sm:justify-center md:justify-start">
-                    <div className=" flex-none text-m md:text-4xl font-bold tabular-nums leading-none md:mb-2 md:py-4" //w-7
-                    >
-                      {step.id.toString().padStart(2, "0")}
-                    </div>
 
-                    <h3 className="hidden md:block text-xl md:text-2xl font-semibold leading-snug">
-                      {step.title}
-                    </h3>
-                  </div>
-
-                  <p className="mt-1 md:mt-2 font-medium text-[10px] md:text-base text-left" //text-center md:
-                  >
-                    {step.description}
-                  </p>
-                </div>
-
-                {idx < steps.length - 1 && <div />}
-              </div>
-            ))}
-          </div>
         {/* Сетка 3х3 поверх маски 
 {/* маска уже лежит под этим блоком
 <div
@@ -218,10 +184,10 @@ export default function StepsToInvest() {
   "
 > 
 <div
-    className="
-      w-full mx-auto mt-12
       /* ВАЖНО: у грид-контейнера gap по X = 0, сепараторы — отдельные треки */
-      grid gap-x-0 gap-y-4
+    className="
+      w-full mx-auto sm:mt-12 md:mt-0
+      grid gap-x-0 gap-y-4 md:pb-12 md:pl-[195px]
       px-[var(--pad-l)] pr-[var(--pad-r)]
       [grid-template-columns:var(--c1)_var(--g12)_var(--c2)_var(--g23)_var(--c3)]
       md:[grid-template-columns:var(--c1-md)_var(--g12-md)_var(--c2-md)_var(--g23-md)_var(--c3-md)]
@@ -239,15 +205,15 @@ export default function StepsToInvest() {
         "--c3": "1.06fr",
 
         // разные сепараторы
-        "--g12": "4px",
-        "--g23": "16px",
+        "--g12": "2px",
+        "--g23": "14px",
 
         // десктопные значения (если нужно)
-        "--c1-md": "1.02fr",
-        "--c2-md": ".90fr",
-        "--c3-md": "1.08fr",
-        "--g12-md": "16px",
-        "--g23-md": "24px",
+        "--c1-md": "0.62fr",
+        "--c2-md": ".76fr",
+        "--c3-md": "1fr",
+        "--g12-md": "8px",
+        "--g23-md": "14px",
       } as React.CSSProperties
     }
   >
@@ -264,7 +230,7 @@ export default function StepsToInvest() {
 {/* сепаратор между 1 и 2 (треки g12) */}
 <div
   aria-hidden
-  className="col-start-2 col-end-3 flex items-stretch justify-center py-1"
+  className="block md:hidden col-start-2 col-end-3 flex items-stretch justify-center py-1"
 >
   <div
     className="h-full"
@@ -290,7 +256,7 @@ export default function StepsToInvest() {
 {/* сепаратор между 2 и 3 (треки g23) */}
 <div
   aria-hidden
-  className="col-start-4 col-end-5 flex items-stretch justify-center py-1 pt-3"
+  className="block md:hidden col-start-4 col-end-5 flex items-stretch justify-center py-1 pt-3"
 >
   <div
     className="h-full"
@@ -360,6 +326,42 @@ export default function StepsToInvest() {
   );
 }
 
+{/*    <div className="hidden grid grid-cols-3 gap-3 md:gap-5 " //gap-4 left-[24px] right-[1vw] md:left-20 md:right-20
+    >
+...твои шаги без дополнительных mt-8/md:mt-12 ... 
+            {steps.map((step, idx) => (
+              <div key={step.id} className="relative group h-full sm:mt-7 md:mt-0">
+                <div
+                  className="
+                  w-full
+                  md:pb-16 pl-0 pb-3 md:pl-1 
+                    bg-transparent rounded-2xl
+                    sm:h-[110px] sm:max-w-[60px] md:w-[320px] md:h-[200px] md:h-full
+                    flex flex-col justify-top
+                    transition
+                  "
+                >
+                  <div className="flex items-baseline gap-2 md:block sm:justify-center md:justify-start">
+                    <div className=" flex-none text-m md:text-4xl font-bold tabular-nums leading-none md:mb-2 md:py-4" //w-7
+                    >
+                      {step.id.toString().padStart(2, "0")}
+                    </div>
+
+                    <h3 className="hidden md:block text-xl md:text-2xl font-semibold leading-snug">
+                      {step.title}
+                    </h3>
+                  </div>
+
+                  <p className="mt-1 md:mt-2 font-medium text-[10px] md:text-base text-left" //text-center md:
+                  >
+                    {step.description}
+                  </p>
+                </div>
+
+                {idx < steps.length - 1 && <div />}
+              </div>
+            ))}
+          </div> */}
 
         {/* Контейнер с тремя «шагами» 
         <div className="relative z-10 mx-auto px-6 md:px-8 md:max-w-6xl mt-8 md:mt-12">

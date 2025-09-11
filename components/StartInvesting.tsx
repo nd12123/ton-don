@@ -1,20 +1,55 @@
 // components/StartInvesting.tsx
 import { FloatingStakeNow } from "./FloatingStakeNow";
-
+import Image from "next/image";
 export default function StartInvesting({ className = "" }: { className?: string }) {
   return (
-    <section className={["relative z-[5] text-white", className].join(" ")}>
-      {/* Блок с фоном баннера */}
+   <section className={["relative z-[5] text-white", className].join(" ")}>
+  <div
+    className="
+      relative mx-auto
+      w-[min(92vw,1100px)]
+      aspect-[1359/768]
+    "
+  >
+    {/* ФОН как <Image>, а не background */}
+    <Image
+      src="/decorative/StartNow.svg"
+      alt=""
+      fill
+      priority
+      className=" font-['Inter']
+        pointer-events-none select-none
+        object-contain object-center
+        md:scale-[1.12]  /* tablet: чуть крупнее */
+        lg:scale-[1.16]  /* desktop: ~1.3× */
+        [transform-origin:center]
+      "
+    />
+
+    {/* Контент поверх
+    <div className="absolute inset-0 flex items-start">
       <div
         className="
-          relative mx-auto
-          w-[min(92vw,1100px)]
-          aspect-[1359/768]
-          bg-no-repeat bg-center
-          bg-[length:100%] md:bg-[length:85%] lg:bg-[length:80%]
+          pl-[2%] pt-[15%]
+          md:pl-[7%] md:pt-[10%]
+          lg:pl-[8%] lg:pt-[9%]
+          max-w-[min(88%,640px)]
         "
-        style={{ backgroundImage: "url('/decorative/StartNow.svg')" }}
       >
+        <h1 className="pt-1 font-bold md:font-extrabold leading-[0.95] tracking-[-0.02em]
+                       text-[clamp(18px,6vw,70px)] md:text-[clamp(28px,8.2vw,92px)]">
+          Start investing<br/>now!
+        </h1>
+
+        <p className="pt-0 md:mt-4 text-white/90 text-[clamp(10px,2vw,22px)]">
+          Start earning in 2 clicks – your first income tomorrow
+        </p>
+
+        <FloatingStakeNow href="/staking" className="pt-2 left-[5px] mb-7 md:mt-6 inline-block" />
+      </div>
+    </div>
+  </div>
+ */}
         {/* Контент поверх фона */}
         <div
           className="
@@ -28,13 +63,13 @@ export default function StartInvesting({ className = "" }: { className?: string 
               // якорим блок примерно как на макете
               pl-[2%] pt-[15%]
               md:pl-[7%] md:pt-[10%]
-              lg:pl-[8%] lg:pt-[9%]
+              lg:l-[-20px] lg:pt-[15%]
               max-w-[min(88%,640px)]
             "
           >
             {/* Заголовок */}
             <h1
-              className="
+              className=" md:hidden
               pt-1
                 font-bold md:font-extrabold leading-[0.95] tracking-[-0.02em]
                 md:text-[clamp(28px,8.2vw,92px)]
@@ -47,7 +82,7 @@ export default function StartInvesting({ className = "" }: { className?: string 
             {/* Подзаголовок */}
             <p
               className="
-                pt-0 md:mt-4
+                pb-1 md:mt-4
                 text-white/90
                 text-[clamp(10px,2vw,22px)]
               "
@@ -59,8 +94,8 @@ export default function StartInvesting({ className = "" }: { className?: string 
             <FloatingStakeNow
               href="/staking"
               className="
-              pt-2 left-[5px]
-                mb-7 md:mt-6
+               pt-2 left-[5px]
+                mb-7 md:mt-3 md:mb-11
                 inline-block
               "
             />

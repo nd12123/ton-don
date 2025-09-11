@@ -32,7 +32,7 @@
       "title": "Start investing now!"
     },
     "steps": {
-      "title_html": "3 Easy steps to invest<br/>in <blue>TonStake.Ai</blue>",
+      "title_html": "Three Easy steps to invest<br/>in <blue>TonStake.Ai</blue>",
       "items": [
         { "title": "Choose Plan", "desc": "Select a plan that suits you best" },
         { "title": "Make a Deposit", "desc": "Deposit at least 10 TON" },
@@ -78,7 +78,7 @@
     "connectWallet": "Connect Wallet"
   },
   "steps": {
-    "title": "3 easy steps to invest",
+    "title": "Three easy steps to invest",
     "choosePlan": "Choose Plan",
     "makeDeposit": "Make a Deposit",
     "getDividends": "Receive Dividends"
