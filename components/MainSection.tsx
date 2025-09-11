@@ -14,6 +14,9 @@ import centralLeftSphere from '@/assets/Main/EllipseMainLeft.png';
 const ellipse6 = '/decorative/ellipse6.png';
 const ellipse5 = '/decorative/ellipse5.png';
 
+import certikSvg from "@/public/decorative/certik.svg";
+
+
 
 // Import SVG icons
 //import GetStartedIcon from '@/assets/Main/Get started.svg';
@@ -22,7 +25,7 @@ import GoToStakingButton from '@/components/GoToStakingButton';
 import ReliableIcon from '@/assets/Main/Reliable.svg';
 import ProfitableIcon from '@/assets/Main/Profitable.svg';
 import SimpleIcon from '@/assets/Main/Simple.svg';
-import AuditedIcon from '@/assets/Main/bottom audited by certik.svg';
+//import AuditedIcon from '@/assets/Main/bottom audited by certik.svg';
 
 type MainSectionProps = {
   className?: string
@@ -188,7 +191,7 @@ export default function MainSection({className = ''}: MainSectionProps) {
   <ChevronRight className="w-5 h-5 text-white" />
 </button> */}
                     <GoToStakingButton className="btn-primary
-    w-[132px] sm:w-[132px] sm:left-0 h-12 
+    w-[132px] sm:w-[132px] sm:left-0 h-12 md:h-10
     bg-gradient-to-r from-sky-600 to-sky-400
     rounded-2xl
     shadow-[0px_21px_40px_rgba(6,173,252,0.19)]
@@ -218,17 +221,28 @@ export default function MainSection({className = ''}: MainSectionProps) {
     alt="Audited by Certik"
     width={140}
     height={40}
-    className="md:hidden md:h-6 w-auto sm:left-0"
+    className="md:hidden md:h-6 w-auto [image-rendering:-webkit-optimize-contrast] [image-rendering:crisp-edges] select-none sm:left-0"
     priority
   />
 
-  {/* desktop icon */}
+  {/* desktop icon 
   <Image
-    src={AuditedIcon}
+    src={audited...}
     alt="Audited by Certik"
     className="hidden md:block md:h-8 w-auto"
-  />
+  /> */}
+  
+<Image
+  src={certikSvg}
+  alt="Audited by CertiK"
+  width={160}
+  height={50}
+  priority
+  className="hidden md:block [image-rendering:-webkit-optimize-contrast] [image-rendering:crisp-edges] select-none"
+  unoptimized   // для SVG без разницы, просто отдаст <img>
+/>
 </button>
+
 
 </div>
  </div>
