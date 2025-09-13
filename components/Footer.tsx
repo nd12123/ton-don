@@ -160,7 +160,7 @@ export default function Footer({ className = "" }: { className?: string }) {
           </div>
 
           <div
-            className="-z-10 h-6 border-l-2 border-transparent mx-2"
+            className="-z-10 h-6 border-l-2 border-transparent mx-1 md:mx-2"
             style={{
               borderImageSlice: 1,
               borderImageSource:
@@ -172,8 +172,8 @@ export default function Footer({ className = "" }: { className?: string }) {
             <Image src={certikBadge} alt="Audited by Certik" width={120} height={50} />
           </div>*/}
               
-<div className="md:hidden flex items-center">
-            <Image src="/decorative/mobile/Certik.png" alt="Audited by Certik" width={120} height={50} />
+<div className="bg-white rounded px-1 py-0.5 flex items-center">
+            <Image src="/decorative/mobile/Certik.png" alt="Audited by Certik" width={100} height={40} />
           </div>
 
           <div className="flex items-center pt-3">

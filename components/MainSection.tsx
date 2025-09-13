@@ -221,7 +221,7 @@ export default function MainSection({className = ''}: MainSectionProps) {
     alt="Audited by Certik"
     width={140}
     height={40}
-    className="md:hidden md:h-6 w-auto [image-rendering:-webkit-optimize-contrast] [image-rendering:crisp-edges] select-none sm:left-0"
+    className="md:hidden bg-white rounded-xl py-2 px-4 md:h-6 w-auto [image-rendering:-webkit-optimize-contrast] [image-rendering:crisp-edges] select-none sm:left-0"
     priority
   />
 
