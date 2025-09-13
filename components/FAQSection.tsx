@@ -324,9 +324,17 @@ export default function FAQSection() {
           style={{ objectFit: "contain" }}
         />
       </div>
-      <div className="pointer-events-none absolute top-[-10px] left-1/4 w-60 h-60 opacity-65 animate-float-slow delay-2000">
+      <div className="hidden md:block pointer-events-none absolute top-[-10px] left-1/4 w-60 h-60 opacity-65 animate-float-slow delay-2000">
         <NextImage
           src="/decorative/ton4.svg"
+          alt=""
+          fill
+          style={{ objectFit: "contain" }}
+        />
+      </div>
+<div className="md:hidden pointer-events-none absolute top-[-10px] left-1/4 w-60 h-60 opacity-65 animate-float-slow delay-2000">
+        <NextImage
+          src="/decorative/ton4.png"
           alt=""
           fill
           style={{ objectFit: "contain" }}
