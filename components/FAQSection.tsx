@@ -5,7 +5,7 @@ import React, { useState } from 'react';
 import NextImage from 'next/image';           // << вот так
 import { ChevronDown, ChevronUp } from 'lucide-react';
 import { motion, useReducedMotion } from "framer-motion";
-
+import  Image  from 'next/image';
 //import SectionWithFade from "@/components/SectionWithFade";
 
 // пути к вашим PNG/SVG теперь станут строкой или React-компонентом
@@ -266,7 +266,7 @@ export default function FAQSection() {
   />
 </div>
         */}
-      <div className="absolute bottom-[-25px] left-[-40px] w-1/5 h-[20%] md:left-0 md:bottom-0 md:w-full md:h-full opacity-[45%] md:opacity-80 pointer-events-none z-0">
+      <div className="hidden md:block absolute bottom-0 left-[-20px] w-full h-1/2 md:left-0 md:bottom-0 md:w-full md:h-full opacity-[65%] md:opacity-80 pointer-events-none z-0">
   <NextImage
     src={sphere}
     alt=""
@@ -277,6 +277,28 @@ export default function FAQSection() {
       //opacity: 0.9,
     }}
   />
+</div>
+
+<div className="md:hidden absolute bottom-0 left-[-0px] w-full h-1/2 md:left-0 md:bottom-0 md:w-full md:h-full opacity-[95%] md:opacity-80 pointer-events-none z-0 overflow-visible">
+  {/* Внутренний контейнер, который мы скейлим */}
+  <div
+    className="relative w-full h-full"
+    style={{
+      transform: "scale(0.4)",          // ← 4x меньше
+      transformOrigin: "left bottom",     // ← якорим слева-снизу
+      willChange: "transform",
+    }}
+  >
+    <Image
+      src={sphere}
+      alt="sphere"
+      fill
+      priority
+      className="object-cover object-left-bottom"
+      // чтобы Next подгружал не гигантский источник, подскажем ожидаемый визуальный размер:
+      sizes="(min-width: 768px) 25vw, 50vw"
+    />
+  </div>
 </div>
 
 
