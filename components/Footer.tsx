@@ -167,9 +167,13 @@ export default function Footer({ className = "" }: { className?: string }) {
                 "linear-gradient(90deg, #021B37 0%, #0099FF 20.19%, #0099FF 81.25%, #021B37 100%)",
             }}
           />
-
-          <div className="flex items-center">
+{/** 
+          <div className="hidden md:block flex items-center">
             <Image src={certikBadge} alt="Audited by Certik" width={120} height={50} />
+          </div>*/}
+              
+<div className="md:hidden flex items-center">
+            <Image src="/decorative/mobile/Certik.png" alt="Audited by Certik" width={120} height={50} />
           </div>
 
           <div className="flex items-center pt-3">

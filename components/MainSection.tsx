@@ -217,7 +217,7 @@ export default function MainSection({className = ''}: MainSectionProps) {
 >
   {/* mobile icon */}
   <Image
-    src="/decorative/mobile/audited-by-certik.svg"
+    src="/decorative/mobile/Certik.png"
     alt="Audited by Certik"
     width={140}
     height={40}
