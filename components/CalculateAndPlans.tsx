@@ -291,7 +291,7 @@ export default function CalculateAndPlans() {
           style={{ objectFit: "cover", objectPosition: "right center", opacity: 0.3 }}
         />
       </div>
-{/* 6) Правый «хвост» — топ-фейд, без фейда снизу ЗВЕЗДЫ СВЕРХУ СПРАВА (нахуй)
+{/* 6) Правый «хвост» — топ-фейд, без фейда снизу  */}
 <div className="hidden md:block absolute bottom-0 right-0 w-full h-full pointer-events-none -z-10">
   <div
     className="
@@ -319,8 +319,7 @@ export default function CalculateAndPlans() {
       }}
     />
   </div>
-</div> */}
-
+</div> 
       
 {/* 1) Декоративный звёздный шум (сверхвысокий слой, чуть прозрачный)  //w-full h-full inset-0*/}
 <div className="md:hidden absolute top-0 right-0 w-80 h-80 pointer-events-none -z-30 stars-mask">

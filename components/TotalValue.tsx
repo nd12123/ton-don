@@ -36,7 +36,7 @@ export default function TotalValue() {
       />*/}
       {/* 1) Фон горизонта c плавным появлением сверху */}
 {/* 1) Горизонт: растворение черного сверху маской */}
-<div className="hidden md:block mt-5 absolute inset-0 -z-20">
+<div className="hidden md:block md:-mt-[50px] absolute inset-0 -z-20">
   <Image
     src="/decorative/horizon-bg.svg"
     alt="horizon"
@@ -73,12 +73,9 @@ export default function TotalValue() {
 </div>
 
 
-      <div
-        className=" hidden md:block  absolute top-0 left-0 w-full h-12 md:h-24 pointer-events-none -z-1" //md:block 
-        style={{
-          background: "linear-gradient(to bottom, #0B1028, rgba(11, 17, 40, 0))",
-        }}
-      />
+<div className=" hidden md:block absolute top-0 left-0 w-full h-12 md:h-24 pointer-events-none -z-1" //md:block 
+style={{ background: "linear-gradient(to bottom, #0B1028, rgba(11, 17, 40, 0))", }} />
+
 
       {/* 2) Звёздная текстура */}
       <div className="md:hidden absolute inset-0 -z-10 pointer-events-none">
@@ -94,7 +91,7 @@ export default function TotalValue() {
       </div>
 
       {/* 3) Боковые эллипсы (сферы) */}
-      <div className="absolute top-0 left-0 w-full md:w-1/2 h-full opacity-[100%] md:opacity-50 pointer-events-none z-10">
+      <div className="absolute top-0 left-0 w-full md:w-1/2 h-full opacity-[100%] md:top-[-20px] md:left-[-20px] md:opacity-[55%] pointer-events-none z-10">
         <Image
           src="/decorative/Ellipse60.png"
           alt="left glow"
@@ -108,7 +105,7 @@ export default function TotalValue() {
           }}
         />
       </div>
-      <div className="absolute top-0 right-0 w-full w-full md:w-1/2 h-full opacity-55 md:opacity-45 pointer-events-none z-0">
+      <div className="absolute top-0 right-0 w-full md:w-1/2 h-full opacity-60 md:top-[-10px] md:right-[-20px] md:opacity-[39%] pointer-events-none z-[12]">
         <Image
           src="/decorative/Ellipse50.png"
           alt="right glow"

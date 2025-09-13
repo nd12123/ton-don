@@ -44,7 +44,7 @@ export default function MainSection({className = ''}: MainSectionProps) {
       ].join(" ")}
     >
 
-      <div className="absolute bottom-0 left-0 w-full md:w-1/2 h-full opacity-75 md:opacity-55 lg:w-3/5 lg:opacity-55 pointer-events-none">
+      <div className="absolute bottom-0 left-0 w-full md:w-[100%] h-full opacity-75 md:opacity-55 lg:w-3/5 lg:opacity-55 pointer-events-none">
         <Image
           src={ellipse6}
           alt=""
@@ -53,7 +53,7 @@ export default function MainSection({className = ''}: MainSectionProps) {
         />
       </div>
 
-      <div className="absolute bottom-0 right-0 w-full md:w-1/2 h-full opacity-35 md:opacity-45 lg:w-1/2 lg:opacity-78 pointer-events-none">
+      <div className="absolute bottom-0 right-0 w-full md:w-[100% + 450px] h-full opacity-35 md:opacity-45 lg:w-1/2 lg:opacity-[39%] pointer-events-none">
         <Image
           src={ellipse5}
           alt=""
@@ -295,6 +295,56 @@ export default function MainSection({className = ''}: MainSectionProps) {
     background: "linear-gradient(to top, #0B1028, rgba(11,17,40,0))",
   }}
   />*/}
+  {/* desktop-only мягкий переход вниз 
+  <div
+  className="hidden md:block pointer-events-none absolute inset-x-0 bottom-[-1px] h-[clamp(64px,9vw,160px)] z-[2]"
+  style={{
+    background:
+      "linear-gradient(to bottom, rgba(11,17,40,0) 0%, #0B1128 60%, #0B1128 100%)",
+  }}
+/>
+*/}
+{/* Мягкое продолжение градиента в TotalValue
+<div
+  className="
+  opzcity-10
+    hidden md:block
+    absolute inset-x-0 bottom-[-1px]   
+    h-[72px]                          
+    pointer-events-none
+    z-[1]
+  "
+  style={{
+    background:
+      // сверху прозрачный → к низу тот самый #0B1028
+      "linear-gradient(to bottom, rgba(11,17,40,0) 0%, rgba(11,17,40,.35) 55%, #0B1028 100%)",
+  }}
+/> 
+<div
+  className="
+    opacity-[2%]
+    hidden md:block
+    absolute inset-x-0 bottom-[-1px]
+    h-[72px]
+    pointer-events-none
+    z-[1]
+  "
+  style={{
+    // как было: лёгкая подкраска снизу вверх
+    background:
+      "linear-gradient(to bottom, rgba(11,17,40,0) 0%, rgba(11,17,40,.35) 55%, #0B1028 100%)",
+
+    // ⬇️ маска: виден только правый «хвост» (~правая треть), далее — плавное растворение
+    WebkitMaskImage:
+      "linear-gradient(to left, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 33%, rgba(0,0,0,0.65) 41%, rgba(0,0,0,0) 55%)",
+    maskImage:
+      "linear-gradient(to left, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 33%, rgba(0,0,0,0.65) 41%, rgba(0,0,0,0) 55%)",
+    WebkitMaskRepeat: "no-repeat",
+    maskRepeat: "no-repeat",
+  }}
+/>
+*/}
+
     </section>
   );
   
