@@ -105,9 +105,9 @@ export default function FAQSection() {
     ].join(', ')
   }}
 />
-{/* — Плавный фэйд сверху для стыка Калькулятора → FAQ mobile */}
+{/* — Плавный фэйд сверху для стыка Калькулятора → FAQ mobile  block md:*/}
 <div
-  className="absolute block md:hidden top-0 left-0 w-full h-24 pointer-events-none z-[-1] opacity-70"
+  className="absolute hidden top-0 left-0 w-full h-24 pointer-events-none z-[-1] opacity-70"
   style={{
     backgroundImage: [
       // 0) чуть более лёгкая «чёрная» полоса сверху

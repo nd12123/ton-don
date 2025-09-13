@@ -172,10 +172,13 @@ export default function Footer({ className = "" }: { className?: string }) {
             <Image src={certikBadge} alt="Audited by Certik" width={120} height={50} />
           </div>
 
+          <div className="flex items-center pt-3">
           <Link href="/support" className="ml-1 inline-flex items-center">
             <Image src={supportIcon} alt="Support" width={120} height={50} />
           </Link>
         </div>
+      </div>
+
 
         {/* навигация (как у вас было) */}
         <nav className="flex flex-wrap gap-6 text-[20px] text-white pb-2 mt-2">

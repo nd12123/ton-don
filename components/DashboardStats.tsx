@@ -84,9 +84,9 @@ export default function DashboardStats({
   //const gap = nextPlan ? Math.max(0, nextPlan.min - deposit) : 0;
 
 const ICONS = {
-    balance: "decorative/ProfileBalance.svg",
-    daily: "decorative/ProfileIncomeD.svg",
-    total: "decorative/ProfileIncomeT.svg",
+    balance: "/decorative/ProfileBalance.svg",
+    daily: "/decorative/ProfileIncomeD.svg",
+    total: "/decorative/ProfileIncomeT.svg",
   };
 
     {/*<section className="w-full max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">*/}

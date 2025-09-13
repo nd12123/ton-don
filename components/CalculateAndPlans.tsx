@@ -126,8 +126,8 @@ export default function CalculateAndPlans() {
           <span className="text-[#00C2FF]">{t("calc.h1.profit")}</span>
         </h1>
       </div>
-      {/* 2) Горизонт (основной фон) */}
-      <div className="md:hidden absolute inset-0 pointer-events-none -z-20 overflow-hidden">
+      {/* 2) Горизонт (основной фон) md:hidden */}
+      <div className=" hidden absolute inset-0 pointer-events-none -z-20 overflow-hidden">
   <div
     style={{
       position: "absolute",
@@ -152,9 +152,9 @@ export default function CalculateAndPlans() {
   </div>
 </div>
 
-{/* 2) Фон секции: все слои в одном контейнере + маска по Y */}
+{/* 2) Фон секции: все слои в одном контейнере + маска по Y   hidden md: */}
 <div
-  className=" hidden md:block
+  className="block
     absolute inset-0 -z-20 pointer-events-none
     [--fade:clamp(36px,8vw,120px)]  /* высота растворения сверху/снизу */
   "
@@ -291,12 +291,12 @@ export default function CalculateAndPlans() {
           style={{ objectFit: "cover", objectPosition: "right center", opacity: 0.3 }}
         />
       </div>
-{/* 6) Правый «хвост» — топ-фейд, без фейда снизу */}
+{/* 6) Правый «хвост» — топ-фейд, без фейда снизу ЗВЕЗДЫ СВЕРХУ СПРАВА (нахуй)
 <div className="hidden md:block absolute bottom-0 right-0 w-full h-full pointer-events-none -z-10">
   <div
     className="
       absolute inset-0
-      [--fade-top:clamp(24px,7vw,120px)]   /* высота растворения сверху */
+      [--fade-top:clamp(24px,7vw,120px)]   
       md:[--fade-top:clamp(36px,8vw,160px)]
     "
     style={{
@@ -319,7 +319,7 @@ export default function CalculateAndPlans() {
       }}
     />
   </div>
-</div>
+</div> */}
 
       
 {/* 1) Декоративный звёздный шум (сверхвысокий слой, чуть прозрачный)  //w-full h-full inset-0*/}
@@ -331,7 +331,7 @@ export default function CalculateAndPlans() {
   style={{
     objectFit: "contain",
     objectPosition: "right top",
-    opacity: 0.1,
+    opacity: 0.03,
     maskImage: "radial-gradient(circle at center, black 70%, transparent 100%)",
     WebkitMaskImage: "radial-gradient(circle at center, black 70%, transparent 100%)",
     maskRepeat: "no-repeat",
