@@ -105,7 +105,7 @@ export default function Footer({ className = "" }: { className?: string }) {
         <Image
           src={sphereUpperLeft}
           alt=""
-          className="absolute left-0 top-0 w-full h-auto opactity-74 md:opacity-85"
+          className="absolute left-0 sm:top-[-15px] top-0 w-full h-auto opactity-[85%] md:opacity-85"
         />
         <Image
           src={sphereUpperRight}

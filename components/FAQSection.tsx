@@ -266,7 +266,7 @@ export default function FAQSection() {
   />
 </div>
         */}
-      <div className="absolute bottom-0 left-0 w-full h-[20%] md:w-full md:h-full opacity-100 md:opacity-80 pointer-events-none z-0">
+      <div className="absolute bottom-[-25px] left-[-40px] w-1/5 h-[20%] md:left-0 md:bottom-0 md:w-full md:h-full opacity-[45%] md:opacity-80 pointer-events-none z-0">
   <NextImage
     src={sphere}
     alt=""
