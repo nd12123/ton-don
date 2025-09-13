@@ -12,6 +12,8 @@ import { useT } from '@/providers/I18nProvider';
 
 
 import tonTop from "@/assets/Calculator/ton.svg"
+import tonTopMobile from "@/assets/Calculator/ton.png"
+
 import sphere from "@/assets/Calculator/Ellipse9.png"
 
 const PLANS = [
@@ -103,9 +105,20 @@ export default function CalculateAndPlans() {
     />
   </div>
  {/* небольшая TON-иконка справа от текста */}
- <div className="absolute h-[48px] md:h-[160px] md:w-[160px] w-[48px] top-[15px] right-[35px] md:right-[200px] ml-4 z-[2]">
+ <div className="absolute hidden md:block h-[48px] md:h-[160px] md:w-[160px] w-[48px] top-[15px] right-[35px] md:right-[200px] ml-4 z-[2]">
     <Image
       src={tonTop}        // или тот файл, который у тебя для маленькой монеты
+      alt="TON Icon"
+      fill
+      style={{ objectFit: "contain",
+        //objectPosition: "right center",
+       }}
+    />
+  </div>
+
+ <div className="absolute md:hidden h-[48px] md:h-[160px] md:w-[160px] w-[48px] top-[15px] right-[35px] md:right-[200px] ml-4 z-[2]">
+    <Image
+      src={tonTopMobile}        // или тот файл, который у тебя для маленькой монеты
       alt="TON Icon"
       fill
       style={{ objectFit: "contain",

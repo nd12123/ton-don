@@ -5,6 +5,7 @@ import ton3d4 from "@/assets/TotalValue/Ton 3d 4.png";
 import ton3d5 from "@/assets/TotalValue/Ton 3d 5.svg";
 import ton3d6 from "@/assets/TotalValue/Ton 3d 6.png";
 import ton3d7 from "@/assets/TotalValue/Ton 3d 7.svg";
+import ton3d8 from "@/assets/TotalValue/Ton 3d 7.png"; 
 import leftSphere from "@/assets/TotalValue/Ellipse9.png";
 import rightSphere from "@/assets/TotalValue/Ellipse10.png";
 import GoToStakingButton from '@/components/GoToStakingButton';
@@ -135,7 +136,12 @@ style={{ background: "linear-gradient(to bottom, #0B1028, rgba(11, 17, 40, 0))",
         <Image
           src={ton3d5}
           alt=""
-          className="absolute bottom-[0%] right-[9%] w-[25%] opacity-100 animate-float delay-2000  z-10"
+          className="absolute hidden md:block bottom-[0%] right-[9%] w-[25%] opacity-100 animate-float delay-2000  z-10"
+        />
+        <Image
+          src={ton3d8}
+          alt=""
+          className="absolute md:hidden bottom-[2%] right-[9%] w-[25%] opacity-100 animate-float delay-2000  z-10"
         />
         <Image
           src={ton3d7}
