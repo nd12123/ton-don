@@ -4,7 +4,6 @@ import { Toaster } from "react-hot-toast";
 import ThemeProviderWrapper from "@/components/ThemeProviderWrapper";
 //import Header from "@/components/header";
 
-import ClientProviders from "@/components/ClientProviders";
 //import TonDebugReset from "@/components/TonDebugReset";
 import { Inter } from 'next/font/google';
 // app/layout.tsx
@@ -59,12 +58,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className={`${inter.variable} font-inter min-h-screen flex flex-col overflow-x-hidden`}> 
         <ThemeProviderWrapper>
 
-          <ClientProviders>
                  {/* <TonDebugReset /> удалить после подтверждения, что шум ушёл */}
 
             <Toaster position="top-right" />
             <main className="flex-grow">{children}</main>
-          </ClientProviders>
         </ThemeProviderWrapper>
       </body>
     </html>

@@ -204,7 +204,7 @@ useEffect(() => {
 
 
 {/* Предпросчёт — оверлей-пилюля + кнопка */}
-<div className="mt-4 flex flex-row flex-nowrap items-center gap-2 sm:gap-3 md:gap-4 w-full">
+<div className="mt-4 flex flex-col md:flex-row flex-nowrap items-center gap-2 sm:gap-5 md:gap-5 w-full">
   {/* внешнее glow */}
   <div
     aria-hidden
@@ -262,7 +262,7 @@ useEffect(() => {
     {/* яркое внешнее свечение */}
     <div
       aria-hidden
-      className="absolute -inset-4 rounded-[24px] blur-2xl opacity-90"
+      className="absolute -inset-4 rounded-xl md:rounded-[24px] blur-2xl opacity-90"
       style={{
         background:
           "radial-gradient(70% 120% at 50% 100%, rgba(0,174,255,.65) 0%, rgba(0,174,255,0) 70%)",
@@ -311,31 +311,31 @@ useEffect(() => {
           </div>
 
 <div
-  className="relative w-full max-w-[620px] overflow-hidden rounded-[28px]
-             aspect-[625/420] md:aspect-[640/420]">
+  className="relative md:ml-20 h-full w-full max-w-[550px] overflow-hidden 
+             aspect-[500/350] md:aspect-[500/350]" //rounded-[28px]
+             >
   {/* Фон внутри контейнера: заполняет форму и масштабируется */}
   <Image
-    src="/staking/daily-bg.svg"
+    src="/staking/stakingBg.svg" //daily-bg
     alt=""
     fill
     priority
     className="
- mt-9
        pointer-events-none select-none
       rounded-[inherit]           /* повторяем радиус контейнера */
       object-cover                /* заполняем всю карточку без «пустых полей» */
       will-change-transform
     "
     style={{
-      transform: 'scale(1.22)',   /* зум подгони под вкус: 1.1–1.35 */
-      transformOrigin: '50% 55%', /* центр/смещение фокуса при зуме */
+      //transform: 'scale(1.22)',   /* зум подгони под вкус: 1.1–1.35 */
+      //transformOrigin: '50% 55%', /* центр/смещение фокуса при зуме */
     }}
   />
 
   {/* Контент (всё лежит на фоне, нижняя граница выше) */}
-  <div className="absolute inset-[3%] z-10 flex flex-col  md:py-8 md:mx-24">
+  <div className="absolute inset-[1%] md:inset-[3%] z-10 flex flex-col px-4 pt-1  md:py-8 md:ml-12 md:pr-16">
     {/* APR бейдж — оставил как был, ты подправишь при желании */}
-    <div className="absolute right-0 top-[10px] rounded-xl bg-white text-[#0A6CFF]
+    <div className="absolute right-4 top-[10px] rounded-xl bg-white text-[#0A6CFF]
                     font-bold leading-none text-[18px] md:text-2xl py-1 px-3 md:py-2 md:ml-[12px] md:px-4 shadow">
       {apr}%
     </div>
@@ -351,8 +351,8 @@ useEffect(() => {
       {dailyIncomeTon.toFixed(2)} TON
     </p>
 
-    <p className="mt-auto md:mb-12 text-[11px] text-[20px] pb-6 md:pb-12 mb:py-15 md:text-sm leading-snug text-blue-50/90 max-w-[38rem]">
-      TonStake.ai automates your income — over $2 million TON is already making a
+    <p className="mt-auto mb-5 md:mb-12 text-[14px] md:text-[20px] pb-6 md:pb-12 mb:py-15 md:text-sm leading-snug text-blue-50/90 max-w-[38rem]">
+      TonStake automates your income — over $2 million TON is already making a
       profit on our algorithms. Start with 10 TON and watch your capital grow!
     </p>
 
@@ -360,9 +360,9 @@ useEffect(() => {
     <Image
       src="/decorative/ton22.svg"
       alt=""
-      width={138}
-      height={138}
-      className="pointer-events-none select-none absolute right-4 bottom-1 md:right-2 md:bottom-2"
+      //width={138}
+      //height={138}
+      className="pointer-events-none w-[90px] h-[90px] md:w-[138px] md:h-[138px] select-none absolute right-4 bottom-[-5px] md:right-2 md:bottom-2"
     />
   </div>
 </div>

@@ -2,6 +2,7 @@
 import { I18nProvider } from "@/providers/I18nProvider";
 import { getDictionary, type Locale } from "@/lib/i18n/getDictionary";
 import Header from "@/components/header/HeaderClient"; // <-- клиентский
+import ClientProviders from "@/components/ClientProviders";
 
 // НИКАКИХ <html>/<body> здесь! Это не root layout.
 export default async function LocaleLayout({
@@ -16,8 +17,10 @@ export default async function LocaleLayout({
   const dict = await getDictionary(locale);
 
   return <I18nProvider dict={dict}>
+              <ClientProviders>
     <Header />
     {children}
+          </ClientProviders>
     </I18nProvider>;
 }
 

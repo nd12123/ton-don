@@ -136,6 +136,32 @@ const earnedNow = useMemo(() => totalEarnedSoFar(history), [history]);
 */
   />
 
+{/** history client */}
+      <section>
+  <h2 className="text-xl font-semibold mb-4 text-gray-600">История стейков</h2>
+  <ProfileHistory
+    history={history}
+    onWithdrawClick={(stake: StakeRecord) => {
+      setSelectedStake(stake);
+      setModalOpen(true);
+    }}
+  />
+</section> 
+
+
+
+      {selectedStake && (
+        <WithdrawModal
+        open={modalOpen}
+        onClose={() => setModalOpen(false)}
+        stake={selectedStake}
+        onConfirm={handleWithdraw}
+      />
+      )}
+    </main>
+  );
+}
+
 
       {/* 1) Короткая сводка
       <section className="grid grid-cols-1 sm:grid-cols-2 gap-6">
@@ -201,33 +227,6 @@ const earnedNow = useMemo(() => totalEarnedSoFar(history), [history]);
           </Table>
         )}
       </section>*/}
-{/** history client */}
-      <section>
-  <h2 className="text-xl font-semibold mb-4 text-gray-600">История стейков</h2>
-  <ProfileHistory
-    history={history}
-    onWithdrawClick={(stake: StakeRecord) => {
-      setSelectedStake(stake);
-      setModalOpen(true);
-    }}
-  />
-</section> 
-
-
-
-      {selectedStake && (
-        <WithdrawModal
-        open={modalOpen}
-        onClose={() => setModalOpen(false)}
-        stake={selectedStake}
-        onConfirm={handleWithdraw}
-      />
-      )}
-    </main>
-  );
-}
-
-
 
   // 2) Общий доход по завершённым стейкам
   /*
