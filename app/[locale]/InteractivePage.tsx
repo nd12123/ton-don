@@ -74,14 +74,8 @@ export default function InteractivePage() {
       >*/}
       
         <TotalValue  />
-
-
-      
+  
       <WhyUs />
-
-
-
-
 
       <StepsToInvest />
       {/* <StepsFinal /> */}

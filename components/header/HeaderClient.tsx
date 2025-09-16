@@ -9,7 +9,7 @@ import WalletConnect from "@/components/WalletConnect";
 import MobileNav from "@/components/MobileNav";
 import { useTonWallet, useTonAddress } from "@tonconnect/ui-react";
 import { Address } from "@ton/core";
-import { useT } from "@/providers/I18nProvider";
+import { useT } from '@/i18n/react';
 
 // 👉 ЗАМЕНИ ЭТУ СТРОКУ на то, что у тебя в .env.local
 // Формат: можно смешивать EQ… и raw 0:… адреса, через запятую const ADMIN_ADDRESSES_CSV = "0QB8akzBYXBpATjJiWG1vRwo2FG2JoA9czy3yNno-qhMnrVn, 0:aaaaaaaaaaaaaaaaaaaa, EQyyyyyyyyyyyyyyyyyy";
@@ -56,7 +56,7 @@ export default function HeaderClient() {
   const pathname = usePathname();
   const router = useRouter();
   const isAdmin = useIsAdmin();
-const t = useT();
+  const t = useT("common");
 
   useEffect(() => {
     router.prefetch("/admin");
@@ -66,11 +66,11 @@ const t = useT();
   // формируем пункты меню; пересчитываем при смене языка и прав администратора
   const links = useMemo(() => {
     const base = [
-      { name: t("common.nav.home"), href: "/" },
-      { name: t("common.nav.staking"), href: "/staking" },
+      { name: t("nav.home"), href: "/" },
+      { name: t("nav.staking"), href: "/staking" },
       //{ name: t("common.nav.history"), href: "/history" },
-      { name: t("common.nav.profile"), href: "/profile" },
-      { name: t("common.nav.support"), href: "/support" }
+      { name: t("nav.profile"), href: "/profile" },
+      { name: t("nav.support"), href: "/support" }
     ];
     return isAdmin ? [...base, { name: "Admin", href: "/admin" }] : base;
   }, [isAdmin, t]);
@@ -89,8 +89,8 @@ const t = useT();
       <header className="hidden md:block fixed top-0 left-0 w-full z-50 bg-[#0B1128] backdrop-blur-sm">
         <div className="mx-auto px-4 md:px-8 py-3 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2 text-xl font-bold text-white">
-            <Image src="/favicon.svg" alt={t("common.brand")} width={22} height={22} className="rounded-md" />
-            <span>{t("common.brand")}</span>
+            <Image src="/favicon.svg" alt={t("brand")} width={22} height={22} className="rounded-md" />
+            <span>{t("brand")}</span>
           </Link>
 
           <nav className="hidden sm:flex gap-8 text-sm">

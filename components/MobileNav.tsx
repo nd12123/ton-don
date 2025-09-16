@@ -8,7 +8,7 @@ import { useTonWallet } from "@tonconnect/ui-react";
 import ConnectWalletButton from "@/components/ConnectWalletButton";
 import Image from "next/image";
 import LanguageSwitcher from "./LanguageSwitcher";
-import { useT } from "@/providers/I18nProvider";
+import { useT } from '@/i18n/react';
 type NavItem = { name: string; href: string };
 
 function useIsAdmin() {

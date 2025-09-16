@@ -1,7 +1,8 @@
 // providers/I18nProvider.tsx
+/*
 "use client";
 import React, { createContext, useContext, useMemo } from "react";
-import type { Dict } from "@/lib/i18n/getDictionary";
+import type { Dict } from "@/lib/i18n/getDictionary"; //
 
 const I18nCtx = createContext<Dict | null>(null);
 
@@ -15,3 +16,4 @@ export function useT() {
   return (key: string) =>
     key.split(".").reduce<any>((acc, k) => (acc ? acc[k] : undefined), dict) ?? key; // безопасный фоллбек
 }
+  */

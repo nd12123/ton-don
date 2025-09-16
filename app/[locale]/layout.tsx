@@ -1,42 +1,68 @@
 // app/[locale]/layout.tsx
-import { I18nProvider } from "@/providers/I18nProvider";
-import { getDictionary, type Locale } from "@/lib/i18n/getDictionary";
-import Header from "@/components/header/HeaderClient"; // <-- клиентский
+import type { ReactNode } from "react";
+import Header from "@/components/header/HeaderClient";
 import ClientProviders from "@/components/ClientProviders";
 
-// НИКАКИХ <html>/<body> здесь! Это не root layout.
+import { I18nProvider, type Locale } from "@/i18n/react";
+import { getMessages } from "@/i18n";
+
+// локали держим тут, чтобы не тянуть конфиги
+const SUPPORTED = ["ru", "en"] as const;
+type Supported = typeof SUPPORTED[number];
+const DEFAULT_LOCALE: Supported = "ru";
+
 export default async function LocaleLayout({
   children,
   params,
 }: {
-  children: React.ReactNode;
-  // В Next 15 тип LayoutProps для сегментов ожидает Promise
-  params: Promise<{ locale: Locale }>;
+  children: ReactNode;
+  params: Promise<{ locale: Locale | string }>;
 }) {
   const { locale } = await params;
-  const dict = await getDictionary(locale);
 
-  return <I18nProvider dict={dict}>
-              <ClientProviders>
-    <Header />
-    {children}
-          </ClientProviders>
-    </I18nProvider>;
+  // если путь типа /site.webmanifest попал в [locale] — не трогаем i18n
+  if (!SUPPORTED.includes(locale as Supported)) {
+    return (
+      <>
+        <Header />
+        {children}
+      </>
+    );
+  }
+
+  const messages = await getMessages(locale as Supported, [
+    "common",
+    "home",
+    "faq",
+    "staking",
+    "support",
+  ]);
+
+  return (
+    <I18nProvider locale={locale as Supported} messages={messages}>
+      <ClientProviders>
+        <Header />
+        {children}
+      </ClientProviders>
+    </I18nProvider>
+  );
 }
 
-// Можно оставить генерацию статичных параметров
 export function generateStaticParams() {
   return [{ locale: "ru" }, { locale: "en" }];
 }
 
-// Если есть generateMetadata — он тоже принимает Promise-параметры:
 export async function generateMetadata({
   params,
 }: {
-  params: Promise<{ locale: Locale }>;
+  params: Promise<{ locale: Locale | string }>;
 }) {
   const { locale } = await params;
+  const safe = SUPPORTED.includes(locale as Supported)
+    ? (locale as Supported)
+    : DEFAULT_LOCALE;
+
   return {
-    title: locale === "ru" ? "TON Stake — Главная" : "TON Stake — Home",
+    title: safe === "ru" ? "TON Stake — Главная" : "TON Stake — Home",
   };
 }

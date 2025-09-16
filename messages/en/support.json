@@ -1,0 +1,12 @@
+{
+  "title": "Support",
+  "lead": "Any questions? Get in touch with us:",
+  "contact": {
+    "email_label": "Email",
+    "tg_label": "Telegram",
+    "form_label": "Contact form",
+    "email_value": "{{email}}",
+    "tg_value": "{{telegram}}",
+    "form_value": "{{supportFormUrl}}"
+  }
+}

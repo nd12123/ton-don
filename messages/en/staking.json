@@ -1,0 +1,44 @@
+{
+  "titles": {
+    "stats": "Statistics after stake",
+    "stake": "Add to staking"
+  },
+  "stats": {
+    "balance": "Balance",
+    "dailyIncome": "Daily Income",
+    "totalIncome": "Total Income",
+    "assetValue": "Asset value (updated hourly)"
+  },
+  "inputs": {
+    "amount": "Deposit amount",
+    "duration": "Deposit duration",
+    "days": "Days"
+  },
+  "cards": {
+    "in1day": "In 1 day",
+    "in7days": "In 7 days",
+    "inNDays": "In {days} days"
+  },
+  "plans": {
+    "basic":   { "label": "Basic",   "range": "1–999 TON" },
+    "pro":     { "label": "Pro",     "range": "1000–1999 TON" },
+    "premium": { "label": "Premium", "range": "2000+ TON" }
+  },
+  "planCard": {
+    "yourProfit": "Your profit",
+    "perDay": "Per day",
+    "investmentsAllTime": "Investments for all time",
+    "aria": {
+      "selected": "Selected",
+      "selectPlan": "Select plan"
+    }
+  },
+  "buttons": {
+    "stakeNow": "Stake Now",
+    "connect": "Connect"
+  },
+  "ticket": {
+    "dailyIncome": "Daily Income",
+    "note": "You can increase your staking at any time without canceling your current contract. Simply add more TON to your existing deposit and automatically qualify for a more profitable plan. This way, your capital grows faster and your earnings remain steady."
+  }
+}

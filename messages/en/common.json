@@ -1,0 +1,30 @@
+{
+  "brand": "Ton Stake",
+  "app": {
+    "name": "TON Staking Platform"
+  },
+  "nav": {
+    "home": "home",
+    "staking": "Staking",
+    "history": "History",
+    "profile": "Profile",
+    "support": "Support"
+  },
+  "buttons": {
+    "stakeNow": "Stake Now",
+        "getStarted": "Get started",
+                "startInvesting": "Start Investing",
+                                "exploreOptions": "Explore Options",
+                                    "connect": "Connect Wallet"
+  
+  },
+  "footer": {
+    "copyright": "© 2025 Orbi Ton | All Rights Reserved",
+    "terms": "Terms and Conditions",
+    "privacy": "Privacy Policy"
+  },
+  "startInvesting": {
+    "title": "Start investing now",
+    "subtitle": "Start earning in 2 clicks – your first income tomorrow"
+  }
+}

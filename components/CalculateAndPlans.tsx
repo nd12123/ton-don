@@ -8,7 +8,7 @@ import Calculator from "./Calculator";
 //import CalculatorTest from "./CalculatorMobile";
 import CalculatorHorizontal from "./CalculatorHorizontal";
 
-import { useT } from '@/providers/I18nProvider';
+import { useT } from '@/i18n/react';
 
 
 import tonTop from "@/assets/Calculator/ton.svg"
@@ -41,7 +41,13 @@ export default function CalculateAndPlans() {
   };
   const apr = PLANS[selectedPlanIdx].apr;
   const dailyEarnings = useMemo(() => (amount * (apr/100)) , [amount, apr]); // /365
-  const t = useT();
+
+  const t = useT("home");
+  // ключи для словаря: plans.basic / plans.pro / plans.premium
+  const PLAN_KEYS = ["basic", "pro", "premium"] as const;
+  const in1day  = t("calc.cards.in1day");      // "In 1 day" / "За 1 день" и т.п.
+  const in7days = t("calc.cards.in7days");     // "In 7 days"
+  const inNDays = t("calc.cards.inNDays").replace("{days}", String(days)); // "In {days} days"
 
   return ( //py-20 pt-[200px] lg:pt-[375px]
     <section id="calculate-plans" className="relative overflow-hidden text-white pb-7 pt-0   scroll-mt-12" //lg:
@@ -168,7 +174,7 @@ export default function CalculateAndPlans() {
 {/* 2) Фон секции: все слои в одном контейнере + маска по Y   hidden md: */}
 <div
   className="block
-    absolute inset-0 -z-20 pointer-events-none
+    absolute inset-0 -z-30 pointer-events-none
     [--fade:clamp(36px,8vw,120px)]  /* высота растворения сверху/снизу */
   "
   style={{
@@ -228,9 +234,9 @@ export default function CalculateAndPlans() {
           {PLANS.map((plan, idx) => (
             <PlanCard
               key={plan.id}
-              title={plan.label}
+              title={t(`plans.${PLAN_KEYS[idx]}.label`)}
               dailyProfit={plan.apr}
-              rangeText={plan.rangeText}
+              rangeText={t(`plans.${PLAN_KEYS[idx]}.range`)}
               iconSrc={plan.iconSrc}
               isActive={idx === selectedPlanIdx}
               bgSrc={plan.bgSrc}
@@ -243,12 +249,19 @@ export default function CalculateAndPlans() {
           {PLANS.map((plan, idx) => (
             <PlanCardDesktop
               key={plan.id}
-              title={plan.label}
+              title={t(`plans.${PLAN_KEYS[idx]}.label`)}
               dailyProfit={plan.apr}
-              rangeText={plan.rangeText}
+              rangeText={t(`plans.${PLAN_KEYS[idx]}.range`)}
               iconSrc={plan.iconSrc}
               isActive={idx === selectedPlanIdx}
               //bgSrc={plan.bgSrc}
+              bgClass={
+    // любой стабильный вариант, лишь бы совпадал с твоими css-утилитами:
+    // например, если у тебя есть .bg-plan-basic/.bg-plan-pro/.bg-plan-premium
+    `bg-plan-${["basic","pro","premium"][plan.id]}`
+    // или, если у тебя в данных есть key:
+    // `bg-plan-${plan.key}`
+  }
               onSelect={() => handlePlanSelect(idx)}
             />
           ))}
@@ -370,7 +383,7 @@ export default function CalculateAndPlans() {
       {/* Мягкое свечение поверх фона (но под текстом) */}
       <div className="py-3 absolute inset-0 -z-10 pointer-events-none bg-gradient-to-br from-white/10 to-transparent opacity-70 group-hover:opacity-90 transition-opacity" />
       
-      <span className="text-[14px] font-semibold text-white/80">In 1 day</span>
+      <span className="text-[14px] font-semibold text-white/80">{in1day}</span>
       <span className="text-m font-bold text-center">+{dailyEarnings.toFixed(2)} <br/> TON</span>
     </div>
 
@@ -384,7 +397,7 @@ export default function CalculateAndPlans() {
       />
       <div className="absolute inset-0 -z-10 pointer-events-none bg-gradient-to-br from-white/10 to-transparent opacity-70 group-hover:opacity-90 transition-opacity" />
       
-      <span className="text-[14px] font-semibold text-white/80">In 7 days</span>
+      <span className="text-[14px] font-semibold text-white/80">{in7days}</span>
       <span className="text-m font-bold text-center">+{(dailyEarnings * 7).toFixed(2)} <br/> TON</span>
     </div>
 
@@ -398,7 +411,7 @@ export default function CalculateAndPlans() {
       />
       <div className="absolute inset-0 -z-10 pointer-events-none bg-gradient-to-br from-white/10 to-transparent opacity-70 group-hover:opacity-90 transition-opacity" />
       
-      <span className="text-[14px] font-semibold text-white/80 text-center">In {days} days</span>
+      <span className="text-[14px] font-semibold text-white/80 text-center"> {inNDays} </span>
       <span className="text-m font-bold text-center">+{(dailyEarnings * days).toFixed(0)} <br/> TON</span>
     </div>
   </div>

@@ -1,0 +1,12 @@
+{
+  "title": "Поддержка",
+  "lead": "Есть вопросы? Свяжитесь с нами:",
+  "contact": {
+    "email_label": "Email",
+    "tg_label": "Telegram",
+    "form_label": "Форма обратной связи",
+    "email_value": "{{email}}",
+    "tg_value": "{{telegram}}",
+    "form_value": "{{supportFormUrl}}"
+  }
+}

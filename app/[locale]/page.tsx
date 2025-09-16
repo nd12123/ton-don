@@ -1,5 +1,7 @@
 // app/page.tsx
-import type { Locale } from "@/lib/i18n/getDictionary";
+//import type { Locale } from "@/lib/i18n/getDictionary";
+import type {  Locale } from "@/i18n/react";
+
 import InteractivePage from "./InteractivePage";
 // НИ КАКОГО "use client" здесь!
 

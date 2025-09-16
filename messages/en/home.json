@@ -1,0 +1,144 @@
+{
+  "pills": {
+    "reliable": "Reliable",
+    "profitable": "Profitable",
+    "simple": "Simple"
+  },
+  "nav": {
+    "goToTotalValue": "Go to Total Value",
+    "goToCalculator": "Go to Calculator",
+    "goToSteps": "Go to Steps"
+  },
+  "calc": {
+    "h1": {
+      "choose": "Choose",
+      "plan": "plan",
+      "and": "and",
+      "calculate": "Calculate",
+      "your": "your",
+      "profit": "profit"
+    },
+    "cards": {
+      "in1day": "In 1 day",
+      "in7days": "In 7 days",
+      "inNDays": "In {days} days"
+    },
+    "inputs": {
+      "amount": "Deposit amount",
+      "duration": "Deposit duration",
+      "days": "Days"
+    }
+  },
+    "plans": {
+      "basic": { "label": "Basic", "range": "1–999 TON" },
+      "pro": { "label": "Pro", "range": "1000–1999 TON" },
+      "premium": { "label": "Premium", "range": "2000+ TON" },
+      
+    "card": {
+      "yourProfit": "Your profit",
+      "perDay": "Per day",
+      "investmentsAllTime": "Investments for all time",
+      "aria": {
+        "selected": "Selected",
+        "selectPlan": "Select plan"
+      }
+    }
+    },
+
+  "startInvesting": {
+    "title": "Start investing now!",
+    "subtitle": "Start earning in 2 clicks – your first income tomorrow"
+  },
+
+  "why": {
+    "features": {
+      "security": {
+        "title": "Security",
+        "desc": "Your funds are held with secure validators."
+      },
+      "transparency": {
+        "title": "Transparency",
+        "desc": "Every transaction is fully transparent on-chain."
+      },
+      "flexibility": {
+        "title": "Flexibility",
+        "desc": "Set the staking term to fit your needs."
+      }
+    },
+    "cta": "Explore options"
+  },
+  "faq": {
+    "title": "FAQ",
+    "subtitle": "Quick answers to popular questions...",
+    "items": [
+      {
+        "q": "Where can I calculate my staking profit?",
+        "a": "You can calculate your staking profit directly on this page using our interactive calculator. Simply choose a plan, enter the amount of TON you want to stake and the number of days — you’ll instantly see the projected profit."
+      },
+      {
+        "q": "How long does it take to receive rewards?",
+        "a": "You receive rewards every day, starting within the next 24 hours after your stake is confirmed on the network. Funds are allocated automatically by TONStake.ai portfolio algorithms."
+      },
+      {
+        "q": "What is the minimum amount to start staking?",
+        "a": "The minimum to start staking is 10 TON. Plans are tuned so that from 10 TON you can already start earning."
+      },
+      {
+        "q": "Can I withdraw my funds at any time?",
+        "a": "Yes, you can withdraw at any time. Open your dashboard, choose “Withdraw” and confirm the transaction in your wallet — the funds will return to your address."
+      },
+      {
+        "q": "Are there any extra fees or hidden charges?",
+        "a": "We don’t charge additional platform fees. The only costs are TON network fees (gas) for deposits and withdrawals. The platform itself is free."
+      },
+      {
+        "q": "How secure is my staking deposit?",
+        "a": "Your funds are stored in smart contracts that follow TON security standards. We use vetted open-source contracts and run periodic security audits."
+      }
+    ]
+  },
+
+  "hero": {
+    "title_1": "Stake TON",
+    "title_2": "Easily & Securely",
+    "lead": "Stake your TON (Toncoin) with confidence and earn reliable passive income through fully audited smart contracts.",
+    "headlineTop": "Stake TON in minutes"
+  },
+  "stats": {
+    "title": "Total Value",
+    "totalStaked": "41653 TON",
+    "blurb": "Let your TON work for you! More than $100,000 in TON is already generating passive income through our smart algorithms. Begin with only 10 TON and grow along with us."
+  },
+  "features": {
+    "security": {
+      "title": "Security",
+      "desc": "Your funds are stored with trusted validators."
+    },
+    "transparency": {
+      "title": "Transparency",
+      "desc": "Every transaction is fully visible on the blockchain."
+    },
+    "flexibility": {
+      "title": "Flexibility",
+      "desc": "Set the staking period according to your needs."
+    },
+    "profitability": {
+      "title": "Profitability",
+      "desc": "Earn regular rewards for participating in the TON network."
+    },
+    "simplicity": {
+      "title": "Simplicity",
+      "desc": "Start staking in just a few clicks — no complex setup required."
+    },
+    "networkSupport": {
+      "title": "Network Support",
+      "desc": "With your stake, you help strengthen and decentralize the TON blockchain."
+    }
+  },
+  "cta": {
+    "choosePlan": "Choose a Plan and Calculate Your Profit"
+  },
+  "buttons": {
+      "connect": "Connect Wallet"
+  }
+}

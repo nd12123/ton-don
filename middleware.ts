@@ -3,20 +3,45 @@ import { NextRequest, NextResponse } from 'next/server'
 
 // === i18n ===
 const SUPPORTED_LOCALES = ['ru', 'en'] as const
-const DEFAULT_LOCALE = 'ru' // ← поменяй при необходимости
+const DEFAULT_LOCALE = 'ru'
 
 function hasLocale(pathname: string) {
   const first = pathname.split('/')[1]
-  return SUPPORTED_LOCALES.includes(first as any)
+  return (SUPPORTED_LOCALES as readonly string[]).includes(first)
 }
 
 // файлы, API и статика — пропускаем
 function isPublic(req: NextRequest) {
   const p = req.nextUrl.pathname
+
+  // системные/статические пути
   if (p.startsWith('/api')) return true
   if (p.startsWith('/_next')) return true
-  if (p === '/favicon.ico' || p === '/robots.txt' || p === '/sitemap.xml') return true
-  if (/\.(?:png|jpg|jpeg|gif|svg|ico|webp|avif|css|js|map|txt|ttf|woff2?)$/i.test(p)) return true
+
+  // корневые служебные файлы
+  if (
+    p === '/favicon.ico' ||
+    p === '/robots.txt' ||
+    p === '/sitemap.xml' ||
+    p === '/site.webmanifest' ||            // ← важно
+    p === '/manifest.webmanifest' ||        // на всякий
+    p === '/manifest.json'                  // на всякий
+  ) return true
+
+  // статики по известным префиксам (дополни, если нужны свои)
+  if (
+    p.startsWith('/decorative') ||
+    p.startsWith('/assets') ||
+    p.startsWith('/images') ||
+    p.startsWith('/icons') ||
+    p.startsWith('/fonts')
+  ) return true
+
+  // любые файлы по расширению
+  if (/\.(?:png|jpg|jpeg|gif|svg|ico|webp|avif|css|js|map|txt|ttf|otf|woff2?|mp4|webm)$/i.test(p)) {
+    return true
+  }
+
   return false
 }
 
@@ -37,7 +62,7 @@ function isAdminPath(pathname: string) {
 export function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl
 
-  // 0) файлы/API — мимо
+  // 0) файлы/API/статика — мимо
   if (isPublic(req)) return NextResponse.next()
 
   // 1) i18n: если путь без локали — редиректим на дефолтную
@@ -74,7 +99,25 @@ export function middleware(req: NextRequest) {
   return NextResponse.next()
 }
 
-// матчим ВСЁ, кроме _next, api и файлов с расширением
+// матчим ВСЁ, кроме явной статики/служебных путей
 export const config = {
-  matcher: ['/((?!_next|api|.*\\..*).*)'],
+  matcher: [
+    '/((?!' +
+      'api|' +
+      '_next/static|' +
+      '_next/image|' +
+      'favicon.ico|' +
+      'robots.txt|' +
+      'sitemap.xml|' +
+      'site.webmanifest|' +
+      'manifest.webmanifest|' +
+      'manifest.json|' +
+      'decorative|' +
+      'assets|' +
+      'images|' +
+      'icons|' +
+      'fonts|' +
+      '.*\\.(?:png|jpg|jpeg|gif|svg|ico|webp|avif|css|js|map|txt|ttf|otf|woff2?|mp4|webm)' +
+    ').*)',
+  ],
 }

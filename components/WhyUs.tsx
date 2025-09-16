@@ -2,24 +2,28 @@
 
 import Link from "next/link";
 import { ShieldCheck, Activity, Clock, ArrowRight } from "lucide-react";
+import { useT } from "@/i18n/react";
+import type { ReactNode } from "react"; // ⬅️ добавили
 
-const features = [
-  {
-    title: "Безопасность",
-    icon: <ShieldCheck size={28} className="text-sky-400" />,
-    description: "Ваши средства хранятся в безопасных валидаторах.",
-  },
-  {
-    title: "Прозрачность",
-    icon: <Activity size={28} className="text-sky-400" />,
-    description: "Каждая транзакция полностью прозрачна на блокчейне.",
-  },
-  {
-    title: "Гибкость",
-    icon: <Clock size={28} className="text-sky-400" />,
-    description: "Настройте срок стейкинга под свои нужды.",
-  },
-];
+type FeatureKey =
+  | "security"
+  | "transparency"
+  | "flexibility"
+  | "profitability"
+  | "simplicity"
+  | "networkSupport";
+
+// было: Record<FeatureKey, JSX.Element>
+// стало:
+const ICONS: Record<FeatureKey, ReactNode> = {
+  security: <ShieldCheck size={28} className="text-sky-400" />,
+  transparency: <Activity size={28} className="text-sky-400" />,
+  flexibility: <Clock size={28} className="text-sky-400" />,
+  profitability: <Activity size={28} className="text-sky-400" />,
+  simplicity: <ShieldCheck size={28} className="text-sky-400" />,
+  networkSupport: <Clock size={28} className="text-sky-400" />,
+};
+
 
 function FeatureCard({
   title,
@@ -30,6 +34,7 @@ function FeatureCard({
   icon: React.ReactNode;
   description: string;
 }) {
+  const tCommon = useT("common");
   return (
     <div
       className="
@@ -53,7 +58,7 @@ function FeatureCard({
       </div>
 
       <div className="p-4 md:p-0">
-        <Link href="#calculate-plans">
+        <Link href="#calculate-plans" aria-label={tCommon("buttons.exploreOptions")}>
           <button
             type="button"
             className="
@@ -63,7 +68,7 @@ function FeatureCard({
               hover:underline transition
             "
           >
-            <span>Explore options</span>
+            <span>{tCommon("buttons.exploreOptions")}</span>
             <ArrowRight size={16} />
           </button>
         </Link>
@@ -71,20 +76,29 @@ function FeatureCard({
     </div>
   );
 }
+
 export default function WhyUs() {
+  const tHome = useT("home");
+
+  // все 6 фич из локали
+  const keys: FeatureKey[] = [
+    "security",
+    "transparency",
+    "flexibility",
+    "profitability",
+    "simplicity",
+    "networkSupport",
+  ];
+
   return (
-    <section
-      id="why-us"
-      className="relative overflow-hidden"
-    >
+    <section id="why-us" className="relative overflow-hidden md:mb-4">
       <div
-  className="absolute top-0 left-0 w-full h-full pointer-events-none -z-10 opacity-85"
-  style={{
-    // последний стоп два раза — чтобы «полка» цвета была ровной
-    background:
-      "linear-gradient(to bottom, #010512  0%, #050C1E 20%, #060E21 42%, #0A1324 80%, #0A1324 100%)",
-  }}
-/>
+        className="absolute top-0 left-0 w-full h-full pointer-events-none -z-10 opacity-85"
+        style={{
+          background:
+            "linear-gradient(to bottom, #010512  0%, #050C1E 20%, #060E21 42%, #0A1324 80%, #0A1324 100%)",
+        }}
+      />
 
       <div
         className="
@@ -94,25 +108,24 @@ export default function WhyUs() {
           justify-items-center sm:justify-items-stretch
         "
       >
-        
         {/* первые 3 карточки */}
-        {features.map((f) => (
+        {keys.slice(0, 3).map((k) => (
           <FeatureCard
-            key={f.title}
-            title={f.title}
-            icon={f.icon}
-            description={f.description}
+            key={k}
+            title={tHome(`features.${k}.title`)}
+            description={tHome(`features.${k}.desc`)}
+            icon={ICONS[k]}
           />
         ))}
 
         {/* ещё 3 карточки — только на десктопе */}
         <div className="hidden lg:contents">
-          {features.map((f, i) => (
+          {keys.slice(3).map((k) => (
             <FeatureCard
-              key={`dup-${i}-${f.title}`}
-              title={f.title}
-              icon={f.icon}
-              description={f.description}
+              key={k}
+              title={tHome(`features.${k}.title`)}
+              description={tHome(`features.${k}.desc`)}
+              icon={ICONS[k]}
             />
           ))}
         </div>

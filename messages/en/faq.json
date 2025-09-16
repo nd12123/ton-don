@@ -1,0 +1,36 @@
+{
+  "title": "FAQ",
+  "subtitle": "Quick answers to popular questions!",
+  "items": [
+    {
+      "id": "calc",
+      "q": "Where can I calculate my staking profit?",
+      "a": "You can calculate your staking profit directly on this page using our interactive calculator. Simply choose a plan, enter the amount of TON you want to stake and the number of days — and you will immediately see your projected earnings."
+    },
+    {
+      "id": "rewards_time",
+      "q": "How long does it take to receive rewards?",
+      "a": "You receive rewards daily, starting within 24 hours after your stake is confirmed on the network. The funds are distributed automatically by our portfolio algorithms."
+    },
+    {
+      "id": "min_amount",
+      "q": "What is the minimum amount to start staking?",
+      "a": "The minimum amount to start staking is 10 TON. We’ve designed all plans so that you can start earning rewards with just 10 TON."
+    },
+    {
+      "id": "withdraw_any_time",
+      "q": "Can I withdraw my funds at any time?",
+      "a": "Yes, you can withdraw your funds at any time. Simply go to your dashboard, select the \"Withdraw\" option, and confirm the transaction through your wallet — the funds will be returned to your address."
+    },
+    {
+      "id": "fees",
+      "q": "Are there any extra fees or hidden charges?",
+      "a": "We do not charge any additional fees for using the platform. The only costs are the TON network (gas) fees for transfers and withdrawals. The platform itself is completely free."
+    },
+    {
+      "id": "security",
+      "q": "How secure is my staking deposit?",
+      "a": "Your funds are stored in smart contracts that follow TON’s security standards. We use verified open-source contracts and conduct regular security audits."
+    }
+  ]
+}

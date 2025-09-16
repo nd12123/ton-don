@@ -1,63 +1,34 @@
 // components/FAQSection.tsx
 "use client";
 
-import React, { useState } from 'react';
-import NextImage from 'next/image';           // << вот так
-import { ChevronDown, ChevronUp } from 'lucide-react';
-import { motion, useReducedMotion } from "framer-motion";
-import  Image  from 'next/image';
-//import SectionWithFade from "@/components/SectionWithFade";
+import React, { useState } from "react";
+import NextImage from "next/image";
+import { ChevronDown } from "lucide-react";
+import { motion } from "framer-motion";
+import Image from "next/image";
 
-// пути к вашим PNG/SVG теперь станут строкой или React-компонентом
-//import leftSphere from '@/public/decorative/EllipseFAQLeft.png';
-//import centerSphere from '@/public/decorative/Ellipse7.png';
+import sphereRightTop from "@/public/decorative/Ellipse50.png";
+import sphere from "@/public/decorative/Ellipse8.png";
 
-//import sphereLeft from "@/public/decorative/EllipseFAQLeft.png";    // ellipse6 сбоку слева
-import sphereRightTop from "@/public/decorative/Ellipse50.png";    //  сбоку 
-import sphere from "@/public/decorative/Ellipse8.png";    // ellipse6 // сбоку слева
+import { useT } from "@/i18n/react";
 
-//const sphereUpperRight = "@/public/decorative/Ellipse50.png";    //  right top
-
-type FAQItem = { question: string; answer: string };
+type FAQItem = { id?: string; question: string; answer: string }; // ★ id опционален
 
 export default function FAQSection() {
-  const faqs: FAQItem[] = [
-      {
-        question: "Where can I calculate my staking profit?",
-        answer:
-          "You can calculate your staking profit directly on this page using our interactive calculator. Simply choose a plan, enter the amount of TON you want to stake and the number of days — и вы сразу увидите прогнозируемую прибыль.",
-      },
-      {
-        question: "How long does it take to receive rewards?",
-        answer:
-          "Вы получаете награду каждый день, начиная со следующих 24 часов после того, как ваш стейк будет подтверждён в сети. Средства распределяются автоматически портфельными алгоритмами TONStake.ai.",
-      },
-      {
-        question: "What is the minimum amount to start staking?",
-        answer:
-          "Минимальная сумма для запуска стейкинга — 10 TON. Мы настроили все тарифы так, чтобы начиная с 10 TON вы уже могли начать получать проценты.",
-      },
-      {
-        question: "Can I withdraw my funds at any time?",
-        answer:
-          "Да, вы можете вывести свои средства в любой момент. Достаточно зайти в свой дашборд, выбрать функцию «Withdraw» и подтвердить транзакцию через ваш кошелёк — средства придут обратно на ваш адрес.",
-      },
-      {
-        question: "Are there any extra fees or hidden charges?",
-        answer:
-          "Мы не взимаем никакой дополнительной платы за использование платформы. Единственные комиссии — это сетевые сборы TON (gas) при переводе и выводе. Сама платформа бесплатна.",
-      },
-      {
-        question: "How secure is my staking deposit?",
-        answer:
-          "Ваши средства хранятся в смарт-контрактах со стандартами безопасности TON. Мы используем проверенные open-source контракты и периодически проводим аудиты безопасности.",
-      },
-    ];    
-  const [openIndex, setOpenIndex] = useState<number | null>(null);
-  const toggleIndex = (idx: number) =>
-    setOpenIndex(prev => (prev === idx ? null : idx));
+  const t = useT("faq"); // ★ берем неймспейс faq
 
-  
+  // ★ тянем массив items из локали и приводим к нужной структуре
+  const rawItems = t("items") as unknown;
+  const faqs: FAQItem[] = Array.isArray(rawItems)
+    ? rawItems.map((it: any) => ({
+        id: it?.id,
+        question: it?.q ?? "",
+        answer: it?.a ?? "",
+      }))
+    : [];
+
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
+
   const spring = {
     type: "spring",
     stiffness: 320,
@@ -68,94 +39,28 @@ export default function FAQSection() {
   return (
     <section
       className={[
-        'relative z-10',
-        'text-white',
-         //' stars-mask',  px-4 py-10 sm:px-6 lg:px-8
-        //'overflow-hidden',
-        'bg-faq-gradient',
-        //'horizon',
-        'py-6 md:py-10'
-      ].join(' ')}
-      >
-        {/* — Усиленный фэйд вверх для FAQ */}
-{/* — Плавный фэйд сверху для стыка Калькулятора → FAQ */}
-<div
-  className="absolute hidden  top-0 left-0 w-full h-24 pointer-events-none z-[-1] opacity-30" // md:block
-  style={{
-    backgroundImage: [
-      // 0) чуть более лёгкая «чёрная» полоса сверху
-      `linear-gradient(
-         to bottom,
-         rgba(0, 0, 0, 0.3) 0%,
-         rgba(0, 0, 0, 0.15) 8%,
-         transparent 30%
-       )`,
-      // 1) смягчённый радиальный блик в левом верхнем углу
-      `radial-gradient(
-         circle at top left,
-         rgba(10, 19, 41, 0.7) 0%,
-         transparent 70%
-       )`,
-      // 2) основной линейный фейд сверху вниз
-      `linear-gradient(
-         to top,
-         rgba(10, 19, 41, 1) 0%,
-         rgba(10, 19, 41, 0) 100%
-       )`
-    ].join(', ')
-  }}
-/>
-{/* — Плавный фэйд сверху для стыка Калькулятора → FAQ mobile  block md:*/}
-<div
-  className="absolute hidden top-0 left-0 w-full h-24 pointer-events-none z-[-1] opacity-70"
-  style={{
-    backgroundImage: [
-      // 0) чуть более лёгкая «чёрная» полоса сверху
-      `linear-gradient(
-         to bottom,
-         rgba(0, 0, 0, 0.3) 0%,
-         rgba(0, 0, 0, 0.15) 8%,
-         transparent 30%
-       )`,
-      // 1) смягчённый радиальный блик в левом верхнем углу
-      `radial-gradient(
-         circle at top left,
-         rgba(10, 19, 41, 0.7) 0%,
-         transparent 70%
-       )`,
-      // 2) основной линейный фейд сверху вниз
-      /*
-       */
-      `linear-gradient(
-         to top,
-         rgba(10, 19, 41, 1) 0%,
-         rgba(10, 19, 41, 0) 100%
-       )`
-    ].join(', ')
-  }}
-/>
-
-      
+        "relative z-10",
+        "text-white",
+        "bg-faq-gradient",
+        "py-6 md:py-10",
+      ].join(" ")}
+    >
+      {/* фейды и т.д. — без изменений */}
 
       <div className="relative z-10 container mx-auto pb-10 px-5 py-25">
+        {/* ★ заголовки из локали */}
         <h2 className="text-4xl sm:text-5xl font-bold text-center mb-4">
-          FAQ
+          {t("title")}
         </h2>
-        <p className="text-center text-gray-300 mb-12">
-          Quick answers to popular questions...
-        </p>
-        
-        {/* layout-анимация грида: перестройка без «рывков» */}
-        <motion.div
-          layout
-          transition={spring}
-          className="grid grid-cols-1 md:grid-cols-2 gap-6"
-        >
+        <p className="text-center text-gray-300 mb-12">{t("subtitle")}</p>
+
+        {/* grid c анимацией */}
+        <motion.div layout transition={spring} className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {faqs.map((item, idx) => {
             const isOpen = openIndex === idx;
             return (
               <motion.article
-                key={idx}
+                key={item.id ?? idx} // ★ стабильный ключ
                 layout
                 transition={spring}
                 className={[
@@ -181,7 +86,6 @@ export default function FAQSection() {
                   </motion.span>
                 </button>
 
-                {/* вместо max-height — height:auto с framer-motion */}
                 <motion.div
                   initial={false}
                   animate={isOpen ? "open" : "closed"}
@@ -201,192 +105,50 @@ export default function FAQSection() {
           })}
         </motion.div>
       </div>
-{/**
- * 
-        <div className="grid grid-cols-1 md:grid-cols-2 auto-rows-min gap-8">
-          {faqs.map((item, idx) => {
-            const isOpen = openIndex === idx;
-            return (
-              <div
-                key={idx}
-                className={`relative group rounded-xl overflow-hidden transition-all ${
-                  isOpen
-                    ? 'bg-gradient-to-r from-[#00BFFF] to-[#009FEF] text-white'
-                    : 'bg-[#0A1329] border border-[#00BFFF] text-white'
-                }`}
-              >
-                <button
-                  onClick={() => toggleIndex(idx)}
-                  className="w-full flex items-center justify-between px-6 py-4 font-medium"
-                >
-                  <span className="text-lg sm:text-xl">{item.question}</span>
-                  {isOpen ? (
-                    <ChevronUp className="w-6 h-6" />
-                  ) : (
-                    <ChevronDown className="w-6 h-6" />
-                  )}
-                </button>
-                <div
-                  className={`px-6 overflow-hidden transition-[max-height] duration-300 ${
-                    isOpen ? 'max-h-96 py-4' : 'max-h-0'
-                  }`}
-                >
-                  <p className="text-gray-100 leading-relaxed">
-                    {item.answer}
-                  </p>
-                </div>
-              </div>
-            );
-          })}
+
+      {/* дальше твои фоновые слои/сферы — без изменений */}
+      <div className="hidden md:block absolute bottom-0 left-[-20px] w-full h-1/2 md:left-0 md:bottom-0 md:w-full md:h-full opacity-[65%] md:opacity-80 pointer-events-none z-0">
+        <NextImage src={sphere} alt="" fill style={{ objectFit: "cover", objectPosition: "left bottom" }} />
+      </div>
+
+      <div className="md:hidden absolute bottom-0 left-[-0px] w-full h-1/2 md:left-0 md:bottom-0 md:w-full md:h-full opacity-[95%] md:opacity-80 pointer-events-none z-0 overflow-visible">
+        <div className="relative w-full h-full" style={{ transform: "scale(0.4)", transformOrigin: "left bottom", willChange: "transform" }}>
+          <Image src={sphere} alt="sphere" fill priority className="object-cover object-left-bottom" sizes="(min-width: 768px) 25vw, 50vw" />
         </div>
       </div>
- */}
 
-<div className="absolute inset-0 -z-10 pointer-events-none" style={{}} />
+      <div className="hidden md:block absolute top-0 right-0 h-full w-full pointer-events-none z-0">
+        <NextImage src={sphereRightTop} alt="" fill style={{ objectFit: "cover", objectPosition: "top right", opacity: 0.22 }} />
+      </div>
 
-{/* 1) Слой «шум» на весь блок 
-
-      <NextImage // w-full h-auto
-          src={sphereLeft}
-          alt=""
-          className="pointer-events-none opacity-99" 
-          style={{ objectFit: "cover", objectPosition: "left bottom" }}
-        />
-        
-<div className="absolute top-0 right-0 w-full h-full pointer-events-none z-0">
-  <NextImage
-    src={sphereUpperRight}
-    alt=""
-    fill
-    style={{
-      objectFit: "cover",
-      objectPosition: "left bottom",
-      opacity: 0.6,
-    }}
-  />
-</div>
-        */}
-      <div className="hidden md:block absolute bottom-0 left-[-20px] w-full h-1/2 md:left-0 md:bottom-0 md:w-full md:h-full opacity-[65%] md:opacity-80 pointer-events-none z-0">
-  <NextImage
-    src={sphere}
-    alt=""
-    fill
-    style={{
-      objectFit: "cover",
-      objectPosition: "left bottom",
-      //opacity: 0.9,
-    }}
-  />
-</div>
-
-<div className="md:hidden absolute bottom-0 left-[-0px] w-full h-1/2 md:left-0 md:bottom-0 md:w-full md:h-full opacity-[95%] md:opacity-80 pointer-events-none z-0 overflow-visible">
-  {/* Внутренний контейнер, который мы скейлим */}
-  <div
-    className="relative w-full h-full"
-    style={{
-      transform: "scale(0.4)",          // ← 4x меньше
-      transformOrigin: "left bottom",     // ← якорим слева-снизу
-      willChange: "transform",
-    }}
-  >
-    <Image
-      src={sphere}
-      alt="sphere"
-      fill
-      priority
-      className="object-cover object-left-bottom"
-      // чтобы Next подгружал не гигантский источник, подскажем ожидаемый визуальный размер:
-      sizes="(min-width: 768px) 25vw, 50vw"
-    />
-  </div>
-</div>
-
-
-<div className="hidden md:block absolute top-0 right-0 h-full w-full pointer-events-none z-0">
-  <NextImage
-    src={sphereRightTop}
-    alt=""
-    fill
-    style={{
-      objectFit: "cover",
-      objectPosition: "top right",
-      opacity: 0.22,
-    }}
-  />
-</div>
-
-      {/* 2) Плавающие ton сверху */}
       <div className="pointer-events-none absolute top-[-10px] left-2/5 w-40 h-40 opacity-60 animate-float-slow">
-        <NextImage
-          src="/decorative/ton2.png"
-          alt=""
-          fill
-          style={{ objectFit: "contain" }}
-        />
+        <NextImage src="/decorative/ton2.png" alt="" fill style={{ objectFit: "contain" }} />
       </div>
       <div className="hidden md:block pointer-events-none absolute top-[-10px] left-1/4 w-60 h-60 opacity-65 animate-float-slow delay-2000">
-        <NextImage
-          src="/decorative/ton4.svg"
-          alt=""
-          fill
-          style={{ objectFit: "contain" }}
-        />
+        <NextImage src="/decorative/ton4.svg" alt="" fill style={{ objectFit: "contain" }} />
       </div>
-<div className="md:hidden pointer-events-none absolute top-[-10px] left-1/4 w-60 h-60 opacity-65 animate-float-slow delay-2000">
-        <NextImage
-          src="/decorative/ton4.png"
-          alt=""
-          fill
-          style={{ objectFit: "contain" }}
-        />
+      <div className="md:hidden pointer-events-none absolute top-[-10px] left-1/4 w-60 h-60 opacity-65 animate-float-slow delay-2000">
+        <NextImage src="/decorative/ton4.png" alt="" fill style={{ objectFit: "contain" }} />
       </div>
 
-      {/* 3) Центрированный блюр-эллипс */}
       <div className="pointer-events-none absolute top-0 inset-x-0 mx-auto w-1/3 h-1/3 opacity-35">
-        <NextImage
-          src="/decorative/EllipseFull.png"
-          alt=""
-          fill
-          style={{ objectFit: "contain" }}
-        />
+        <NextImage src="/decorative/EllipseFull.png" alt="" fill style={{ objectFit: "contain" }} />
       </div>
 
-{/* === FAQ: фон с плавным растворением ТОЛЬКО сверху (desktop), мобилка — без изменений === hidden md:block */}
-<div className="absolute inset-0 -z-10 pointer-events-none">
-  {/* desktop/tablet: топ-фейд маской */}
-  <div
-    className=" absolute inset-0
-               [--fade-top:clamp(28px,7vw,140px)]"
-    style={{
-      WebkitMaskImage:
-        "linear-gradient(to bottom, rgba(0,0,0,0) 0, rgba(0,0,0,1) var(--fade-top), rgba(0,0,0,1) 100%)",
-      maskImage:
-        "linear-gradient(to bottom, rgba(0,0,0,0) 0, rgba(0,0,0,1) var(--fade-top), rgba(0,0,0,1) 100%)",
-      WebkitMaskRepeat: "no-repeat",
-      maskRepeat: "no-repeat",
-    }}
-  >
-      <NextImage
-        src="/decorative/starsbg1.png"       // укажите свой файл со звёздами stars-bg ?
-        alt=""
-        fill
-        className="pointer-events-none opacity-10 md:opacity-10"
-        style={{ objectFit: "cover", objectPosition: "center top" }}
-      />
-</div>
-</div>
-
-<div
-  className="absolute hidden md:block inset-x-0 bottom-0 h-3 md:h-32 pointer-events-none -z-10" //w-1/2 md:w-full
-  style={{
-    background: `
-      linear-gradient(
-      )
-    `,
-  }}
-/>
+      <div className="absolute inset-0 -z-10 pointer-events-none">
+        <div
+          className="absolute inset-0 [--fade-top:clamp(28px,7vw,140px)]"
+          style={{
+            WebkitMaskImage: "linear-gradient(to bottom, rgba(0,0,0,0) 0, rgba(0,0,0,1) var(--fade-top), rgba(0,0,0,1) 100%)",
+            maskImage: "linear-gradient(to bottom, rgba(0,0,0,0) 0, rgba(0,0,0,1) var(--fade-top), rgba(0,0,0,1) 100%)",
+            WebkitMaskRepeat: "no-repeat",
+            maskRepeat: "no-repeat",
+          }}
+        >
+          <NextImage src="/decorative/starsbg1.png" alt="" fill className="pointer-events-none opacity-10 md:opacity-10" style={{ objectFit: "cover", objectPosition: "center top" }} />
+        </div>
+      </div>
     </section>
-
   );
 }
 
