@@ -16,7 +16,8 @@
     "getStarted": "Начать",
         "startInvesting": "Начать инвестировать",
                                 "exploreOptions": "Исследовать",
-                                    "connect": "Подключить кошелёк"
+                                    "connect": "Подключить",
+                                        "connectWallet": "Подключить кошелёк"
 
   },
   "footer": {

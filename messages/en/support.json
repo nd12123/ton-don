@@ -1,5 +1,16 @@
 {
   "title": "Support",
+  "intro": "If you have any questions, you can reach us at:",
+  "form": {
+    "emailPlaceholder": "Your email",
+    "emailAria": "Email input field",
+    "messagePlaceholder": "Your message",
+    "messageAria": "Message input field",
+    "submit": "Send",
+    "sending": "Sending…",
+    "sent": "Message sent, thank you!",
+    "error": "An error occurred while sending. Please try again later."
+  },
   "lead": "Any questions? Get in touch with us:",
   "contact": {
     "email_label": "Email",

@@ -4,14 +4,11 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { useT } from '@/i18n/react';
+import { useT } from "@/i18n/react";
 
 import logoSvg from "@/assets/Footer/Ton image.png";
-//import certikBadge from "@/assets/Main/bottom audited by certik.svg";
 import certikBadge from "@/public/decorative/certik.svg";
-
 import supportIcon from "@/assets/Footer/Support.svg";
-//import telegramIcon from "@/assets/Footer/telegram.svg"; // (не используется, оставил как было)
 import StartInvestingDesktop from "./StartInvestingDesktop";
 import StartInvesting from "./StartInvesting";
 
@@ -25,8 +22,22 @@ const tonCoin1 = "/decorative/ton3.png";
 const tonCoin2 = "/decorative/ton2.png";
 
 export default function Footer({ className = "" }: { className?: string }) {
-  const t = useT();
-  const year = new Date().getFullYear();
+  // берем общий неймспейс
+  const t = useT("common");
+  // безопасный фоллбек (если ключа нет — показываем разумный дефолт)
+  const tf = <T extends string>(key: string, fb: T) => t<T>(key, undefined, fb);
+
+  const brand = tf("brand", "TON Stake");
+  const navHome = tf("nav.home", "Home");
+  const navStaking = tf("nav.staking", "Staking");
+  const navProfile = tf("nav.profile", "Profile");
+  const navSupport = tf("nav.support", "Support");
+
+  const copy = tf("footer.copyright", "© 2025 Orbi Ton | All Rights Reserved");
+  const terms = tf("footer.terms", "Terms and Conditions");
+  const privacy = tf("footer.privacy", "Privacy Policy");
+
+  const supportAlt = tf("nav.support", "Support");
 
   return (
     <footer className={`relative overflow-hidden text-white ${className}`}>
@@ -38,7 +49,7 @@ export default function Footer({ className = "" }: { className?: string }) {
           mixBlendMode: "multiply",
         }}
       />
-      {/* верхний лёгкий fade */}
+      {/* верхний fade */}
       <div
         className="pointer-events-none absolute top-0 left-0 w-full h-48 z-10 opacity-10"
         style={{
@@ -47,7 +58,7 @@ export default function Footer({ className = "" }: { className?: string }) {
         }}
       />
 
-      {/* ===== 0) Фон: звёзды/сферы/тон ===== */}
+      {/* фон: звёзды/сферы/тон */}
       <div className="absolute inset-0 pointer-events-none">
         <div
           className="absolute inset-0 opacity-99"
@@ -85,13 +96,13 @@ export default function Footer({ className = "" }: { className?: string }) {
         />
       </div>
 
-      {/* ===== 1) CTA Start Investing ===== */}
+      {/* CTA */}
       <div className="lg:hidden relative z-10 mt-6 sm:mt-8 lg:mt-10 pb-3">
         <StartInvesting />
       </div>
       <StartInvestingDesktop className="hidden lg:block" />
 
-      {/* ===== 2) Верхняя зона футера ===== */}
+      {/* верхняя зона футера */}
       <div className="relative z-10 pt-0 md:pt-3 pb-0 md:pb-3">
         <div className="container mx-auto px-2 md:px-4">
           {/* mobile */}
@@ -99,8 +110,8 @@ export default function Footer({ className = "" }: { className?: string }) {
             <div className="flex flex-col items-center justify-between gap-0">
               <div className="flex items-center gap-1">
                 <div className="flex items-center gap-2">
-                  <Image src={logoSvg} alt="TONStake.ai" width={32} height={32} />
-                  <span className="text-xl whitespace-nowrap font-semibold">TON Stake</span>
+                  <Image src={logoSvg} alt={brand} width={32} height={32} />
+                  <span className="text-xl whitespace-nowrap font-semibold">{brand}</span>
                 </div>
 
                 <div
@@ -123,23 +134,23 @@ export default function Footer({ className = "" }: { className?: string }) {
 
                 <div className="flex items-center pt-3">
                   <Link href="/support" className="ml-1 inline-flex items-center">
-                    <Image src={supportIcon} alt="Support" width={120} height={50} />
+                    <Image src={supportIcon} alt={supportAlt} width={120} height={50} />
                   </Link>
                 </div>
               </div>
 
               <nav className="flex flex-wrap gap-6 text-[20px] text-white pb-2 mt-2">
                 <Link href="/" className="hover:text-white transition-colors">
-                  {t("nav.home")}
+                  {navHome}
                 </Link>
                 <Link href="/staking" className="hover:text-white transition-colors">
-                  {t("nav.staking")}
+                  {navStaking}
                 </Link>
                 <Link href="/profile" className="hover:text-white transition-colors">
-                  {t("nav.profile")}
+                  {navProfile}
                 </Link>
                 <Link href="/support" className="hover:text-white transition-colors">
-                  {t("nav.support")}
+                  {navSupport}
                 </Link>
               </nav>
 
@@ -162,8 +173,8 @@ export default function Footer({ className = "" }: { className?: string }) {
               {/* left */}
               <div className="flex items-center gap-4 min-w-0">
                 <div className="flex items-center gap-2">
-                  <Image src={logoSvg} alt="TONStake.ai" width={32} height={32} />
-                  <span className="text-xl whitespace-nowrap font-semibold">TON Stake</span>
+                  <Image src={logoSvg} alt={brand} width={32} height={32} />
+                  <span className="text-xl whitespace-nowrap font-semibold">{brand}</span>
                 </div>
 
                 <div
@@ -189,23 +200,23 @@ export default function Footer({ className = "" }: { className?: string }) {
                 "
               >
                 <Link href="/" className="hover:text-white/90 transition-colors">
-                  {t("nav.home")}
+                  {navHome}
                 </Link>
                 <Link href="/staking" className="hover:text-white/90 transition-colors">
-                  {t("nav.staking")}
+                  {navStaking}
                 </Link>
                 <Link href="/profile" className="hover:text-white/90 transition-colors">
-                  {t("nav.profile")}
+                  {navProfile}
                 </Link>
                 <Link href="/support" className="hover:text-white/90 transition-colors">
-                  {t("nav.support")}
+                  {navSupport}
                 </Link>
               </nav>
 
               {/* right support */}
               <div className="absolute right-0 top-1/2 -translate-y-1/2">
                 <Link href="/support" className="inline-flex items-center">
-                  <Image src={supportIcon} alt="Support" width={120} height={50} />
+                  <Image src={supportIcon} alt={supportAlt} width={120} height={50} />
                 </Link>
               </div>
             </div>
@@ -224,15 +235,15 @@ export default function Footer({ className = "" }: { className?: string }) {
         </div>
       </div>
 
-      {/* ===== 3) Копирайт ===== */}
+      {/* копирайт */}
       <div className="z-10 container mx-auto px-4 flex flex-col-reverse lg:flex-row items-center justify-between gap-1 md:gap-4 text-[12px] text-gray-600">
-        <p>{t("footer.copyright")}</p>
+        <p>{copy}</p>
         <div className="flex gap-2 md:gap-4">
           <Link href="/terms" className="hover:text-white transition-colors text-[#A0B0D8]">
-            {t("footer.terms")}
+            {terms}
           </Link>
           <Link href="/privacy" className="hover:text-white transition-colors text-[#A0B0D8]">
-            {t("footer.privacy")}
+            {privacy}
           </Link>
         </div>
       </div>

@@ -6,7 +6,7 @@ import { FloatingStakeNow } from "./FloatingStakeNow";
 import { useT } from '@/i18n/react';
 
 export default function StartInvestingDesktop({ className = "" }: { className?: string }) {
-  const t = useT();
+  const t = useT("home");
 
   return (
     <section className={`relative text-white ${className}`}>
@@ -37,10 +37,10 @@ export default function StartInvestingDesktop({ className = "" }: { className?: 
           <h2
             className="
               font-extrabold leading-[0.95] tracking-[-0.02em]
-              text-[64px] xl:text-[68px] 2xl:text-[72px]
+              text-[64px] xl:text-[66px] 2xl:text-[72px]
               mb-4
               whitespace-nowrap
-              md:max-w-[550px]
+              md:max-w-[540px]
             "
           >
             {t("startInvesting.title")}

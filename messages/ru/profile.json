@@ -1,1 +1,22 @@
-{}
+{
+  "search": { "placeholder": "Поиск валидатора…" },
+  "filters": { "all": "Все", "active": "Активные", "completed": "Завершённые" },
+  "status": { "active": "Активен", "completed": "Завершён" },
+  "labels": {
+    "plannedIncome": "Плановый доход",
+    "earned": "Заработано",
+    "status": "Статус",
+    "apr": "APR",
+    "daysShort": "д"
+  },
+  "buttons": { "withdraw": "Вывести" },
+  "title": "История стейков",
+  "titles": {
+    "myProfile": "Мой профиль",
+    "history": "История стейков"
+  },
+  "plannedIncome": "Плановый доход",
+  "empty": "Ничего не найдено.",
+  "connectWalletPrompt": "Подключите кошелёк в шапке.",
+  "needConnect": "Подключите кошелёк в шапке."
+}

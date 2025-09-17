@@ -1,6 +1,6 @@
 // /i18n/index.ts
 export type Locale = "ru" | "en";
-export type Namespace = "common" | "home" | "faq" | "staking" | "support";
+export type Namespace = "common" | "home" | "faq" | "staking"| "profile" | "support";
 
 // грузим JSON из /messages/<locale>/<ns>.json
 export async function loadNamespace<T = unknown>(

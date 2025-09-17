@@ -9,6 +9,10 @@
     "totalIncome": "Total Income",
     "assetValue": "Asset value (updated hourly)"
   },
+  "status": {
+    "connected": "Connected",
+        "disconnected": "Disconnected"
+  },
   "inputs": {
     "amount": "Deposit amount",
     "duration": "Deposit duration",

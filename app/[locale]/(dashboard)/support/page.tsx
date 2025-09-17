@@ -2,8 +2,11 @@
 
 import { useState } from 'react';
 import { motion } from 'framer-motion';
+import { useT } from '@/i18n/react';
 
 export default function Page() {
+  const t = useT('support');
+
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
   const [status, setStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle');
@@ -38,11 +41,9 @@ export default function Page() {
       transition={{ duration: 0.4 }}
       className="max-w-2xl w-full mx-auto px-4 py-10"
     >
-      <h1 className="text-2xl font-bold mb-6">Поддержка</h1>
+      <h1 className="text-2xl font-bold mb-6">{t('title')}</h1>
 
-      <p className="text-gray-700 mb-4 text-sm">
-        Если у вас возникли вопросы, вы можете связаться с нами:
-      </p>
+      <p className="text-gray-700 mb-4 text-sm">{t('intro')}</p>
 
       <ul className="text-sm text-blue-600 space-y-2 mb-6">
         <li>
@@ -57,9 +58,6 @@ export default function Page() {
             @tonstake
           </a>
         </li>
-        <li>
-          Discord: <span className="text-gray-500">Coming soon</span>
-        </li>
       </ul>
 
       <form
@@ -68,36 +66,36 @@ export default function Page() {
       >
         <input
           type="email"
-          placeholder="Ваш email"
+          placeholder={t('form.emailPlaceholder')}
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-        className="w-full px-4 py-2 text-sm bg-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 text-gray-700"
+          className="w-full px-4 py-2 text-sm bg-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 text-gray-700"
           required
+          aria-label={t('form.emailAria')}
         />
         <textarea
           rows={4}
-          placeholder="Ваше сообщение"
+          placeholder={t('form.messagePlaceholder')}
           value={message}
           onChange={(e) => setMessage(e.target.value)}
           className="w-full px-4 py-2 text-sm bg-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 text-gray-700"
           required
+          aria-label={t('form.messageAria')}
         />
         <button
           type="submit"
           disabled={status === 'sending'}
           className="px-4 py-2 text-sm bg-blue-500 hover:bg-blue-600 disabled:opacity-50 text-white rounded-md"
         >
-          {status === 'sending' ? 'Отправка…' : 'Отправить'}
+          {status === 'sending' ? t('form.sending') : t('form.submit')}
         </button>
       </form>
 
       {status === 'sent' && (
-        <p className="mt-2 text-green-600 text-sm">Сообщение отправлено, спасибо!</p>
+        <p className="mt-2 text-green-600 text-sm">{t('form.sent')}</p>
       )}
       {status === 'error' && (
-        <p className="mt-2 text-red-600 text-sm">
-          Произошла ошибка при отправке. Попробуйте ещё раз позже.
-        </p>
+        <p className="mt-2 text-red-600 text-sm">{t('form.error')}</p>
       )}
     </motion.main>
   );

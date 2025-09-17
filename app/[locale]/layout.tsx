@@ -30,12 +30,13 @@ export default async function LocaleLayout({
     );
   }
 
-  const messages = await getMessages(locale as Supported, [
+const messages = await getMessages(locale as Locale, [
     "common",
     "home",
     "faq",
     "staking",
     "support",
+    "profile", 
   ]);
 
   return (

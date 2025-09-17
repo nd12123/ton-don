@@ -4,7 +4,7 @@
     "name": "TON Staking Platform"
   },
   "nav": {
-    "home": "home",
+    "home": "Home",
     "staking": "Staking",
     "history": "History",
     "profile": "Profile",
@@ -15,7 +15,9 @@
         "getStarted": "Get started",
                 "startInvesting": "Start Investing",
                                 "exploreOptions": "Explore Options",
-                                    "connect": "Connect Wallet"
+                                    "connect": "Connect Wallet",
+                                      "connectWallet": "Connect Wallet"
+
   
   },
   "footer": {

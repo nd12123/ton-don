@@ -9,6 +9,10 @@
     "totalIncome": "Суммарный доход",
     "assetValue": "Стоимость актива (обновляется каждый час)"
   },
+  "status": {
+    "connected": "Connected",
+        "disconnected": "Disconnected"
+  },
   "inputs": {
     "amount": "Сумма депозита",
     "duration": "Срок депозита",
@@ -34,7 +38,7 @@
     }
   },
   "buttons": {
-    "stakeNow": "Стейкать",
+    "stakeNow": "Застейкать",
     "connect": "Подключить"
   },
   "ticket": {

@@ -1,10 +1,21 @@
-import React from 'react';
-import { Wallet } from 'lucide-react';
-import GoToStakingButton from "@/components/GoToStakingButton"
+// components/ConnectWalletButton.tsx
+"use client";
+
+import React from "react";
+import { Wallet } from "lucide-react";
+import GoToStakingButton from "@/components/GoToStakingButton";
+import { useT } from "@/i18n/react";
+
 export default function ConnectWalletButton() {
+  const t = useT("common");
+  const label = (() => {
+    const k = t("buttons.connectWallet");
+    return k === "buttons.connectWallet" ? "Connect Wallet" : k; // фоллбек
+  })();
+
   return (
-    
-    <GoToStakingButton className="btn-primary
+    <GoToStakingButton
+      className="btn-primary
         relative flex items-center justify-center
         w-52 h-11
         rounded-xl
@@ -13,12 +24,11 @@ export default function ConnectWalletButton() {
         overflow-hidden
         transition-transform
         hover:scale-105
-        focus:ring-2 focus:ring-sky-400 focus:outline-none
-      "
+        focus:ring-2 focus:ring-sky-400 focus:outline-none"
     >
       <Wallet className="w-4 h-4 text-white mr-2" />
       <span className="text-white text-lg font-semibold font-['Inter'] leading-tight">
-        Connect Wallet
+        {label}
       </span>
     </GoToStakingButton>
   );

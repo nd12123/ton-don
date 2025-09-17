@@ -28,23 +28,40 @@ function deepGet(obj: any, path: string) {
   return path.split(".").reduce((acc, k) => (acc != null ? acc[k] : undefined), obj);
 }
 
-// t c неймспейсом: useT("home")("pills.simple")
+/**
+ * useT с дженериком:
+ * - умеет возвращать строки, объекты, массивы
+ * - поддерживает интерполяцию для строк
+ * - фоллбеком возвращает сам ключ (как раньше)
+ */
 export function useT(ns?: Namespace) {
   const ctx = useContext(I18nCtx);
   if (!ctx) {
-    // вне провайдера — возвращаем идентичность
-    return (key: string) => key;
+    // безопасный заглушечный переводчик
+    return function tAny<T = string>(key: string, _params?: Record<string, any>, fallback?: T): T {
+      return (fallback ?? (key as unknown as T)) as T;
+    };
   }
-  return (key: string) => {
-    const base = ns ? ctx.messages?.[ns] : ctx.messages;
-    const val = deepGet(base, key);
-    if (typeof val === "string") return val;
 
-    if (process.env.NODE_ENV !== "production") {
-      console.warn(`[i18n] missing key: ${ns ? ns + "." : ""}${key}`);
+  const base = ns ? ctx.messages[ns] : ctx.messages;
+
+  return function tAny<T = string>(
+    key: string,
+    params?: Record<string, any>,
+    fallback?: T
+  ): T {
+    const val = key
+      .split(".")
+      .reduce<any>((acc, k) => (acc != null ? acc[k] : undefined), base);
+
+    if (val == null) return (fallback ?? (key as unknown as T)) as T;
+
+    if (typeof val === "string" && params) {
+      return val.replace(/\{(\w+)\}/g, (_m, p) =>
+        params[p] != null ? String(params[p]) : `{${p}}`
+      ) as unknown as T;
     }
-    // Фоллбек: возвращаем именно "ns.key" чтобы было видно, что не найдено
-    return ns ? `${ns}.${key}` : key;
+    return val as T; // ← ключ: отдаём массивы/объекты как есть
   };
 }
 

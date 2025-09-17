@@ -1,1 +1,22 @@
-{}
+{
+  "search": { "placeholder": "Search validator…" },
+  "filters": { "all": "All", "active": "Active", "completed": "Completed" },
+  "status": { "active": "Active", "completed": "Completed" },
+  "labels": {
+    "plannedIncome": "Planned income",
+    "earned": "Earned",
+    "status": "Status",
+    "apr": "APR",
+    "daysShort": "d"
+  },
+  "buttons": { "withdraw": "Withdraw" },
+  "titles": {
+    "myProfile": "My Profile",
+    "history": "Staking history"
+  },
+  "title": "Stake history",
+  "plannedIncome": "Planned income",
+  "empty": "Nothing found.",
+  "connectWalletPrompt": "Connect your wallet in the header.",
+  "needConnect": "Connect Wallet"
+}
