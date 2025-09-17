@@ -9,8 +9,8 @@ import { useT } from "@/i18n/react";
 export default function ConnectWalletButton() {
   const t = useT("common");
   const label = (() => {
-    const k = t("buttons.connectWallet");
-    return k === "buttons.connectWallet" ? "Connect Wallet" : k; // фоллбек
+    const k = t("buttons.connect");
+    return k === "buttons.connect" ? "Connect Wallet" : k; // фоллбек
   })();
 
   return (
