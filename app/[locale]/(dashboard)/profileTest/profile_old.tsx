@@ -128,7 +128,7 @@ const balance = useMemo(() => balanceActive(history), [history]);
             {/* слайдер суммы */}
             <input
               type="range"
-              min={1}
+              min={10}
               max={5000}
               step={1}
               value={amount}

@@ -17,7 +17,7 @@ type CalculatorProps = {
 const PLAN_BG_ACTIVE = "/decorative/plan-row-bg.svg";
 
 const PLANS = [
-  { id: 0, label: "Basic", min: 1,  iconSrc: "/decorative/basic icon.svg" },
+  { id: 0, label: "Basic", min: 10,  iconSrc: "/decorative/basic icon.svg" },
   { id: 1, label: "Pro", min: 1000, iconSrc: "/decorative/pro icon.svg"   },
   { id: 2, label: "Premium", min: 2000, iconSrc: "/decorative/super icon.svg" },
 ];

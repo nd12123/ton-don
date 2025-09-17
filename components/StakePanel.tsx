@@ -39,7 +39,7 @@ export default function StakePanel() {
       <div className="flex gap-2">
         <input
           type="number"
-          min={1}
+          min={10} //1
           value={stakeAmount}
           onChange={(e) => setStakeAmount(Number(e.target.value))}
           className="border p-1 rounded w-24"

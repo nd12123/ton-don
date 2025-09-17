@@ -79,9 +79,21 @@ export default function TotalValue() {
       <div className="absolute top-0 left-0 w-full md:w-1/2 h-full opacity-[100%] md:top-[-20px] md:left-[-20px] md:opacity-[55%] pointer-events-none z-10">
         <Image src="/decorative/Ellipse60.png" alt="left glow" fill style={{ objectFit: "cover", objectPosition: "left top" }} />
       </div>
-      <div className="absolute top-0 right-0 w-full md:w-1/2 h-full opacity-60 md:top-[-10px] md:right-[-20px] md:opacity-[39%] pointer-events-none z-[12]">
+      <div className="absolute md:hidden top-0 right-0 w-full h-full opacity-60 md:w-[50%] md:top-[-50px] md:right-[-30px] md:opacity-[39%] pointer-events-none z-[12]">
         <Image src="/decorative/Ellipse50.png" alt="right glow" fill style={{ objectFit: "cover", objectPosition: "right top" }} />
       </div>
+
+<div className="absolute hidden md:block top-0 right-0 w-full h-full opacity-[42%] pointer-events-none z-[12]">
+  <div className="relative w-full h-full md:origin-top-right md:scale-[0.52]">
+    <Image
+      src="/decorative/Ellipse50.png"
+      alt="right glow"
+      fill
+      style={{ objectFit: "cover", objectPosition: "right top" }}
+      priority
+    />
+  </div>
+</div>
 
       {/* 4) 3D-монеты */}
       <div className="absolute inset-0 pointer-events-none">

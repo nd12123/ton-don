@@ -139,17 +139,18 @@ export default function Footer({ className = "" }: { className?: string }) {
                 </div>
               </div>
 
-              <nav className="flex flex-wrap gap-6 text-[20px] text-white pb-2 mt-2">
-                <Link href="/" className="hover:text-white transition-colors">
+             
+ <nav className="grid grid-cols-2 gap-x-6 gap-y-3 text-[18px] text-white pb-2 mt-3 w-full max-w-xs mx-auto">
+   <Link href="/" className="block text-center whitespace-nowrap hover:text-white transition-colors">
                   {navHome}
                 </Link>
-                <Link href="/staking" className="hover:text-white transition-colors">
+   <Link href="/staking" className="block text-center whitespace-nowrap hover:text-white transition-colors">
                   {navStaking}
                 </Link>
-                <Link href="/profile" className="hover:text-white transition-colors">
+   <Link href="/profile" className="block text-center whitespace-nowrap hover:text-white transition-colors">
                   {navProfile}
                 </Link>
-                <Link href="/support" className="hover:text-white transition-colors">
+   <Link href="/support" className="block text-center whitespace-nowrap hover:text-white transition-colors">
                   {navSupport}
                 </Link>
               </nav>

@@ -3,7 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, Suspense   } from "react";
 import ClientOnly from "@/components/ClientOnly";
 import WalletConnect from "@/components/WalletConnect";
 import MobileNav from "@/components/MobileNav";
@@ -77,6 +77,7 @@ export default function HeaderClient() {
 
   return (
     <>
+        <Suspense fallback={null /* можно поставить лоадер */}>
 
       {/* mobile-only header: sticky, сам занимает место */}
       {/* mobile-only header: sticky, занимает место и даёт safe-area */}
@@ -85,7 +86,8 @@ export default function HeaderClient() {
     <MobileNav />
   </div>
 </div>
-   
+       </Suspense>
+
       <header className="hidden md:block fixed top-0 left-0 w-full z-50 bg-[#0B1128] backdrop-blur-sm">
         <div className="mx-auto px-4 md:px-8 py-3 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2 text-xl font-bold text-white">
@@ -108,13 +110,17 @@ export default function HeaderClient() {
           </nav>
 
           <div className="flex items-center gap-2">
+            
             <ClientOnly>
               <WalletConnect />
             </ClientOnly>
-            <LanguageSwitcher />
+                    <Suspense fallback={null /* можно поставить лоадер */}>
+             <LanguageSwitcher />
+                 </Suspense>
+
           </div>
         </div>
       </header>
-    </>
+      </>
   );
 }

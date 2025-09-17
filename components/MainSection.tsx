@@ -75,12 +75,12 @@ export default function MainSection({ className = "" }: MainSectionProps) {
       <div className="absolute bottom-0 left-0 w-full md:w-[100%] h-full opacity-75 md:opacity-55 lg:w-3/5 lg:opacity-55 pointer-events-none">
         <Image src={ellipse6} alt="" fill style={{ objectFit: "cover", objectPosition: "left bottom" }} />
       </div>
-      <div className="absolute bottom-0 right-0 w-full md:w-[100% + 450px] h-full opacity-35 md:opacity-45 lg:w-1/2 lg:opacity-[39%] pointer-events-none">
+      <div className="absolute bottom-0 right-0 w-full md:w-[100%] h-full opacity-35 md:opacity-45 lg:w-1/2 lg:opacity-[42%] pointer-events-none">
         <Image src={ellipse5} alt="" fill style={{ objectFit: "cover", objectPosition: "right bottom" }} />
       </div>
 
       {/* центральные сферы только на мобилке */}
-      <div className="md:hidden absolute top-[30%] right-0 w-full md:w-1/2 md:opacity-90 h-full pointer-events-none">
+      <div className="md:hidden absolute top-[30%] right-0 w-full md:w-full md:opacity-90 h-full pointer-events-none">
         <Image src={centralRightSphere} alt="" fill style={{ objectFit: "cover", objectPosition: "right center" }} />
       </div>
       <div className="md:hidden absolute top-[30%] left-0 w-full md:w-1/2 h-full pointer-events-none">
@@ -88,8 +88,8 @@ export default function MainSection({ className = "" }: MainSectionProps) {
       </div>
 
       {/* верхние «пилюли» */}
-      <div className="max-w-7xl mx-auto mb-8 md:pl-[90px] px-2">
-        <div className="flex md:items-center md:gap-16 sm:gap-6 gap-10 overflow-x-clip">
+    <div className="max-w-7xl mx-auto mb-8 md:pl-[90px] px-2">
+   <div className="flex flex-nowrap items-center gap-3 sm:gap-5 md:gap-16">
           <Link
             href="#total-value"
             aria-label={ariaTotalValue}
@@ -193,22 +193,22 @@ export default function MainSection({ className = "" }: MainSectionProps) {
           <Image
             src={centralSphere}
             alt=""
-            className="absolute top-[20%] md:top-[20%] md:right-[20px] w-[65%] md:w-[45%] lg:w[30%] lg:top-[0%] opacity-30 md:opacity-50 lg:opacity-35 animate-float"
+            className="absolute top-[20%] md:top-[20%] md:right-[20px] w-[65%] md:w-[45%] lg:w[30%] lg:top-[5%] opacity-30 md:opacity-50 lg:opacity-35 animate-float"
           />
           <Image
             src={ton3d3}
             alt=""
-            className="absolute top-[15%] right-[-45px] w-[30%] md:top-[3%] md:right-[16%] md:w-[17%] xl:top-[2%] 3xl:top-[0%] xl:right-[16%] 3xl:right-[13%] 3xl:w-[18%] opacity-90 animate-float delay-4000"
+            className="absolute top-[15%] right-[-45px] w-[30%] md:top-[3%] md:right-[16%] md:w-[17%] xl:top-[5%] 3xl:top-[0%] xl:right-[16%] 3xl:right-[13%] 3xl:w-[18%] opacity-90 animate-float delay-4000"
           />
           <Image
             src={ton3d1}
             alt=""
-            className="absolute right-[15%] bottom-[20%] w-[30%] md:top-[22%] md:right-[26%] md:w-[10%] 2xl:bottom-[18%] 2xl:right-[28%] 2xl:w-[13%] opacity-80 animate-float-slow delay-1000"
+            className="absolute right-[15%] bottom-[20%] w-[30%] md:top-[22%] md:right-[26%] md:w-[10%] 2xl:bottom-[20%] 2xl:right-[28%] 2xl:w-[13%] opacity-80 animate-float-slow delay-1000"
           />
           <Image
             src={ton3d2}
             alt=""
-            className="absolute bottom-[-5%] right-[-60px] w-[60%] md:bottom-[7%] md:right![10%] 3xl:bottom-[-2%] 3xl:right-[8%] md:w-[28%] 3xl:h-[30%] opacity-90 animate-float delay-2000"
+            className="absolute bottom-[-5%] right-[-60px] w-[60%] md:bottom-[7%] md:right-[10%] 3xl:bottom-[-2%] 3xl:right-[8%] md:w-[28%] 3xl:w-[26%] opacity-90 animate-float delay-2000"
           />
         </div>
       </div>

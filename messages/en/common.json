@@ -20,6 +20,10 @@
 
   
   },
+  "wallet": {
+    "connected": "Connected: {addr}",
+    "manage": "Manage wallet"
+  },
   "footer": {
     "copyright": "© 2025 Orbi Ton | All Rights Reserved",
     "terms": "Terms and Conditions",

@@ -30,7 +30,7 @@ export default function StakeCalculator({
           type="number"
           value={stakeAmount}
           onChange={(e) => setStakeAmount(Number(e.target.value))}
-          min={0}
+          min={10}
           className="w-full bg-gray-100 dark:bg-gray-700
       border border-gray-300 dark:border-gray-600
       text-gray-900 dark:text-gray-100

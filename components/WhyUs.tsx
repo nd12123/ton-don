@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { ShieldCheck, Activity, Clock, ArrowRight } from "lucide-react";
+import { ShieldCheck, Activity, Clock, ArrowRight, TrendingUp, Sparkles, Network } from "lucide-react";
 import { useT } from "@/i18n/react";
 import type { ReactNode } from "react"; // ⬅️ добавили
 
@@ -19,9 +19,9 @@ const ICONS: Record<FeatureKey, ReactNode> = {
   security: <ShieldCheck size={28} className="text-sky-400" />,
   transparency: <Activity size={28} className="text-sky-400" />,
   flexibility: <Clock size={28} className="text-sky-400" />,
-  profitability: <Activity size={28} className="text-sky-400" />,
-  simplicity: <ShieldCheck size={28} className="text-sky-400" />,
-  networkSupport: <Clock size={28} className="text-sky-400" />,
+  profitability: <TrendingUp size={28} className="text-sky-400" />,
+  simplicity:   <Sparkles    size={28} className="text-sky-400" />,
+  networkSupport: <Network   size={28} className="text-sky-400" />,
 };
 
 
@@ -37,8 +37,8 @@ function FeatureCard({
   const tCommon = useT("common");
   return (
     <div
-      className="
-        relative w-full max-w-xs
+      className=" pb-4 md:mb-3
+             relative w-full max-w-xs
         min-h-[220px] md:min-h-[240px]
         bg-[radial-gradient(ellipse_at_top_right,_#2C3553_0%,_#1A223E_100%)]
         rounded-3xl
@@ -91,7 +91,7 @@ export default function WhyUs() {
   ];
 
   return (
-    <section id="why-us" className="relative overflow-hidden md:mb-4">
+    <section id="why-us" className="relative overflow-hidden mb-3 md:mb-8">
       <div
         className="absolute top-0 left-0 w-full h-full pointer-events-none -z-10 opacity-85"
         style={{
@@ -130,6 +130,18 @@ export default function WhyUs() {
           ))}
         </div>
       </div>
+
+      
+      {/* --- НИЖНИЙ ФЕЙД НУЖНОГО ЦВЕТА --- */}
+      <div
+        className="pointer-events-none absolute inset-x-0 bottom-[-1px] z-[5]
+                   h-[clamp(56px,9vw,160px)]"
+        style={{
+          // тот же цвет, что и фон следующей секции
+          background:
+            "linear-gradient(to bottom, rgba(10,19,36,0) 0%, #0B1128 60%, #0B1128 100%)",
+        }}
+      />
     </section>
   );
 }

@@ -16,7 +16,7 @@ type CalculatorProps = {
 };
 
 const PLANS = [
-  { label: "Basic",   min: 1,    iconSrc: "/decorative/basic icon.svg" },
+  { label: "Basic",   min: 10,    iconSrc: "/decorative/basic icon.svg" },
   { label: "Pro",     min: 1000, iconSrc: "/decorative/pro icon.svg"   },
   { label: "Premium", min: 2000, iconSrc: "/decorative/super icon.svg" },
 ];

@@ -5,6 +5,7 @@ import ClientProviders from "@/components/ClientProviders";
 
 import { I18nProvider, type Locale } from "@/i18n/react";
 import { getMessages } from "@/i18n";
+import { Suspense } from "react";
 
 // локали держим тут, чтобы не тянуть конфиги
 const SUPPORTED = ["ru", "en"] as const;
@@ -24,8 +25,10 @@ export default async function LocaleLayout({
   if (!SUPPORTED.includes(locale as Supported)) {
     return (
       <>
+      <Suspense fallback={null}>
         <Header />
         {children}
+        </Suspense>
       </>
     );
   }
@@ -41,7 +44,7 @@ const messages = await getMessages(locale as Locale, [
 
   return (
     <I18nProvider locale={locale as Supported} messages={messages}>
-      <ClientProviders>
+      <ClientProviders locale={locale as Supported}>
         <Header />
         {children}
       </ClientProviders>

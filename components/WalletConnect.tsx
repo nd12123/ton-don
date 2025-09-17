@@ -1,6 +1,13 @@
+// components/WalletConnect.tsx
 "use client";
 
-import { TonConnectButton } from "@tonconnect/ui-react";
+import dynamic from "next/dynamic";
+
+// ВАЖНО: рендерим кнопку только на клиенте
+const TonConnectButton = dynamic(
+  async () => (await import("@tonconnect/ui-react")).TonConnectButton,
+  { ssr: false }
+);
 
 export default function WalletConnect() {
   return (

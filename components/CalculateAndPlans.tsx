@@ -17,7 +17,7 @@ import tonTopMobile from "@/assets/Calculator/ton.png"
 import sphere from "@/assets/Calculator/Ellipse9.png"
 
 const PLANS = [
-  { id: 0, label: "Basic",   apr:  4, min:    1, rangeText: "1–999 TON",      iconSrc: "/decorative/basic icon.svg", bgSrc: "/decorative/stepsRight.png"},
+  { id: 0, label: "Basic",   apr:  4, min:    10, rangeText: "1–999 TON",      iconSrc: "/decorative/basic icon.svg", bgSrc: "/decorative/stepsRight.png"},
   { id: 1, label: "Pro",     apr:  7, min: 1000, rangeText: "1000–1999 TON", iconSrc: "/decorative/pro icon.svg", bgSrc: "/decorative/stepsCardBg.svg"   },
   { id: 2, label: "Premium", apr: 10, min: 2000, rangeText: "2000+ TON",      iconSrc: "/decorative/super icon.svg", bgSrc: "/decorative/stepsLeft.png" },
 ];
@@ -111,7 +111,7 @@ export default function CalculateAndPlans() {
     />
   </div>
  {/* небольшая TON-иконка справа от текста */}
- <div className="absolute hidden md:block h-[48px] md:h-[160px] md:w-[160px] w-[48px] top-[15px] right-[35px] md:right-[200px] ml-4 z-[2]">
+ <div className="absolute hidden md:block h-[48px] md:h-[160px] md:w-[160px] w-[48px] top-[15px] right-[35px] md:right-[150px] lg:right-[200px] ml-4 z-[2]">
     <Image
       src={tonTop}        // или тот файл, который у тебя для маленькой монеты
       alt="TON Icon"
@@ -178,6 +178,8 @@ export default function CalculateAndPlans() {
     [--fade:clamp(36px,8vw,120px)]  /* высота растворения сверху/снизу */
   "
   style={{
+        backgroundColor: '#0A1324',
+
     WebkitMaskImage:
       "linear-gradient(to bottom, rgba(0,0,0,0) 0, rgba(0,0,0,1) var(--fade), rgba(0,0,0,1) calc(100% - var(--fade)), rgba(0,0,0,0) 100%)",
     maskImage:

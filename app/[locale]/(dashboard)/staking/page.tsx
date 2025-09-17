@@ -96,16 +96,18 @@ export default function StakingPage() {
       />
 
       <section>
-        <h2 className="text-4xl font-bold mb-6 mt-6 md:mb-2 md:mt-2">{t("titles.stake")}</h2>
+        <h2 className="text-4xl font-bold mb-6 mt-6 md:mb-5 md:mt-5">{t("titles.stake")}</h2>
 
-        <div className="grid md:grid-cols-2 gap-8 items-start">
-          {/* ЛЕВАЯ половина: калькулятор */}
-          <div
-            className="relative rounded-[28px] p-4 md:p-6
-                       bg-[#0B1A34]/80 ring-1 ring-sky-300/40
-                       shadow-[0_22px_80px_rgba(0,194,255,0.28)]
-                       overflow-hidden"
-          >
+{/* контейнер: на md+ две колонки: [левая = резиновая][правая = авто] */}
+  <div className="grid gap-6 md:gap-10 items-start
+                  md:grid-cols-[minmax(0,1fr)_auto]">      
+                  {/* ЛЕВАЯ: растягиваемся по максимуму, допускаем ужимание */}
+    <div className="min-w-0
+                    relative rounded-[28px] p-4 md:p-6
+                    bg-[#0B1A34]/80 ring-1 ring-sky-300/40
+                    shadow-[0_22px_80px_rgba(0,194,255,0.28)]
+                    overflow-hidden">
+    
             <div
               aria-hidden
               className="pointer-events-none absolute -inset-6 rounded-[36px] -z-10"
@@ -299,10 +301,13 @@ export default function StakingPage() {
               </div>
             </div>
           </div>
+{/* ПРАВАЯ: фиксированная ширина/лимиты, всегда у правого края */}
+    <div className="justify-self-end">
 
-          {/* ПРАВАЯ половина: карточка «Daily Income» */}
+          {/* ПРАВАЯ половина: карточка «Daily Income»md:ml-20 h-full w-full  w-[clamp(320px,40vw,560px)]*/}
           <div
-            className="relative md:ml-20 h-full w-full max-w-[550px] overflow-hidden 
+            className="relative h-full w-[clamp(320px,40vw,560px)]
+             max-w-[550px] overflow-hidden 
                        aspect-[500/350] md:aspect-[500/350]"
           >
             <Image
@@ -313,13 +318,13 @@ export default function StakingPage() {
               className="pointer-events-none select-none rounded-[inherit] object-cover will-change-transform"
             />
 
-            <div className="absolute inset-[1%] md:inset-[3%] z-10 flex flex-col px-4 pt-1 md:py-8 md:ml-12 md:pr-16">
+            <div className="absolute inset-[1%] md:inset-[0%] z-10 flex flex-col px-4 pt-1 md:mt-1 md:pl-8 md:ml-2 md:pr-16">
               <div className="absolute right-4 top-[10px] rounded-xl bg-white text-[#0A6CFF]
                               font-bold leading-none text-[18px] md:text-2xl py-1 px-3 md:py-2 md:ml-[12px] md:px-4 shadow">
                 {apr}%
               </div>
 
-              <h3 className="text-lg md:text-xl font-semibold leading-tight mb-1.5 mt-1.5">
+              <h3 className="text-lg md:text-3xl font-semibold md:text-bold leading-tight mb-1.5 mt-1.5">
                 {t("ticket.dailyIncome")}
               </h3>
 
@@ -338,10 +343,11 @@ export default function StakingPage() {
               <Image
                 src="/decorative/ton22.svg"
                 alt=""
-                className="pointer-events-none w-[90px] h-[90px] md:w-[138px] md:h-[138px] select-none absolute right-4 bottom-[-5px] md:right-2 md:bottom-2"
+                className="pointer-events-none w-[90px] h-[90px] md:w-[138px] md:h-[138px] opacity-75 md:opacity-95 select-none absolute right-4 bottom-[-5px] md:right-[-15px] md:bottom-[-15px]"
               />
             </div>
           </div>
+        </div>
         </div>
       </section>
 

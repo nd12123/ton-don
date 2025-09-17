@@ -17,7 +17,7 @@ type CalculatorProps = {
 
 // локальные пороги для быстрого выбора min по планам — только для кнопок слева
 const INTERNAL_PLAN_STEPS = [
-  { id: 0, key: "basic",   min: 1,    iconSrc: "/decorative/basic icon.svg" },
+  { id: 0, key: "basic",   min: 10,    iconSrc: "/decorative/basic icon.svg" },
   { id: 1, key: "pro",     min: 1000, iconSrc: "/decorative/pro icon.svg"   },
   { id: 2, key: "premium", min: 2000, iconSrc: "/decorative/super icon.svg" },
 ] as const;
@@ -162,7 +162,7 @@ export default function Calculator({
             {/* Days range */}
             <input
               type="range"
-              min={1}
+              min={10}
               max={365}
               step={1}
               value={days}
