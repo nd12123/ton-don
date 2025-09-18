@@ -7,13 +7,13 @@ import PlanCardDesktop from "./PlanCardDesktop";
 import Calculator from "./Calculator";
 //import CalculatorTest from "./CalculatorMobile";
 import CalculatorHorizontal from "./CalculatorHorizontal";
+import { useRouter, usePathname } from "next/navigation";
 
 import { useT } from '@/i18n/react';
 
 
 import tonTop from "@/assets/Calculator/ton.svg"
 import tonTopMobile from "@/assets/Calculator/ton.png"
-
 import sphere from "@/assets/Calculator/Ellipse9.png"
 
 const PLANS = [
@@ -23,11 +23,23 @@ const PLANS = [
 ];
 
 export default function CalculateAndPlans() {
+  const router = useRouter();
+  const pathname = usePathname();
+
+  // берём текущий префикс локали из URL ("/ru", "/en")
+  const locale = (pathname?.split("/")[1] || "ru") as "ru" | "en";
+  const stakingHref = `/${locale}/staking`;
+
   const [selectedPlanIdx, setSelectedPlanIdx] = useState(0);
   const [amount, setAmount] = useState(PLANS[0].min);
   const [days,   setDays]   = useState(30);
 
   const handlePlanSelect = (idx: number) => {
+    if (idx === selectedPlanIdx) {
+      // повторный клик по уже выбранной карточке → идём на стейкинг
+      router.push(stakingHref);
+      return;
+    }
     setSelectedPlanIdx(idx);
     setAmount(PLANS[idx].min);
   };

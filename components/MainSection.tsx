@@ -151,41 +151,77 @@ export default function MainSection({ className = "" }: MainSectionProps) {
 
           {/* Лид */}
           <p className="text-[15px] md:text-lg text-gray-300 max-w-lg">{lead}</p>
+{/* Кнопки */}
+<div className="
+  flex flex-col sm:flex-row sm:items-center md:justify-start
+  gap-4 md:gap-[36px]
+">
+  <GoToStakingButton
+    className="
+      btn-primary
+      w-[200px] h-[56px]     /* мобайл */
+      sm:w-[220px] sm:h-[60px]
+      md:w-[260px] md:h-[62px]
+      lg:w-[250px] lg:h-[62px]   /* десктоп */
+      rounded-3xl
+      bg-gradient-to-r from-sky-600 to-sky-400
+      shadow-[0_21px_40px_rgba(6,173,252,0.19)]
+      inline-flex items-center justify-center
+      text-white text-base sm:text-lg md:text-[18px] font-semibold font-inter
+      tracking-[0.2px]
+      transition-transform hover:scale-[1.03] active:scale-[0.99]
+    "
+  >
+    {btnGetStarted}
+    <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className="w-5 h-5"
+  >
+    <path d="M9 18l6-6-6-6" />
+  </svg>
+  </GoToStakingButton>
 
-          {/* Кнопки */}
-          <div className="flex flex-col sm:flex-row md:items-center md:justify-center sm:items-start md:justify-start gap-4 sm:gap-6">
-            <GoToStakingButton
-              className="btn-primary w-[132px] sm:w-[132px] sm:left-0 h-12 md:h-10 bg-gradient-to-r from-sky-600 to-sky-400 rounded-2xl shadow-[0px_21px_40px_rgba(6,173,252,0.19)] shadow-[inset_5px_11px_30px_rgba(56,172,234,1)] inline-flex items-center justify-center gap-6 text-white text-lg font-semibold font-inter leading-loose transition-transform hover:scale-105"
-            >
-              {btnGetStarted}
-            </GoToStakingButton>
+  {/* Кнопка "Audited by Certik" — SVG на всех брейкпоинтах для идеальной резкости */}
+  <button
+    type="button"
+    aria-label={auditedByCertik}
+    className="
+      inline-flex items-center justify-center
+      w-[200px] h-[56px]
+      sm:w-[220px] sm:h-[60px]
+      md:w-[260px] md:h-[62px]
+      lg:w-[250px] lg:h-[65px]
+        tracking-[0.2px]
+      transition-transform hover:scale-[1.03] active:scale-[0.99]
+    "
+      /*  rounded-3xl
+      bg-transparent
+      hover:ring-white/25 transition     ring-1 ring-white/15*/
+  >
+    <Image
+      src={certikSvg}              /* один SVG для всех экранов */
+      alt={auditedByCertik}
+      priority
+      width={250} height={65}      /* базовый бокс для SSR; реальный размер задают w/h кнопки */
+      className="
+        w-[150px] h-auto           /* мобайл */
+        sm:w-[170px]
+        md:w-[190px]
+        lg:w-[250px]               /* десктоп */
+        select-none
+        [image-rendering:auto]
+      "
+      unoptimized
+    />
+  </button>
+</div>
 
-            <button
-              type="button"
-              className="md:w-64 sm:left-[0px] sm:w-[70px] sm:h-[30px] h-8 md:h-16 bg-transparent border-0 border-sky-400 rounded-2xl md:inline-flex md:items-center md:justify-center text-white text-lg font-semibold font-inter leading-loose transition"
-              aria-label={auditedByCertik}
-            >
-              {/* mobile icon */}
-              <Image
-                src="/decorative/mobile/Certik.png"
-                alt={auditedByCertik}
-                width={140}
-                height={40}
-                className="md:hidden bg-white rounded-xl py-2 px-4 md:h-6 w-auto [image-rendering:-webkit-optimize-contrast] [image-rendering:crisp-edges] select-none sm:left-0"
-                priority
-              />
-              {/* desktop icon */}
-              <Image
-                src={certikSvg}
-                alt={auditedByCertik}
-                width={160}
-                height={50}
-                priority
-                className="hidden md:block [image-rendering:-webkit-optimize-contrast] [image-rendering:crisp-edges] select-none"
-                unoptimized
-              />
-            </button>
-          </div>
         </div>
 
         {/* правый столбец: 3D-монеты/сферы */}

@@ -77,23 +77,36 @@ export default function PlanCardDesktop({
       <div className="w-full border-b mb-5" style={{ borderColor: "rgba(16,95,150,1)" }} />
 
       {/* кнопка без текста (фон меняется), aria — локализуем */}
-      <div className="mt-auto">
-        <button
-          className={`
-            h-12 w-3/4 rounded-lg transition 
-            bg-center bg-cover block mx-auto self-center
-            ${isActive
-              ? "bg-[url('/decorative/btn-select.svg')]"
-              : "bg-[url('/decorative/btn.svg')]"
-            }
-          `}
-          aria-label={
-            isActive
-              ? tHome("plans.card.aria.selected")
-              : tHome("plans.card.aria.selectPlan")
-          }
-        />
-      </div>
+      {/* CTA */}
+<div className="mt-auto">
+  <button
+    onClick={onSelect}
+    className={[
+      "group relative mx-auto block w-[min(270px,85%)] h-[56px] md:h-[60px] rounded-[16px]",
+      "ring-1 ring-white/20 shadow-[0_12px_32px_rgba(0,174,255,.25)]",
+      isActive
+        ? "bg-[url('/decorative/btn-empty.svg')]"
+        : "bg-[url('/decorative/btn-empty-selected.svg')]",
+      "bg-cover bg-center transition-transform hover:scale-[1.02] active:scale-[0.99]"
+    ].join(" ")}
+    aria-label={
+      isActive
+        ? tHome("plans.card.aria.selected")
+        : tHome("plans.card.aria.selectPlan")
+    }
+  >
+    <span className={[
+      "absolute inset-0 grid place-items-center px-4 text-sm md:text-base font-bold",
+      isActive ? "text-white" : "text-white"
+    ].join(" ")}>
+      {isActive
+        ? tHome("plans.card.ctaActive")   // «Начать инвестирование >»
+        : tHome("plans.card.ctaIdle")     // «Выбрать план»
+      }
+    </span>
+  </button>
+</div>
+
 
       {/*
         NOTE: bg-plan-${title.toLowerCase()} зависит от текста заголовка.

@@ -33,11 +33,12 @@
       "basic": { "label": "Basic", "range": "1–999 TON" },
       "pro": { "label": "Pro", "range": "1000–1999 TON" },
       "premium": { "label": "Premium", "range": "2000+ TON" },
-      
     "card": {
       "yourProfit": "Your profit",
       "perDay": "Per day",
       "investmentsAllTime": "Investments for all time",
+      "ctaIdle": "Select plan",
+      "ctaActive": "Start invest now >",
       "aria": {
         "selected": "Selected",
         "selectPlan": "Select plan"

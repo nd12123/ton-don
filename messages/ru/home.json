@@ -28,16 +28,17 @@
       "basic": { "label": "Базовый", "range": "1–999 TON" },
       "pro": { "label": "Про", "range": "1000–1999 TON" },
       "premium": { "label": "Премиум", "range": "2000+ TON" },
-      
-    "card": {
-      "yourProfit": "Ваша прибыль",
-      "perDay": "В день",
-      "investmentsAllTime": "Инвестиции за всё время",
-      "aria": {
-        "selected": "Выбрано",
-        "selectPlan": "Выбрать план"
+      "card": {
+        "yourProfit": "Ваша прибыль",
+        "perDay": "В день",
+        "investmentsAllTime": "Инвестиции за всё время",
+        "ctaActive": "Начать инвестировать >",
+        "ctaIdle": "Выбрать план",
+        "aria": {
+          "selected": "Выбрано",
+          "selectPlan": "Выбрать план"
+        }
       }
-    }
     },
 
   "startInvesting": {
