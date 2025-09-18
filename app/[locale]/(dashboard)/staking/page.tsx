@@ -76,8 +76,9 @@ export default function StakingPage() {
   const planRange = t(`plans.${planKey}.range`);
 
   return (
-    <main className="min-h-screen text-white">
-      <h1 className="text-4xl font-bold mb-8">{t("titles.stats")}</h1>
+    <main className="text-white min-h-screen pt-2 md:pt-6" //md:min-h-screen 
+    >
+      <h1 className="text-4xl text-center -mt-1 md:text-left  font-bold mb-8 md:mt-1">{t("titles.stats")}</h1>
 
       <DashboardStats
         balanceTon={previewBalanceTon}
@@ -96,7 +97,7 @@ export default function StakingPage() {
       />
 
       <section>
-        <h2 className="text-4xl font-bold mb-6 mt-6 md:mb-5 md:mt-5">{t("titles.stake")}</h2>
+        <h2 className="text-4xl font-bold text-center  md:text-left md:justify-left mb-6 mt-6 md:mb-5 md:mt-5">{t("titles.stake")}</h2>
 
 {/* контейнер: на md+ две колонки: [левая = резиновая][правая = авто] */}
   <div className="grid gap-6 md:gap-10 items-start
@@ -208,7 +209,7 @@ export default function StakingPage() {
             <div className="mt-4 flex flex-col md:flex-row flex-nowrap items-center gap-2 sm:gap-5 md:gap-5 w-full">
               <div
                 aria-hidden
-                className="pointer-events-none absolute -inset-2 rounded-[18px] blur-xl opacity-50"
+                className="pointer-events-none absolute -inset-1 md:-inset-2 rounded-[18px] blur-xl opacity-50"
                 style={{
                   background:
                     "radial-gradient(70% 120% at 50% 0%, rgba(0,194,255,.45) 0%, rgba(0,194,255,0) 70%)",
@@ -216,7 +217,7 @@ export default function StakingPage() {
               />
 
               <div
-                className="relative flex-1 min-w-0 rounded-[18px] px-3 md:px-4 py-2 md:py-2.5 
+                className="relative flex-1 min-w-0 rounded-[18px] px-1 md:px-4 py-2 md:py-2.5 
                            bg-[linear-gradient(180deg,#2BD2FF_0%,#0DA5F2_100%)]
                            ring-1 ring-white/25
                            shadow-[0_14px_40px_rgba(0,174,255,0.35)]"
@@ -324,11 +325,11 @@ export default function StakingPage() {
                 {apr}%
               </div>
 
-              <h3 className="text-lg md:text-3xl font-semibold md:text-bold leading-tight mb-1.5 mt-1.5">
+              <h3 className="text-lg md:text-3xl font-semibold md:text-bold leading-tight pb-1 md:mb-1.5 pt-2 md:mt-1.5">
                 {t("ticket.dailyIncome")}
               </h3>
 
-              <p className="font-bold mb-0.5 text-[24px] md:text-[36px]">
+              <p className="font-bold pb-1 md:mb-0.5 text-[24px] md:text-[36px]">
                 ${(dailyTon * TON_PRICE).toFixed(2)}
               </p>
 
@@ -343,7 +344,7 @@ export default function StakingPage() {
               <Image
                 src="/decorative/ton22.svg"
                 alt=""
-                className="pointer-events-none w-[90px] h-[90px] md:w-[138px] md:h-[138px] opacity-75 md:opacity-95 select-none absolute right-4 bottom-[-5px] md:right-[-15px] md:bottom-[-15px]"
+                className="pointer-events-none w-[90px] h-[90px] md:w-[138px] md:h-[138px] opacity-100 md:opacity-95 select-none absolute right-[-20px] bottom-[-15px] md:right-[-15px] md:bottom-[-15px]"
               />
             </div>
           </div>

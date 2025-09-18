@@ -71,9 +71,9 @@ export default function ProfilePage() {
   const earnedNow = useMemo(() => totalEarnedSoFar(history), [history]);
 
   return (
-    <main className="max-w-4xl mx-auto px-4 py-10 space-y-8">
+    <main className="max-w-4xl mx-auto px-4 pb-6 pt-3 md:py-10 space-y-2 md:space-y-8">
       <motion.h1
-        className="text-3xl font-bold"
+        className="text-3xl font-bold text-center justify-center md:text-left md:justify-left"
         initial={{ opacity: 0, y: -10 }}
         animate={{ opacity: 1, y: 0 }}
       >
@@ -90,7 +90,7 @@ export default function ProfilePage() {
       />
 
       <section>
-        <h2 className="text-xl font-semibold mb-4 text-gray-600">
+        <h2 className="text-center justify-center md:text-left md:justify-left text-xl font-semibold mb-4 text-gray-600">
           {t("titles.history")}
         </h2>
         <ProfileHistory

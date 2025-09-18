@@ -1,4 +1,5 @@
 // lib/ton/useStakeDeploy.ts
+/*
 "use client";
 
 import {  toNano } from "@ton/core"; //beginCell,
@@ -12,13 +13,6 @@ export function useStakeDeploy() {
     // 1) get code/data/address
     const initDesc = await LastContract.fromInit();
     //console.log('deploying a contract')
-    // 2) build the single stateInit cell
-    /*
-    const stateInitCell = beginCell()
-      .storeRef(initDesc.code!)  // code is non-null
-      .storeRef(initDesc.data!)  // data is non-null
-      .endCell();
-*/
     // 3) serialize to Base64
     //const stateInitBoc = stateInitCell.toBoc().toString("base64");
 
@@ -38,3 +32,4 @@ export function useStakeDeploy() {
 
   return { deploy };
 }
+*/
