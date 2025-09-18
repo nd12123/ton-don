@@ -111,7 +111,7 @@ export default function FAQSection() {
         <NextImage src={sphere} alt="" fill style={{ objectFit: "cover", objectPosition: "left bottom" }} />
       </div>
 
-      <div className="md:hidden absolute bottom-0 left-[-0px] w-full h-1/2 md:left-0 md:bottom-0 md:w-full md:h-full opacity-[95%] md:opacity-80 pointer-events-none z-0 overflow-visible">
+      <div className="md:hidden absolute bottom-[0px] left-[-0px] w-full h-1/2 md:left-0 md:bottom-0 md:w-full md:h-full opacity-[95%] md:opacity-80 pointer-events-none z-0 overflow-visible">
         <div className="relative w-full h-full" style={{ transform: "scale(0.4)", transformOrigin: "left bottom", willChange: "transform" }}>
           <Image src={sphere} alt="sphere" fill priority className="object-cover object-left-bottom" sizes="(min-width: 768px) 25vw, 50vw" />
         </div>

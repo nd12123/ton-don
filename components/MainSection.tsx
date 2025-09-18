@@ -159,8 +159,8 @@ export default function MainSection({ className = "" }: MainSectionProps) {
   <GoToStakingButton
     className="
       btn-primary
-      w-[200px] h-[56px]     /* мобайл */
-      sm:w-[220px] sm:h-[60px]
+      w-[160px] h-[48px]     /* мобайл */
+      sm:w-[180px] sm:h-[50px]
       md:w-[260px] md:h-[62px]
       lg:w-[250px] lg:h-[62px]   /* десктоп */
       rounded-3xl
@@ -192,7 +192,7 @@ export default function MainSection({ className = "" }: MainSectionProps) {
     type="button"
     aria-label={auditedByCertik}
     className="
-      inline-flex items-center justify-center
+      inline-flex items-center justify-left
       w-[200px] h-[56px]
       sm:w-[220px] sm:h-[60px]
       md:w-[260px] md:h-[62px]
@@ -210,7 +210,7 @@ export default function MainSection({ className = "" }: MainSectionProps) {
       priority
       width={250} height={65}      /* базовый бокс для SSR; реальный размер задают w/h кнопки */
       className="
-        w-[150px] h-auto           /* мобайл */
+        w-[160px] h-auto           /* мобайл */
         sm:w-[170px]
         md:w-[190px]
         lg:w-[250px]               /* десктоп */
@@ -251,7 +251,7 @@ export default function MainSection({ className = "" }: MainSectionProps) {
 
       {/* мобильный градиент внизу */}
       <div
-        className="block md:hidden absolute inset-x-0 bottom-0 h-full opacity-[7%] pointer-events-none z-20"
+        className="block md:hidden absolute inset-x-0 bottom-0 h-full opacity-[9%] pointer-events-none z-30"
         style={{ background: "linear-gradient(to top, #17DCFF, #0B1028)" }}
       />
     </section>

@@ -20,12 +20,12 @@ export default function TotalValue() {
   return (
     <section id="total-value" className="relative overflow-hidden text-white py-32 scroll-smooth">
       {/* 1) Фон горизонта (полупрозрачный) */}
-      <div className="md:hidden absolute inset-0 -z-20">
+      <div className="md:hidden absolute inset-0 -z-20 opacity-45 md:opacity-40">
         <Image
           src="/decorative/horizon-bg.svg"
           alt="horizon"
           fill
-          style={{ objectFit: "cover", objectPosition: "center top", opacity: 0.4 }}
+          style={{ objectFit: "cover", objectPosition: "center top" }}
         />
       </div>
 
