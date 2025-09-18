@@ -11,7 +11,7 @@ const TonConnectButton = dynamic(
 
 export default function WalletConnect() {
   return (
-    <div className="shadow-lg hover:shadow-xl sm:text-[9px] md:text-sm items-center justify-center bg-blue-500 hover:bg-blue-600 text-white rounded-full transition-shadow focus:outline-none focus:ring-2 focus:ring-blue-400">
+    <div className="md:shadow-lg md:hover:shadow-xl sm:text-[9px] md:text-sm items-center justify-center md:bg-blue-500 md:hover:bg-blue-600 text-white rounded-full transition-shadow focus:outline-none md:focus:ring-2 md:focus:ring-blue-400">
       <TonConnectButton />
     </div>
   );

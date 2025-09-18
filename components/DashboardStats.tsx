@@ -3,9 +3,13 @@
 
 import Image from "next/image";
 import { useTonAddress } from "@tonconnect/ui-react";
-import ConnectWalletButton from "@/components/ConnectWalletButton";
+//import ConnectWalletButton from "@/components/ConnectWalletButton";
 import { Plan } from "./Plans";
 import { useT } from "@/i18n/react";
+import WalletConnectInline from "@/components/WalletConnectInline";
+
+import ClientOnly from "@/components/ClientOnly";
+import WalletConnect from "@/components/WalletConnect";
 
 interface DashboardStatsProps {
   balanceTon: number;
@@ -123,25 +127,33 @@ export default function DashboardStats({
         />
       </div>
 
-      {/* Asset value + connect */}
-      <div className="mt-5 md:mt-6 rounded-2xl border border-sky-400/25 bg-white/5 px-4 py-4 flex items-center gap-3 justify-between">
-        <div>
-          <p className="uppercase text-[10px] tracking-wide text-sky-300/90">
-            {tr("stats.assetValue", "Asset value (updated hourly)")}
-          </p>
-          <p className="text-xl font-semibold">{ton(balanceTon, 2)}</p>
-        </div>
+<div className="
+  mt-5 md:mt-6 rounded-2xl border border-sky-400/25 bg-white/5 px-4 py-4
+  flex flex-wrap md:flex-nowrap items-center gap-3 md:gap-4
+">
+  <div className="flex-1 min-w-0">
+    <p className="uppercase text-[10px] tracking-wide text-sky-300/90">
+      {tr("stats.assetValue", "Asset value (updated hourly)")}
+    </p>
+    <p className="text-xl font-semibold">{ton(balanceTon, 2)}</p>
+  </div>
 
-        {address ? (
-          <div className="text-sky-300/90 text-sm px-4 py-2 rounded-xl border border-sky-400/30">
-            {tr("status.connected", "Connected")}
-          </div>
-        ) : (
-          <div className="shrink-0">
-            <ConnectWalletButton />
-          </div>
-        )}
+  {address ? (
+    <div className="basis-full md:basis-auto w-full md:w-auto mt-2 md:mt-0
+                    flex justify-center md:justify-end">
+      <div className="text-sky-300/90 text-sm px-4 py-2 rounded-xl border border-sky-400/30">
+        {tr("status.connected", "Connected")}
       </div>
+    </div>
+  ) : (
+    <div className="basis-full md:basis-auto w-full md:w-auto mt-2 md:mt-0
+                    flex justify-center md:justify-end">
+      <WalletConnectInline />
+    </div>
+  )}
+</div>
+
+
     </section>
   );
 }

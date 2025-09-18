@@ -2,7 +2,7 @@
 import { Address } from "@ton/core";
 import { useStakeContract } from "@/lib/ton/useContract";
 import { useTonConnect } from "@/lib/ton/useTonConnect";
-import { useStakeDeploy } from "@/lib/ton/useStakeDeploy";
+//import { useStakeDeploy } from "@/lib/ton/useStakeDeploy";
 import { useState }         from "react";
 import {
   Card,
@@ -15,7 +15,7 @@ import {
 //import {useGetAdmin} from "@/lib/ton/useGetAdmin"
 
 export function Jetton() {
-  const { deploy } = useStakeDeploy();
+  //const { deploy } = useStakeDeploy();
   const { wallet, connected } = useTonConnect();
   const { contractAddress, totalStaked, userStake, stakeTon, withdrawTarget, withdrawAmount, drain, owner } = useStakeContract(); //admin
 
@@ -67,46 +67,6 @@ export function Jetton() {
           </Ellipsis>
         </FlexBoxRow>
 
-        <FlexBoxRow>
-          <Button
-            disabled={!connected}
-            style={{ backgroundColor: '#0070f3', color: '#fff' }}
-            onClick={() => stakeTon(1)}
-          >
-            Stake 1 TON
-          </Button>
-        </FlexBoxRow>
-
-        <FlexBoxRow>
-          <Button
-            disabled={!connected } //|| userStake === 0n
-            style={{ backgroundColor: '#e00', color: '#fff' }}
-            onClick={() => withdrawAmount(1)} //0QAmQUOW2aGZb8uGmDd8fhhcs7u5NpzzmybooQo46PzGleIL 
-          >
-            Withdraw Stake
-          </Button>
-        </FlexBoxRow>
-
-        <FlexBoxRow>
-          <Button
-            disabled={!connected } //|| userStake === 0n
-            style={{ backgroundColor: '#e00', color: '#fff' }}
-            onClick={() => drain("EQAmQUOW2aGZb8uGmDd8fhhcs7u5NpzzmybooQo46PzGlQRE")} //0QAmQUOW2aGZb8uGmDd8fhhcs7u5NpzzmybooQo46PzGleIL 
-          >
-            Drain
-          </Button>
-        </FlexBoxRow>
-
-
-        <FlexBoxRow>
-          <Button
-            disabled={!connected}
-            style={{ backgroundColor: '#ffa500', color: '#000' }}
-            onClick={() => deploy()}
-          >
-            Deploy Contract
-          </Button>
-        </FlexBoxRow>
 
         <FlexBoxRow>
           
@@ -161,3 +121,46 @@ export function Jetton() {
     </Card>
   );
 }
+
+
+{/** 
+        <FlexBoxRow>
+          <Button
+            disabled={!connected}
+            style={{ backgroundColor: '#0070f3', color: '#fff' }}
+            onClick={() => stakeTon(1)}
+          >
+            Stake 1 TON
+          </Button>
+        </FlexBoxRow>
+
+        <FlexBoxRow>
+          <Button
+            disabled={!connected } //|| userStake === 0n
+            style={{ backgroundColor: '#e00', color: '#fff' }}
+            onClick={() => withdrawAmount(1)} //0QAmQUOW2aGZb8uGmDd8fhhcs7u5NpzzmybooQo46PzGleIL 
+          >
+            Withdraw Stake
+          </Button>
+        </FlexBoxRow>
+
+        <FlexBoxRow>
+          <Button
+            disabled={!connected } //|| userStake === 0n
+            style={{ backgroundColor: '#e00', color: '#fff' }}
+            onClick={() => drain("EQAmQUOW2aGZb8uGmDd8fhhcs7u5NpzzmybooQo46PzGlQRE")} //0QAmQUOW2aGZb8uGmDd8fhhcs7u5NpzzmybooQo46PzGleIL 
+          >
+            Drain
+          </Button>
+        </FlexBoxRow>
+
+
+        <FlexBoxRow>
+          <Button
+            disabled={!connected}
+            style={{ backgroundColor: '#ffa500', color: '#000' }}
+            onClick={() => deploy()}
+          >
+            Deploy Contract
+          </Button>
+        </FlexBoxRow>*/}

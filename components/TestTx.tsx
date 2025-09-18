@@ -1,3 +1,4 @@
+/*
 "use client";
 import { useTonConnectUI, CHAIN } from "@tonconnect/ui-react";
 import toast from "react-hot-toast";
@@ -37,3 +38,4 @@ export default function TestTx() {
     </button>
   );
 }
+  */
