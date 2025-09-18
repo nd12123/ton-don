@@ -49,10 +49,10 @@ export default function FAQSection() {
 
       <div className="relative z-10 container mx-auto pb-10 px-5 py-25">
         {/* ★ заголовки из локали */}
-        <h2 className="text-4xl sm:text-5xl font-bold text-center mb-4">
+        <h2 className="text-4xl sm:text-5xl font-bold text-center mb-8 md:mb-4">
           {t("title")}
         </h2>
-        <p className="text-center text-gray-300 mb-12">{t("subtitle")}</p>
+        <p className="text-center text-gray-300 mb-4 md:mb-12 ">{t("subtitle")}</p>
 
         {/* grid c анимацией */}
         <motion.div layout transition={spring} className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -121,15 +121,20 @@ export default function FAQSection() {
         <NextImage src={sphereRightTop} alt="" fill style={{ objectFit: "cover", objectPosition: "top right", opacity: 0.22 }} />
       </div>
 
-      <div className="pointer-events-none absolute top-[-10px] left-2/5 w-40 h-40 opacity-60 animate-float-slow">
+      <div className="hidden md:block pointer-events-none absolute top-[-20px] left-2/5 w-35 h-35 opacity-80 z-20  animate-float-slow">
         <NextImage src="/decorative/ton2.png" alt="" fill style={{ objectFit: "contain" }} />
       </div>
       <div className="hidden md:block pointer-events-none absolute top-[-10px] left-1/4 w-60 h-60 opacity-65 animate-float-slow delay-2000">
         <NextImage src="/decorative/ton4.svg" alt="" fill style={{ objectFit: "contain" }} />
       </div>
-      <div className="md:hidden pointer-events-none absolute top-[-10px] left-1/4 w-60 h-60 opacity-65 animate-float-slow delay-2000">
-        <NextImage src="/decorative/ton4.png" alt="" fill style={{ objectFit: "contain" }} />
-      </div>
+     
+  {/* mobile-only */}
+  <div className="md:hidden pointer-events-none absolute top-[-25px] right-10 w-[90px] h-[90px] opacity-90 z-20 animate-float-slow">
+    <NextImage src="/decorative/ton2.png" alt="" fill style={{ objectFit: "contain" }} />
+  </div>
+  <div className="md:hidden pointer-events-none absolute top-[-5px] left-[-10px] w-[120px] h-[120px] opacity-60 z-20 animate-float-slow delay-2000">
+    <NextImage src="/decorative/ton4.png" alt="" fill style={{ objectFit: "contain" }} />
+  </div>
 
       <div className="pointer-events-none absolute top-0 inset-x-0 mx-auto w-1/3 h-1/3 opacity-35">
         <NextImage src="/decorative/EllipseFull.png" alt="" fill style={{ objectFit: "contain" }} />

@@ -1,9 +1,11 @@
-//Mobile Only!
+// Mobile Only!
 "use client";
+
 import GoToStakingButton from "./GoToStakingButton";
 import React, { useEffect, useState } from "react";
-//import PlanCard from "./PlanCardMini";
-import Image from 'next/image'
+import Image from "next/image";
+import { useT } from "@/i18n/react";
+
 type CalculatorProps = {
   amount: number;
   onAmountChange: (v: number) => void;
@@ -14,18 +16,22 @@ type CalculatorProps = {
   apr: number;
   dailyEarnings: number;
 };
+
 const PLAN_BG_ACTIVE = "/decorative/plan-row-bg.svg";
 
+// ⚠️ ключи стабильные, лейблы тянем из локалей по ключам
 const PLANS = [
-  { id: 0, label: "Basic", min: 10,  iconSrc: "/decorative/basic icon.svg" },
-  { id: 1, label: "Pro", min: 1000, iconSrc: "/decorative/pro icon.svg"   },
-  { id: 2, label: "Premium", min: 2000, iconSrc: "/decorative/super icon.svg" },
+  { key: "basic" as const,   min: 10,   iconSrc: "/decorative/basic icon.svg" },
+  { key: "pro" as const,     min: 1000, iconSrc: "/decorative/pro icon.svg"   },
+  { key: "premium" as const, min: 2000, iconSrc: "/decorative/super icon.svg" },
 ];
 
-function getPlanByAmount(amount: number): string {
-  if (amount < 1000) return "Basic";
-  if (amount < 2000) return "Pro";
-  return "Premium";
+type PlanKey = typeof PLANS[number]["key"];
+
+function getPlanKeyByAmount(amount: number): PlanKey {
+  if (amount < 1000) return "basic";
+  if (amount < 2000) return "pro";
+  return "premium";
 }
 
 export default function CalculatorHorizontal({
@@ -35,194 +41,170 @@ export default function CalculatorHorizontal({
   sliderMax,
   days,
   onDaysChange,
-  //apr,
-  dailyEarnings,
+  // apr,           // не используется в этом компоненте
+  dailyEarnings,   // используется в твоиx карточках ниже
 }: CalculatorProps) {
-  const [selectedPlan, setSelectedPlan] = useState<string>(getPlanByAmount(amount));
-// Автообновление плана при изменении amount
-useEffect(() => {
-  const autoPlan = getPlanByAmount(amount);
-  if (autoPlan !== selectedPlan) {
-    setSelectedPlan(autoPlan);
-  }
-}, [amount, selectedPlan]);
+  const tHome = useT("home");
+  const tStaking = useT("staking");
+  const tCommon = useT("common");
+
+  const [selectedPlanKey, setSelectedPlanKey] = useState<PlanKey>(getPlanKeyByAmount(amount));
+
+  // автообновление выбранного плана при изменении суммы
+  useEffect(() => {
+    const nextKey = getPlanKeyByAmount(amount);
+    if (nextKey !== selectedPlanKey) setSelectedPlanKey(nextKey);
+  }, [amount, selectedPlanKey]);
+
+  const amountLabel = tStaking("inputs.amount");
+  const daysLabel   = tStaking("inputs.days");
+  const connectTxt  = tCommon("buttons.connect");
 
   return (
     <div
-      className="relative  rounded-[20px] 
-      pl-0 pt-3 gap-0 md:gap-2 flex flex-row  /*items-stretch justify-start*/ justify-between   backdrop-blur-sm
-      bg-[radial-gradient(ellipse_90.67%_90.68%_at_51.85%_6.45%,_#3E5C89_0%,_#171E38_100%)]
-      border border-white/10            
-      shadow-[1px_15px_48.9px_0px_rgba(61,212,255,0.18)]
-      outline outline-[1px] outline-offset-[-2px] outline-sky-400 
-      "      //py-10 md:py-14 ?? bg-[url('/ticket-bg.png')] bg-cover bg-center bg-[#101426]/80 shadow-[0_0_60px_#00C2FF33] //flex-col lg:
+      className="relative rounded-[20px]
+                 pl-0 pt-3 gap-0 md:gap-2 flex flex-row justify-between backdrop-blur-sm
+                 bg-[radial-gradient(ellipse_90.67%_90.68%_at_51.85%_6.45%,_#3E5C89_0%,_#171E38_100%)]
+                 border border-white/10
+                 shadow-[1px_15px_48.9px_0px_rgba(61,212,255,0.18)]
+                 outline outline-[1px] outline-offset-[-2px] outline-sky-400"
     >
-      {/* Левая секция — планы */}
-{/* Левая секция — планы (мобилка, без фона у неактивных) */}
-<div className="flex flex-col w-[46%] pl-2 pr-0 pt-0 pb-1 gap-0 relative overflow-visible z-10" //-hidden
->
-  {PLANS.map((plan) => {
-    const active = selectedPlan === plan.label;
-    return (
-      <button
-        key={plan.label}
-        onClick={() => { onAmountChange(plan.min); setSelectedPlan(plan.label); }}
-        aria-pressed={active}
-        className={[
-          "relative  w-full flex items-center gap-2 px-0 pt-3 pb-1",
-          " ", //isolate
-          // никаких бордеров/маргинов — ряды вплотную
-          /* rounded-none first:rounded-t-xl last:rounded-b-xl */
-        ].join(" ")}
-        style={
-          active
-            ? {
-                backgroundImage: `url('${PLAN_BG_ACTIVE}')`,
-                backgroundRepeat: "no-repeat",
-                backgroundSize: "100% 100%",
-                backgroundPosition: "center",
+      {/* Левая колонка: планы */}
+      <div className="flex flex-col w-[46%] pl-2 pr-0 pt-0 pb-1 gap-0 relative overflow-visible z-10">
+        {PLANS.map((plan) => {
+          const active = selectedPlanKey === plan.key;
+          const title  = tHome(`plans.${plan.key}.label`);
+          return (
+            <button
+              key={plan.key}
+              onClick={() => { onAmountChange(plan.min); setSelectedPlanKey(plan.key); }}
+              aria-pressed={active}
+              className="relative w-full flex items-center gap-2 px-0 pt-3 pb-1"
+              style={
+                active
+                  ? {
+                      backgroundImage: `url('${PLAN_BG_ACTIVE}')`,
+                      backgroundRepeat: "no-repeat",
+                      backgroundSize: "100% 100%",
+                      backgroundPosition: "center",
+                    }
+                  : { background: "transparent" }
               }
-            : { background: "transparent" } // <— у неактивных фона нет
-        }
-      >
-        <img src={plan.iconSrc} alt={plan.label} className="w-6 h-6 shrink-0 pb-2" />
-        <span className="text-white text-[15px] font-semibold leading-none pb-2">{plan.label}</span>
+            >
+              <Image src={plan.iconSrc} alt={title} width={24} height={24} className="shrink-0 pb-2" />
+              <span className="text-white text-[14px] font-semibold leading-none pb-2">
+                {title}
+              </span>
 
-      
-      {/* правая синяя кромка, перекрывает сепаратор на 2px */}
-      {active && (
-        <span
-          aria-hidden
-          className="pointer-events-none absolute top-0 h-full w-[2px] z-20"
-          style={{
-            // смещение вправо (в минус, чтобы выйти за пределы кнопки)
-            right: "calc(var(--overlap, 1px) * -1)", //2px
-            background: "linear-gradient(180deg,#3DD4FF 0%,#0098EA 100%)",
-            boxShadow: "0 0 8px rgba(0,194,255,0.40)",
-          }}
-        />
-      )}
-      </button>
-    );
-  })}
+              {/* правая синяя кромка, перекрывает сепаратор на 2px */}
+              {active && (
+                <span
+                  aria-hidden
+                  className="pointer-events-none absolute top-0 h-[41px] w-[3px] z-20 pt-2"
+                  style={{
+                    right: "calc(var(--overlap, 1px) * -1)",
+                    background: "linear-gradient(180deg,#3DD4FF 0%,#0098EA 100%)",
+                    boxShadow: "0 0 8px rgba(0,194,255,0.40)",
+                  }}
+                />
+              )}
+            </button>
+          );
+        })}
+
         <div className="px-1 pb-1">
-                            <GoToStakingButton className="btn-primary text-[11px] w-[95%] h-auto
-            bg-[#00C2FF] hover:bg-[#00A5E0] text-white px-1 py-[2px] rounded-xl font-semibold transition-all shadow-lg
-          ">Connect Wallet</GoToStakingButton>
+          <GoToStakingButton
+            className="btn-primary text-[11px] w-[95%] h-auto
+                       bg-[#00C2FF] hover:bg-[#00A5E0] text-white px-1 py-[2px]
+                       rounded-xl font-semibold transition-all shadow-lg"
+          >
+            {connectTxt}
+          </GoToStakingButton>
         </div>
       </div>
-{/* === Наша новая линия-сепаратор ===  <div
-          className="h-[140px] w-[2px] my-2" //my-3
-          style={{ background: "rgba(59, 71, 114, 1)" }}
-        />*/}
-{/* Вертикальный сепаратор — стык в стык */}
-<div
-  className="self-stretch w-[3px] h-[120px] pt-3 mx-0" // mb-3
-  style={{ background: "rgba(59,71,114,1)" }}
-/>
 
+      {/* Вертикальный сепаратор */}
+      <div
+        className="self-stretch w-[3px] h-[120px] pt-3 mx-0"
+        style={{ background: "rgba(59,71,114,1)" }}
+      />
 
-      {/* Центральная секция — слайдеры */}
+      {/* Правая колонка: инпуты и слайдеры */}
       <div className="flex flex-col gap-1 w-full relative pb-2 px-2">
-  <label className="text-white/80 text-[15px] font-medium">
-    Deposit amount
-  </label>
+        <label className="text-white/80 text-[15px] font-medium">
+          {amountLabel}
+        </label>
 
-  <div className="flex items-center gap-1 bg-[#1F1F2C] rounded-2xl px-2 py-1" // w-full
-  >
-    {/* Ammount Инпут */}
-    <input
-      type="number"
-      value={amount}
-      min={sliderMin}
-      max={sliderMax}
-      onChange={(e) => onAmountChange(Number(e.target.value))}
-      className=" bg-transparent text-white text-lg font-semibold outline-none text-center" //w-[100px]
-    />
+        <div className="flex items-center gap-1 bg-[#1F1F2C] rounded-2xl px-2 py-1">
+          {/* Amount input */}
+          <input
+            type="number"
+            value={amount}
+            min={sliderMin}
+            max={sliderMax}
+            onChange={(e) => onAmountChange(Number(e.target.value))}
+            className="bg-transparent text-white text-lg font-semibold outline-none text-center"
+          />
+          {/* Slider */}
+          <input
+            type="range"
+            min={sliderMin}
+            max={sliderMax}
+            step={1}
+            value={amount}
+            onChange={(e) => onAmountChange(Number(e.target.value))}
+            className="w-full h-2 appearance-none bg-[#00C2FF]/30 rounded-full relative"
+          />
+          {/* Icon */}
+          <Image src="/decorative/ton2.png" alt="TON" width={32} height={32} />
+        </div>
 
-    {/* Слайдер */}
-    <input
-      type="range"
-      min={sliderMin}
-      max={sliderMax}
-      step={1}
-      value={amount}
-      onChange={(e) => onAmountChange(Number(e.target.value))}
-      className="w-full h-2 appearance-none bg-[#00C2FF]/30 rounded-full relative"
-    />
+        <div className="flex flex-col gap-1 w-full relative">
+          <label className="text-white/80 text-[15px] font-medium">
+            {daysLabel}
+          </label>
 
-    {/* Иконка справа */}
-    <img
-      src="/decorative/ton2.png"
-      alt="TON"
-      className="w-8 h-8"
-    />
-  </div>
-  <div className="flex flex-col gap-1 w-full relative">
-  <label className="text-white/80 text-[15px] font-medium">
-    Deposit duration
-  </label>
+          <div className="flex items-center gap-2 bg-[#1F1F2C] rounded-2xl px-2 py-1 w-full">
+            {/* Days input */}
+            <input
+              type="number"
+              value={days}
+              min={sliderMin}
+              max={365}
+              onChange={(e) => onDaysChange(Number(e.target.value))}
+              className="w-[100px] bg-transparent text-white text-lg font-semibold outline-none text-center"
+            />
+            {/* Slider */}
+            <input
+              type="range"
+              min={sliderMin}
+              max={365}
+              step={1}
+              value={days}
+              onChange={(e) => onDaysChange(Number(e.target.value))}
+              className="w-full h-2 appearance-none bg-[#00C2FF]/30 rounded-full relative"
+            />
+            {/* "Days" справа дублировать не нужно — лейбл выше уже локализован */}
+          </div>
+        </div>
+      </div>
 
-  <div className="flex items-center gap-2 bg-[#1F1F2C] rounded-2xl px-2 py-1 w-full">
-    {/* Days Инпут */}
-    <input
-      type="number"
-      value={days}
-      min={sliderMin}
-      max={365}
-      onChange={(e) => onDaysChange(Number(e.target.value))}
-      className="w-[100px] bg-transparent text-white text-lg font-semibold outline-none text-center"
-    />
+      {/* Декор-монеты */}
+      <div className="absolute top-[-30px] right-[-15px] pointer-events-none z-0">
+        <div className="relative w-[60px] h-[60px] ">
+          <Image src="/decorative/ton6.png" alt="Ton Coin Right" fill style={{ objectFit: "contain" }} />
+        </div>
+      </div>
 
-    {/* Слайдер */}
-    <input
-      type="range"
-      min={sliderMin}
-      max={365}
-      step={1}
-      value={days}
-      onChange={(e) => onDaysChange(Number(e.target.value))}
-      className="w-full h-2 appearance-none bg-[#00C2FF]/30 rounded-full relative"
-    />
-    <label className="text-white/80 text-[14px] font-medium">
-    Days
-  </label>
-</div>
-</div>
-</div>
-
-{/* === Декоративные TON-монетки под калькулятором ===  inset-x-0  flex justify-center  animate-float-slow delay-1000 gap-8 */}
-<div className="absolute top-[-30px] right-[-15px] pointer-events-none z-0">
-  {/* Правая монета */}
-  <div className="relative w-[60px] h-[60px] ">
-    <Image
-      src="/decorative/ton6.png"
-      alt="Ton Coin Right"
-      fill
-      style={{ objectFit: "contain" }}
-    />
-  </div>
-</div>
-
-<div className="absolute bottom-[-35px] md:bottom-[-50px] right-[190px]  pointer-events-none z-0" //gap-8 
-> 
-  {/* Центральная монета чуть большего размера animate-float-slow delay-500 */}
-  <div className="relative w-[80px] h-[80px]  ">
-    <Image
-      src="/decorative/ton2.png"
-      alt="Ton Coin Center"
-      fill
-      style={{ objectFit: "contain",
-        //objectPosition: "center top",
-       }}
-    />
-  </div>
-</div>
+      <div className="absolute bottom-[-35px] md:bottom-[-50px] right-[190px] pointer-events-none z-0">
+        <div className="relative w-[80px] h-[80px]">
+          <Image src="/decorative/ton2.png" alt="Ton Coin Center" fill style={{ objectFit: "contain" }} />
+        </div>
+      </div>
     </div>
-    
-
   );
 }
+
 
 {/**
   </div>

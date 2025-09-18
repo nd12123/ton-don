@@ -17,7 +17,8 @@
         "startInvesting": "Начать инвестировать",
                                 "exploreOptions": "Исследовать",
                                     "connect": "Подключить",
-                                        "connectWallet": "Подключить кошелёк"
+                                        "connectWallet": "Подключить кошелёк",
+                                        "floatingStakeNow": "Стейк"
   },
   "wallet": {
     "connected": "Подключено: {addr}",

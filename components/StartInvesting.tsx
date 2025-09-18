@@ -1,103 +1,49 @@
-// components/StartInvesting.tsx
+"use client";
 import { FloatingStakeNow } from "./FloatingStakeNow";
 import Image from "next/image";
+import { useT } from "@/i18n/react";
+
 export default function StartInvesting({ className = "" }: { className?: string }) {
+  const tHome = useT("home");
+
   return (
-   <section className={["relative z-[5] text-white", className].join(" ")}>
-  <div
-    className="
-      relative mx-auto
-      w-[min(92vw,1100px)]
-      aspect-[1359/768]
-    "
-  >
-    {/* ФОН как <Image>, а не background */}
-    <Image
-      src="/decorative/StartNow.svg"
-      alt=""
-      fill
-      priority
-      className=" font-['Inter']
-        pointer-events-none select-none
-        object-contain object-center
-        md:scale-[1.12]  /* tablet: чуть крупнее */
-        lg:scale-[1.16]  /* desktop: ~1.3× */
-        [transform-origin:center]
-      "
-    />
+    <section className={["relative z-[5] text-white", className].join(" ")}>
+      <div className="relative mx-auto w-[min(92vw,1100px)] aspect-[1359/768]">
+        {/* фон */}
+        <Image
+          src="/decorative/StartNow.svg"
+          alt=""
+          fill
+          priority
+          className="pointer-events-none select-none object-contain object-center 
+                     md:scale-[1.12] lg:scale-[1.16] [transform-origin:center]"
+        />
 
-    {/* Контент поверх
-    <div className="absolute inset-0 flex items-start">
-      <div
-        className="
-          pl-[2%] pt-[15%]
-          md:pl-[7%] md:pt-[10%]
-          lg:pl-[8%] lg:pt-[9%]
-          max-w-[min(88%,640px)]
-        "
-      >
-        <h1 className="pt-1 font-bold md:font-extrabold leading-[0.95] tracking-[-0.02em]
-                       text-[clamp(18px,6vw,70px)] md:text-[clamp(28px,8.2vw,92px)]">
-          Start investing<br/>now!
-        </h1>
-
-        <p className="pt-0 md:mt-4 text-white/90 text-[clamp(10px,2vw,22px)]">
-          Start earning in 2 clicks – your first income tomorrow
-        </p>
-
-        <FloatingStakeNow href="/staking" className="pt-2 left-[5px] mb-7 md:mt-6 inline-block" />
-      </div>
-    </div>
-  </div>
- */}
-        {/* Контент поверх фона */}
-        <div
-          className="
-            absolute inset-0
-            flex items-start
-          "
-        >
-          {/* Левая колонка с текстом */}
+        {/* контент */}
+        <div className="absolute inset-0 flex items-start">
           <div
-            className="
-              // якорим блок примерно как на макете
-              pl-[2%] pt-[15%]
-              md:pl-[7%] md:pt-[10%]
-              lg:l-[-20px] lg:pt-[15%]
-              max-w-[min(88%,640px)]
-            "
+            className="pl-[2%] pt-[15%]
+                       md:pl-[7%] md:pt-[10%]
+                       lg:l-[-20px] lg:pt-[15%]
+                       max-w-[min(88%,640px)]"
           >
-            {/* Заголовок */}
+            {/* заголовок */}
             <h1
-              className=" md:hidden
-              pt-1
-                font-bold md:font-extrabold leading-[0.95] tracking-[-0.02em]
-                md:text-[clamp(28px,8.2vw,92px)]
-                text-[clamp(18px,6vw,70px)]
-              "
-            >
-              Start investing<br />now!
-            </h1>
+              className="md:hidden pt-1 font-bold md:font-extrabold leading-[0.95]
+                         tracking-[-0.02em] text-[clamp(18px,6vw,70px)]
+                         md:text-[clamp(28px,8.2vw,92px)]"
+              dangerouslySetInnerHTML={{ __html: tHome("startInvesting.title") }}
+            />
 
-            {/* Подзаголовок */}
-            <p
-              className="
-                pb-1 md:mt-4
-                text-white/90
-                text-[clamp(10px,2vw,22px)]
-              "
-            >
-              Start earning in 2 clicks – your first income tomorrow
+            {/* подзаголовок */}
+            <p className="pb-1 md:mt-4 text-white/90 text-[clamp(10px,2vw,22px)]">
+              {tHome("startInvesting.subtitle")}
             </p>
 
-            {/* Кнопка под текстом (чуть ниже, по центру не нужно — как в рефе слева) */}
+            {/* кнопка */}
             <FloatingStakeNow
               href="/staking"
-              className="
-               pt-2 left-[5px]
-                mb-7 md:mt-3 md:mb-11
-                inline-block
-              "
+              className="pt-2 left-[5px] mb-7 md:mt-3 md:mb-11 inline-block"
             />
           </div>
         </div>
@@ -105,6 +51,7 @@ export default function StartInvesting({ className = "" }: { className?: string 
     </section>
   );
 }
+
 
 
       {/* 2) Горизонт (основной фон) 

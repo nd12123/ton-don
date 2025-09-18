@@ -1,13 +1,15 @@
-// components/FloatingStakeNow.tsx
+"use client";
 import Link from "next/link";
-//import { cn } from "@/lib/utils"; // если нет, замените просто на шаблонную строку
+import { useT } from "@/i18n/react";
 
 type Props = {
   href?: string;
-  className?: string; // <-- новое
+  className?: string;
 };
 
 export function FloatingStakeNow({ href = "/staking", className = "" }: Props) {
+  const tCommon = useT("common");
+
   return (
     <Link
       href={href}
@@ -16,15 +18,15 @@ export function FloatingStakeNow({ href = "/staking", className = "" }: Props) {
       {/* сама кнопка */}
       <span
         className="
-          relative inline-flex items-center gap-1 md:gap-2 text-5 md:text-[20px] py-1 md:mt-3 md:px-2
-          h-5 md:h-12 w-15 md:w-50 px-2 md:px-1 rounded md:rounded-xl
+          relative inline-flex items-center gap-1 md:gap-2
+          text-[14px] md:text-[20px] py-0 md:mt-3 md:px-2
+          h-5 md:h-12 px-4 rounded md:rounded-xl
           bg-gray-100 md:bg-white text-sky-500 md:font-semibold
           shadow-[0_0_35px_rgba(0,191,255,0.55)]
         "
       >
-        Stake Now
-        <span className="inline-block" //k md:translate-x-[1px]
-        >›</span>
+        {tCommon("buttons.floatingStakeNow")}
+        <span className="inline-block">›</span>
       </span>
 
       {/* синее «свечение» под кнопкой */}

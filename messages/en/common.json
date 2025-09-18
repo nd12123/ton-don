@@ -16,8 +16,8 @@
                 "startInvesting": "Start Investing",
                                 "exploreOptions": "Explore Options",
                                     "connect": "Connect Wallet",
-                                      "connectWallet": "Connect Wallet"
-
+                                      "connectWallet": "Connect Wallet",
+                                        "floatingStakeNow": "Stake Now"
   
   },
   "wallet": {

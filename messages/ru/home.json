@@ -34,6 +34,8 @@
         "investmentsAllTime": "Инвестиции за всё время",
         "ctaActive": "Начать инвестировать >",
         "ctaIdle": "Выбрать план",
+        "ctaMobActive": "Стейк",
+        "ctaMobIdle": "Выбрать",
         "aria": {
           "selected": "Выбрано",
           "selectPlan": "Выбрать план"
