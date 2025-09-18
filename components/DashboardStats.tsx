@@ -18,7 +18,14 @@ interface DashboardStatsProps {
   priceUsd: number;
   deposit: number;
   plans: Plan[];
+  address?: string; // ← НОВОЕ
+
 }
+
+// где-то рядом, утилита для короткого адреса
+const short = (a?: string) =>
+  a && a.length > 10 ? `${a.slice(0, 4)}…${a.slice(-4)}` : a ?? "";
+
 
 type StatCardProps = {
   title: string;
@@ -138,16 +145,19 @@ export default function DashboardStats({
     <p className="text-xl font-semibold">{ton(balanceTon, 2)}</p>
   </div>
 
+ 
+  {/* справа: либо чип с коротким адресом, либо кнопка */}
   {address ? (
-    <div className="basis-full md:basis-auto w-full md:w-auto mt-2 md:mt-0
-                    flex justify-center md:justify-end">
-      <div className="text-sky-300/90 text-sm px-4 py-2 rounded-xl border border-sky-400/30">
-        {tr("status.connected", "Connected")}
-      </div>
+    <div className="shrink-0 flex items-center justify-center md:justify-end">
+      <span className="font-mono text-white/90 text-sm px-3 py-2 rounded-xl 
+                       border border-sky-400/30 bg-white/5">
+        {short(address)}
+      </span>
     </div>
   ) : (
-    <div className="basis-full md:basis-auto w-full md:w-auto mt-2 md:mt-0
-                    flex justify-center md:justify-end">
+    // на мобилке по центру всей ячейки, на десктопе — как было справа
+    <div className="shrink-0 w-full md:w-auto flex md:block justify-center">
+      {/* твой компонент кнопки подключения */}
       <WalletConnectInline />
     </div>
   )}

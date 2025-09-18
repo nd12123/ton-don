@@ -87,6 +87,7 @@ export default function StakingPage() {
         priceUsd={TON_PRICE}
         deposit={previewDeposit}
         plans={PLANS}
+        address = {address}
         // при желании: подписи из t("stats.*")
         // statsLabels={{
         //   balance: t("stats.balance"),
