@@ -17,7 +17,8 @@
                                 "exploreOptions": "Explore Options",
                                     "connect": "Connect Wallet",
                                       "connectWallet": "Connect Wallet",
-                                        "floatingStakeNow": "Stake Now"
+                                        "floatingStakeNow": "Stake Now",
+                                        "connected":"Connected"
   
   },
   "wallet": {

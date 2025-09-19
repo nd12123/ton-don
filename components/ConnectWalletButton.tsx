@@ -5,12 +5,23 @@ import React from "react";
 import { Wallet } from "lucide-react";
 import GoToStakingButton from "@/components/GoToStakingButton";
 import { useT } from "@/i18n/react";
+import { useTonWallet } from "@tonconnect/ui-react";
 
 export default function ConnectWalletButton() {
   const t = useT("common");
+  const wallet = useTonWallet();
+
+  // если есть адрес → считаем, что подключено
+  const isConnected = Boolean(wallet?.account?.address);
+
   const label = (() => {
-    const k = t("buttons.connect");
-    return k === "buttons.connect" ? "Connect Wallet" : k; // фоллбек
+    if (isConnected) {
+      const k = t("buttons.connected");
+      return k === "buttons.connected" ? "Подключено" : k;
+    } else {
+      const k = t("buttons.connect");
+      return k === "buttons.connect" ? "Подключить кошелёк" : k;
+    }
   })();
 
   return (

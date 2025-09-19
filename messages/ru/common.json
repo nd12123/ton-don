@@ -18,7 +18,8 @@
                                 "exploreOptions": "Исследовать",
                                     "connect": "Подключить",
                                         "connectWallet": "Подключить кошелёк",
-                                        "floatingStakeNow": "Стейк"
+                                        "floatingStakeNow": "Стейк",
+                                        "connected":"Подключен"
   },
   "wallet": {
     "connected": "Подключено: {addr}",
