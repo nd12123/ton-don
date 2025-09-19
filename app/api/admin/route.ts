@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
   const { address } = await req.json().catch(() => ({ address: "" }));
-  const list = (process.env.NEXT_PUBLIC_ADMIN_ADDRESSES || "")
+  const list = (process.env.NEXT_PUBLIC_ADMIN_WALLETS || "")
     .split(",")
     .map(s => s.trim().toLowerCase())
     .filter(Boolean);

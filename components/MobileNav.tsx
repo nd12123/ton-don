@@ -16,7 +16,7 @@ function useIsAdmin() {
   const addr = wallet?.account?.address ?? null;
   // список админов через env: NEXT_PUBLIC_ADMIN_ADDRESSES="EQxxx,EQyyy"
   const admins = useMemo(() => {
-    const raw = process.env.NEXT_PUBLIC_ADMIN_ADDRESSES || "";
+    const raw = process.env.NEXT_PUBLIC_ADMIN_WALLETS || "";
     return raw
       .split(",")
       .map(s => s.trim())
