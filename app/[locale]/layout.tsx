@@ -7,6 +7,8 @@ import { I18nProvider, type Locale } from "@/i18n/react";
 import { getMessages } from "@/i18n";
 import { Suspense } from "react";
 
+import TonConnectWarmup from "@/components/TonConnectWarmup";
+
 // локали держим тут, чтобы не тянуть конфиги
 const SUPPORTED = ["ru", "en"] as const;
 type Supported = typeof SUPPORTED[number];
@@ -26,6 +28,7 @@ export default async function LocaleLayout({
     return (
       <>
       <Suspense fallback={null}>
+        <div><TonConnectWarmup /></div> {/* just a prefetch*/}
         <Header />
         {children}
         </Suspense>
