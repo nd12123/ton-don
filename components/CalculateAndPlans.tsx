@@ -1,6 +1,6 @@
 // components/CalculateAndPlans.tsx
 "use client";
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect, useRef } from "react";
 import Image from "next/image";
 import PlanCard from "./PlanCard";
 import PlanCardDesktop from "./PlanCardDesktop";
@@ -27,12 +27,43 @@ export default function CalculateAndPlans() {
   const pathname = usePathname();
 
   // берём текущий префикс локали из URL ("/ru", "/en")
-  const locale = (pathname?.split("/")[1] || "ru") as "ru" | "en";
+  const locale = (pathname?.split("/")[1] || "ru") as "ru" | "en" | 'es';
   const stakingHref = `/${locale}/staking`;
 
   const [selectedPlanIdx, setSelectedPlanIdx] = useState(0);
   const [amount, setAmount] = useState(PLANS[0].min);
   const [days,   setDays]   = useState(30);
+
+  
+  const plansRef = useRef<HTMLDivElement | null>(null);
+  const calcRef  = useRef<HTMLDivElement | null>(null);
+
+  // простой observer: добавляет .is-visible всем детям с .reveal-up*
+  useEffect(() => {
+    const makeObserver = () =>
+      new IntersectionObserver(
+        (entries, io) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              const host = entry.target as HTMLElement;
+              host.querySelectorAll<HTMLElement>(".reveal-up, .reveal-up-slow")
+                .forEach((el) => el.classList.add("is-visible"));
+              io.unobserve(entry.target); // один раз
+            }
+          });
+        },
+        { threshold: 0.2 }
+      );
+
+    const io1 = makeObserver();
+    const io2 = makeObserver();
+
+    if (plansRef.current) io1.observe(plansRef.current);
+    if (calcRef.current)  io2.observe(calcRef.current);
+
+    return () => { io1.disconnect(); io2.disconnect(); };
+  }, []);
+
 
   const handlePlanSelect = (idx: number) => {
     if (idx === selectedPlanIdx) {
@@ -152,9 +183,9 @@ export default function CalculateAndPlans() {
       <div className="max-w-6xl mx-auto px-4 mt-2 md:mt-8 2xl:mt-12 relative z-10 pb-7 md:pb-16">
         <h1 className="font-inter font-bold text-[32px] leading-[35px] md:text-[70px] md:leading-[68px] text-white">
           {t("calc.h1.choose")}{" "}
-          <span className="text-[#00C2FF]">{t("calc.h1.plan")}</span> {t("calc.h1.and")}<br />
-          <span className="text-[#00C2FF]">{t("calc.h1.calculate")}</span> {t("calc.h1.your")}{" "}
-          <span className="text-[#00C2FF]">{t("calc.h1.profit")}</span>
+          <span className="text-gradient-deep">{t("calc.h1.plan")}</span> {t("calc.h1.and")}<br />
+          <span className="text-gradient-deep">{t("calc.h1.calculate")}</span> {t("calc.h1.your")}{" "}
+          <span className="text-gradient-deep">{t("calc.h1.profit")}</span>
         </h1>
       </div>
       {/* 2) Горизонт (основной фон) md:hidden */}
@@ -244,8 +275,13 @@ export default function CalculateAndPlans() {
       <div className="max-w-6xl mx-auto px-2 md:px-6 pb-6">
         {/* === 3) Карточки планов === */}
         <div className=" md:hidden grid grid-cols-3 gap-x-3 md:gap-x-16 gap-y-2 md:gap-y-8 mb-6 md:mb-16" //grid-cols-1 md: 
-        >
+                  ref={plansRef} >
           {PLANS.map((plan, idx) => (
+            <div
+              key={`m-${plan.id}`}
+              className="reveal-up"                                  // ← анимация
+              style={{ animationDelay: `${180 + idx * 140}ms` }}     // ← стаггер
+            >
             <PlanCard
               key={plan.id}
               title={t(`plans.${PLAN_KEYS[idx]}.label`)}
@@ -256,11 +292,17 @@ export default function CalculateAndPlans() {
               bgSrc={plan.bgSrc}
               onSelect={() => handlePlanSelect(idx)}
             />
+            </div>
           ))}
         </div>
         <div className="hidden md:grid grid-cols-3 gap-x-3 md:gap-x-16 gap-y-2 md:gap-y-8 mb-6 md:mb-16" //grid-cols-1 md: 
-        >
+                  ref={plansRef} >
           {PLANS.map((plan, idx) => (
+            <div
+              key={`m-${plan.id}`}
+              className="reveal-up"                                  // ← анимация
+              style={{ animationDelay: `${180 + idx * 140}ms` }}     // ← стаггер
+            >
             <PlanCardDesktop
               key={plan.id}
               title={t(`plans.${PLAN_KEYS[idx]}.label`)}
@@ -278,12 +320,13 @@ export default function CalculateAndPlans() {
   }
               onSelect={() => handlePlanSelect(idx)}
             />
+            </div>
           ))}
         </div>
         
 
 {/* Mobile-only CalculatorTest */}
-<div className="md:hidden mt-1">
+<div className="ref={calcRef} md:hidden mt-1">
   <CalculatorHorizontal
     amount={amount}
     onAmountChange={handleAmountChange}
@@ -298,7 +341,7 @@ export default function CalculateAndPlans() {
 </div>
 
 {/* Desktop-only */}
-<div className="hidden md:block mb-6">
+<div className="ref={calcRef} hidden md:block mb-6">
   <Calculator
     amount={amount}
     onAmountChange={handleAmountChange}

@@ -1,0 +1,164 @@
+{
+  "brand": "TON Stake",
+  "nav": {
+    "home": "Inicio",
+    "staking": "Staking",
+    "profile": "Perfil",
+    "support": "Soporte",
+    "steps": "Pasos"
+  },
+  "buttons": {
+    "getStarted": "Comenzar",
+    "exploreOptions": "Explorar opciones",
+    "startInvesting": "Empezar a invertir",
+    "calculate": "Calcular"
+  },
+  "badges": {
+    "auditedByCertik": "Auditado por Certik"
+  },
+  "footer": {
+    "copyright": "© 2025 Orbi Ton | Todos los derechos reservados",
+    "terms": "Términos y Condiciones",
+    "privacy": "Política de Privacidad"
+  },
+  "home": {
+    "hero": {
+      "title_1": "Staking TON",
+      "title_2": "Fácil & Seguro",
+      "lead": "Stakea tu TON de manera sencilla y obtén ingresos pasivos con contratos inteligentes auditados.",
+      "btn": "Comenzar"
+    },
+    "pills": {
+      "reliable": "Fiable",
+      "profitable": "Rentable",
+      "simple": "Simple"
+    },
+    "nav": {
+      "goToTotalValue": "Ir al valor total",
+      "goToCalculator": "Ir al calculador",
+      "goToSteps": "Ver pasos"
+    },
+    "stats": {
+      "title": "Total bloqueado",
+      "blurb": "Un cálculo estimado de las recompensas basadas en tu depósito."
+    },
+    "features": {
+      "security": {
+        "title": "Seguridad",
+        "desc": "Tus fondos están protegidos en contratos inteligentes auditados."
+      },
+      "transparency": {
+        "title": "Transparencia",
+        "desc": "Cada transacción es verificable en la cadena."
+      },
+      "flexibility": {
+        "title": "Flexibilidad",
+        "desc": "Retira tu stake en cualquier momento sin penalización."
+      },
+      "profitability": {
+        "title": "Rentabilidad",
+        "desc": "Obtén rendimientos competitivos con nodos seleccionados."
+      },
+      "simplicity": {
+        "title": "Simplicidad",
+        "desc": "Comienza a stakear en pocos clics, sin tecnicismos."
+      },
+      "networkSupport": {
+        "title": "Soporte de Red",
+        "desc": "Compatible con los principales monederos del ecosistema TON."
+      }
+    }
+  },
+  "calc": {
+    "h1": {
+      "choose": "Elige tu",
+      "plan": "Plan",
+      "and": "y",
+      "calculate": "Calcula",
+      "your": "tu",
+      "profit": "beneficio"
+    },
+    "cards": {
+      "in1day": "En 1 día",
+      "in7days": "En 7 días",
+      "inNDays": "En {days} días"
+    }
+  },
+  "plans": {
+    "basic": {
+      "label": "Básico",
+      "range": "1–999 TON"
+    },
+    "pro": {
+      "label": "Pro",
+      "range": "1000–1999 TON"
+    },
+    "premium": {
+      "label": "Premium",
+      "range": "2000+ TON"
+    }
+  },
+  "faq": {
+    "title": "Preguntas frecuentes",
+    "subtitle": "Respuestas a las dudas más comunes",
+    "items": [
+      {
+        "id": "calc",
+        "q": "¿Dónde puedo calcular mi beneficio de staking?",
+        "a": "Puedes calcular tu beneficio aquí usando nuestro calculador. Selecciona un plan, introduce la cantidad de TON y los días, y verás el beneficio estimado."
+      },
+      {
+        "id": "rewards",
+        "q": "¿Cuándo recibo mis recompensas?",
+        "a": "Las recompensas se distribuyen diariamente, a partir de 24 horas después de confirmar tu stake."
+      },
+      {
+        "id": "minimum",
+        "q": "¿Cuál es el mínimo para comenzar?",
+        "a": "El mínimo es de 10 TON. Desde esa cantidad ya puedes generar rendimientos."
+      },
+      {
+        "id": "withdraw",
+        "q": "¿Puedo retirar mis fondos en cualquier momento?",
+        "a": "Sí, puedes retirar cuando quieras. Solo haz clic en «Retirar» en tu panel y confirma la transacción."
+      },
+      {
+        "id": "fees",
+        "q": "¿Hay comisiones ocultas?",
+        "a": "No cobramos comisiones extra; solo pagas las comisiones de la red (gas) al depositar o retirar."
+      },
+      {
+        "id": "security",
+        "q": "¿Qué tan seguros son mis fondos?",
+        "a": "Los fondos están en contratos inteligentes auditados. Usamos código abierto revisado y auditorías periódicas."
+      }
+    ]
+  },
+  "support": {
+    "title": "Soporte",
+    "intro": "Si tienes dudas, contáctanos:",
+    "form": {
+      "emailPlaceholder": "Tu email",
+      "messagePlaceholder": "Tu mensaje",
+      "emailAria": "Campo para introducir tu email",
+      "messageAria": "Campo para introducir tu mensaje",
+      "submit": "Enviar",
+      "sending": "Enviando...",
+      "sent": "¡Enviado!",
+      "error": "Error al enviar. Inténtalo de nuevo."
+    }
+  },
+  "profile": {
+    "title": "Perfil",
+    "about": "Acerca de ti",
+    "edit": "Editar",
+    "logout": "Cerrar sesión"
+  },
+  "staking": {
+    "title": "Panel de Staking",
+    "intro": "Conecta tu monedero y empieza a stakear.",
+    "connectWallet": "Conectar monedero",
+    "stakeNow": "Stakear ahora",
+    "dashboard": "Ver tablero"
+  }
+}

@@ -10,7 +10,7 @@ import { Suspense } from "react";
 import TonConnectWarmup from "@/components/TonConnectWarmup";
 
 // локали держим тут, чтобы не тянуть конфиги
-const SUPPORTED = ["ru", "en"] as const;
+const SUPPORTED = ["ru", "en", 'es'] as const;
 type Supported = typeof SUPPORTED[number];
 const DEFAULT_LOCALE: Supported = "ru";
 
@@ -56,7 +56,7 @@ const messages = await getMessages(locale as Locale, [
 }
 
 export function generateStaticParams() {
-  return [{ locale: "ru" }, { locale: "en" }];
+  return [{ locale: "ru" }, { locale: "en" }, { locale: "es" }]; //locale change
 }
 
 export async function generateMetadata({

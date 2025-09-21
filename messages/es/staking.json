@@ -1,0 +1,48 @@
+{
+  "titles": {
+    "stats": "Estadísticas después del stake",
+    "stake": "Añadir al staking"
+  },
+  "stats": {
+    "balance": "Saldo",
+    "dailyIncome": "Ingresos diarios",
+    "totalIncome": "Ingresos totales",
+    "assetValue": "Valor del activo (actualizado cada hora)"
+  },
+  "status": {
+    "connected": "Conectado",
+    "disconnected": "Desconectado"
+  },
+  "inputs": {
+    "amount": "Monto del depósito",
+    "duration": "Duración del depósito",
+    "days": "Días"
+  },
+  "cards": {
+    "in1day": "En 1 día",
+    "in7days": "En 7 días",
+    "inNDays": "En {days} días"
+  },
+  "plans": {
+    "basic":   { "label": "Básico",   "range": "1–999 TON" },
+    "pro":     { "label": "Pro",      "range": "1000–1999 TON" },
+    "premium": { "label": "Premium",  "range": "2000+ TON" }
+  },
+  "planCard": {
+    "yourProfit": "Tu ganancia",
+    "perDay": "Por día",
+    "investmentsAllTime": "Inversiones de todo el tiempo",
+    "aria": {
+      "selected": "Seleccionado",
+      "selectPlan": "Seleccionar plan"
+    }
+  },
+  "buttons": {
+    "stakeNow": "Stakear ahora",
+    "connect": "Conectar"
+  },
+  "ticket": {
+    "dailyIncome": "Ingresos diarios",
+    "note": "Puedes aumentar tu staking en cualquier momento sin cancelar tu contrato actual. Simplemente añade más TON a tu depósito existente y automáticamente calificarás para un plan más rentable. De esta manera, tu capital crece más rápido y tus ganancias se mantienen estables."
+  }
+}

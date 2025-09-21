@@ -3,5 +3,5 @@ import { redirect } from "next/navigation";
 
 // Никакого "use client"
 export default function RootRedirect() {
-  redirect("/ru"); // или на нужную дефолтную локаль
+  redirect("/en"); // или на нужную дефолтную локаль
 }

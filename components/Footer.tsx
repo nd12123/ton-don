@@ -11,6 +11,7 @@ import certikBadge from "@/public/decorative/certik.svg";
 import supportIcon from "@/assets/Footer/Support.svg";
 import StartInvestingDesktop from "./StartInvestingDesktop";
 import StartInvesting from "./StartInvesting";
+import { motion } from "framer-motion";
 
 // декоративные картинки из /public/decorative
 const stars1 = "/decorative/starsbg1.png";
@@ -96,11 +97,29 @@ export default function Footer({ className = "" }: { className?: string }) {
         />
       </div>
 
-      {/* CTA */}
-      <div className="lg:hidden relative z-10 mt-6 sm:mt-8 lg:mt-10 pb-3">
-        <StartInvesting />
-      </div>
-      <StartInvestingDesktop className="hidden lg:block" />
+     {/* CTA mobile */}
+<motion.div
+  key="footer-cta-mobile"
+  initial={{ opacity: 0, y: 28, filter: "blur(6px)" }}
+  whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+  viewport={{ once: true, amount: 0.25, margin: "0px 0px -10% 0px" }}
+  transition={{ duration: 1.05, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
+  className="lg:hidden relative z-10 mt-6 sm:mt-8 lg:mt-10 pb-3 will-change-transform transform-gpu"
+>
+  <StartInvesting />
+</motion.div>
+
+{/* CTA desktop */}
+<motion.div
+  key="footer-cta-desktop"
+  initial={{ opacity: 0, y: 28, filter: "blur(6px)" }}
+  whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+  viewport={{ once: true, amount: 0.25, margin: "0px 0px -10% 0px" }}
+  transition={{ duration: 1.05, ease: [0.22, 1, 0.36, 1], delay: 0.2 }}
+  className="hidden lg:block will-change-transform transform-gpu"
+>
+  <StartInvestingDesktop />
+</motion.div>
 
       {/* верхняя зона футера */}
       <div className="relative z-10 pt-0 md:pt-3 pb-0 md:pb-3">

@@ -1,7 +1,7 @@
 // components/FAQSection.tsx
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import NextImage from "next/image";
 import { ChevronDown } from "lucide-react";
 import { motion } from "framer-motion";
@@ -29,13 +29,31 @@ export default function FAQSection() {
 
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
-  const spring = {
-    type: "spring",
-    stiffness: 320,
-    damping: 34,
-    mass: 0.6,
-  } as const;
 
+  // spring для layout как было
+  const spring = { type: "spring", stiffness: 320, damping: 34, mass: 0.6 } as const;
+
+  // ↓↓↓ reveal по скроллу
+const gridRef = useRef<HTMLDivElement | null>(null);
+
+useEffect(() => {
+  const el = gridRef.current;
+  if (!el) return;
+
+  const io = new IntersectionObserver(
+    ([entry]) => {
+      if (!entry.isIntersecting) return;
+      el.classList.add("is-visible"); // показать грид один раз
+      io.unobserve(el);
+    },
+    { threshold: 0.2 }
+  );
+
+  io.observe(el);
+  return () => io.disconnect();
+}, []);
+
+  
   return (
     <section
       className={[
@@ -55,8 +73,13 @@ export default function FAQSection() {
         <p className="text-center text-gray-300 mb-4 md:mb-12 ">{t("subtitle")}</p>
 
         {/* grid c анимацией */}
-        <motion.div layout transition={spring} className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {faqs.map((item, idx) => {
+<motion.div
+  ref={gridRef}
+  layout
+  transition={spring}
+  className="faq-reveal grid grid-cols-1 md:grid-cols-2 gap-6"
+>
+            {faqs.map((item, idx) => {
             const isOpen = openIndex === idx;
             return (
               <motion.article

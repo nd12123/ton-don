@@ -1,0 +1,142 @@
+{
+  "pills": {
+    "reliable": "Fiable",
+    "profitable": "Rentable",
+    "simple": "Sencillo"
+  },
+  "nav": {
+    "goToTotalValue": "Ir al valor total",
+    "goToCalculator": "Ir al calculador",
+    "goToSteps": "Ir a los pasos"
+  },
+  "calc": {
+    "h1": {
+      "choose": "Elige",
+      "plan": "plan",
+      "and": "y",
+      "calculate": "Calcula",
+      "your": "tu",
+      "profit": "beneficio"
+    },
+    "cards": {
+      "in1day": "En 1 día",
+      "in7days": "En 7 días",
+      "inNDays": "En {days} días"
+    },
+    "inputs": {
+      "amount": "Importe del depósito",
+      "duration": "Duración del depósito",
+      "days": "Días"
+    }
+  },
+  "plans": {
+    "basic": { "label": "Básico", "range": "1–999 TON" },
+    "pro": { "label": "Pro", "range": "1000–1999 TON" },
+    "premium": { "label": "Premium", "range": "2000+ TON" },
+    "card": {
+      "yourProfit": "Tu beneficio",
+      "perDay": "Por día",
+      "investmentsAllTime": "Inversiones de todo el tiempo",
+      "ctaIdle": "Selecciona un plan",
+      "ctaActive": "Empieza a invertir ahora >",
+      "aria": {
+        "selected": "Seleccionado",
+        "selectPlan": "Selecciona plan"
+      }
+    }
+  },
+  "startInvesting": {
+    "title": "¡Comienza a invertir ahora!",
+    "subtitle": "Empieza a ganar en 2 clics – tu primer ingreso mañana"
+  },
+  "why": {
+    "features": {
+      "security": {
+        "title": "Seguridad",
+        "desc": "Tus fondos se conservan con validadores seguros."
+      },
+      "transparency": {
+        "title": "Transparencia",
+        "desc": "Cada transacción es completamente transparente en cadena."
+      },
+      "flexibility": {
+        "title": "Flexibilidad",
+        "desc": "Fija el plazo de staking según tus necesidades."
+      }
+    },
+    "cta": "Explorar opciones"
+  },
+  "faq": {
+    "title": "Preguntas frecuentes",
+    "subtitle": "Respuestas rápidas a preguntas populares...",
+    "items": [
+      {
+        "q": "¿Dónde puedo calcular mis ganancias de staking?",
+        "a": "Puedes calcular tu beneficio de staking directamente en esta página usando nuestro calculador interactivo. Simplemente elige un plan, introduce la cantidad de TON que quieres stakear y el número de días, y verás al instante el beneficio proyectado."
+      },
+      {
+        "q": "¿Cuánto tiempo se tarda en recibir las recompensas?",
+        "a": "Recibes recompensas todos los días, a partir de las 24 horas siguientes a que tu stake sea confirmado en la red. Los fondos se asignan automáticamente mediante los algoritmos de cartera de TONStake.ai."
+      },
+      {
+        "q": "¿Cuál es la cantidad mínima para comenzar a hacer staking?",
+        "a": "La cantidad mínima para comenzar a hacer staking es de 10 TON. Los planes están ajustados para que a partir de 10 TON ya puedas empezar a ganar."
+      },
+      {
+        "q": "¿Puedo retirar mis fondos en cualquier momento?",
+        "a": "Sí, puedes retirar en cualquier momento. Abre tu panel, elige «Retirar» y confirma la transacción en tu monedero — los fondos volverán a tu dirección."
+      },
+      {
+        "q": "¿Hay tarifas extra o cargos ocultos?",
+        "a": "No cobramos tarifas adicionales por la plataforma. Los únicos costes son las comisiones de la red TON (gas) para depósitos y retiros. La plataforma en sí es gratuita."
+      },
+      {
+        "q": "¿Qué tan seguro es mi depósito de staking?",
+        "a": "Tus fondos se almacenan en contratos inteligentes que siguen los estándares de seguridad de TON. Usamos contratos de código abierto revisados y realizamos auditorías de seguridad periódicas."
+      }
+    ]
+  },
+  "hero": {
+    "title_1": "Haz staking de TON",
+    "title_2": "Fácilmente y de forma segura",
+    "lead": "Haz staking de tu TON (Toncoin) con confianza y gana ingresos pasivos fiables mediante contratos inteligentes totalmente auditados.",
+    "headlineTop": "Haz staking de TON en minutos"
+  },
+  "stats": {
+    "title": "Valor total",
+    "totalStaked": "41653 TON",
+    "blurb": "¡Deja que tu TON trabaje para ti! Más de 100.000 $ en TON ya están generando ingresos pasivos gracias a nuestros algoritmos inteligentes. Empieza con solo 10 TON y crece con nosotros."
+  },
+  "features": {
+    "security": {
+      "title": "Seguridad",
+      "desc": "Tus fondos se almacenan con validadores de confianza."
+    },
+    "transparency": {
+      "title": "Transparencia",
+      "desc": "Cada transacción es completamente visible en la cadena."
+    },
+    "flexibility": {
+      "title": "Flexibilidad",
+      "desc": "Ajusta el periodo de staking a tus necesidades."
+    },
+    "profitability": {
+      "title": "Rentabilidad",
+      "desc": "Obtén recompensas regulares por participar en la red TON."
+    },
+    "simplicity": {
+      "title": "Simplicidad",
+      "desc": "Empieza a hacer staking en unos pocos clics — sin configuración complicada."
+    },
+    "networkSupport": {
+      "title": "Soporte de la red",
+      "desc": "Con tu stake ayudas a fortalecer y descentralizar la blockchain de TON."
+    }
+  },
+  "cta": {
+    "choosePlan": "Elige un plan y calcula tu beneficio"
+  },
+  "buttons": {
+    "connect": "Conectar monedero"
+  }
+}

@@ -1,5 +1,5 @@
 // /i18n/index.ts
-export type Locale = "ru" | "en";
+export type Locale = "ru" | "en" | 'es';
 export type Namespace = "common" | "home" | "faq" | "staking"| "profile" | "support";
 
 // грузим JSON из /messages/<locale>/<ns>.json

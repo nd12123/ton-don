@@ -1,0 +1,36 @@
+{
+  "title": "Preguntas frecuentes",
+  "subtitle": "¡Respuestas rápidas a las preguntas más comunes!",
+  "items": [
+    {
+      "id": "calc",
+      "q": "¿Dónde puedo calcular mis ganancias de staking?",
+      "a": "Puedes calcular tus ganancias de staking directamente en esta página usando nuestra calculadora interactiva. Solo elige un plan, introduce la cantidad de TON que deseas bloquear y el número de días — verás de inmediato tus ganancias estimadas."
+    },
+    {
+      "id": "rewards_time",
+      "q": "¿Cuánto tiempo tarda en recibir recompensas?",
+      "a": "Recibes recompensas a diario, comenzando dentro de las 24 horas posteriores a la confirmación de tu stake en la red. Los fondos se distribuyen automáticamente mediante nuestros algoritmos de portafolio."
+    },
+    {
+      "id": "min_amount",
+      "q": "¿Cuál es la cantidad mínima para empezar a hacer staking?",
+      "a": "La cantidad mínima para comenzar es de 10 TON. Hemos diseñado todos los planes para que puedas empezar a ganar recompensas con solo 10 TON."
+    },
+    {
+      "id": "withdraw_any_time",
+      "q": "¿Puedo retirar mis fondos en cualquier momento?",
+      "a": "Sí, puedes retirar tus fondos en cualquier momento. Solo accede a tu panel, selecciona la opción \"Retirar\" y confirma la transacción en tu monedero — los fondos volverán a tu dirección."
+    },
+    {
+      "id": "fees",
+      "q": "¿Existen comisiones adicionales o cargos ocultos?",
+      "a": "No cobramos comisiones adicionales por usar la plataforma. Los únicos costos son las tarifas de red (gas) de TON para depósitos y retiros. La plataforma en sí es completamente gratuita."
+    },
+    {
+      "id": "security",
+      "q": "¿Qué tan seguro está mi depósito de staking?",
+      "a": "Tus fondos se almacenan en contratos inteligentes que cumplen con los estándares de seguridad de TON. Usamos contratos de código abierto verificados y realizamos auditorías de seguridad periódicas."
+    }
+  ]
+}

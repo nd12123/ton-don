@@ -1,8 +1,8 @@
 // middleware.ts
 import { NextRequest, NextResponse } from 'next/server';
 
-const SUPPORTED_LOCALES = ['ru','en'] as const;
-const DEFAULT_LOCALE = 'ru';
+const SUPPORTED_LOCALES = ['ru','en', 'es'] as const;
+const DEFAULT_LOCALE = 'en';
 
 function hasLocale(pathname: string) {
   const first = pathname.split('/')[1];

@@ -1,0 +1,23 @@
+{
+  "title": "Soporte",
+  "intro": "Si tienes alguna pregunta, puedes escribirnos a:",
+  "form": {
+    "emailPlaceholder": "Tu correo electrónico",
+    "emailAria": "Campo de correo",
+    "messagePlaceholder": "Tu mensaje",
+    "messageAria": "Campo de mensaje",
+    "submit": "Enviar",
+    "sending": "Enviando…",
+    "sent": "¡Mensaje enviado, gracias!",
+    "error": "Se produjo un error al enviar. Por favor, inténtalo más tarde."
+  },
+  "lead": "¿Tienes preguntas? Ponte en contacto con nosotros:",
+  "contact": {
+    "email_label": "Correo",
+    "tg_label": "Telegram",
+    "form_label": "Formulario de contacto",
+    "email_value": "{{email}}",
+    "tg_value": "{{telegram}}",
+    "form_value": "{{supportFormUrl}}"
+  }
+}

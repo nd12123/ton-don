@@ -21,6 +21,110 @@
     --text-secondary: #D1D5DB;
   }
 }
+/* ↓ наши утилити-классы */
+@layer utilities {
+  .text-gradient-deep {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(90deg, #00B7FF 0%, #2F80ED 50%, #7F9CF5 100%);
+  }
+}
+
+@keyframes pillDrop {
+  from { opacity: 0; transform: translateY(-14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pillDrop {
+  from { opacity: 0; transform: translateY(-18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* более длинная, плавная анимация + анти-дёргание */
+.pill-animate {
+  opacity: 0;
+  transform: translateY(-18px);
+  backface-visibility: hidden;
+  will-change: transform, opacity;
+  animation: pillDrop .9s cubic-bezier(.22,1,.36,1) forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pill-animate {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+/* ==== scroll-in анимации для секции Plans/Calculator ==== */
+@keyframes riseSoft {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* базовое состояние до входа в вьюпорт */
+.reveal-up {
+  opacity: 0;
+  transform: translateY(18px);
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+}
+
+/* запускаем анимацию, когда добавим .is-visible */
+.reveal-up.is-visible {
+  animation: riseSoft 0.85s cubic-bezier(.22,1,.36,1) forwards;
+}
+
+/* плавный, длиннее (для больших блоков типа калькулятора) */
+.reveal-up-slow.is-visible {
+  animation: riseSoft 1.05s cubic-bezier(.22,1,.36,1) forwards;
+}
+
+/* уважение prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  .reveal-up,
+  .reveal-up-slow {
+    opacity: 1 !important;
+    transform: none !important;
+    animation: none !important;
+  }
+}
+
+/* ==== FAQ: scroll-in ==== */
+@keyframes faqRise {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.faq-reveal {
+  opacity: 0;
+  transform: translateY(16px);
+  will-change: opacity, transform;
+  backface-visibility: hidden;
+}
+
+.faq-reveal.is-visible {
+  animation: faqRise 0.8s cubic-bezier(.22,1,.36,1) forwards;
+}
+
+/* чуть длиннее — можно для каждого 2-го блока/по желанию */
+.faq-reveal.slow.is-visible {
+  animation-duration: 1.0s;
+}
+
+/* ховер-микро-лифт (необязательно) */
+.faq-hover {
+  transition: transform .25s cubic-bezier(.22,1,.36,1), box-shadow .25s;
+}
+.faq-hover:hover {
+  transform: translateY(-2px);
+}
+
+/* уважим системное уменьшение анимаций */
+@media (prefers-reduced-motion: reduce) {
+  .faq-reveal { opacity: 1 !important; transform: none !important; animation: none !important; }
+  .faq-hover:hover { transform: none !important; }
+}
 
 
 /* === Сильный переливающийся градиент для текста === */

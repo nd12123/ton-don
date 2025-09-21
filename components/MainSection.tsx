@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useT } from "@/i18n/react";
 import ResponsiveArt from "./ResponsiveArt";
+import { useEffect, useRef } from "react";
 
 import ton3d1Svg from "@/assets/Main/Ton 3d 1.svg";
 import ton3d2Svg from "@/assets/Main/Ton 3d 2.svg";
@@ -34,6 +35,28 @@ type MainSectionProps = {
 export default function MainSection({ className = "" }: MainSectionProps) {
   const tHome = useT("home");
   const tCommon = useT("common");
+
+  const leftRef = useRef<HTMLDivElement | null>(null);
+
+useEffect(() => {
+  const el = leftRef.current;
+  if (!el) return;
+
+  const io = new IntersectionObserver(
+    ([entry]) => {
+      if (entry.isIntersecting) {
+        el.classList.add("is-visible");     // показать
+        // io.unobserve(el);                // ← раскомментируй, если нужно один раз и навсегда
+      } else {
+        el.classList.remove("is-visible");  // скрывать при выходе
+      }
+    },
+    { threshold: 0.25 }
+  );
+
+  io.observe(el);
+  return () => io.disconnect();
+}, []);
 
 
 // Рендер второй строки: слова — градиент, "И"/"&" — белая, перенос после неё (на мобилке)
@@ -80,6 +103,7 @@ const renderTitle2 = (s: string) => {
         "relative",
         "text-white",
         "pl-1 md:pt-20 sm:px-0 lg:px-8 2xl:px-0 pb-32",
+        "group",
         className,
       ].join(" ")}
     >
@@ -101,37 +125,34 @@ const renderTitle2 = (s: string) => {
 
       {/* верхние «пилюли» */}
     <div className="w-full md:max-w-7xl  2xl:max-w-8xl mx-auto mb-8 md:pl-[90px] pl-2">
-   <div className=" ml-0 md:ml-4
+   <div className="          /* pill-animate */
+   ml-0 md:ml-4
       grid grid-cols-3 items-center text-center gap-2
       sm:flex sm:flex-wrap sm:gap-5 sm:justify-start
-      md:gap-16">
-          <Link
-            href="#total-value"
-            aria-label={ariaTotalValue}
-            className="flex items-center gap-2 group rounded-lg outline-none focus-visible:ring-2 focus-visible:ring-sky-400/60 transition-transform hover:scale-[1.02] active:scale-[0.99]"
-          >
-            <Image src={ReliableIcon} alt={pillReliable} width={24} height={24} />
-            <span className="text-lg font-medium group-hover:text-sky-300">{pillReliable}</span>
-          </Link>
-
-          <Link
-            href="#calculate-plans"
-            aria-label={ariaCalculator}
-            className="flex items-center gap-2 group rounded-lg outline-none focus-visible:ring-2 focus-visible:ring-sky-400/60 transition-transform hover:scale-[1.02] active:scale-[0.99]"
-          >
-            <Image src={ProfitableIcon} alt={pillProfitable} width={24} height={24} />
-            <span className="text-lg font-medium group-hover:text-sky-300">{pillProfitable}</span>
-          </Link>
-
-          <Link
-            href="#steps"
-            aria-label={ariaSteps}
-            className="pr-0 md:pr-2 flex items-center gap-2 group rounded-lg outline-none focus-visible:ring-2 focus-visible:ring-sky-400/60 transition-transform hover:scale-[1.02] active:scale-[0.99]"
-          >
-            <Image src={SimpleIcon} alt={pillSimple} width={25} height={25} />
-            <span className="text-lg font-medium group-hover:text-sky-300">{pillSimple}</span>
-          </Link>
-        </div>
+      md:gap-16"
+>
+          {[
+      { href: "#total-value",  aria: ariaTotalValue,  icon: ReliableIcon,   label: pillReliable  },
+      { href: "#calculate-plans", aria: ariaCalculator, icon: ProfitableIcon, label: pillProfitable },
+      { href: "#steps", aria: ariaSteps, icon: SimpleIcon, label: pillSimple },
+    ].map((item, i) => (
+      <Link
+        key={item.href}
+        href={item.href}
+        aria-label={item.aria}
+        className="
+          pill-animate
+          flex items-center gap-2 group rounded-lg outline-none
+          focus-visible:ring-2 focus-visible:ring-sky-400/60
+          transition-transform hover:scale-[1.02] active:scale-[0.99]
+        "
+        style={{ animationDelay: `${120 + i * 90}ms` }} // лёгкий стаггер
+      >
+        <Image src={item.icon} alt={item.label} width={24} height={24} />
+        <span className="text-lg font-medium">{item.label}</span> {/**group-hover:text-sky-300 */}
+      </Link>
+    ))}
+  </div>
       </div>
 
       {/* основной грид */}
@@ -142,9 +163,14 @@ const renderTitle2 = (s: string) => {
         </div>
 
         {/* левый столбец: заголовок, лид, кнопки */}
-        <div className="flex flex-col justify-center  space-y-6 md:max-w-[811px] text-center md:text-left mx-auto md:mx-0 px-2">
+        <div   ref={leftRef} 
+        className="flex flex-col justify-center  space-y-6 md:max-w-[811px] text-center md:text-left mx-auto md:mx-0 px-2
+  opacity-0 translate-y-3
+    motion-safe:transition-all motion-safe:duration-500 motion-safe:ease-out
+    [&.is-visible]:opacity-100
+    [&.is-visible]:translate-y-0">
           {/* Заголовок: mobile / desktop */}
-          <div className="font-bold">
+          <div className="font-bold motion-safe:transition-opacity motion-safe:duration-500 motion-safe:delay-100">
             {/* Mobile: каждое слово title_1 с новой строки */}
             <div className="md:hidden leading-[1.02]">
               {splitWords(title1).map((w, i) => (
@@ -165,9 +191,10 @@ const renderTitle2 = (s: string) => {
           </div>
 
           {/* Лид */}
-          <p className="text-[15px] md:text-lg text-gray-300 max-w-lg">{lead}</p>
+          <p className="motion-safe:transition-opacity motion-safe:duration-500 motion-safe:delay-200 text-[15px] md:text-lg text-gray-300 max-w-lg ">{lead}</p>
 {/* Кнопки */}
 <div className="
+motion-safe:transition-opacity motion-safe:duration-500 motion-safe:delay-300
   flex flex-col sm:flex-row sm:items-center md:justify-start
   gap-4 md:gap-[36px]
 ">
@@ -244,13 +271,13 @@ const renderTitle2 = (s: string) => {
           <Image
             src={centralSphere}
             alt=""
-            className="absolute top-[20%] md:top-[20%] md:right-[20px] w-[65%] md:w-[45%] 2xl:w[40%] 2xl:top-[5%] opacity-30 md:opacity-50 lg:opacity-35 animate-float"
+            className="absolute top-[20%] md:top-[20%] md:right-[20px] w-[65%] md:w-[45%] 2xl:w[45%] 2xl:top-[5%] 3xl:w[45%] 3xl:top-[0%] opacity-30 md:opacity-50 2xl:opacity-35 animate-float"
           />
           {/** MOBILE */}
           <Image
             src={ton3d3Png}
             alt=""
-            className=" md:hidden absolute top-[15%] right-[-45px] w-[30%] md:top-[3%] md:right-[16%] md:w-[17%] xl:top-[5%] 3xl:top-[0%] xl:right-[16%] 3xl:right-[13%] 3xl:w-[18%] opacity-90 animate-float delay-4000"
+            className=" md:hidden absolute top-[15%] right-[-45px] w-[30%] md:top-[3%] md:right-[16%] md:w-[17%] xl:top-[5%] 3xl:top-[-4%] xl:right-[16%] 3xl:right-[13%] 3xl:w-[18%] opacity-90 animate-float delay-4000"
           />
           <Image
             src={ton3d1Png}
@@ -266,17 +293,17 @@ const renderTitle2 = (s: string) => {
           <Image
             src={ton3d2Svg}
             alt=""
-            className="hidden md:block absolute top-[15%] right-[-45px] w-[30%] md:top-[3%] md:right-[16%] md:w-[17%] 2xl:top-[5%] 2xl:right-[13%] 2xl:w-[20%] opacity-90 animate-float delay-4000"
+            className="hidden md:block absolute top-[15%] right-[-45px] w-[30%] md:top-[3%] md:right-[16%] md:w-[17%] 2xl:top-[5%] 2xl:right-[16%] 2xl:w-[20%] opacity-90 animate-float delay-4000"
           />
           <Image
             src={ton3d1Svg}
             alt=""
-            className="hidden md:block absolute right-[15%] bottom-[20%] w-[30%] md:top-[22%] md:right-[26%] md:w-[10%] 2xl:bottom-[20%] 2xl:right-[27%] 2xl:w-[14%] opacity-80 animate-float-slow delay-1000"
+            className="hidden md:block absolute right-[15%] bottom-[20%] w-[30%] md:top-[22%] md:right-[26%] md:w-[10%] 2xl:bottom-[20%] 2xl:right-[29%] 2xl:w-[16%] opacity-80 animate-float-slow delay-1000"
           />
           <Image
             src={ton3d3Svg}
             alt=""
-            className="hidden md:block absolute bottom-[-5%] right-[-60px] w-[60%] md:bottom-[7%] md:right-[10%] 2xl:bottom-[0%] 2xl:right-[8%] md:w-[28%] 2xl:w-[31%] opacity-90 animate-float delay-2000"
+            className="hidden md:block absolute bottom-[-5%] right-[-60px] w-[60%] md:bottom-[7%] md:right-[10%] lg:bottom-[2%] 2xl:bottom-[-2%] 3xl:bottom-[-9%] 2xl:right-[12%] 3xl:right-[14%] md:w-[28%] 2xl:w-[27%] 3xl:w-[26%] opacity-90 animate-float delay-2000"
           />
           
         </div>
