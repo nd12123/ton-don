@@ -37,7 +37,7 @@ export default function StartInvestingDesktop({ className = "" }: { className?: 
           <h2
             className="
               font-extrabold leading-[0.95] tracking-[-0.02em]
-              text-[60px] xl:text-[62px] 2xl:text-[66px]
+              xl:text-[60px] 2xl:text-[62px]
               mb-4
               whitespace-nowrap
               md:max-w-[540px]
