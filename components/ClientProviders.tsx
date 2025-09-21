@@ -17,7 +17,7 @@ export default function ClientProviders({ children, locale }: Props) {
       manifestUrl="https://staking-mocha-iota.vercel.app/tonconnect-manifest.json"
       language={lang}           // <- корректный проп; не в uiPreferences
       // uiPreferences={{ theme: 'SYSTEM' }} // опционально
-      restoreConnection={false} //true on production
+      //restoreConnection={false} //true on production
     >
       {children}
     </TonConnectUIProvider>
