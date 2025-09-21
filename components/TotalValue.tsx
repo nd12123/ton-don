@@ -61,7 +61,7 @@ export default function TotalValue() {
       </div>
 
       <div
-        className="hidden md:block absolute top-0 left-0 w-full h-12 md:h-24 pointer-events-none -z-1"
+        className="hidden md:block absolute top-0 left-0 w-full h-12 md:h-24 pointer-events-none -z-10"
         style={{ background: "linear-gradient(to bottom, #0B1028, rgba(11, 17, 40, 0))" }}
       />
 
@@ -83,8 +83,8 @@ export default function TotalValue() {
         <Image src="/decorative/Ellipse50.png" alt="right glow" fill style={{ objectFit: "cover", objectPosition: "right top" }} />
       </div>
 
-<div className="absolute hidden md:block top-0 right-0 w-full h-full opacity-[42%] pointer-events-none z-[12]">
-  <div className="relative w-full h-full md:origin-top-right md:scale-[0.52]">
+<div className="absolute hidden md:block top-0 right-0 w-full h-full opacity-[42%] pointer-events-none z-[12] overflow-visible">
+  <div className="relative w-full h-full md:origin-top-right md:scale-x-[0.52]">
     <Image
       src="/decorative/Ellipse50.png"
       alt="right glow"
@@ -94,6 +94,7 @@ export default function TotalValue() {
     />
   </div>
 </div>
+
 
       {/* 4) 3D-монеты */}
       <div className="absolute inset-0 pointer-events-none">

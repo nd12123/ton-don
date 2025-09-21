@@ -17,7 +17,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             alt=""
             fill
             sizes="100vw"
-            style={{ objectFit: "cover", objectPosition:"center top", opacity: 0.45 }}
+            style={{ objectFit: "cover", objectPosition:"center top", opacity: 0.95 }} //opacity:0.45
             priority
           />
           {/* Лёгкие звёзды */}

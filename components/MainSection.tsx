@@ -4,10 +4,14 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useT } from "@/i18n/react";
+import ResponsiveArt from "./ResponsiveArt";
 
-import ton3d1 from "@/assets/Main/Ton 3d 1.png";
-import ton3d2 from "@/assets/Main/Ton 3d 2.png";
-import ton3d3 from "@/assets/Main/Ton 3d 3.png";
+import ton3d1Svg from "@/assets/Main/Ton 3d 1.svg";
+import ton3d2Svg from "@/assets/Main/Ton 3d 2.svg";
+import ton3d3Svg from "@/assets/Main/Ton 3d 3.svg";
+import ton3d1Png from "@/assets/Main/Ton 3d 1.png";
+import ton3d2Png from "@/assets/Main/Ton 3d 2.png";
+import ton3d3Png from "@/assets/Main/Ton 3d 3.png";
 import centralSphere from "@/assets/Main/Ellipse10.png";
 import centralRightSphere from "@/assets/Main/EllipseMainRight.png";
 import centralLeftSphere from "@/assets/Main/EllipseMainLeft.png";
@@ -21,6 +25,8 @@ import SimpleIcon from "@/assets/Main/Simple.svg";
 const ellipse6 = "/decorative/ellipse6.png";
 const ellipse5 = "/decorative/ellipse5.png";
 
+// после импортов
+const isSeparator = (s: string) => /\s*&\s*|\s+[Ии]\s+/.test(s);
 type MainSectionProps = {
   className?: string;
 };
@@ -29,20 +35,26 @@ export default function MainSection({ className = "" }: MainSectionProps) {
   const tHome = useT("home");
   const tCommon = useT("common");
 
-  // подсветка второй строки: если есть "&", красим обе части, иначе красим всю строку
-  const renderTitle2 = (s: string) => {
-    const parts = s.split("&").map((p) => p.trim());
-    if (parts.length === 2) {
-      return (
-        <>
-          <span className="text-[#00C2FF]">{parts[0]}</span>
-          &nbsp;&amp;&nbsp;
-          <span className="text-[#00C2FF]">{parts[1]}</span>
-        </>
-      );
-    }
-    return <span className="text-[#00C2FF]">{s}</span>;
-  };
+
+// Рендер второй строки: слова — градиент, "И"/"&" — белая, перенос после неё (на мобилке)
+const renderTitle2 = (s: string) => {
+  const m = s.match(/^(.*?)(?:\s*&\s*|\s+[Ии]\s+)(.*)$/);
+  if (!m) return <span className="text-gradient-strong">{s}</span>;
+
+  const before = m[1].trim();
+  const after  = m[2].trim();
+  const sep    = s.includes("&") ? "&" : "и"; // что показывать белым
+
+  return (
+    <>
+      <span className="text-gradient-strong">{before}</span>
+      <span className="text-white">&nbsp;{sep}&nbsp;</span>
+      <br className="" />
+      <span className="text-gradient-strong">{after}</span>
+    </>
+  );
+};
+
 
   // просто ключи
   const title1 = tHome("hero.title_1");
@@ -67,7 +79,7 @@ export default function MainSection({ className = "" }: MainSectionProps) {
       className={[
         "relative",
         "text-white",
-        "pl-1 md:pt-20 sm:px-0 lg:px-8 pb-32",
+        "pl-1 md:pt-20 sm:px-0 lg:px-8 2xl:px-0 pb-32",
         className,
       ].join(" ")}
     >
@@ -88,8 +100,11 @@ export default function MainSection({ className = "" }: MainSectionProps) {
       </div>
 
       {/* верхние «пилюли» */}
-    <div className="max-w-7xl mx-auto mb-8 md:pl-[90px] px-2">
-   <div className="flex flex-nowrap items-center gap-3 sm:gap-5 md:gap-16">
+    <div className="w-full md:max-w-7xl  2xl:max-w-8xl mx-auto mb-8 md:pl-[90px] pl-2">
+   <div className=" ml-0 md:ml-4
+      grid grid-cols-3 items-center text-center gap-2
+      sm:flex sm:flex-wrap sm:gap-5 sm:justify-start
+      md:gap-16">
           <Link
             href="#total-value"
             aria-label={ariaTotalValue}
@@ -111,7 +126,7 @@ export default function MainSection({ className = "" }: MainSectionProps) {
           <Link
             href="#steps"
             aria-label={ariaSteps}
-            className="pr-2 flex items-center gap-2 group rounded-lg outline-none focus-visible:ring-2 focus-visible:ring-sky-400/60 transition-transform hover:scale-[1.02] active:scale-[0.99]"
+            className="pr-0 md:pr-2 flex items-center gap-2 group rounded-lg outline-none focus-visible:ring-2 focus-visible:ring-sky-400/60 transition-transform hover:scale-[1.02] active:scale-[0.99]"
           >
             <Image src={SimpleIcon} alt={pillSimple} width={25} height={25} />
             <span className="text-lg font-medium group-hover:text-sky-300">{pillSimple}</span>
@@ -120,20 +135,20 @@ export default function MainSection({ className = "" }: MainSectionProps) {
       </div>
 
       {/* основной грид */}
-      <div className="max-w-7xl mx-auto md:grid md:grid-cols-1 lg:grid-cols-2 md:gap-12 items-center md:pl-[90px]">
+      <div className="max-w-7xl 2xl:max-w-8xl mx-auto md:grid md:grid-cols-1 lg:grid-cols-2 md:gap-12 items-center md:pl-[90px]">
         {/* эллипс позади заголовка */}
-        <div className="pointer-events-none absolute top-[50%] right-[30%] md:top-[30px] md:left-[50px] md:w-[600px] sm:w-[180px] md:h-[600px] sm:h-[100px] opacity-90 -z-10">
+        <div className="pointer-events-none absolute top-[50%] right-[30%] md:top-[30px] md:left-[50px] md:w-[600px] sm:w-[180px] md:h-[600px] sm:h-[100px] 2xl:left-[14%]  opacity-90 -z-10">
           <Image src="/decorative/ellipse10.png" alt="" fill style={{ objectFit: "contain" }} />
         </div>
 
         {/* левый столбец: заголовок, лид, кнопки */}
-        <div className="space-y-6 md:max-w-[811px] text-center md:text-left mx-auto md:mx-0 px-2">
+        <div className="flex flex-col justify-center  space-y-6 md:max-w-[811px] text-center md:text-left mx-auto md:mx-0 px-2">
           {/* Заголовок: mobile / desktop */}
           <div className="font-bold">
             {/* Mobile: каждое слово title_1 с новой строки */}
             <div className="md:hidden leading-[1.02]">
               {splitWords(title1).map((w, i) => (
-                <span key={i} className="block text-[clamp(44px,12vw,56px)] text-left">
+                <span key={i} className="block text-[clamp(44px,12vw,56px)]  text-left">
                   {w}
                 </span>
               ))}
@@ -143,9 +158,9 @@ export default function MainSection({ className = "" }: MainSectionProps) {
             </div>
 
             {/* Desktop */}
-            <div className="hidden md:block leading-[75px] tracking-[0]">
-              <span className="block text-[74px]">{title1}</span>
-              <span className="block text-[74px]">{renderTitle2(title2)}</span>
+            <div className="hidden md:block leading-[75px] 2xl:leading-[78px] tracking-[0]">
+              <span className="md:whitespace-nowrap block text-[74px]  2xl:text-[80px]">{title1}</span>
+              <span className="block text-[74px] 2xl:text-[80px]">{renderTitle2(title2)}</span>
             </div>
           </div>
 
@@ -229,23 +244,41 @@ export default function MainSection({ className = "" }: MainSectionProps) {
           <Image
             src={centralSphere}
             alt=""
-            className="absolute top-[20%] md:top-[20%] md:right-[20px] w-[65%] md:w-[45%] lg:w[30%] lg:top-[5%] opacity-30 md:opacity-50 lg:opacity-35 animate-float"
+            className="absolute top-[20%] md:top-[20%] md:right-[20px] w-[65%] md:w-[45%] 2xl:w[40%] 2xl:top-[5%] opacity-30 md:opacity-50 lg:opacity-35 animate-float"
+          />
+          {/** MOBILE */}
+          <Image
+            src={ton3d3Png}
+            alt=""
+            className=" md:hidden absolute top-[15%] right-[-45px] w-[30%] md:top-[3%] md:right-[16%] md:w-[17%] xl:top-[5%] 3xl:top-[0%] xl:right-[16%] 3xl:right-[13%] 3xl:w-[18%] opacity-90 animate-float delay-4000"
           />
           <Image
-            src={ton3d3}
+            src={ton3d1Png}
             alt=""
-            className="absolute top-[15%] right-[-45px] w-[30%] md:top-[3%] md:right-[16%] md:w-[17%] xl:top-[5%] 3xl:top-[0%] xl:right-[16%] 3xl:right-[13%] 3xl:w-[18%] opacity-90 animate-float delay-4000"
+            className="md:hidden absolute right-[15%] bottom-[20%] w-[30%] md:top-[22%] md:right-[26%] md:w-[10%] 2xl:bottom-[20%] 2xl:right-[28%] 2xl:w-[13%] opacity-80 animate-float-slow delay-1000"
           />
           <Image
-            src={ton3d1}
+            src={ton3d2Png}
             alt=""
-            className="absolute right-[15%] bottom-[20%] w-[30%] md:top-[22%] md:right-[26%] md:w-[10%] 2xl:bottom-[20%] 2xl:right-[28%] 2xl:w-[13%] opacity-80 animate-float-slow delay-1000"
+            className="md:hidden absolute bottom-[-5%] right-[-60px] w-[60%] md:bottom-[7%] md:right-[10%] 3xl:bottom-[-2%] 3xl:right-[8%] md:w-[28%] 3xl:w-[26%] opacity-90 animate-float delay-2000"
+          />
+          {/** DESKTOP */}
+          <Image
+            src={ton3d2Svg}
+            alt=""
+            className="hidden md:block absolute top-[15%] right-[-45px] w-[30%] md:top-[3%] md:right-[16%] md:w-[17%] 2xl:top-[5%] 2xl:right-[13%] 2xl:w-[20%] opacity-90 animate-float delay-4000"
           />
           <Image
-            src={ton3d2}
+            src={ton3d1Svg}
             alt=""
-            className="absolute bottom-[-5%] right-[-60px] w-[60%] md:bottom-[7%] md:right-[10%] 3xl:bottom-[-2%] 3xl:right-[8%] md:w-[28%] 3xl:w-[26%] opacity-90 animate-float delay-2000"
+            className="hidden md:block absolute right-[15%] bottom-[20%] w-[30%] md:top-[22%] md:right-[26%] md:w-[10%] 2xl:bottom-[20%] 2xl:right-[27%] 2xl:w-[14%] opacity-80 animate-float-slow delay-1000"
           />
+          <Image
+            src={ton3d3Svg}
+            alt=""
+            className="hidden md:block absolute bottom-[-5%] right-[-60px] w-[60%] md:bottom-[7%] md:right-[10%] 2xl:bottom-[0%] 2xl:right-[8%] md:w-[28%] 2xl:w-[31%] opacity-90 animate-float delay-2000"
+          />
+          
         </div>
       </div>
 

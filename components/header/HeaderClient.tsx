@@ -87,40 +87,48 @@ export default function HeaderClient() {
   </div>
 </div>
        </Suspense>
+<header className="hidden md:block fixed top-0 left-0 w-full z-50 bg-[#0B1128] backdrop-blur-sm">
+  <div className="mx-auto max-w-7xl px-4 md:px-8 py-3 
+                  grid grid-cols-[auto_1fr_auto] items-center">
+    {/* ЛОГО СЛЕВА */}
+    <Link href="/" className="flex items-center gap-2 text-xl font-bold text-white">
+      <Image src="/favicon.svg" alt={t("brand")} width={22} height={22} className="rounded-md" />
+      <span>{t("brand")}</span>
+    </Link>
 
-      <header className="hidden md:block fixed top-0 left-0 w-full z-50 bg-[#0B1128] backdrop-blur-sm">
-        <div className="mx-auto px-4 md:px-8 py-3 flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-2 text-xl font-bold text-white">
-            <Image src="/favicon.svg" alt={t("brand")} width={22} height={22} className="rounded-md" />
-            <span>{t("brand")}</span>
-          </Link>
+    {/* МЕНЮ ПО ЦЕНТРУ */}
+    <nav className="justify-self-center">
+      <ul className="hidden md:flex items-center 
+                     gap-8 lg:gap-10 xl:gap-14 2xl:gap-20">
+        {links.map((link) => (
+          <li key={link.href}>
+            <Link
+              href={link.href}
+              className={`transition ${
+                pathname === link.href
+                  ? "text-[#00C2FF] font-semibold"
+                  : "text-gray-300 hover:text-[#00C2FF]"
+              }`}
+            >
+              {link.name}
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </nav>
 
-          <nav className="hidden sm:flex gap-8 text-sm">
-            {links.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className={`transition ${
-                  pathname === link.href ? "text-[#00C2FF] font-semibold" : "text-gray-400 hover:text-[#00C2FF]"
-                }`}
-              >
-                {link.name}
-              </Link>
-            ))}
-          </nav>
+    {/* КНОПКИ СПРАВА */}
+    <div className="justify-self-end flex items-center gap-2 md:gap-3">
+      <ClientOnly>
+        <WalletConnect />
+      </ClientOnly>
+      <Suspense fallback={null}>
+        <LanguageSwitcher />
+      </Suspense>
+    </div>
+  </div>
+</header>
 
-          <div className="flex items-center gap-2">
-            
-            <ClientOnly>
-              <WalletConnect />
-            </ClientOnly>
-                    <Suspense fallback={null /* можно поставить лоадер */}>
-             <LanguageSwitcher />
-                 </Suspense>
-
-          </div>
-        </div>
-      </header>
       </>
   );
 }

@@ -4,6 +4,7 @@ import Link from "next/link";
 import { ShieldCheck, Activity, Clock, ArrowRight, TrendingUp, Sparkles, Network } from "lucide-react";
 import { useT } from "@/i18n/react";
 import type { ReactNode } from "react"; // ⬅️ добавили
+import { motion, useReducedMotion } from "framer-motion"; // ⬅️ добавили
 
 type FeatureKey =
   | "security"
@@ -24,6 +25,39 @@ const ICONS: Record<FeatureKey, ReactNode> = {
   networkSupport: <Network   size={28} className="text-sky-400" />,
 };
 
+const containerV = {
+  hidden: {},
+  visible: {
+    transition: {
+      staggerChildren: 0.12,
+      //when: "beforeChildren",
+    },
+  },
+};
+
+// универсальный easing (cubic-bezier), duration — без spring
+const makeCardV = (dir: "up" | "left" | "right") => {
+  const delta =
+    dir === "up" ? { y: 32, x: 0 } :
+    dir === "left" ? { x: -28, y: 0 } :
+    { x: 28, y: 0 };
+
+  return {
+    hidden: { opacity: 0, ...delta, scale: 0.98 },
+    visible: {
+      opacity: 1, x: 0, y: 0, scale: 1,
+      transition: { duration: 0.55, ease: [0.22, 1, 0.36, 1] }, // ⬅️ универсально
+    },
+    hover: {
+      y: -4, scale: 1.01,
+      transition: { duration: 0.25, ease: [0.22, 1, 0.36, 1] },
+    },
+  };
+};
+
+// направление по индексу: 0↑, 1←, 2→, 3↑, 4←, 5→
+const dirByIndex = (i: number) =>
+  (["up","left","right","up","left","right"] as const)[i % 6];
 
 function FeatureCard({
   title,
@@ -35,16 +69,21 @@ function FeatureCard({
   description: string;
 }) {
   const tCommon = useT("common");
+  const prefersReduced = useReducedMotion();
+
   return (
-    <div
-      className=" pb-4 md:mb-3
-             relative w-full max-w-xs
+    <motion.div
+      initial={ prefersReduced ? false : { opacity: 0, y: 28, scale: 0.985 } }
+      whileInView={ prefersReduced ? {} : { opacity: 1, y: 0, scale: 1 } }
+      viewport={{ amount: 0.3, once: true, margin: "-10% 0px -10% 0px" }}
+      transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+      whileHover={ prefersReduced ? undefined : { y: -4, scale: 1.01, transition: { duration: 0.22 } } }
+      className="
+        pb-4 md:mb-3 relative w-full max-w-xs
         min-h-[220px] md:min-h-[240px]
         bg-[radial-gradient(ellipse_at_top_right,_#2C3553_0%,_#1A223E_100%)]
-        rounded-3xl
-        outline outline-1 outline-offset-[-1px] outline-sky-500/70
-        overflow-hidden flex flex-col
-        md:mx-auto sm:mx-0
+        rounded-3xl outline outline-1 outline-offset-[-1px] outline-sky-500/70
+        overflow-hidden flex flex-col md:mx-auto sm:mx-0
       "
     >
       <div className="p-4 md:p-6 flex-1 flex flex-col">
@@ -63,8 +102,7 @@ function FeatureCard({
             type="button"
             className="
               absolute bottom-5 left-1/2 -translate-x-1/2 sm:translate-x-0 sm:left-6
-              inline-flex items-center gap-2
-              text-sky-400 text-base font-bold font-inter
+              inline-flex items-center gap-2 text-sky-400 text-base font-bold font-inter
               hover:underline transition
             "
           >
@@ -73,9 +111,10 @@ function FeatureCard({
           </button>
         </Link>
       </div>
-    </div>
+    </motion.div>
   );
 }
+
 
 export default function WhyUs() {
   const tHome = useT("home");
@@ -100,41 +139,57 @@ export default function WhyUs() {
         }}
       />
 
-      <div
-        className="
-          relative z-10 py-8
-          max-w-6xl mx-auto
-          grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-8 px-4
-          justify-items-center sm:justify-items-stretch
-        "
-      >
-        {/* первые 3 карточки */}
-        {keys.slice(0, 3).map((k) => (
-          <FeatureCard
-            key={k}
-            title={tHome(`features.${k}.title`)}
-            description={tHome(`features.${k}.desc`)}
-            icon={ICONS[k]}
-          />
-        ))}
+  <motion.div
+  variants={containerV}
+  initial="hidden"
+  whileInView="visible"
+  viewport={{ amount: 0.25, once: true }}
+  className="
+    relative z-10 py-8
+    max-w-6xl mx-auto
+    grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-8 px-4
+    justify-items-center sm:justify-items-stretch
+  "
+>
+  {keys.slice(0, 3).map((k, i) => (
+    <FeatureCard
+      key={k}
+      title={tHome(`features.${k}.title`)}
+      description={tHome(`features.${k}.desc`)}
+      icon={ICONS[k]}
+      //variants={makeCardV(dirByIndex(i))}      
+    />
+  ))}
+</motion.div>
 
-        {/* ещё 3 карточки — только на десктопе */}
-        <div className="hidden lg:contents">
-          {keys.slice(3).map((k) => (
-            <FeatureCard
-              key={k}
-              title={tHome(`features.${k}.title`)}
-              description={tHome(`features.${k}.desc`)}
-              icon={ICONS[k]}
-            />
-          ))}
-        </div>
-      </div>
-
+{/* второй ряд тоже нужен свой motion-контейнер; без lg:contents */}
+<div className="hidden lg:block">
+  <motion.div
+    variants={containerV}
+    initial="hidden"
+    whileInView="visible"
+    viewport={{ amount: 0.2, once: true }}
+    className="       relative z-10
+      max-w-6xl mx-auto
+      grid grid-cols-3 gap-4 md:gap-8 px-4
+      justify-items-stretch
+    "
+  >
+    {keys.slice(3).map((k, i) => (
+      <FeatureCard
+        key={k}
+        title={tHome(`features.${k}.title`)}
+        description={tHome(`features.${k}.desc`)}
+        icon={ICONS[k]}
+        //variants={makeCardV(dirByIndex(i + 3))} 
+      />
+    ))}
+  </motion.div>
+</div>
       
       {/* --- НИЖНИЙ ФЕЙД НУЖНОГО ЦВЕТА --- */}
       <div
-        className="pointer-events-none absolute inset-x-0 bottom-[-1px] z-[5]
+        className="pointer-events-none absolute inset-x-0 bottom-[-1px] z-[0]
                    h-[clamp(56px,9vw,160px)]"
         style={{
           // тот же цвет, что и фон следующей секции

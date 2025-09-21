@@ -10,6 +10,11 @@ module.exports = {
   ],
   theme: {
     extend: {
+      screens: {
+        '2xl': '1536px',
+        '3xl': '1920px',
+        '4xl': '2560px',
+      },
       keyframes: {
         "pulse-slow": {
           "0%, 100%": { opacity: "0.3" },

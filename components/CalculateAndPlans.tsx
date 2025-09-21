@@ -149,7 +149,7 @@ export default function CalculateAndPlans() {
   {/* ---- Локализованный заголовок ----
          Разбиваем на части, чтобы подсветить отдельные слова.
          Строки сами живут в messages/{locale}.json */}
-      <div className="max-w-6xl mx-auto px-4 relative z-10 pb-7 md:pb-16">
+      <div className="max-w-6xl mx-auto px-4 my-1 md:my-2 2xl:my-3 relative z-10 pb-7 md:pb-16">
         <h1 className="font-inter font-bold text-[32px] leading-[35px] md:text-[70px] md:leading-[68px] text-white">
           {t("calc.h1.choose")}{" "}
           <span className="text-[#00C2FF]">{t("calc.h1.plan")}</span> {t("calc.h1.and")}<br />

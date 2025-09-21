@@ -85,9 +85,9 @@ export default function InteractivePage() {
         <TotalValue  />
   
       <WhyUs />
-{/**
       <StepsToInvest />
-      <CalculateAndPlans /> */}
+      <CalculateAndPlans /> 
+{/***/}
 
       <FAQSection />
       <Footer />

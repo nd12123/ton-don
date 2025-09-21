@@ -170,11 +170,16 @@ export default function Footer({ className = "" }: { className?: string }) {
 
           {/* desktop */}
           <div className="hidden md:block">
-            <div className="relative min-h-[64px]">
-              {/* left */}
-              <div className="flex items-center gap-4 min-w-0">
-                <div className="flex items-center gap-2">
-                  <Image src={logoSvg} alt={brand} width={32} height={32} />
+            <div className="relative min-h-[64px] xl:min-h-[72px] 2xl:min-h-[84px]">
+{/* left */}
+<div
+  className="
+    flex items-center gap-4 min-w-0
+    2xl:absolute 2xl:left-0 2xl:top-1/2 2xl:-translate-y-1/2
+  "
+>
+                <div className="flex items-center gap-2"> 
+                  <Image src={logoSvg} alt={brand} width={32} height={32} className="2xl:h-9 2xl:w-9" />
                   <span className="text-xl whitespace-nowrap font-semibold">{brand}</span>
                 </div>
 
@@ -189,17 +194,21 @@ export default function Footer({ className = "" }: { className?: string }) {
                 />
 
                 <div className="flex items-center">
-                  <Image src={certikBadge} alt="Audited by Certik" width={120} height={50} />
+                  <Image src={certikBadge} alt="Audited by Certik" width={120} height={50} className="2xl:h-10 w-auto" />
                 </div>
               </div>
 
               {/* center nav */}
-              <nav
-                className="
-                  absolute left-1/2 -translate-x-1/2
-                  flex items-center gap-8 text-[20px] text-white
-                "
-              >
+             <nav
+  className="
+    absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2
+    flex items-center
+    gap-8 lg:gap-10 xl:gap-14 2xl:gap-20 3xl:gap-24
+    text-[18px] lg:text-[20px] 2xl:text-[22px]
+    text-white
+  "
+>
+
                 <Link href="/" className="hover:text-white/90 transition-colors">
                   {navHome}
                 </Link>
