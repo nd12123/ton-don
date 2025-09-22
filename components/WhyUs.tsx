@@ -132,7 +132,7 @@ export default function WhyUs() {
   return (
     <section id="why-us" className="relative overflow-hidden mb-3 md:mb-8">
       <div
-        className="absolute top-0 left-0 w-full h-full pointer-events-none -z-10 opacity-85"
+        className="absolute top-0 left-0 w-full h-full pointer-events-none -z-10 opacity-85 " //3xl:hidden
         style={{
           background:
             "linear-gradient(to bottom, #010512  0%, #050C1E 20%, #060E21 42%, #0A1324 80%, #0A1324 100%)",
@@ -189,7 +189,7 @@ export default function WhyUs() {
       
       {/* --- НИЖНИЙ ФЕЙД НУЖНОГО ЦВЕТА --- */}
       <div
-        className="pointer-events-none absolute inset-x-0 bottom-[-1px] z-[0]
+        className="pointer-events-none absolute inset-x-0 bottom-[-1px] z-[0] 
                    h-[clamp(56px,9vw,160px)]"
         style={{
           // тот же цвет, что и фон следующей секции

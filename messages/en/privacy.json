@@ -1,0 +1,89 @@
+{
+  "title": "Privacy Policy",
+  "updated": "2025-01-01",
+  "sections": [
+    {
+      "id": "overview",
+      "h": "1. Overview",
+      "p": [
+        "This Policy explains what information we collect and how we use it. We aim to collect the minimum necessary to operate the Service."
+      ]
+    },
+    {
+      "id": "data",
+      "h": "2. Data We Process",
+      "p": [
+        "Public wallet data: addresses, balances, transactions on public blockchains.",
+        "Technical logs: basic diagnostics (e.g., request time, errors) to keep the Service reliable.",
+        "Support messages: if you contact us, we process what you provide to respond."
+      ]
+    },
+    {
+      "id": "dont_collect",
+      "h": "3. What We Don’t Collect",
+      "p": [
+        "We do not collect private keys or seed phrases. Never share them with anyone."
+      ]
+    },
+    {
+      "id": "cookies",
+      "h": "4. Cookies & Analytics",
+      "p": [
+        "We may use minimal cookies or privacy-respecting analytics to understand usage. You can block cookies in your browser."
+      ]
+    },
+    {
+      "id": "use",
+      "h": "5. How We Use Data",
+      "p": [
+        "Provide and maintain the Service;",
+        "Improve performance, reliability, and security;",
+        "Respond to support requests;",
+        "Comply with legal obligations where applicable."
+      ]
+    },
+    {
+      "id": "sharing",
+      "h": "6. Sharing",
+      "p": [
+        "We do not sell your personal data. We may share limited data with infrastructure providers solely to operate the Service, under appropriate safeguards."
+      ]
+    },
+    {
+      "id": "transfers",
+      "h": "7. International Transfers",
+      "p": [
+        "Data may be processed in jurisdictions different from yours. We take reasonable measures to protect data during transfer."
+      ]
+    },
+    {
+      "id": "security",
+      "h": "8. Security",
+      "p": [
+        "We use reasonable technical and organizational measures. No online service can guarantee absolute security."
+      ]
+    },
+    {
+      "id": "rights",
+      "h": "9. Your Rights",
+      "p": [
+        "Subject to law, you may request access, correction, or deletion of your support data. Blockchain data is public and immutable."
+      ]
+    },
+    {
+      "id": "changes",
+      "h": "10. Changes",
+      "p": [
+        "We may update this Policy. Continued use indicates acceptance."
+      ]
+    },
+    {
+      "id": "contact",
+      "h": "11. Contact",
+      "p": [
+        "Questions about this Policy: {{email}}",
+        "Brand: {{brand}}"
+      ]
+    }
+  ]
+}

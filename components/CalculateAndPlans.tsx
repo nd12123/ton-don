@@ -236,13 +236,14 @@ useEffect(() => {
 >
   {/* Горизонт */}
   <Image
-    src="/decorative/radius-bg.png"
+    src="/decorative/Frame 33.svg" //radius-bg.png"
     alt="horizon"
     fill
     priority
     style={{
       objectFit: "cover",
-      opacity: 0.40,
+          objectPosition: "center 115px", // ⬅️ сместили картинку вверх на 100px, визуально «опустилась»
+      opacity: 0.60,
     }}
   />
 

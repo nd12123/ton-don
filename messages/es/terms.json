@@ -1,0 +1,80 @@
+{
+  "title": "Términos del Servicio",
+  "updated": "2025-01-01",
+  "sections": [
+    {
+      "id": "agreement",
+      "h": "1. Aceptación de los Términos",
+      "p": [
+        "Al acceder o usar este sitio web y los servicios relacionados (el «Servicio»), aceptas estos Términos del Servicio («Términos»). Si no estás de acuerdo, no uses el Servicio."
+      ]
+    },
+    {
+      "id": "eligibility",
+      "h": "2. Billetera y responsabilidad",
+      "p": [
+        "Eres el único responsable de la seguridad de tu billetera y de tus claves privadas.",
+        "No custodiamos fondos ni podemos recuperar claves o transacciones perdidas."
+      ]
+    },
+    {
+      "id": "no_advice",
+      "h": "3. Sin asesoría financiera",
+      "p": [
+        "El Servicio se ofrece con fines informativos y utilitarios y no constituye asesoría financiera, de inversión, legal ni fiscal.",
+        "Eres responsable de tus decisiones."
+      ]
+    },
+    {
+      "id": "risks",
+      "h": "4. Riesgos y ausencia de garantías",
+      "p": [
+        "Las operaciones on-chain conllevan riesgos, incluidos la volatilidad del mercado, fallas de contratos inteligentes, slashing de validadores y caídas de la red.",
+        "EL SERVICIO SE PROPORCIONA «TAL CUAL» Y «SEGÚN DISPONIBILIDAD», SIN GARANTÍAS DE NINGÚN TIPO, EXPRESAS O IMPLÍCITAS."
+      ]
+    },
+    {
+      "id": "liability",
+      "h": "5. Limitación de responsabilidad",
+      "p": [
+        "EN LA MÁXIMA MEDIDA PERMITIDA POR LA LEY, NO SEREMOS RESPONSABLES POR DAÑOS INDIRECTOS, INCIDENTALES, ESPECIALES, CONSECUENCIALES, EJEMPLARES O PUNITIVOS; NI POR PÉRDIDA DE BENEFICIOS, CRIPTOACTIVOS, DATOS O FONDO DE COMERCIO; NI POR FALLAS DE RED, VALIDADORES O BILLETERAS."
+      ]
+    },
+    {
+      "id": "fees",
+      "h": "6. Comisiones",
+      "p": [
+        "Podrías incurrir en comisiones de red («gas») y de terceros. No las controlamos ni somos responsables por ellas."
+      ]
+    },
+    {
+      "id": "prohibited",
+      "h": "7. Uso prohibido",
+      "p": [
+        "Te comprometes a no usar el Servicio con fines ilícitos ni en violación de las leyes aplicables."
+      ]
+    },
+    {
+      "id": "third_party",
+      "h": "8. Servicios de terceros",
+      "p": [
+        "El Servicio puede integrarse con protocolos o enlaces de terceros. No los controlamos ni somos responsables por su contenido, términos o seguridad."
+      ]
+    },
+    {
+      "id": "changes",
+      "h": "9. Cambios",
+      "p": [
+        "Podemos modificar estos Términos publicando una versión actualizada. Tu uso continuado implica aceptación."
+      ]
+    },
+    {
+      "id": "contact",
+      "h": "10. Contacto",
+      "p": [
+        "Consultas sobre los Términos: {{email}}",
+        "Marca: {{brand}}"
+      ]
+    }
+  ]
+}

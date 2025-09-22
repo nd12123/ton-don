@@ -1,0 +1,80 @@
+{
+  "title": "Terms of Service",
+  "updated": "2025-01-01",
+  "sections": [
+    {
+      "id": "agreement",
+      "h": "1. Agreement to Terms",
+      "p": [
+        "By accessing or using this website and related services (the “Service”), you agree to be bound by these Terms of Service (“Terms”). If you do not agree, do not use the Service."
+      ]
+    },
+    {
+      "id": "eligibility",
+      "h": "2. Eligibility & Wallet",
+      "p": [
+        "You are solely responsible for the security of your wallet and private keys.",
+        "We do not custody funds and cannot recover lost keys or transactions."
+      ]
+    },
+    {
+      "id": "no_advice",
+      "h": "3. No Financial Advice",
+      "p": [
+        "The Service is provided for informational and utility purposes only and does not constitute financial, investment, legal, or tax advice.",
+        "You are solely responsible for your decisions."
+      ]
+    },
+    {
+      "id": "risks",
+      "h": "4. Risks & No Warranty",
+      "p": [
+        "On-chain operations carry risks, including market volatility, smart-contract bugs, validator slashing, and network outages.",
+        "THE SERVICE IS PROVIDED “AS IS” AND “AS AVAILABLE” WITHOUT WARRANTIES OF ANY KIND, EXPRESS OR IMPLIED."
+      ]
+    },
+    {
+      "id": "liability",
+      "h": "5. Limitation of Liability",
+      "p": [
+        "TO THE MAXIMUM EXTENT PERMITTED BY LAW, WE SHALL NOT BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, EXEMPLARY, OR PUNITIVE DAMAGES; NOR FOR ANY LOSS OF PROFITS, CRYPTO ASSETS, DATA, OR GOODWILL; NOR FOR NETWORK, VALIDATOR, OR WALLET FAILURES."
+      ]
+    },
+    {
+      "id": "fees",
+      "h": "6. Fees",
+      "p": [
+        "You may incur network (“gas”) fees and third-party fees. We do not control such fees and are not responsible for them."
+      ]
+    },
+    {
+      "id": "prohibited",
+      "h": "7. Prohibited Use",
+      "p": [
+        "You agree not to use the Service for illegal activities or in violation of applicable laws and regulations."
+      ]
+    },
+    {
+      "id": "third_party",
+      "h": "8. Third-Party Services",
+      "p": [
+        "The Service may integrate third-party protocols or links. We do not control and are not responsible for third-party content, terms, or security."
+      ]
+    },
+    {
+      "id": "changes",
+      "h": "9. Changes",
+      "p": [
+        "We may modify these Terms at any time by posting an updated version. Continued use constitutes acceptance."
+      ]
+    },
+    {
+      "id": "contact",
+      "h": "10. Contact",
+      "p": [
+        "Questions about these Terms: {{email}}",
+        "Brand: {{brand}}"
+      ]
+    }
+  ]
+}

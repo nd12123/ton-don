@@ -43,6 +43,8 @@ const messages = await getMessages(locale as Locale, [
     "staking",
     "support",
     "profile", 
+     'terms', 
+     'privacy'
   ]);
 
   return (

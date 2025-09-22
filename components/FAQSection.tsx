@@ -140,9 +140,28 @@ useEffect(() => {
         </div>
       </div>
 
-      <div className="hidden md:block absolute top-0 right-0 h-full w-full pointer-events-none z-0">
-        <NextImage src={sphereRightTop} alt="" fill style={{ objectFit: "cover", objectPosition: "top right", opacity: 0.22 }} />
-      </div>
+
+   <div
+  className="
+    hidden md:block absolute top-0 right-0 h-full w-full pointer-events-none z-0
+    xl:opacity-45 3xl:opacity-50 3xl:brightness-110
+  "
+  style={{
+    transform: "scaleX(0.85)",
+    transformOrigin: "top right",
+  }}
+>
+  <NextImage
+    src={sphereRightTop}
+    alt=""
+    fill
+    className="object-cover object-right-top"
+    style={{ opacity: 0.5 }} // базовая; поверх неё на 3xl применится 3xl:opacity-40
+  />
+</div>
+
+
+
 
       <div className="hidden md:block pointer-events-none absolute top-[-20px] left-2/5 w-35 h-35 opacity-80 z-20  animate-float-slow">
         <NextImage src="/decorative/ton2.png" alt="" fill style={{ objectFit: "contain" }} />

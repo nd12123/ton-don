@@ -1,0 +1,89 @@
+{
+  "title": "Política de Privacidad",
+  "updated": "2025-01-01",
+  "sections": [
+    {
+      "id": "overview",
+      "h": "1. Información general",
+      "p": [
+        "Esta Política explica qué información recopilamos y cómo la usamos. Buscamos recolectar lo mínimo necesario para operar el Servicio."
+      ]
+    },
+    {
+      "id": "data",
+      "h": "2. Datos que tratamos",
+      "p": [
+        "Datos públicos de la billetera: direcciones, saldos y transacciones en blockchains públicas.",
+        "Registros técnicos: diagnósticos básicos (p. ej., tiempo de solicitud, errores) para mantener la fiabilidad.",
+        "Mensajes de soporte: si nos contactas, tratamos lo que proporciones para responder."
+      ]
+    },
+    {
+      "id": "dont_collect",
+      "h": "3. Lo que NO recopilamos",
+      "p": [
+        "No recopilamos claves privadas ni frases semilla. Nunca las compartas con nadie."
+      ]
+    },
+    {
+      "id": "cookies",
+      "h": "4. Cookies y analítica",
+      "p": [
+        "Podemos usar cookies mínimas o analítica respetuosa de la privacidad para entender el uso. Puedes bloquear las cookies en tu navegador."
+      ]
+    },
+    {
+      "id": "use",
+      "h": "5. Cómo usamos los datos",
+      "p": [
+        "Proporcionar y mantener el Servicio;",
+        "Mejorar rendimiento, fiabilidad y seguridad;",
+        "Responder a solicitudes de soporte;",
+        "Cumplir obligaciones legales cuando corresponda."
+      ]
+    },
+    {
+      "id": "sharing",
+      "h": "6. Cesión a terceros",
+      "p": [
+        "No vendemos tus datos personales. Podemos compartir datos limitados con proveedores de infraestructura únicamente para operar el Servicio, con las debidas garantías."
+      ]
+    },
+    {
+      "id": "transfers",
+      "h": "7. Transferencias internacionales",
+      "p": [
+        "Los datos pueden procesarse en jurisdicciones distintas a la tuya. Adoptamos medidas razonables para protegerlos durante la transferencia."
+      ]
+    },
+    {
+      "id": "security",
+      "h": "8. Seguridad",
+      "p": [
+        "Aplicamos medidas técnicas y organizativas razonables. Ningún servicio en línea puede garantizar seguridad absoluta."
+      ]
+    },
+    {
+      "id": "rights",
+      "h": "9. Tus derechos",
+      "p": [
+        "Conforme a la ley, puedes solicitar acceso, rectificación o eliminación de tus datos de soporte. Los datos en blockchain son públicos e inmutables."
+      ]
+    },
+    {
+      "id": "changes",
+      "h": "10. Cambios",
+      "p": [
+        "Podemos actualizar esta Política. El uso continuado implica aceptación."
+      ]
+    },
+    {
+      "id": "contact",
+      "h": "11. Contacto",
+      "p": [
+        "Consultas sobre esta Política: {{email}}",
+        "Marca: {{brand}}"
+      ]
+    }
+  ]
+}

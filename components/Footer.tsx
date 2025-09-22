@@ -80,7 +80,7 @@ export default function Footer({ className = "" }: { className?: string }) {
         <Image
           src={sphereUpperRight}
           alt=""
-          className="hidden md:block absolute right-0 top-0 w-full h-auto opacity-[05%]"
+          className="hidden md:block absolute right-0 top-0 w-full h-auto opacity-[5%] 3xl:brightness-110 3xl:opacity-[8%]"
         />
         <Image
           src={sphereRight}
