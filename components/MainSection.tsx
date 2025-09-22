@@ -294,7 +294,7 @@ motion-safe:transition-opacity motion-safe:duration-500 motion-safe:delay-300
           <Image
             src={ton3d1Svg}
             alt=""
-            className="hidden md:block absolute right-[15%] bottom-[20%] w-[30%] md:top-[22%] md:right-[26%] md:w-[10%] 2xl:bottom-[20%] 2xl:right-[29%] 2xl:w-[16%] opacity-80 animate-float-slow delay-1000"
+            className="hidden md:block absolute right-[16%] bottom-[22%] w-[30%] md:top-[22%] md:right-[26%] md:w-[10%] 2xl:bottom-[20%] 2xl:right-[29%] 2xl:w-[16%] opacity-80 animate-float-slow delay-1000"
           />
           <Image
             src={ton3d3Svg}

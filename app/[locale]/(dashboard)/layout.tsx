@@ -13,11 +13,11 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         <div className="pointer-events-none fixed inset-0 -z-10">
           {/* Горизонт */}
           <Image
-            src="/decorative/radius-bg.png" //save svg? /horizon-bg.svg
+            src="/decorative/Frame 33.svg" //save svg? radius-bg.png /horizon-bg.svg
             alt=""
             fill
             sizes="100vw"
-            style={{ objectFit: "cover", objectPosition:"center top", opacity: 0.95 }} //opacity:0.45
+            style={{ objectFit: "cover", objectPosition:"center top", opacity: 0.9 }} //opacity:0.45
             priority
           />
           {/* Лёгкие звёзды */}

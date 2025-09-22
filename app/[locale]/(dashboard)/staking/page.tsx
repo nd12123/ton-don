@@ -9,10 +9,16 @@ import { StakeModal } from "@/components/StakeModal";
 import Image from "next/image";
 import { balanceActive, dailyIncomeActive, totalEarnedSoFar } from "@/lib/earnings";
 import { useT } from "@/i18n/react";
+import { useTonPrice } from "@/lib/hooks/useTonPrice";
 
-const TON_PRICE = 3;
+
+//const TON_PRICE = 3;
 
 export default function StakingPage() {
+  const price = useTonPrice();                     // <-- тянем цену TON
+  const tonPrice = price > 0 ? price : 3;          // <-- мягкий фолбэк
+  const isFallbackPrice = price <= 0;              // <-- флаг "цена по умолчанию"
+  
   const t = useT("staking");
 
   const address = useTonAddress();
@@ -84,7 +90,7 @@ export default function StakingPage() {
         balanceTon={previewBalanceTon}
         dailyIncomeTon={previewDailyIncomeTon}
         totalIncomeTon={previewTotalIncomeTon}
-        priceUsd={TON_PRICE}
+        priceUsd={tonPrice}
         deposit={previewDeposit}
         plans={PLANS}
         address = {address}
@@ -331,7 +337,7 @@ export default function StakingPage() {
               </h3>
 
               <p className="font-bold pb-1 md:mb-0.5 text-[24px] md:text-[36px]">
-                ${(dailyTon * TON_PRICE).toFixed(2)}
+                ${(dailyTon * tonPrice).toFixed(2)}
               </p>
 
               <p className="font-semibold leading-tight text-[13px] md:text-[16px] mb-2">
