@@ -35,35 +35,38 @@ export default function CalculateAndPlans() {
   const [days,   setDays]   = useState(30);
 
   
-  const plansRef = useRef<HTMLDivElement | null>(null);
-  const calcRef  = useRef<HTMLDivElement | null>(null);
+  //const calcRef  = useRef<HTMLDivElement | null>(null);
 
-  // простой observer: добавляет .is-visible всем детям с .reveal-up*
-  useEffect(() => {
-    const makeObserver = () =>
-      new IntersectionObserver(
-        (entries, io) => {
-          entries.forEach(entry => {
-            if (entry.isIntersecting) {
-              const host = entry.target as HTMLElement;
-              host.querySelectorAll<HTMLElement>(".reveal-up, .reveal-up-slow")
-                .forEach((el) => el.classList.add("is-visible"));
-              io.unobserve(entry.target); // один раз
-            }
-          });
-        },
-        { threshold: 0.2 }
-      );
+const plansRefD = useRef<HTMLDivElement | null>(null);
+// два отдельных ref
+const plansRefM = useRef<HTMLDivElement | null>(null);
 
-    const io1 = makeObserver();
-    const io2 = makeObserver();
+// новые
+const calcRefM  = useRef<HTMLDivElement | null>(null);
+const calcRefD  = useRef<HTMLDivElement | null>(null);
 
-    if (plansRef.current) io1.observe(plansRef.current);
-    if (calcRef.current)  io2.observe(calcRef.current);
+useEffect(() => {
+  const roots = [
+    plansRefM.current, plansRefD.current,
+    calcRefM.current,  calcRefD.current,
+  ].filter(Boolean) as HTMLElement[];
 
-    return () => { io1.disconnect(); io2.disconnect(); };
-  }, []);
+  if (!roots.length) return;
 
+  const io = new IntersectionObserver((entries, obs) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) return;
+      const root = entry.target as HTMLElement;
+      root.querySelectorAll<HTMLElement>(".reveal-up").forEach((el) => {
+        el.classList.add("is-visible");
+      });
+      obs.unobserve(root); // анимируем один раз
+    });
+  }, { threshold: 0.2 });
+
+  roots.forEach((r) => io.observe(r));
+  return () => io.disconnect();
+}, []);
 
   const handlePlanSelect = (idx: number) => {
     if (idx === selectedPlanIdx) {
@@ -275,7 +278,7 @@ export default function CalculateAndPlans() {
       <div className="max-w-6xl mx-auto px-2 md:px-6 pb-6">
         {/* === 3) Карточки планов === */}
         <div className=" md:hidden grid grid-cols-3 gap-x-3 md:gap-x-16 gap-y-2 md:gap-y-8 mb-6 md:mb-16" //grid-cols-1 md: 
-                  ref={plansRef} >
+                  ref={plansRefM} >
           {PLANS.map((plan, idx) => (
             <div
               key={`m-${plan.id}`}
@@ -296,7 +299,7 @@ export default function CalculateAndPlans() {
           ))}
         </div>
         <div className="hidden md:grid grid-cols-3 gap-x-3 md:gap-x-16 gap-y-2 md:gap-y-8 mb-6 md:mb-16" //grid-cols-1 md: 
-                  ref={plansRef} >
+                  ref={plansRefD} >
           {PLANS.map((plan, idx) => (
             <div
               key={`m-${plan.id}`}
@@ -324,35 +327,37 @@ export default function CalculateAndPlans() {
           ))}
         </div>
         
-
-{/* Mobile-only CalculatorTest */}
-<div className="ref={calcRef} md:hidden mt-1">
-  <CalculatorHorizontal
-    amount={amount}
-    onAmountChange={handleAmountChange}
-    sliderMin={PLANS[0].min}
-    sliderMax={5000}
-    days={days}
-    onDaysChange={setDays}
-    apr={apr}
-    dailyEarnings={dailyEarnings}
-  />
-  
+{/* Mobile-only */}
+<div className="md:hidden mt-1" ref={calcRefM}>
+  <div className="reveal-up" style={{ animationDelay: "160ms" }}>
+    <CalculatorHorizontal
+      amount={amount}
+      onAmountChange={handleAmountChange}
+      sliderMin={PLANS[0].min}
+      sliderMax={5000}
+      days={days}
+      onDaysChange={setDays}
+      apr={apr}
+      dailyEarnings={dailyEarnings}
+    />
+  </div>
 </div>
-
 {/* Desktop-only */}
-<div className="ref={calcRef} hidden md:block mb-6">
-  <Calculator
-    amount={amount}
-    onAmountChange={handleAmountChange}
-    sliderMin={PLANS[0].min}
-    sliderMax={5000}
-    days={days}
-    onDaysChange={setDays}
-    apr={apr}
-    dailyEarnings={dailyEarnings}
-  />
+<div className="hidden md:block mb-6" ref={calcRefD}>
+  <div className="reveal-up" style={{ animationDelay: "200ms" }}>
+    <Calculator
+      amount={amount}
+      onAmountChange={handleAmountChange}
+      sliderMin={PLANS[0].min}
+      sliderMax={5000}
+      days={days}
+      onDaysChange={setDays}
+      apr={apr}
+      dailyEarnings={dailyEarnings}
+    />
+  </div>
 </div>
+
 </div>
 
       {/* 5) Левый «сфера-хвост» */}

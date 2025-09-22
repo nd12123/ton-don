@@ -113,7 +113,7 @@ export default function TotalValue() {
 
         <TotalValueWidget />
 
-        <p className="mt-6 max-w-2xl mx-auto text-base text-gray-300">
+        <p className="mt-6 max-w-2xl mx-auto text-[13px] md:text-base text-gray-300">
           {tHome("stats.blurb")}
         </p>
 

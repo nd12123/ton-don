@@ -174,11 +174,11 @@ const renderTitle2 = (s: string) => {
             {/* Mobile: каждое слово title_1 с новой строки */}
             <div className="md:hidden leading-[1.02]">
               {splitWords(title1).map((w, i) => (
-                <span key={i} className="block text-[clamp(44px,12vw,56px)]  text-left">
+                <span key={i} className="block text-[clamp(60px,12vw,64px)]  text-left">
                   {w}
                 </span>
               ))}
-              <span className="block text-[clamp(44px,11vw,50px)] text-left">
+              <span className="block text-[clamp(60px,11vw,64px)] text-left text-semibold">
                 {renderTitle2(title2)}
               </span>
             </div>
@@ -201,7 +201,7 @@ motion-safe:transition-opacity motion-safe:duration-500 motion-safe:delay-300
   <GoToStakingButton
     className="
       btn-primary
-      w-[160px] h-[48px]     /* мобайл */
+      w-[180px] h-[48px]     /* мобайл */
       sm:w-[180px] sm:h-[50px]
       md:w-[260px] md:h-[62px]
       lg:w-[250px] lg:h-[62px]   /* десктоп */
@@ -228,40 +228,36 @@ motion-safe:transition-opacity motion-safe:duration-500 motion-safe:delay-300
     <path d="M9 18l6-6-6-6" />
   </svg>
   </GoToStakingButton>
-
-  {/* Кнопка "Audited by Certik" — SVG на всех брейкпоинтах для идеальной резкости */}
-  <button
-    type="button"
-    aria-label={auditedByCertik}
+<button
+  type="button"
+  aria-label={auditedByCertik}
+  className="
+    inline-flex items-center justify-left
+    w-[180px] h-[50px]          /* было 220x60 → стало ~20% меньше */
+    sm:w-[230px] sm:h-[60px]
+    md:w-[260px] md:h-[62px]
+    lg:w-[250px] lg:h-[65px]
+    tracking-[0.2px]
+    transition-transform hover:scale-[1.03] active:scale-[0.99]
+  "
+>
+  <Image
+    src={certikSvg}
+    alt={auditedByCertik}
+    priority
+    width={260} height={65}     /* можно оставить с запасом */
+    sizes="(max-width: 640px) 180px, (max-width: 1024px) 230px, 260px"
     className="
-      inline-flex items-center justify-left
-      w-[200px] h-[56px]
-      sm:w-[220px] sm:h-[60px]
-      md:w-[260px] md:h-[62px]
-      lg:w-[250px] lg:h-[65px]
-        tracking-[0.2px]
-      transition-transform hover:scale-[1.03] active:scale-[0.99]
+      w-[180px] h-auto          /* мобильный рендер-бокс ↓ */
+      sm:w-[230px]
+      md:w-[260px]
+      lg:w-[250px]
+      select-none
+      [image-rendering:auto]
     "
-      /*  rounded-3xl
-      bg-transparent
-      hover:ring-white/25 transition     ring-1 ring-white/15*/
-  >
-    <Image
-      src={certikSvg}              /* один SVG для всех экранов */
-      alt={auditedByCertik}
-      priority
-      width={250} height={65}      /* базовый бокс для SSR; реальный размер задают w/h кнопки */
-      className="
-        w-[160px] h-auto           /* мобайл */
-        sm:w-[170px]
-        md:w-[190px]
-        lg:w-[250px]               /* десктоп */
-        select-none
-        [image-rendering:auto]
-      "
-      unoptimized
-    />
-  </button>
+  />
+</button>
+
 </div>
 
         </div>
@@ -287,7 +283,7 @@ motion-safe:transition-opacity motion-safe:duration-500 motion-safe:delay-300
           <Image
             src={ton3d2Png}
             alt=""
-            className="md:hidden absolute bottom-[-5%] right-[-60px] w-[60%] md:bottom-[7%] md:right-[10%] 3xl:bottom-[-2%] 3xl:right-[8%] md:w-[28%] 3xl:w-[26%] opacity-90 animate-float delay-2000"
+            className="md:hidden absolute bottom-[0%] right-[-60px] w-[60%] md:bottom-[7%] md:right-[10%] 3xl:bottom-[-2%] 3xl:right-[8%] md:w-[28%] 3xl:w-[26%] opacity-90 animate-float delay-2000"
           />
           {/** DESKTOP */}
           <Image
@@ -303,7 +299,7 @@ motion-safe:transition-opacity motion-safe:duration-500 motion-safe:delay-300
           <Image
             src={ton3d3Svg}
             alt=""
-            className="hidden md:block absolute bottom-[-5%] right-[-60px] w-[60%] md:bottom-[7%] md:right-[10%] lg:bottom-[2%] 2xl:bottom-[-2%] 3xl:bottom-[-9%] 2xl:right-[12%] 3xl:right-[14%] md:w-[28%] 2xl:w-[27%] 3xl:w-[26%] opacity-90 animate-float delay-2000"
+            className="hidden md:block absolute bottom-[0%] right-[-60px] w-[60%] md:bottom-[10%] md:right-[7%] xl:bottom-[6%] 2xl:bottom-[2%] 3xl:bottom-[-9%] 2xl:right-[12%] 3xl:right-[14%] md:w-[28%] 2xl:w-[27%] 3xl:w-[26%] opacity-90 animate-float delay-2000"
           />
           
         </div>
@@ -311,7 +307,7 @@ motion-safe:transition-opacity motion-safe:duration-500 motion-safe:delay-300
 
       {/* мобильный градиент внизу */}
       <div
-        className="block md:hidden absolute inset-x-0 bottom-0 h-full opacity-[9%] pointer-events-none z-30"
+        className="block md:hidden absolute inset-x-0 bottom-0 h-full opacity-[8%] pointer-events-none z-30"
         style={{ background: "linear-gradient(to top, #17DCFF, #0B1028)" }}
       />
     </section>
