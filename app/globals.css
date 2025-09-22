@@ -62,18 +62,20 @@
   to   { opacity: 1; transform: translateY(0); }
 }
 
-/* базовое состояние до входа в вьюпорт */
+/* === reveal utils: не оборачивать в @layer, иначе могут выпасть на проде === */
 .reveal-up {
   opacity: 0;
-  transform: translateY(18px);
-  will-change: transform, opacity;
-  backface-visibility: hidden;
+  transform: translateY(10px);
+  transition:
+    opacity .6s cubic-bezier(.22,1,.36,1),
+    transform .6s cubic-bezier(.22,1,.36,1);
+  will-change: opacity, transform;
+}
+.reveal-up.is-visible {
+  opacity: 1;
+  transform: translateY(0);
 }
 
-/* запускаем анимацию, когда добавим .is-visible */
-.reveal-up.is-visible {
-  animation: riseSoft 0.85s cubic-bezier(.22,1,.36,1) forwards;
-}
 
 /* плавный, длиннее (для больших блоков типа калькулятора) */
 .reveal-up-slow.is-visible {

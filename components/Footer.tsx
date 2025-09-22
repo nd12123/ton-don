@@ -9,6 +9,8 @@ import { useT } from "@/i18n/react";
 import logoSvg from "@/assets/Footer/Ton image.png";
 import certikBadge from "@/public/decorative/certik.svg";
 import supportIcon from "@/assets/Footer/Support.svg";
+import supportPng from "@/assets/Footer/Support.png";
+
 import StartInvestingDesktop from "./StartInvestingDesktop";
 import StartInvesting from "./StartInvesting";
 import { motion } from "framer-motion";
@@ -147,13 +149,13 @@ export default function Footer({ className = "" }: { className?: string }) {
                     src="/decorative/mobile/Certik.png"
                     alt="Audited by Certik"
                     width={100}
-                    height={40}
+                    height={38}
                   />
                 </div>
 
                 <div className="flex items-center pt-3">
                   <Link href="/support" className="ml-1 inline-flex items-center">
-                    <Image src={supportIcon} alt={supportAlt} width={120} height={50} />
+                    <Image src={supportPng} alt={supportAlt} width={120} height={50} />
                   </Link>
                 </div>
               </div>
