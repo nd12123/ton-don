@@ -1,0 +1,48 @@
+{
+  "titles": {
+    "stats": "स्टेक के बाद सांख्यिकी",
+    "stake": "स्टेकिंग में जोड़ें"
+  },
+  "stats": {
+    "balance": "बैलेंस",
+    "dailyIncome": "दैनिक आय",
+    "totalIncome": "कुल आय",
+    "assetValue": "एसेट वैल्यू (प्रति घंटा अपडेट)"
+  },
+  "status": {
+    "connected": "कनेक्टेड",
+    "disconnected": "डिस्कनेक्टेड"
+  },
+  "inputs": {
+    "amount": "जमा राशि",
+    "duration": "जमा अवधि",
+    "days": "दिन"
+  },
+  "cards": {
+    "in1day": "1 दिन में",
+    "in7days": "7 दिनों में",
+    "inNDays": "{days} दिनों में"
+  },
+  "plans": {
+    "basic":   { "label": "Basic",   "range": "1–999 TON" },
+    "pro":     { "label": "Pro",     "range": "1000–1999 TON" },
+    "premium": { "label": "Premium", "range": "2000+ TON" }
+  },
+  "planCard": {
+    "yourProfit": "आपका लाभ",
+    "perDay": "प्रति दिन",
+    "investmentsAllTime": "कुल निवेश",
+    "aria": {
+      "selected": "चयनित",
+      "selectPlan": "प्लान चुनें"
+    }
+  },
+  "buttons": {
+    "stakeNow": "अभी स्टेक करें",
+    "connect": "कनेक्ट"
+  },
+  "ticket": {
+    "dailyIncome": "दैनिक आय",
+    "note": "आप बिना मौजूदा कॉन्ट्रैक्ट रद्द किए किसी भी समय अपना स्टेकिंग बढ़ा सकते हैं। बस मौजूदा डिपॉज़िट में अधिक TON जोड़ें — और स्वचालित रूप से अधिक लाभदायक प्लान पर अपग्रेड हो जाएगा। इससे पूंजी तेज़ी से बढ़ेगी और आय स्थिर रहेगी।"
+  }
+}

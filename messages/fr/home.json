@@ -1,0 +1,142 @@
+{
+  "pills": {
+    "reliable": "Fiable",
+    "profitable": "Rentable",
+    "simple": "Simple"
+  },
+  "nav": {
+    "goToTotalValue": "Aller à la Valeur Totale",
+    "goToCalculator": "Aller au Calculateur",
+    "goToSteps": "Aller aux Étapes"
+  },
+  "calc": {
+    "h1": {
+      "choose": "Choisissez",
+      "plan": "un plan",
+      "and": "et",
+      "calculate": "calculez",
+      "your": "vos",
+      "profit": "bénéfices"
+    },
+    "cards": {
+      "in1day": "En 1 jour",
+      "in7days": "En 7 jours",
+      "inNDays": "En {days} jours"
+    },
+    "inputs": {
+      "amount": "Montant du dépôt",
+      "duration": "Durée du dépôt",
+      "days": "Jours"
+    }
+  },
+  "plans": {
+    "basic": { "label": "Basic", "range": "1–999 TON" },
+    "pro": { "label": "Pro", "range": "1000–1999 TON" },
+    "premium": { "label": "Premium", "range": "2000+ TON" },
+    "card": {
+      "yourProfit": "Vos bénéfices",
+      "perDay": "Par jour",
+      "investmentsAllTime": "Investissements cumulés",
+      "ctaIdle": "Choisir un plan",
+      "ctaActive": "Investir maintenant >",
+      "aria": {
+        "selected": "Sélectionné",
+        "selectPlan": "Choisir un plan"
+      }
+    }
+  },
+  "startInvesting": {
+    "title": "Commencez à investir maintenant !",
+    "subtitle": "Deux clics pour commencer — premiers gains dès demain"
+  },
+  "why": {
+    "features": {
+      "security": {
+        "title": "Sécurité",
+        "desc": "Vos fonds sont hébergés chez des validateurs sûrs."
+      },
+      "transparency": {
+        "title": "Transparence",
+        "desc": "Chaque transaction est visible on-chain."
+      },
+      "flexibility": {
+        "title": "Flexibilité",
+        "desc": "Ajustez la durée de staking selon vos besoins."
+      }
+    },
+    "cta": "Explorer les options"
+  },
+  "faq": {
+    "title": "FAQ",
+    "subtitle": "Des réponses rapides aux questions fréquentes...",
+    "items": [
+      {
+        "q": "Où calculer mes gains de staking ?",
+        "a": "Sur cette page via notre calculateur interactif. Choisissez un plan, saisissez le montant en TON et la durée — l’estimation s’affiche immédiatement."
+      },
+      {
+        "q": "Délai de réception des récompenses ?",
+        "a": "Elles sont versées chaque jour, à partir de 24 h après la confirmation de votre stake. La distribution est automatisée par nos algorithmes."
+      },
+      {
+        "q": "Montant minimum pour commencer ?",
+        "a": "10 TON. Nos plans permettent de gagner dès 10 TON."
+      },
+      {
+        "q": "Retrait à tout moment ?",
+        "a": "Oui. Ouvrez le tableau de bord, « Withdraw », puis confirmez dans votre wallet — les fonds reviennent à votre adresse."
+      },
+      {
+        "q": "Frais cachés ?",
+        "a": "Aucun frais de plateforme. Seules les commissions réseau TON (gas) s’appliquent aux dépôts/retraits."
+      },
+      {
+        "q": "Sécurité du dépôt ?",
+        "a": "Smart contracts conformes aux standards de sécurité TON, open-source vérifiés et audits réguliers."
+      }
+    ]
+  },
+  "hero": {
+    "title_1": "Staker TON",
+    "title_2": "Facile & Sûr",
+    "lead": "Staker vos TON (Toncoin) en toute confiance et gagnez un revenu passif via des smart contracts audités.",
+    "headlineTop": "Staker TON en quelques minutes"
+  },
+  "stats": {
+    "title": "Valeur Totale",
+    "totalStaked": "41653 TON",
+    "blurb": "Faites travailler vos TON ! Plus de 100 000 $ en TON génèrent déjà des revenus passifs via nos algorithmes. Commencez avec 10 TON."
+  },
+  "features": {
+    "security": {
+      "title": "Sécurité",
+      "desc": "Fonds chez des validateurs de confiance."
+    },
+    "transparency": {
+      "title": "Transparence",
+      "desc": "Tout est visible sur la blockchain."
+    },
+    "flexibility": {
+      "title": "Flexibilité",
+      "desc": "Durée selon vos besoins."
+    },
+    "profitability": {
+      "title": "Rentabilité",
+      "desc": "Récompenses régulières pour soutenir le réseau TON."
+    },
+    "simplicity": {
+      "title": "Simplicité",
+      "desc": "Démarrage en quelques clics, sans configuration complexe."
+    },
+    "networkSupport": {
+      "title": "Soutien du réseau",
+      "desc": "Votre stake renforce et décentralise TON."
+    }
+  },
+  "cta": {
+    "choosePlan": "Choisissez un plan et calculez vos gains"
+  },
+  "buttons": {
+    "connect": "Connecter le wallet"
+  }
+}

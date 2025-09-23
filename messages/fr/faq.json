@@ -1,0 +1,36 @@
+{
+  "title": "FAQ",
+  "subtitle": "Des réponses rapides aux questions fréquentes",
+  "items": [
+    {
+      "id": "calc",
+      "q": "Où puis-je calculer mes gains de staking ?",
+      "a": "Directement sur cette page avec notre calculateur interactif. Choisissez un plan, saisissez le montant en TON et la durée — l’estimation s’affiche immédiatement."
+    },
+    {
+      "id": "rewards_time",
+      "q": "Combien de temps pour recevoir les récompenses ?",
+      "a": "Les récompenses sont versées chaque jour, à partir de 24 h après la confirmation de votre stake sur le réseau. La distribution est automatisée par nos algorithmes."
+    },
+    {
+      "id": "min_amount",
+      "q": "Quel est le montant minimum pour commencer ?",
+      "a": "Le minimum est de 10 TON. Nos plans sont conçus pour vous permettre de gagner dès 10 TON."
+    },
+    {
+      "id": "withdraw_any_time",
+      "q": "Puis-je retirer mes fonds à tout moment ?",
+      "a": "Oui. Ouvrez votre tableau de bord, sélectionnez « Withdraw » et confirmez la transaction dans votre wallet — les fonds seront renvoyés à votre adresse."
+    },
+    {
+      "id": "fees",
+      "q": "Y a-t-il des frais supplémentaires ou cachés ?",
+      "a": "Aucun frais d’utilisation de la plateforme. Seules les commissions réseau TON (gas) s’appliquent aux dépôts et retraits. La plateforme est gratuite."
+    },
+    {
+      "id": "security",
+      "q": "Mon dépôt est-il sécurisé ?",
+      "a": "Vos fonds sont conservés dans des smart contracts conformes aux standards de sécurité de TON. Nous utilisons des contrats open-source vérifiés et procédons à des audits réguliers."
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "search": { "placeholder": "搜索验证节点…" },
+  "filters": { "all": "全部", "active": "进行中", "completed": "已完成" },
+  "status": { "active": "进行中", "completed": "已完成" },
+  "labels": {
+    "plannedIncome": "预计收益",
+    "earned": "已获得",
+    "status": "状态",
+    "apr": "APR",
+    "daysShort": "天"
+  },
+  "buttons": { "withdraw": "提取" },
+  "titles": {
+    "myProfile": "我的资料",
+    "history": "质押历史"
+  },
+  "title": "质押历史",
+  "plannedIncome": "预计收益",
+  "empty": "未找到结果。",
+  "connectWalletPrompt": "请在页眉处连接你的钱包。",
+  "needConnect": "连接钱包"
+}

@@ -1,0 +1,48 @@
+{
+  "titles": {
+    "stats": "质押后的统计",
+    "stake": "追加质押"
+  },
+  "stats": {
+    "balance": "余额",
+    "dailyIncome": "日收益",
+    "totalIncome": "总收益",
+    "assetValue": "资产价值（每小时更新）"
+  },
+  "status": {
+    "connected": "已连接",
+    "disconnected": "未连接"
+  },
+  "inputs": {
+    "amount": "存入金额",
+    "duration": "存入期限",
+    "days": "天数"
+  },
+  "cards": {
+    "in1day": "1 天后",
+    "in7days": "7 天后",
+    "inNDays": "{days} 天后"
+  },
+  "plans": {
+    "basic":   { "label": "Basic",   "range": "1–999 TON" },
+    "pro":     { "label": "Pro",     "range": "1000–1999 TON" },
+    "premium": { "label": "Premium", "range": "2000+ TON" }
+  },
+  "planCard": {
+    "yourProfit": "您的收益",
+    "perDay": "每日",
+    "investmentsAllTime": "累计投资",
+    "aria": {
+      "selected": "已选择",
+      "selectPlan": "选择方案"
+    }
+  },
+  "buttons": {
+    "stakeNow": "立即质押",
+    "connect": "连接"
+  },
+  "ticket": {
+    "dailyIncome": "日收益",
+    "note": "您可随时在不取消现有合约的情况下增加质押。只需向现有存款追加 TON，即可自动享受更高收益的方案。这样资本增长更快，收益更稳定。"
+  }
+}

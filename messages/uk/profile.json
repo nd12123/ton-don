@@ -1,0 +1,22 @@
+{
+  "search": { "placeholder": "Пошук валідатора…" },
+  "filters": { "all": "Усі", "active": "Активні", "completed": "Завершені" },
+  "status": { "active": "Активний", "completed": "Завершений" },
+  "labels": {
+    "plannedIncome": "Плановий дохід",
+    "earned": "Нараховано",
+    "status": "Статус",
+    "apr": "APR",
+    "daysShort": "дн"
+  },
+  "buttons": { "withdraw": "Вивести" },
+  "titles": {
+    "myProfile": "Мій профіль",
+    "history": "Історія стейкінгу"
+  },
+  "title": "Історія стейкінгу",
+  "plannedIncome": "Плановий дохід",
+  "empty": "Нічого не знайдено.",
+  "connectWalletPrompt": "Підключіть гаманець у шапці сайту.",
+  "needConnect": "Підключити гаманець"
+}

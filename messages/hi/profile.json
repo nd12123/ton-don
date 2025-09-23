@@ -1,0 +1,22 @@
+{
+  "search": { "placeholder": "वैलिडेटर खोजें…" },
+  "filters": { "all": "सभी", "active": "सक्रिय", "completed": "पूर्ण" },
+  "status": { "active": "सक्रिय", "completed": "पूर्ण" },
+  "labels": {
+    "plannedIncome": "अनुमानित आय",
+    "earned": "अर्जित",
+    "status": "स्थिति",
+    "apr": "APR",
+    "daysShort": "दि"
+  },
+  "buttons": { "withdraw": "निकालें" },
+  "titles": {
+    "myProfile": "मेरा प्रोफाइल",
+    "history": "स्टेकिंग इतिहास"
+  },
+  "title": "स्टेकिंग इतिहास",
+  "plannedIncome": "अनुमानित आय",
+  "empty": "कुछ नहीं मिला।",
+  "connectWalletPrompt": "हेडर में अपना वॉलेट कनेक्ट करें।",
+  "needConnect": "वॉलेट कनेक्ट करें"
+}

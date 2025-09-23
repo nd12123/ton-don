@@ -3,14 +3,14 @@ import type { ReactNode } from "react";
 import Header from "@/components/header/HeaderClient";
 import ClientProviders from "@/components/ClientProviders";
 
-import { I18nProvider, type Locale } from "@/i18n/react";
-import { getMessages } from "@/i18n";
+import { I18nProvider, type Locale, type Messages } from "@/i18n/react";
+import { loadAllMessages } from "@/i18n";
 import { Suspense } from "react";
 
 import TonConnectWarmup from "@/components/TonConnectWarmup";
 
 // локали держим тут, чтобы не тянуть конфиги
-const SUPPORTED = ["ru", "en", 'es'] as const;
+const SUPPORTED = ["ru", "en", 'es', 'fr','zh','uk','hi'] as const;
 type Supported = typeof SUPPORTED[number];
 const DEFAULT_LOCALE: Supported = "ru";
 
@@ -36,7 +36,7 @@ export default async function LocaleLayout({
     );
   }
 
-const messages = await getMessages(locale as Locale, [
+const messages = await loadAllMessages([
     "common",
     "home",
     "faq",
@@ -45,10 +45,10 @@ const messages = await getMessages(locale as Locale, [
     "profile", 
      'terms', 
      'privacy'
-  ]);
+  ], locale as Locale);
 
   return (
-    <I18nProvider locale={locale as Supported} messages={messages}>
+    <I18nProvider locale={locale as Supported} messages={messages as Messages}>
       <ClientProviders locale={locale as Supported}>
         <Header />
         {children}

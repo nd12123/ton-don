@@ -1,0 +1,36 @@
+{
+  "brand": "Ton Stake",
+  "app": {
+    "name": "TON स्टेकिंग प्लेटफ़ॉर्म"
+  },
+  "nav": {
+    "home": "होम",
+    "staking": "स्टेकिंग",
+    "history": "इतिहास",
+    "profile": "प्रोफ़ाइल",
+    "support": "सपोर्ट"
+  },
+  "buttons": {
+    "stakeNow": "अभी स्टेक करें",
+    "getStarted": "शुरू करें",
+    "startInvesting": "निवेश शुरू करें",
+    "exploreOptions": "विकल्प देखें",
+    "connect": "वॉलेट कनेक्ट करें",
+    "connectWallet": "वॉलेट कनेक्ट करें",
+    "floatingStakeNow": "अभी स्टेक करें",
+    "connected": "कनेक्टेड"
+  },
+  "wallet": {
+    "connected": "कनेक्टेड: {addr}",
+    "manage": "वॉलेट प्रबंधित करें"
+  },
+  "footer": {
+    "copyright": "© 2025 Orbi Ton | सभी अधिकार सुरक्षित",
+    "terms": "नियम और शर्तें",
+    "privacy": "गोपनीयता नीति"
+  },
+  "startInvesting": {
+    "title": "अभी निवेश शुरू करें",
+    "subtitle": "2 क्लिक में कमाना शुरू करें – कल से ही पहली आय"
+  }
+}

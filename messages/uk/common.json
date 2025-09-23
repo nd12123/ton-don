@@ -1,0 +1,36 @@
+{
+  "brand": "Ton Stake",
+  "app": {
+    "name": "Платформа для стейкінгу TON"
+  },
+  "nav": {
+    "home": "Головна",
+    "staking": "Стейкінг",
+    "history": "Історія",
+    "profile": "Профіль",
+    "support": "Підтримка"
+  },
+  "buttons": {
+    "stakeNow": "Стейкнути зараз",
+    "getStarted": "Почати",
+    "startInvesting": "Почати інвестувати",
+    "exploreOptions": "Переглянути варіанти",
+    "connect": "Підключити гаманець",
+    "connectWallet": "Підключити гаманець",
+    "floatingStakeNow": "Стейкнути зараз",
+    "connected": "Підключено"
+  },
+  "wallet": {
+    "connected": "Підключено: {addr}",
+    "manage": "Керувати гаманцем"
+  },
+  "footer": {
+    "copyright": "© 2025 Orbi Ton | Всі права захищені",
+    "terms": "Умови та положення",
+    "privacy": "Політика конфіденційності"
+  },
+  "startInvesting": {
+    "title": "Почни інвестувати зараз",
+    "subtitle": "Почни заробляти у 2 кліки – перший дохід вже завтра"
+  }
+}

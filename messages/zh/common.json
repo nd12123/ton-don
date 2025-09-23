@@ -1,0 +1,36 @@
+{
+  "brand": "Ton Stake",
+  "app": {
+    "name": "TON 质押平台"
+  },
+  "nav": {
+    "home": "首页",
+    "staking": "质押",
+    "history": "历史",
+    "profile": "个人资料",
+    "support": "支持"
+  },
+  "buttons": {
+    "stakeNow": "立即质押",
+    "getStarted": "开始",
+    "startInvesting": "开始投资",
+    "exploreOptions": "探索选项",
+    "connect": "连接钱包",
+    "connectWallet": "连接钱包",
+    "floatingStakeNow": "立即质押",
+    "connected": "已连接"
+  },
+  "wallet": {
+    "connected": "已连接: {addr}",
+    "manage": "管理钱包"
+  },
+  "footer": {
+    "copyright": "© 2025 Orbi Ton | 版权所有",
+    "terms": "条款和条件",
+    "privacy": "隐私政策"
+  },
+  "startInvesting": {
+    "title": "立即开始投资",
+    "subtitle": "只需 2 次点击即可开始 – 明天即可获得第一笔收益"
+  }
+}

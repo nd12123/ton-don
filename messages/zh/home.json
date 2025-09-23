@@ -1,0 +1,142 @@
+{
+  "pills": {
+    "reliable": "可靠",
+    "profitable": "收益好",
+    "simple": "简单"
+  },
+  "nav": {
+    "goToTotalValue": "前往总价值",
+    "goToCalculator": "前往计算器",
+    "goToSteps": "前往步骤"
+  },
+  "calc": {
+    "h1": {
+      "choose": "选择",
+      "plan": "方案",
+      "and": "并",
+      "calculate": "计算",
+      "your": "你的",
+      "profit": "收益"
+    },
+    "cards": {
+      "in1day": "1 天后",
+      "in7days": "7 天后",
+      "inNDays": "{days} 天后"
+    },
+    "inputs": {
+      "amount": "存入数量",
+      "duration": "存入时长",
+      "days": "天数"
+    }
+  },
+  "plans": {
+    "basic": { "label": "基础", "range": "1–999 TON" },
+    "pro": { "label": "进阶", "range": "1000–1999 TON" },
+    "premium": { "label": "高级", "range": "2000+ TON" },
+    "card": {
+      "yourProfit": "你的收益",
+      "perDay": "每天",
+      "investmentsAllTime": "累计投入",
+      "ctaIdle": "选择方案",
+      "ctaActive": "立即投资 >",
+      "aria": {
+        "selected": "已选择",
+        "selectPlan": "选择方案"
+      }
+    }
+  },
+  "startInvesting": {
+    "title": "现在就开始投资！",
+    "subtitle": "两次点击开始赚取——明天就有第一笔收入"
+  },
+  "why": {
+    "features": {
+      "security": {
+        "title": "安全",
+        "desc": "资金由安全的验证者托管。"
+      },
+      "transparency": {
+        "title": "透明",
+        "desc": "所有交易链上可查。"
+      },
+      "flexibility": {
+        "title": "灵活",
+        "desc": "自定义质押期限以符合需求。"
+      }
+    },
+    "cta": "探索选项"
+  },
+  "faq": {
+    "title": "常见问题",
+    "subtitle": "快速解答你的常见疑问...",
+    "items": [
+      {
+        "q": "在哪里计算质押收益？",
+        "a": "就在本页通过交互式计算器。选择方案、输入 TON 数量和天数——立即看到预估收益。"
+      },
+      {
+        "q": "多久开始拿到奖励？",
+        "a": "每天发放，自质押确认后的 24 小时内开始。资金由我们的算法自动分配。"
+      },
+      {
+        "q": "起投最低多少？",
+        "a": "最低 10 TON。我们的方案支持从 10 TON 就开始获得奖励。"
+      },
+      {
+        "q": "可随时提现吗？",
+        "a": "可以。打开面板，选择「Withdraw」并在钱包确认——资金将退回到你的地址。"
+      },
+      {
+        "q": "有额外或隐藏费用吗？",
+        "a": "不收取平台费。仅在充提时支付 TON 网络（gas）手续费。"
+      },
+      {
+        "q": "资金安全吗？",
+        "a": "资金保存在符合 TON 安全标准的智能合约中。采用已验证的开源合约并定期审计。"
+      }
+    ]
+  },
+  "hero": {
+    "title_1": "质押 TON",
+    "title_2": "简单 & 安全",
+    "lead": "自信质押你的 TON（Toncoin），通过已审计的智能合约获得可靠的被动收入。",
+    "headlineTop": "几分钟完成 TON 质押"
+  },
+  "stats": {
+    "title": "总价值",
+    "totalStaked": "41653 TON",
+    "blurb": "让 TON 为你工作！超过 100,000 美元等值的 TON 已在我们的算法下产生被动收益。仅需 10 TON 即可开始。"
+  },
+  "features": {
+    "security": {
+      "title": "安全",
+      "desc": "与可信验证者一起托管。"
+    },
+    "transparency": {
+      "title": "透明",
+      "desc": "交易全链上可见。"
+    },
+    "flexibility": {
+      "title": "灵活",
+      "desc": "期限按需设置。"
+    },
+    "profitability": {
+      "title": "收益性",
+      "desc": "参与 TON 网络获得稳定奖励。"
+    },
+    "simplicity": {
+      "title": "简洁",
+      "desc": "几次点击即可开始，无需复杂设置。"
+    },
+    "networkSupport": {
+      "title": "支持网络",
+      "desc": "你的质押帮助加强并去中心化 TON 区块链。"
+    }
+  },
+  "cta": {
+    "choosePlan": "选择方案并计算你的收益"
+  },
+  "buttons": {
+    "connect": "连接钱包"
+  }
+}

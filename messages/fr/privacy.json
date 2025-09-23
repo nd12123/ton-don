@@ -1,0 +1,89 @@
+{
+  "title": "Politique de Confidentialité",
+  "updated": "2025-01-01",
+  "sections": [
+    {
+      "id": "overview",
+      "h": "1. Aperçu",
+      "p": [
+        "Cette politique explique quelles informations nous collectons et comment nous les utilisons. Nous visons à collecter le minimum nécessaire pour faire fonctionner le Service."
+      ]
+    },
+    {
+      "id": "data",
+      "h": "2. Données que nous traitons",
+      "p": [
+        "Données publiques de portefeuille : adresses, soldes, transactions sur les blockchains publiques.",
+        "Journaux techniques : diagnostics de base (par ex. temps de requête, erreurs) pour assurer la fiabilité du Service.",
+        "Messages de support : si vous nous contactez, nous traitons les informations fournies pour répondre."
+      ]
+    },
+    {
+      "id": "dont_collect",
+      "h": "3. Ce que nous ne collectons pas",
+      "p": [
+        "Nous ne collectons pas vos clés privées ni phrases seed. Ne les partagez jamais."
+      ]
+    },
+    {
+      "id": "cookies",
+      "h": "4. Cookies et analyses",
+      "p": [
+        "Nous pouvons utiliser des cookies minimaux ou des outils d’analyse respectueux de la vie privée. Vous pouvez bloquer les cookies dans votre navigateur."
+      ]
+    },
+    {
+      "id": "use",
+      "h": "5. Utilisation des données",
+      "p": [
+        "Fournir et maintenir le Service ;",
+        "Améliorer la performance, la fiabilité et la sécurité ;",
+        "Répondre aux demandes d’assistance ;",
+        "Respecter les obligations légales lorsque applicable."
+      ]
+    },
+    {
+      "id": "sharing",
+      "h": "6. Partage",
+      "p": [
+        "Nous ne vendons pas vos données personnelles. Nous pouvons partager des données limitées avec des prestataires d’infrastructure uniquement pour opérer le Service, sous des garanties appropriées."
+      ]
+    },
+    {
+      "id": "transfers",
+      "h": "7. Transferts internationaux",
+      "p": [
+        "Les données peuvent être traitées dans des juridictions différentes de la vôtre. Nous prenons des mesures raisonnables pour les protéger pendant le transfert."
+      ]
+    },
+    {
+      "id": "security",
+      "h": "8. Sécurité",
+      "p": [
+        "Nous utilisons des mesures techniques et organisationnelles raisonnables. Aucun service en ligne ne peut garantir une sécurité absolue."
+      ]
+    },
+    {
+      "id": "rights",
+      "h": "9. Vos droits",
+      "p": [
+        "Sous réserve de la loi, vous pouvez demander l’accès, la correction ou la suppression de vos données de support. Les données blockchain sont publiques et immuables."
+      ]
+    },
+    {
+      "id": "changes",
+      "h": "10. Modifications",
+      "p": [
+        "Nous pouvons mettre à jour cette politique. L’utilisation continue du Service vaut acceptation."
+      ]
+    },
+    {
+      "id": "contact",
+      "h": "11. Contact",
+      "p": [
+        "Questions à propos de cette politique : {{email}}",
+        "Marque : {{brand}}"
+      ]
+    }
+  ]
+}

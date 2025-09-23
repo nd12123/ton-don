@@ -1,0 +1,23 @@
+{
+  "title": "Support",
+  "intro": "Si vous avez des questions, contactez-nous :",
+  "form": {
+    "emailPlaceholder": "Votre e-mail",
+    "emailAria": "Champ e-mail",
+    "messagePlaceholder": "Votre message",
+    "messageAria": "Champ message",
+    "submit": "Envoyer",
+    "sending": "Envoi…",
+    "sent": "Message envoyé, merci !",
+    "error": "Une erreur s’est produite lors de l’envoi. Veuillez réessayer plus tard."
+  },
+  "lead": "Des questions ? Écrivez-nous :",
+  "contact": {
+    "email_label": "E-mail",
+    "tg_label": "Telegram",
+    "form_label": "Formulaire de contact",
+    "email_value": "{{email}}",
+    "tg_value": "{{telegram}}",
+    "form_value": "{{supportFormUrl}}"
+  }
+}

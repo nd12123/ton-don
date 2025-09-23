@@ -1,0 +1,22 @@
+{
+  "search": { "placeholder": "Rechercher un validateur…" },
+  "filters": { "all": "Tous", "active": "Actifs", "completed": "Terminés" },
+  "status": { "active": "Actif", "completed": "Terminé" },
+  "labels": {
+    "plannedIncome": "Revenu prévu",
+    "earned": "Gagné",
+    "status": "Statut",
+    "apr": "APR",
+    "daysShort": "j"
+  },
+  "buttons": { "withdraw": "Retirer" },
+  "titles": {
+    "myProfile": "Mon profil",
+    "history": "Historique de staking"
+  },
+  "title": "Historique de staking",
+  "plannedIncome": "Revenu prévu",
+  "empty": "Aucun résultat.",
+  "connectWalletPrompt": "Connectez votre portefeuille dans l’en-tête.",
+  "needConnect": "Connecter le portefeuille"
+}

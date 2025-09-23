@@ -1,0 +1,23 @@
+{
+  "title": "सपोर्ट",
+  "intro": "कोई प्रश्न हो तो यहाँ संपर्क करें:",
+  "form": {
+    "emailPlaceholder": "आपका ई-मेल",
+    "emailAria": "ई-मेल इनपुट फ़ील्ड",
+    "messagePlaceholder": "आपका संदेश",
+    "messageAria": "संदेश इनपुट फ़ील्ड",
+    "submit": "भेजें",
+    "sending": "भेजा जा रहा है…",
+    "sent": "संदेश भेज दिया गया, धन्यवाद!",
+    "error": "भेजते समय त्रुटि हुई। कृपया बाद में पुनः प्रयास करें।"
+  },
+  "lead": "कोई सवाल? हमसे संपर्क करें:",
+  "contact": {
+    "email_label": "ई-मेल",
+    "tg_label": "Telegram",
+    "form_label": "संपर्क फ़ॉर्म",
+    "email_value": "{{email}}",
+    "tg_value": "{{telegram}}",
+    "form_value": "{{supportFormUrl}}"
+  }
+}

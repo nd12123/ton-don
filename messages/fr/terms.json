@@ -1,0 +1,80 @@
+{
+  "title": "Conditions d’utilisation",
+  "updated": "2025-01-01",
+  "sections": [
+    {
+      "id": "agreement",
+      "h": "1. Acceptation des conditions",
+      "p": [
+        "En accédant ou en utilisant ce site Web et les services associés (le « Service »), vous acceptez d’être lié par les présentes Conditions d’utilisation (« Conditions »). Si vous n’êtes pas d’accord, n’utilisez pas le Service."
+      ]
+    },
+    {
+      "id": "eligibility",
+      "h": "2. Éligibilité & Portefeuille",
+      "p": [
+        "Vous êtes seul responsable de la sécurité de votre portefeuille et de vos clés privées.",
+        "Nous ne gardons pas de fonds et ne pouvons pas récupérer de clés ou de transactions perdues."
+      ]
+    },
+    {
+      "id": "no_advice",
+      "h": "3. Pas de conseil financier",
+      "p": [
+        "Le Service est fourni uniquement à des fins d’information et d’utilité et ne constitue pas un conseil financier, d’investissement, juridique ou fiscal.",
+        "Vous êtes seul responsable de vos décisions."
+      ]
+    },
+    {
+      "id": "risks",
+      "h": "4. Risques & Absence de garantie",
+      "p": [
+        "Les opérations on-chain comportent des risques, y compris la volatilité du marché, les bugs des smart contracts, les pénalités de validateurs et les pannes du réseau.",
+        "LE SERVICE EST FOURNI « TEL QUEL » ET « SELON DISPONIBILITÉ » SANS AUCUNE GARANTIE, EXPRESSE OU IMPLICITE."
+      ]
+    },
+    {
+      "id": "liability",
+      "h": "5. Limitation de responsabilité",
+      "p": [
+        "DANS LA LIMITE MAXIMALE AUTORISÉE PAR LA LOI, NOUS NE SERONS PAS RESPONSABLES DES DOMMAGES INDIRECTS, SPÉCIAUX, CONSÉCUTIFS OU PUNITIFS ; NI DE LA PERTE DE PROFITS, D’ACTIFS CRYPTO, DE DONNÉES OU DE RÉPUTATION ; NI DES ÉCHECS DE RÉSEAU, VALIDATEUR OU PORTEFEUILLE."
+      ]
+    },
+    {
+      "id": "fees",
+      "h": "6. Frais",
+      "p": [
+        "Vous pouvez encourir des frais de réseau (« gas ») et de tiers. Nous ne contrôlons pas ces frais et ne sommes pas responsables d’eux."
+      ]
+    },
+    {
+      "id": "prohibited",
+      "h": "7. Utilisation interdite",
+      "p": [
+        "Vous acceptez de ne pas utiliser le Service à des fins illégales ou en violation des lois et réglementations applicables."
+      ]
+    },
+    {
+      "id": "third_party",
+      "h": "8. Services tiers",
+      "p": [
+        "Le Service peut intégrer des protocoles ou liens tiers. Nous ne contrôlons pas et ne sommes pas responsables du contenu, des conditions ou de la sécurité des tiers."
+      ]
+    },
+    {
+      "id": "changes",
+      "h": "9. Modifications",
+      "p": [
+        "Nous pouvons modifier ces Conditions à tout moment en publiant une version mise à jour. L’utilisation continue constitue une acceptation."
+      ]
+    },
+    {
+      "id": "contact",
+      "h": "10. Contact",
+      "p": [
+        "Questions concernant ces Conditions : {{email}}",
+        "Marque : {{brand}}"
+      ]
+    }
+  ]
+}

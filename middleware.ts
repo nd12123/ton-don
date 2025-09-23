@@ -1,7 +1,8 @@
 // middleware.ts
 import { NextRequest, NextResponse } from 'next/server';
 
-const SUPPORTED_LOCALES = ['ru','en', 'es'] as const;
+// добавили fr, zh, uk, hi
+const SUPPORTED_LOCALES = ['en','ru','es','fr','zh','uk','hi'] as const;
 const DEFAULT_LOCALE = 'en';
 
 function hasLocale(pathname: string) {
@@ -12,8 +13,6 @@ function isPublic(req: NextRequest) {
   const p = req.nextUrl.pathname;
   if (p.startsWith('/api')) return true;
   if (p.startsWith('/_next')) return true;
-
-  // корневые служебные и манифесты
   if (
     p === '/favicon.ico' ||
     p === '/robots.txt' ||
@@ -30,18 +29,18 @@ function isPublic(req: NextRequest) {
     p.startsWith('/images') ||
     p.startsWith('/icons') ||
     p.startsWith('/favicon') ||
-    p.startsWith('/fonts')
+    p.startsWith('/fonts') ||
+    p.startsWith('/docs') ||
+    p.startsWith('/audit')
   ) return true;
 
   if (/\.(?:png|jpg|jpeg|gif|svg|ico|webp|avif|css|js|map|txt|ttf|otf|woff2?|mp4|webm)$/i.test(p)) return true;
-
   return false;
 }
 
 export function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
 
-  // локализованные обращения к манифесту переписываем на корень
   if (pathname.endsWith('/tonconnect-manifest.json')) {
     const url = req.nextUrl.clone();
     url.pathname = '/tonconnect-manifest.json';
@@ -55,10 +54,10 @@ export function middleware(req: NextRequest) {
     url.pathname = `/${DEFAULT_LOCALE}${pathname}`;
     return NextResponse.redirect(url);
   }
-
   return NextResponse.next();
 }
 
+// оставляем matcher как был; ничего менять не требуется
 export const config = {
   matcher: [
     '/((?!' +
@@ -78,6 +77,8 @@ export const config = {
       'icons|' +
       'favicon|' +
       'fonts|' +
+      'docs/|' +
+      'audit|' +
       '.*\\.(?:png|jpg|jpeg|gif|svg|ico|webp|avif|css|js|map|txt|ttf|otf|woff2?|mp4|webm)' +
     ').*)',
   ],

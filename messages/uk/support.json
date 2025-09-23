@@ -1,0 +1,23 @@
+{
+  "title": "Підтримка",
+  "intro": "Якщо у вас є запитання, зв’яжіться з нами:",
+  "form": {
+    "emailPlaceholder": "Ваш e-mail",
+    "emailAria": "Поле e-mail",
+    "messagePlaceholder": "Ваше повідомлення",
+    "messageAria": "Поле повідомлення",
+    "submit": "Надіслати",
+    "sending": "Відправка…",
+    "sent": "Повідомлення надіслано, дякуємо!",
+    "error": "Сталася помилка під час відправки. Спробуйте пізніше."
+  },
+  "lead": "Є питання? Напишіть нам:",
+  "contact": {
+    "email_label": "E-mail",
+    "tg_label": "Telegram",
+    "form_label": "Форма зв’язку",
+    "email_value": "{{email}}",
+    "tg_value": "{{telegram}}",
+    "form_value": "{{supportFormUrl}}"
+  }
+}
