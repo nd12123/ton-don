@@ -1,5 +1,10 @@
 # build артефакты и мусор
 node_modules
+Dockerfile*
+docker-compose.yml
+caddy_data
+caddy_config
+*.log
 .next/cache
 .next/trace
 .next/**/*.map

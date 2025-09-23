@@ -5,6 +5,7 @@ import { Dialog } from "@headlessui/react";
 import { Plus, Pencil, Trash2, X } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 import { StakeRecord } from "@/lib/store"; // если тип другой — см. StakeRow ниже
+import { useTonAddress } from "@tonconnect/ui-react"; // <-- добавили
 
 type StakeRow = StakeRecord & {
   id: string | number;
@@ -44,6 +45,10 @@ export default function AdminStakesTable() {
   const [saving, setSaving] = useState(false);
   const [deletingId, setDeletingId] = useState<string | number | null>(null);
 
+
+   // адрес подключённого кошелька (админ)
+  const adminWallet = useTonAddress(); // пустая строка если не подключен
+  
   // загрузка
   const fetchRows = async () => {
     setLoading(true);
@@ -99,7 +104,76 @@ export default function AdminStakesTable() {
       (form.status === "active" || form.status === "completed")
     );
   }, [form]);
+  
+  // --- НОВОЕ: тонкая обёртка для вызова нашего серверного API
+  const adminFetch = async (body: any) => {
+    const token =
+      // 1) лучше хранить как httpOnly cookie, тогда заголовок не нужен
+      // 2) если совсем просто — можно класть в localStorage (понимаем риск)
+      (typeof window !== "undefined" && localStorage.getItem("ADMIN_TOKEN")) ||
+      process.env.NEXT_PUBLIC_ADMIN_UI_TOKEN || "";
 
+    return fetch("/api/admin/stakes", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "x-admin-token": token, // сервер проверит
+      },
+      body: JSON.stringify({ ...body, walletAddress: adminWallet }),
+    });
+  };
+
+  const save = async () => {
+    if (!canSave) return;
+    if (!adminWallet) { setErr("Connect admin wallet first"); return; }
+
+    setSaving(true); setErr(null);
+
+    const payload: any = {
+      validator: form.validator.trim(),
+      owner: form.owner?.trim() || null,
+      wallet: form.wallet?.trim() || null,
+      amount: Number(form.amount),
+      apr: Number(form.apr),
+      duration: Number(form.duration),
+      status: form.status,
+      txHash: form.txHash?.trim() || null,
+    };
+
+    // вместо прямого supabase.update/insert — идём на сервер
+    const res = await adminFetch(
+      form.id
+        ? { op: "update", id: Number(form.id), data: payload }
+        : { op: "create", data: payload }
+    );
+
+    if (!res.ok) {
+      const j = await res.json().catch(() => null);
+      setErr(j?.error || `Save failed (${res.status})`);
+      setSaving(false);
+      return;
+    }
+
+    setSaving(false);
+    setIsOpen(false);
+    fetchRows();
+  };
+
+  const remove = async (id: string | number) => {
+    if (!adminWallet) { setErr("Connect admin wallet first"); return; }
+    setDeletingId(id);
+
+    // безопасность: DELETE тоже через сервер
+    const res = await adminFetch({ op: "delete", id: Number(id) });
+    if (!res.ok) {
+      const j = await res.json().catch(() => null);
+      setErr(j?.error || `Delete failed (${res.status})`);
+    }
+
+    setDeletingId(null);
+    fetchRows();
+  };
+/*
   const save = async () => {
     if (!canSave) return;
     setSaving(true);
@@ -141,7 +215,7 @@ export default function AdminStakesTable() {
     setDeletingId(null);
     fetchRows();
   };
-
+*/
   return (
     <div className="w-full">
       {/* header */}
