@@ -1,4 +1,5 @@
 // app/(dashboard)/profile/page.tsx
+/*
 "use client";
 
 import { useState, useMemo } from "react";
@@ -54,12 +55,7 @@ const handleWithdraw = async (stake: StakeRecord, amt: number) => {
         .update({  txHash: tx, amount: stake.amount - amt }) // if amountLaeft == 0, status: "completed",
         .eq("id", stake.id)
         .select();
-  /*  // Пример: просто пометим как completed или уменьшить amount
-  await supabase
-    .from("stakes")
-    .update({ amount: stake.amount - amt })
-    .eq("id", stake.id);
-    */
+
 
   // Обновляем список
   await fetchHistory(address);
@@ -114,7 +110,6 @@ const handleWithdraw = async (stake: StakeRecord, amt: number) => {
         Мой профиль
       </motion.h1>
 
-      {/* 0) Блок общей статистики */}
       <DashboardStats
         balanceTon={totalStaked}
         dailyIncomeTon={dailyIncome}
@@ -124,7 +119,6 @@ const handleWithdraw = async (stake: StakeRecord, amt: number) => {
         plans={PLANS}
       />
 
-      {/* 1) Короткая сводка */}
       <section className="grid grid-cols-1 sm:grid-cols-2 gap-6">
         <InfoCard
           title="Всего застейкано"
@@ -140,7 +134,6 @@ const handleWithdraw = async (stake: StakeRecord, amt: number) => {
         />
       </section>
 
-      {/* 2) Таблица истории */}
       <section>
         <h2 className="text-xl font-semibold mb-4">История стейков</h2>
         {history.length === 0 ? (
@@ -206,3 +199,4 @@ const handleWithdraw = async (stake: StakeRecord, amt: number) => {
     </main>
   );
 }
+*/
