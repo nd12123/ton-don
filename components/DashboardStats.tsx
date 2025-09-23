@@ -158,7 +158,7 @@ export default function DashboardStats({
     // на мобилке по центру всей ячейки, на десктопе — как было справа
     <div className="shrink-0 w-full md:w-auto flex md:block justify-center">
       {/* твой компонент кнопки подключения */}
-      <WalletConnectInline />
+      <WalletConnectInline /> {/**       <ClientOnly>      </ClientOnly> ...Inline */}
     </div>
   )}
 </div>

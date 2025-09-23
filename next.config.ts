@@ -6,6 +6,7 @@ const nextConfig: NextConfig = {
   output: 'standalone',
 
   images: {
+        unoptimized: true,
     // если грузишь картинки с внешних доменов — открой их тут.
     // Можно сузить до конкретных хостов вместо "**".
     //remotePatterns: [
