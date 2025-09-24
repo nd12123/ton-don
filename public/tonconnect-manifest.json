@@ -1,10 +1,10 @@
 {
-  "url": "https://147.45.69.191.nip.io/",
+  "url": "https://tonstaker.io",
+  "name": "TON Staker",
+  "iconUrl": "https://tonstaker.io/icons/icon-192.png",
+  "termsOfUseUrl": "https://tonstaker.io/terms",
+  "privacyPolicyUrl": "https://tonstaker.io/privacy",
   "description": "Stake your TON tokens securely",
-  "name": "TON Stake",
-  "iconUrl": "https://147.45.69.191.nip.io/decorative/favicon.svg",
-  "termsOfUseUrl": "https://example.com/terms",
-  "privacyPolicyUrl": "https://example.com/privacy",
   "permissions": ["tonClient"],              
   "networks": ["testnet"] 
 }

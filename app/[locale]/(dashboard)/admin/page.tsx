@@ -4,6 +4,10 @@
 import AdminGate from "./AdminGate";
 import { Jetton } from "@/components/Jetton";
 import AdminStakesTable from "@/components/AdminStakesTable";
+
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 // в админ-странице
 export default function AdminPage() {
 //  import { useTonAddress } from "@tonconnect/ui-react";

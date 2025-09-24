@@ -20,7 +20,7 @@ export default function Providers({
 
   return (
     <TonConnectUIProvider
-      manifestUrl="https://147.45.69.191.nip.io/tonconnect-manifest.json"
+      manifestUrl="/tonconnect-manifest.json"
       language={tonUILang}           // <- корректный проп; не в uiPreferences
       // uiPreferences={{ theme: 'SYSTEM' }} // опционально
       //restoreConnection={false} //true on production
