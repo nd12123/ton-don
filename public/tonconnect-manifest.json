@@ -1,8 +1,8 @@
 {
-  "url": "https://staking-mocha-iota.vercel.app/",
+  "url": "https://147.45.69.191.nip.io/",
   "description": "Stake your TON tokens securely",
   "name": "TON Stake",
-  "iconUrl": "https://staking-mocha-iota.vercel.app/decorative/favicon.svg",
+  "iconUrl": "https://147.45.69.191.nip.io/decorative/favicon.svg",
   "termsOfUseUrl": "https://example.com/terms",
   "privacyPolicyUrl": "https://example.com/privacy",
   "permissions": ["tonClient"],              
