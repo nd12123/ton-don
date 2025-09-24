@@ -348,11 +348,14 @@ export default function StakingPage() {
                 {t("ticket.note")}
               </p>
 
-              <Image
-                src="/decorative/ton22.svg"
-                alt=""
-                className="pointer-events-none w-[90px] h-[90px] md:w-[138px] md:h-[138px] opacity-100 md:opacity-95 select-none absolute right-[-20px] bottom-[-15px] md:right-[-15px] md:bottom-[-15px]"
-              />
+             <Image
+  src="/decorative/ton22.svg"
+  alt=""
+  width={138}
+  height={138}
+  className="pointer-events-none w-[90px] h-[90px] md:w-[138px] md:h-[138px] opacity-100 md:opacity-95 select-none absolute right-[-20px] bottom-[-15px] md:right-[-15px] md:bottom-[-15px]"
+/>
+
             </div>
           </div>
         </div>

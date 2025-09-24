@@ -1,6 +1,12 @@
 // lib/store.ts
+"use client";
+
 import {create} from "zustand";
-import { supabase } from "@/lib/supabase";
+//import { supabase } from "@/lib/supabase";
+import { getSupabase } from "@/lib/supabase/browser";
+
+
+  const supabase = getSupabase()
 
 export interface StakeRecord {
   id: string;

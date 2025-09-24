@@ -1,7 +1,9 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import Link from "next/link";
+//import Link from "next/link";
+import LocaleLink from "@/components/LocaleLink";
+
 import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
 import { useTonWallet } from "@tonconnect/ui-react";
@@ -75,10 +77,10 @@ export default function MobileNav() {
           >
             <Menu className="w-6 h-6 text-white" />
           </button>
-<Link href="/" className="flex items-center gap-2 text-white font-bold text-lg">
+<LocaleLink href="/" className="flex items-center gap-2 text-white font-bold text-lg">
   <Image src="/favicon.svg" alt="TON Stake" width={20} height={20} className="rounded-md" />
   <span>{t("common.brand")}</span>
-</Link>
+</LocaleLink>
           {/* Кнопка кошелька справа, как в десктопе */}
           {/* Кнопка кошелька справа (мобайл компактная) */}
 <div
@@ -140,7 +142,7 @@ export default function MobileNav() {
             const active = pathname === item.href;
             return (
               <li key={item.href}>
-                <Link
+                <LocaleLink
                   href={item.href}
                   className={`block rounded-lg px-3 py-2 text-base transition-colors
                     ${active
@@ -148,7 +150,7 @@ export default function MobileNav() {
                       : "text-gray-300 hover:bg-white/5 hover:text-white"}`}
                 >
                   {item.name}
-                </Link>
+                </LocaleLink>
               </li>
             );
           })}

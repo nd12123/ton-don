@@ -1,15 +1,20 @@
 "use client";
 
-import Link from "next/link";
+//import Link from "next/link";
+import LocaleLink from "@/components/LocaleLink";
+
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useMemo, Suspense   } from "react";
 import ClientOnly from "@/components/ClientOnly";
-import WalletConnect from "@/components/WalletConnect";
+//import WalletConnect from "@/components/WalletConnect";
 import MobileNav from "@/components/MobileNav";
 import { useTonWallet, useTonAddress } from "@tonconnect/ui-react";
 import { Address } from "@ton/core";
 import { useT } from '@/i18n/react';
+
+import dynamic from "next/dynamic";
+const WalletConnect = dynamic(() => import("@/components/WalletConnect"), { ssr: false });
 
 // 👉 ЗАМЕНИ ЭТУ СТРОКУ на то, что у тебя в .env.local
 // Формат: можно смешивать EQ… и raw 0:… адреса, через запятую const ADMIN_ADDRESSES_CSV = "0QB8akzBYXBpATjJiWG1vRwo2FG2JoA9czy3yNno-qhMnrVn, 0:aaaaaaaaaaaaaaaaaaaa, EQyyyyyyyyyyyyyyyyyy";
@@ -91,10 +96,10 @@ export default function HeaderClient() {
   <div className="mx-auto max-w-7xl px-4 md:px-8 py-3 
                   grid grid-cols-[auto_1fr_auto] items-center">
     {/* ЛОГО СЛЕВА */}
-    <Link href="/" className="flex items-center gap-2 text-xl font-bold text-white">
+    <LocaleLink href="/" className="flex items-center gap-2 text-xl font-bold text-white">
       <Image src="/favicon.svg" alt={t("brand")} width={22} height={22} className="rounded-md" />
       <span>{t("brand")}</span>
-    </Link>
+    </LocaleLink>
 
     {/* МЕНЮ ПО ЦЕНТРУ */}
     <nav className="justify-self-center">
@@ -102,7 +107,7 @@ export default function HeaderClient() {
                      gap-8 lg:gap-10 xl:gap-14 2xl:gap-20">
         {links.map((link) => (
           <li key={link.href}>
-            <Link
+            <LocaleLink
               href={link.href}
               className={`transition ${
                 pathname === link.href
@@ -111,7 +116,7 @@ export default function HeaderClient() {
               }`}
             >
               {link.name}
-            </Link>
+            </LocaleLink>
           </li>
         ))}
       </ul>

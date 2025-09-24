@@ -3,7 +3,9 @@
 
 import React from "react";
 import Image from "next/image";
-import Link from "next/link";
+//import Link from "next/link";
+import LocaleLink from "@/components/LocaleLink";
+
 import { useT } from "@/i18n/react";
 
 import logoSvg from "@/assets/Footer/Ton image.png";
@@ -25,9 +27,7 @@ const tonCoin1 = "/decorative/ton3.png";
 const tonCoin2 = "/decorative/ton2.png";
 
 export default function Footer({ className = "" }: { className?: string }) {
-  // берем общий неймспейс
   const t = useT("common");
-  // безопасный фоллбек (если ключа нет — показываем разумный дефолт)
   const tf = <T extends string>(key: string, fb: T) => t<T>(key, undefined, fb);
 
   const brand = tf("brand", "TON Stake");
@@ -72,56 +72,58 @@ export default function Footer({ className = "" }: { className?: string }) {
             mixBlendMode: "screen",
           }}
         />
-        <Image
+
+        {/* ВАЖНО: декоративные картинки -> обычные <img>, чтобы не требовались width/height/fill */}
+        <img
           src={sphereUpperLeft}
           alt=""
-          className="absolute left-0 sm:top-[-15px] top-0 w-full h-auto opactity-[85%] md:opacity-85"
+          className="absolute left-0 sm:top-[-15px] top-0 w-full h-auto opacity-85"
         />
-        <Image
+        <img
           src={sphereUpperRight}
           alt=""
-          className="hidden md:block absolute right-0 top-0 w-full h-auto opacity-[5%] 3xl:brightness-110 3xl:opacity-[8%]"
+          className="hidden md:block absolute right-0 top-0 w-full h-auto opacity-[0.05] 3xl:brightness-110 3xl:opacity-[0.08]"
         />
-        <Image
+        <img
           src={sphereRight}
           alt=""
           className="absolute right-0 bottom-0 w-1/2 h-auto opacity-25"
         />
-        <Image
+        <img
           src={tonCoin1}
           alt=""
           className="absolute w-16 h-16 md:w-32 md:h-32 top-[3%] md:top-[5%] right-[3%] opacity-60 animate-float-slow delay-1000"
         />
-        <Image
+        <img
           src={tonCoin2}
           alt=""
           className="absolute w-[100px] h-[100px] bottom-[160px] md:bottom-[26%] left-[6%] md:left-[3%] opacity-50 animate-float-slow delay-3000"
         />
       </div>
 
-     {/* CTA mobile */}
-<motion.div
-  key="footer-cta-mobile"
-  initial={{ opacity: 0, y: 28, filter: "blur(6px)" }}
-  whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-  viewport={{ once: true, amount: 0.25, margin: "0px 0px -10% 0px" }}
-  transition={{ duration: 1.05, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
-  className="lg:hidden relative z-10 mt-6 sm:mt-8 lg:mt-10 pb-3 will-change-transform transform-gpu"
->
-  <StartInvesting />
-</motion.div>
+      {/* CTA mobile */}
+      <motion.div
+        key="footer-cta-mobile"
+        initial={{ opacity: 0, y: 28, filter: "blur(6px)" }}
+        whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+        viewport={{ once: true, amount: 0.25, margin: "0px 0px -10% 0px" }}
+        transition={{ duration: 1.05, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
+        className="lg:hidden relative z-10 mt-6 sm:mt-8 lg:mt-10 pb-3 will-change-transform transform-gpu"
+      >
+        <StartInvesting />
+      </motion.div>
 
-{/* CTA desktop */}
-<motion.div
-  key="footer-cta-desktop"
-  initial={{ opacity: 0, y: 28, filter: "blur(6px)" }}
-  whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-  viewport={{ once: true, amount: 0.25, margin: "0px 0px -10% 0px" }}
-  transition={{ duration: 1.05, ease: [0.22, 1, 0.36, 1], delay: 0.2 }}
-  className="hidden lg:block will-change-transform transform-gpu"
->
-  <StartInvestingDesktop />
-</motion.div>
+      {/* CTA desktop */}
+      <motion.div
+        key="footer-cta-desktop"
+        initial={{ opacity: 0, y: 28, filter: "blur(6px)" }}
+        whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+        viewport={{ once: true, amount: 0.25, margin: "0px 0px -10% 0px" }}
+        transition={{ duration: 1.05, ease: [0.22, 1, 0.36, 1], delay: 0.2 }}
+        className="hidden lg:block will-change-transform transform-gpu"
+      >
+        <StartInvestingDesktop />
+      </motion.div>
 
       {/* верхняя зона футера */}
       <div className="relative z-10 pt-0 md:pt-3 pb-0 md:pb-3">
@@ -154,26 +156,25 @@ export default function Footer({ className = "" }: { className?: string }) {
                 </div>
 
                 <div className="flex items-center pt-3">
-                  <Link href="/support" className="ml-1 inline-flex items-center">
+                  <LocaleLink href="/support" className="ml-1 inline-flex items-center">
                     <Image src={supportPng} alt={supportAlt} width={120} height={50} />
-                  </Link>
+                  </LocaleLink>
                 </div>
               </div>
 
-             
- <nav className="grid grid-cols-2 gap-x-6 gap-y-3 text-[18px] text-white pb-2 mt-3 w-full max-w-xs mx-auto">
-   <Link href="/" className="block text-center whitespace-nowrap hover:text-white transition-colors">
+              <nav className="grid grid-cols-2 gap-x-6 gap-y-3 text-[18px] text-white pb-2 mt-3 w-full max-w-xs mx-auto">
+                <LocaleLink href="/" className="block text-center whitespace-nowrap hover:text-white transition-colors">
                   {navHome}
-                </Link>
-   <Link href="/staking" className="block text-center whitespace-nowrap hover:text-white transition-colors">
+                </LocaleLink>
+                <LocaleLink href="/staking" className="block text-center whitespace-nowrap hover:text-white transition-colors">
                   {navStaking}
-                </Link>
-   <Link href="/profile" className="block text-center whitespace-nowrap hover:text-white transition-colors">
+                </LocaleLink>
+                <LocaleLink href="/profile" className="block text-center whitespace-nowrap hover:text-white transition-colors">
                   {navProfile}
-                </Link>
-   <Link href="/support" className="block text-center whitespace-nowrap hover:text-white transition-colors">
+                </LocaleLink>
+                <LocaleLink href="/support" className="block text-center whitespace-nowrap hover:text-white transition-colors">
                   {navSupport}
-                </Link>
+                </LocaleLink>
               </nav>
 
               <div
@@ -192,14 +193,14 @@ export default function Footer({ className = "" }: { className?: string }) {
           {/* desktop */}
           <div className="hidden md:block">
             <div className="relative min-h-[64px] xl:min-h-[72px] 2xl:min-h-[84px]">
-{/* left */}
-<div
-  className="
-    flex items-center gap-4 min-w-0
-    2xl:absolute 2xl:left-0 2xl:top-1/2 2xl:-translate-y-1/2
-  "
->
-                <div className="flex items-center gap-2"> 
+              {/* left */}
+              <div
+                className="
+                  flex items-center gap-4 min-w-0
+                  2xl:absolute 2xl:left-0 2xl:top-1/2 2xl:-translate-y-1/2
+                "
+              >
+                <div className="flex items-center gap-2">
                   <Image src={logoSvg} alt={brand} width={32} height={32} className="2xl:h-9 2xl:w-9" />
                   <span className="text-xl whitespace-nowrap font-semibold">{brand}</span>
                 </div>
@@ -220,35 +221,34 @@ export default function Footer({ className = "" }: { className?: string }) {
               </div>
 
               {/* center nav */}
-             <nav
-  className="
-    absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2
-    flex items-center
-    gap-8 lg:gap-10 xl:gap-14 2xl:gap-20 3xl:gap-24
-    text-[18px] lg:text-[20px] 2xl:text-[22px]
-    text-white
-  "
->
-
-                <Link href="/" className="hover:text-white/90 transition-colors">
+              <nav
+                className="
+                  absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2
+                  flex items-center
+                  gap-8 lg:gap-10 xl:gap-14 2xl:gap-20 3xl:gap-24
+                  text-[18px] lg:text-[20px] 2xl:text-[22px]
+                  text-white
+                "
+              >
+                <LocaleLink href="/" className="hover:text-white/90 transition-colors">
                   {navHome}
-                </Link>
-                <Link href="/staking" className="hover:text-white/90 transition-colors">
+                </LocaleLink>
+                <LocaleLink href="/staking" className="hover:text-white/90 transition-colors">
                   {navStaking}
-                </Link>
-                <Link href="/profile" className="hover:text-white/90 transition-colors">
+                </LocaleLink>
+                <LocaleLink href="/profile" className="hover:text-white/90 transition-colors">
                   {navProfile}
-                </Link>
-                <Link href="/support" className="hover:text-white/90 transition-colors">
+                </LocaleLink>
+                <LocaleLink href="/support" className="hover:text-white/90 transition-colors">
                   {navSupport}
-                </Link>
+                </LocaleLink>
               </nav>
 
               {/* right support */}
               <div className="absolute right-0 top-1/2 -translate-y-1/2">
-                <Link href="/support" className="inline-flex items-center">
+                <LocaleLink href="/support" className="inline-flex items-center">
                   <Image src={supportIcon} alt={supportAlt} width={120} height={50} />
-                </Link>
+                </LocaleLink>
               </div>
             </div>
 
@@ -270,12 +270,12 @@ export default function Footer({ className = "" }: { className?: string }) {
       <div className="z-10 container mx-auto px-4 flex flex-col-reverse lg:flex-row items-center justify-between gap-1 md:gap-4 text-[12px] text-gray-600">
         <p>{copy}</p>
         <div className="flex gap-2 md:gap-4">
-          <Link href="/terms" className="hover:text-white transition-colors text-[#A0B0D8]">
+          <LocaleLink href="/terms" className="hover:text-white transition-colors text-[#A0B0D8]">
             {terms}
-          </Link>
-          <Link href="/privacy" className="hover:text-white transition-colors text-[#A0B0D8]">
+          </LocaleLink>
+          <LocaleLink href="/privacy" className="hover:text-white transition-colors text-[#A0B0D8]">
             {privacy}
-          </Link>
+          </LocaleLink>
         </div>
       </div>
     </footer>

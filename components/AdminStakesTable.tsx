@@ -143,7 +143,7 @@ export default function AdminStakesTable() {
     // вместо прямого supabase.update/insert — идём на сервер
     const res = await adminFetch(
       form.id
-        ? { op: "update", id: Number(form.id), data: payload }
+ ? { op: "update", id: String(form.id), data: payload }
         : { op: "create", data: payload }
     );
 
@@ -164,8 +164,8 @@ export default function AdminStakesTable() {
     setDeletingId(id);
 
     // безопасность: DELETE тоже через сервер
-    const res = await adminFetch({ op: "delete", id: Number(id) });
-    if (!res.ok) {
+ const res = await adminFetch({ op: "delete", id: String(id) });
+     if (!res.ok) {
       const j = await res.json().catch(() => null);
       setErr(j?.error || `Delete failed (${res.status})`);
     }

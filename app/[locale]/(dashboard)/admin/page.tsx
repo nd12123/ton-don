@@ -4,14 +4,17 @@
 import AdminGate from "./AdminGate";
 import { Jetton } from "@/components/Jetton";
 import AdminStakesTable from "@/components/AdminStakesTable";
-
+// в админ-странице
 export default function AdminPage() {
+//  import { useTonAddress } from "@tonconnect/ui-react";
+//const addr = useTonAddress();
+//console.log('[ton addr] =', addr);
   return (
     <AdminGate>
       <main className="max-w-7xl mx-auto px-4 py-10 space-y-6">
         <h1 className="text-2xl font-bold">Admin · Stakes</h1>
         <div className="space-y-6">
-          <Jetton />
+          {/** <Jetton />*/}
           <AdminStakesTable />
         </div>
       </main>

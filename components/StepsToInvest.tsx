@@ -7,6 +7,9 @@ import Link from "next/link";
 
 // Пути к вашим файлам. Поместите картинки в папку /public/decorative/
 //import coinLarge from "@/assets/StepsToInvest/ton2.png";
+import ton2 from "@/public/decorative/ton2.png"; // путь до файла
+import ton22 from "@/public/decorative/ton22.svg"; // путь до файла
+
 import rightCorner from "@/assets/StepsToInvest/rightCorner.svg"
 import leftCorner from "@/assets/StepsToInvest/leftCorner.svg";
 
@@ -53,22 +56,21 @@ export default function StepsToInvest() {
         </h2>
 
         <div className="relative z-10 mt-4 mb-3 md:mt-6 flex justify-left">
-          <Link href="#calculate-plans">
-            <a
-              className="
-                w-28 h-8 md:w-52 md:h-11 relative
-                bg-[radial-gradient(ellipse_179.05%_152.88%_at_74.38%_155.56%,_#3DD4FF_0%,_#0098EA_100%)]
-                rounded-xl
-                shadow-[0px_4px_27.6px_0px_rgba(61,212,255,0.42)]
-                outline outline-1 outline-offset-[-1px] outline-sky-400
-                overflow-hidden
-                flex items-center justify-center
-              "
-            >
+         <Link
+  href="#calculate-plans"
+  className="
+    w-28 h-8 md:w-52 md:h-11 relative
+    bg-[radial-gradient(ellipse_179.05%_152.88%_at_74.38%_155.56%,_#3DD4FF_0%,_#0098EA_100%)]
+    rounded-xl
+    shadow-[0px_4px_27.6px_0px_rgba(61,212,255,0.42)]
+    outline outline-1 outline-offset-[-1px] outline-sky-400
+    overflow-hidden
+    flex items-center justify-center
+  "
+>
               <span className="text-white text-lg md:font-semibold font-['Inter'] leading-loose">
                 See Plans
               </span>
-            </a>
           </Link>
         </div>
       </div>
@@ -286,7 +288,7 @@ export default function StepsToInvest() {
         <div className="absolute inset-0 pointer-events-none">
           <div className="absolute top-[30px] right-[15px] md:right-[160px] w-[56px] h-[56px] md:w-[200px] md:h-[200px] opacity-100 z-[5]">
             <Image
-              src="/decorative/ton22.svg"
+              src={ton22} 
               alt="TON Coin Left"
               fill
               style={{ objectFit: "contain", mixBlendMode: "screen" }}
@@ -295,7 +297,7 @@ export default function StepsToInvest() {
 
           <div className="absolute w-[78px] h-[78px] md:w-[300px] md:h-[300px] top-[15px] md:top-[-120px] right-[28%] md:right-[36%] z-0 flex opacity-100 md:opacity-100 pointer-events-none">
             <Image
-              src="/decorative/ton2.png"//{coinLarge}
+              src={ton2}
               alt="Ton Coin"
               style={{ objectFit: "contain", mixBlendMode: "screen" }}
             />
