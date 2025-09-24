@@ -4,8 +4,8 @@
   "termsOfUseUrl": "https://tonstaker.io/terms",
   "privacyPolicyUrl": "https://tonstaker.io/privacy",
 
-  "iconUrl": "https://tonstaker.io/icons/icon-192.png",
-  
+  "iconUrl": "https://tonstaker.io/icons/favicon.png",
+
   "description": "Stake your TON tokens securely",
   "permissions": ["tonClient"],              
   "networks": ["testnet"] 
