@@ -14,6 +14,18 @@ function hasLocale(pathname: string) {
 function isPublic(req: NextRequest) {
   const p = req.nextUrl.pathname;
 
+  // /tonconnect-manifest.json — пропускаем
+if (req.nextUrl.pathname === '/tonconnect-manifest.json') {
+  return NextResponse.next();
+}
+// /xx/tonconnect-manifest.json -> /tonconnect-manifest.json
+if (/^\/[a-z]{2}(?:-[A-Z]{2})?\/tonconnect-manifest\.json$/.test(req.nextUrl.pathname)) {
+  const url = req.nextUrl.clone();
+  url.pathname = '/tonconnect-manifest.json';
+  return NextResponse.rewrite(url);
+}
+
+
   // серверные/тех пути
   if (p.startsWith('/api')) return true;
   if (p.startsWith('/_next')) return true;
