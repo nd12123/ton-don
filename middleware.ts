@@ -1,8 +1,8 @@
 // middleware.ts
 import { NextRequest, NextResponse } from 'next/server';
 
-// поддерживаемые локали (используются только внутри функции; на build это ок)
-const SUPPORTED_LOCALES = ['en','ru','es','fr','zh','uk','hi'] as const;
+// Поддерживаемые локали
+const SUPPORTED_LOCALES = ['en', 'ru', 'es', 'fr', 'zh', 'uk', 'hi'] as const;
 const DEFAULT_LOCALE = 'en';
 
 function hasLocale(pathname: string) {
@@ -27,7 +27,9 @@ function isPublic(req: NextRequest) {
     p === '/manifest.webmanifest' ||
     p === '/manifest.json' ||
     p === '/tonconnect-manifest.json'
-  ) return true;
+  ) {
+    return true;
+  }
 
   // статические каталоги
   if (
@@ -39,7 +41,9 @@ function isPublic(req: NextRequest) {
     p.startsWith('/fonts') ||
     p.startsWith('/docs') ||
     p.startsWith('/audit')
-  ) return true;
+  ) {
+    return true;
+  }
 
   // расширения статических ассетов
   if (/\.(?:png|jpg|jpeg|gif|svg|ico|webp|avif|css|js|map|txt|ttf|otf|woff2?|mp4|webm)$/i.test(p)) {
@@ -52,17 +56,25 @@ function isPublic(req: NextRequest) {
 export function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
 
-  // Разрешаем локализованный путь к тон-манифесту, но отдаём корневой файл
-  if (pathname.endsWith('/tonconnect-manifest.json')) {
+  // 1) Корневой манифест никогда не трогаем (он и так исключен matcher'ом, но на всякий)
+  if (pathname === '/tonconnect-manifest.json') {
+    return NextResponse.next();
+  }
+
+  // 2) Локализованный путь /xx/tonconnect-manifest.json переписываем на корень
+  //    Поддержка двухсегментных локалей типа pt-BR: /pt-BR/tonconnect-manifest.json
+  if (/^\/[a-z]{2}(?:-[A-Z]{2})?\/tonconnect-manifest\.json$/.test(pathname)) {
     const url = req.nextUrl.clone();
     url.pathname = '/tonconnect-manifest.json';
+    // query/hash у clone сохраняются автоматически, но можно явно:
+    url.search = req.nextUrl.search;
     return NextResponse.rewrite(url);
   }
 
-  // Публичные пути не трогаем
+  // 3) Публичные пути не трогаем
   if (isPublic(req)) return NextResponse.next();
 
-  // Если локали нет — редиректим на дефолтную, сохраняя query/hash
+  // 4) Если локали нет — редиректим на дефолтную, сохраняя query/hash
   if (!hasLocale(pathname)) {
     const url = req.nextUrl.clone();
     url.pathname = `/${DEFAULT_LOCALE}${pathname}`;
@@ -72,8 +84,10 @@ export function middleware(req: NextRequest) {
   return NextResponse.next();
 }
 
-// ВАЖНО: matcher — ТОЛЬКО литеральные строки, без конкатенаций/переменных.
-// Тут один «глобальный» паттерн с отрицательным просмотром вперёд.
+// ВАЖНО: matcher — только литеральные строки/регексп-строки.
+// Здесь мы исключаем системные и статику (включая корневой tonconnect-manifest.json),
+// а все остальное пускаем через middleware. Локализованный /xx/tonconnect-manifest.json
+// сюда попадет и будет переписан на корень в коде выше.
 export const config = {
   matcher: [
     '/',

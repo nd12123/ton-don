@@ -1,12 +1,8 @@
 {
   "url": "https://tonstaker.io",
   "name": "TON Staker",
+  "iconUrl": "https://tonstaker.io/icons/favicon.svg",
   "termsOfUseUrl": "https://tonstaker.io/terms",
-  "privacyPolicyUrl": "https://tonstaker.io/privacy",
-
-  "iconUrl": "https://tonstaker.io/icons/favicon.png",
-
-  "description": "Stake your TON tokens securely",
-  "permissions": ["tonClient"],              
-  "networks": ["testnet"] 
+  "privacyPolicyUrl": "https://tonstaker.io/privacy"
 }
+

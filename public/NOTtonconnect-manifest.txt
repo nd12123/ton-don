@@ -1,7 +1,12 @@
 {
-  "url": "https://youngdrug.vercel.app/",
-  "name": "TON Stake",
-  "iconUrl": "https://raw.githubusercontent.com/ton-blockchain/tonweb/master/logo.png",
-  "termsOfUseUrl": "https://example.com/terms",
-  "privacyPolicyUrl": "https://example.com/privacy"
+  "url": "https://tonstaker.io",
+  "name": "TON Staker",
+  "termsOfUseUrl": "https://tonstaker.io/terms",
+  "privacyPolicyUrl": "https://tonstaker.io/privacy",
+
+  "iconUrl": "https://tonstaker.io/icons/favicon.png",
+
+  "description": "Stake your TON tokens securely",
+  "permissions": ["tonClient"],              
+  "networks": ["testnet"] 
 }
