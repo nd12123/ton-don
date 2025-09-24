@@ -7,14 +7,12 @@ export const revalidate = 600;
 const manifest = {
   url: 'https://tonstaker.io',
   name: 'TON Staker',
-  // РЕКОМЕНДУЮ PNG 192x192. Если хочешь проверить SVG — поменяй тут на свой SVG,
-  // но для совместимости лучше PNG.
   iconUrl: 'https://tonstaker.io/favicon.svg',
   termsOfUseUrl: 'https://tonstaker.io/terms',
   privacyPolicyUrl: 'https://tonstaker.io/privacy',
 };
 
-const headers: Record<string, string> = {
+const headers = {
   'Content-Type': 'application/json; charset=utf-8',
   'Cache-Control': 'public, max-age=600, s-maxage=600',
   'Access-Control-Allow-Origin': '*',
@@ -22,12 +20,15 @@ const headers: Record<string, string> = {
   'Access-Control-Allow-Headers': 'Content-Type',
 };
 
-export async function GET() {
+export function GET(req: Request) {
+  console.log('[TC] GET manifest', { ua: req.headers.get('user-agent') });
   return NextResponse.json(manifest, { headers });
 }
-export async function HEAD() {
+export function HEAD(req: Request) {
+  console.log('[TC] HEAD manifest', { ua: req.headers.get('user-agent') });
   return new NextResponse(null, { status: 200, headers });
 }
-export async function OPTIONS() {
+export function OPTIONS(req: Request) {
+  console.log('[TC] OPTIONS manifest', { ua: req.headers.get('user-agent') });
   return new NextResponse(null, { status: 204, headers });
 }
