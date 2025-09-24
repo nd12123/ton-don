@@ -9,7 +9,7 @@ const manifest = {
   name: 'TON Staker',
   // РЕКОМЕНДУЮ PNG 192x192. Если хочешь проверить SVG — поменяй тут на свой SVG,
   // но для совместимости лучше PNG.
-  iconUrl: 'https://tonstaker.io/icons/icon-192.png',
+  iconUrl: 'https://tonstaker.io/favicon.svg',
   termsOfUseUrl: 'https://tonstaker.io/terms',
   privacyPolicyUrl: 'https://tonstaker.io/privacy',
 };
