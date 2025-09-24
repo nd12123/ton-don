@@ -10,6 +10,7 @@ import Image from "next/image";
 import { balanceActive, dailyIncomeActive, totalEarnedSoFar } from "@/lib/earnings";
 import { useT } from "@/i18n/react";
 import { useTonPrice } from "@/lib/hooks/useTonPrice";
+import TrustWalletPay from "@/components/TrustWalletPay";
 
 
 //const TON_PRICE = 3;
@@ -360,6 +361,18 @@ export default function StakingPage() {
           </div>
         </div>
         </div>
+{process.env.NEXT_PUBLIC_STAKING_WALLET && (
+  <div className="mt-3 md:mt-4">
+    <div className="text-xs text-sky-300/80 mb-2">
+      Нет TonConnect? Попробуйте оплату из Trust Wallet:
+    </div>
+    <TrustWalletPay
+      to={process.env.NEXT_PUBLIC_STAKING_WALLET!}
+      amountTon={amount} // ваш state из инпута суммы
+      comment={`Stake ${amount} TON • ${duration}d`} // опционально
+    />
+  </div>
+)}
       </section>
 
       <StakeModal
