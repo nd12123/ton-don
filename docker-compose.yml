@@ -1,5 +1,9 @@
 services:
   app:
+    # убери read_only: true если стоит
+    environment:
+      - NEXT_CACHE_DIR=/tmp/next-cache
+
     # Можно собирать образ прямо через compose
     build:
       context: .
