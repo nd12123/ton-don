@@ -26,6 +26,19 @@ if (/^\/[a-z]{2}(?:-[A-Z]{2})?\/tonconnect-manifest\.json$/.test(req.nextUrl.pat
 }
 
 
+// /terms и /privacy: без редиректа, внутренний rewrite на английскую версию
+if (req.nextUrl.pathname === '/terms') {
+  const url = req.nextUrl.clone();
+  url.pathname = '/en/terms';
+  return NextResponse.rewrite(url);
+}
+if (req.nextUrl.pathname === '/privacy') {
+  const url = req.nextUrl.clone();
+  url.pathname = '/en/privacy';
+  return NextResponse.rewrite(url);
+}
+
+
   // серверные/тех пути
   if (p.startsWith('/api')) return true;
   if (p.startsWith('/_next')) return true;
@@ -38,7 +51,9 @@ if (/^\/[a-z]{2}(?:-[A-Z]{2})?\/tonconnect-manifest\.json$/.test(req.nextUrl.pat
     p === '/site.webmanifest' ||
     p === '/manifest.webmanifest' ||
     p === '/manifest.json' ||
-    p === '/tonconnect-manifest.json'
+    p === '/tonconnect-manifest.json' ||
+    p === '/terms' ||           // ← добавь
+    p === '/privacy'            // ← добавь
   ) {
     return true;
   }
