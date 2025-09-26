@@ -2,21 +2,23 @@
 import 'dotenv/config';
 import { createClient } from '@supabase/supabase-js';
 
-// В Node 18+ fetch есть глобально, отдельный пакет не нужен.
+// ── ВАЖНО: WebSocket-полифилл для Node → иначе Realtime = TIMED_OUT
+import WS from 'ws';
+globalThis.WebSocket = WS;
+globalThis.self = globalThis; // на случай либ, ожидающих window/self
 
+// Node 18+ имеет глобальный fetch — отдельные пакеты не нужны.
+
+// ── ENV
 const SUPABASE_URL  = process.env.SUPABASE_URL;
-const SERVICE_KEY   = process.env.SUPABASE_SERVICE_ROLE_KEY;
-const TG_TOKEN      = process.env.BOT_TOKEN;
-//const TG_CHAT_ID    = process.env.TELEGRAM_CHAT_ID;     // число или @username
-//const TG_THREAD_ID  = process.env.TELEGRAM_THREAD_ID;   // опционально, для topics
-// ENV
-const ADMIN_IDS = process.env.ADMIN_IDS || '';
+const SERVICE_KEY   = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_ANON_KEY; // можно ANON, если только слушаем
+const TG_TOKEN      = process.env.BOT_TOKEN; // как у тебя в коде
+const ADMIN_IDS     = process.env.ADMIN_IDS || '';
 
 if (!SUPABASE_URL || !SERVICE_KEY || !TG_TOKEN || !ADMIN_IDS) {
-  console.error('[bot] Missing env: SUPABASE_URL | SUPABASE_SERVICE_ROLE_KEY | BOT_TOKEN | ADMIN_IDS');
+  console.error('[bot] Missing env: SUPABASE_URL | SUPABASE_SERVICE_ROLE_KEY|SUPABASE_ANON_KEY | BOT_TOKEN | ADMIN_IDS');
   process.exit(1);
 }
-
 
 const supa = createClient(SUPABASE_URL, SERVICE_KEY, {
   auth: { persistSession: false },
@@ -31,15 +33,17 @@ function fmt(n) {
   return Number.isFinite(x) ? x.toString() : String(n ?? '');
 }
 
+// ADMIN_IDS формат: "123456:456,987654,-100777:12"
+// где ":456" = optional topic/thread id; можно просто "123456"
 function parseAdminIds(s) {
-  const isNumericId = (x) => /^-?\d+$/.test(x);  // только целое, допускаем -100...
+  const isInt = (x) => /^-?\d+$/.test(x);
   return s.split(',')
     .map(x => x.trim())
     .filter(Boolean)
     .map(x => {
       const [idPart, threadPart] = x.split(':');
-      const chatId = isNumericId(idPart) ? Number(idPart) : idPart; // число или @username
-      const threadId = threadPart && /^-?\d+$/.test(threadPart) ? Number(threadPart) : undefined;
+      const chatId = isInt(idPart) ? Number(idPart) : idPart; // допускаем @username, но для личек нужен numeric id
+      const threadId = threadPart && isInt(threadPart) ? Number(threadPart) : undefined;
       return { chatId, threadId };
     });
 }
@@ -50,7 +54,7 @@ if (!RECIPIENTS.length) {
 }
 console.log('[bot] recipients:', RECIPIENTS);
 
-// отправка одному получателю с бэкоффом
+// ── Telegram
 async function sendOne(chatId, threadId, text) {
   const body = {
     chat_id: chatId,
@@ -80,7 +84,6 @@ async function sendOne(chatId, threadId, text) {
   throw new Error('Telegram rate-limited (429), retries exhausted');
 }
 
-// отправка всем админам (без падения из-за одного)
 async function sendTelegram(text) {
   for (const r of RECIPIENTS) {
     try {
@@ -92,41 +95,44 @@ async function sendTelegram(text) {
   }
 }
 
-
+// ── Start
 async function start() {
   console.log('[bot] starting…');
 
+  const onInsert = async (payload) => {
+    try {
+      const row = payload?.new || {};
+      const id = row.id;
+      if (!id || seen.has(id)) return;
+      seen.add(id);
+
+      const msg =
+        `🟦 <b>Новый стейк</b>\n` +
+        `Кошелек: <code>${row.wallet}</code>\n` +
+        `Сумма: <b>${fmt(row.amount)} TON</b>\n` +
+        `Срок: ${fmt(row.duration)} дн.\n` +
+        `APR: ${fmt(row.apr)}%\n` +
+        `Статус: ${row.status}\n` +
+        (row.txHash ? `TxHash: <code>${row.txHash}</code>\n` : ``) +
+        `ID: <code>${row.id}</code>`;
+
+      await sendTelegram(msg);
+      console.log('[bot] notified id=', row.id);
+    } catch (e) {
+      console.error('[bot] notify error:', e?.message || e);
+    }
+  };
+
   const channel = supa
-    .channel('stakes-inserts', { config: { broadcast: { ack: false } } })
+    .channel('public:stakes:alerts')
     .on('postgres_changes',
       { event: 'INSERT', schema: 'public', table: 'stakes' },
-      async (payload) => {
-        try {
-          const row = payload?.new || {};
-          const id = row.id;
-          if (!id || seen.has(id)) return;
-          seen.add(id);
-
-          const msg =
-            `🟦 <b>Новый стейк</b>\n` +
-            `Кошелек: <code>${row.wallet}</code>\n` +
-            `Сумма: <b>${fmt(row.amount)} TON</b>\n` +
-            `Срок: ${fmt(row.duration)} дн.\n` +
-            `APR: ${fmt(row.apr)}%\n` +
-            `Статус: ${row.status}\n` +
-            (row.txHash ? `TxHash: <code>${row.txHash}</code>\n` : ``) +
-            `ID: <code>${row.id}</code>`;
-
-          await sendTelegram(msg);
-          console.log('[bot] notified id=', row.id);
-        } catch (e) {
-          console.error('[bot] notify error:', e?.message || e);
-        }
-      }
+      onInsert
     )
-    .subscribe((status) => {
-      console.log('[realtime] status:', status);
-    });
+    .subscribe(
+      (status) => console.log('[realtime] status:', status),
+      (err) => console.error('[realtime] error:', err?.message || err)
+    );
 
   // Грейсфул-шатдаун
   const shutdown = async () => {
