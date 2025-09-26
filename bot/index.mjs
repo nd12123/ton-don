@@ -1,6 +1,9 @@
 // bot/index.mjs
-import 'dotenv/config';
+ import dotenv from 'dotenv';
 import { createClient } from '@supabase/supabase-js';
+
+ import { fileURLToPath } from 'url';
+ import { dirname, join } from 'path';
 
 // ── ВАЖНО: WebSocket-полифилл для Node → иначе Realtime = TIMED_OUT
 import WS from 'ws';
@@ -8,6 +11,22 @@ globalThis.WebSocket = WS;
 globalThis.self = globalThis; // на случай либ, ожидающих window/self
 
 // Node 18+ имеет глобальный fetch — отдельные пакеты не нужны.
+
+ const __dirname = dirname(fileURLToPath(import.meta.url));
+ dotenv.config({ path: join(__dirname, '.env') }); // грузим bot/.env рядом со скриптом
+ 
+// сразу после dotenv.config(...)
+const envPath = join(__dirname, '.env');
+console.log('[bot] dotenv path:', envPath);
+
+const REQ = ['SUPABASE_URL','SUPABASE_SERVICE_ROLE_KEY','BOT_TOKEN','ADMIN_IDS'];
+for (const k of REQ) {
+  const v = process.env[k];
+  if (!v || v.length === 0) {
+    console.error('[bot] missing env:', k);
+  }
+}
+
 
 // ── ENV
 const SUPABASE_URL  = process.env.SUPABASE_URL;
