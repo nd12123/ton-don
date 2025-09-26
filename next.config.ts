@@ -5,6 +5,9 @@ const nextConfig: NextConfig = {
   // чтобы в Docker работал node-рантайм из .next/standalone
   output: 'standalone',
 
+ productionBrowserSourceMaps: true,
+
+
   images: {
         unoptimized: true,
     // если грузишь картинки с внешних доменов — открой их тут.
