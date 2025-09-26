@@ -1,4 +1,6 @@
 // components/ResetTon.tsx
+/*
+no use, just in case
 'use client';
 import { useTonConnectUI } from '@tonconnect/ui-react';
 
@@ -19,3 +21,4 @@ export default function ResetTon() {
     </button>
   );
 }
+*/

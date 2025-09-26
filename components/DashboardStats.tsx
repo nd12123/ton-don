@@ -8,8 +8,8 @@ import { Plan } from "./Plans";
 import { useT } from "@/i18n/react";
 import WalletConnectInline from "@/components/WalletConnectInline";
 
-import ClientOnly from "@/components/ClientOnly";
-import WalletConnect from "@/components/WalletConnect";
+//import ClientOnly from "@/components/ClientOnly";
+//import WalletConnect from "@/components/WalletConnect";
 
 interface DashboardStatsProps {
   balanceTon: number;

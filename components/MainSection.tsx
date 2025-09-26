@@ -4,7 +4,7 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useT } from "@/i18n/react";
-import ResponsiveArt from "./ResponsiveArt";
+//import ResponsiveArt from "./ResponsiveArt";
 import { useEffect, useRef } from "react";
 
 import ton3d1Svg from "@/assets/Main/Ton 3d 1.svg";

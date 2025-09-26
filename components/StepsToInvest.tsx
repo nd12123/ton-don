@@ -10,12 +10,12 @@ import Link from "next/link";
 import ton2 from "@/public/decorative/ton2.png"; // путь до файла
 import ton22 from "@/public/decorative/ton22.svg"; // путь до файла
 
-import rightCorner from "@/assets/StepsToInvest/rightCorner.svg"
-import leftCorner from "@/assets/StepsToInvest/leftCorner.svg";
+//import rightCorner from "@/assets/StepsToInvest/rightCorner.svg"
+//import leftCorner from "@/assets/StepsToInvest/leftCorner.svg";
 
 import rightCornerBottom from "@/public/decorative/ellipse5.png";
 import centerSphere from "@/public/decorative/Ellipse51.png";
-import coinLarge from '@/assets/StepsToInvest/stepsTon.svg';
+//import coinLarge from '@/assets/StepsToInvest/stepsTon.svg';
 
 // import WalletConnect from "@/components/WalletConnect";
 import ConnectWalletButton from "@/components/ConnectWalletButton";

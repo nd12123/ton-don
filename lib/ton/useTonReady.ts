@@ -1,9 +1,10 @@
 // lib/ton/useTonReady.ts
+/*
 "use client";
 import { useEffect, useState } from "react";
 import { useTonConnectUI, useTonWallet } from "@tonconnect/ui-react";
 
-/** true, когда контекст TonConnect восстановился (подключен или точно нет) */
+//true, когда контекст TonConnect восстановился (подключен или точно нет) 
 export function useTonReady() {
   const [ui] = useTonConnectUI();
   const wallet = useTonWallet();
@@ -22,3 +23,4 @@ export function useTonReady() {
 
   return ready;
 }
+*/
