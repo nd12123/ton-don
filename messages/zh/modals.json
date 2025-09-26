@@ -1,0 +1,17 @@
+{
+  "common": { "cancel": "取消" },
+  "stake": {
+    "title": "确认质押",
+    "question": "将 {amount} TON 质押给 {validator}？",
+    "confirm": "确认",
+    "sending": "发送中…"
+  },
+  "withdraw": {
+    "title": "从 {validator} 提取",
+    "yourStake": "你的质押",
+    "profit": "可提取收益",
+    "withdrawProfit": "提取收益（{amount} TON）",
+    "withdrawFull": "全部提取（{amount} TON）",
+    "noProfit": "暂无收益可提取"
+  }
+}

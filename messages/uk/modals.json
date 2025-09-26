@@ -1,0 +1,17 @@
+{
+  "common": { "cancel": "Скасувати" },
+  "stake": {
+    "title": "Підтвердьте стейк",
+    "question": "Застейкати {amount} TON у {validator}?",
+    "confirm": "Підтвердити",
+    "sending": "Надсилаємо…"
+  },
+  "withdraw": {
+    "title": "Вивід із {validator}",
+    "yourStake": "Ваш стейк",
+    "profit": "Доступний прибуток",
+    "withdrawProfit": "Вивести прибуток ({amount} TON)",
+    "withdrawFull": "Вивести все ({amount} TON)",
+    "noProfit": "Поки що немає прибутку"
+  }
+}

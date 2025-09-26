@@ -44,7 +44,8 @@ const messages = await loadAllMessages([
     "support",
     "profile", 
      'terms', 
-     'privacy'
+     'privacy',
+     'modals'
   ], locale as Locale);
 
   return (

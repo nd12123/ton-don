@@ -1,0 +1,17 @@
+{
+  "common": { "cancel": "Cancel" },
+  "stake": {
+    "title": "Confirm Stake",
+    "question": "Stake {amount} TON with {validator}?",
+    "confirm": "Confirm",
+    "sending": "Sending…"
+  },
+  "withdraw": {
+    "title": "Withdraw from {validator}",
+    "yourStake": "Your stake",
+    "profit": "Available profit",
+    "withdrawProfit": "Withdraw profit ({amount} TON)",
+    "withdrawFull": "Withdraw full ({amount} TON)",
+    "noProfit": "No profit to withdraw yet"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "common": { "cancel": "रद्द करें" },
+  "stake": {
+    "title": "स्टेक की पुष्टि करें",
+    "question": "{validator} के साथ {amount} TON स्टेक करें?",
+    "confirm": "पुष्टि करें",
+    "sending": "भेजा जा रहा है…"
+  },
+  "withdraw": {
+    "title": "{validator} से निकासी",
+    "yourStake": "आपका स्टेक",
+    "profit": "उपलब्ध लाभ",
+    "withdrawProfit": "लाभ निकालें ({amount} TON)",
+    "withdrawFull": "संपूर्ण निकालें ({amount} TON)",
+    "noProfit": "अभी कोई लाभ नहीं"
+  }
+}

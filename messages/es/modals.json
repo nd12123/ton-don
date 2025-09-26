@@ -1,0 +1,17 @@
+{
+  "common": { "cancel": "Cancelar" },
+  "stake": {
+    "title": "Confirmar stake",
+    "question": "¿Hacer stake de {amount} TON con {validator}?",
+    "confirm": "Confirmar",
+    "sending": "Enviando…"
+  },
+  "withdraw": {
+    "title": "Retirar de {validator}",
+    "yourStake": "Tu stake",
+    "profit": "Ganancia disponible",
+    "withdrawProfit": "Retirar ganancia ({amount} TON)",
+    "withdrawFull": "Retirar todo ({amount} TON)",
+    "noProfit": "Sin ganancias aún"
+  }
+}

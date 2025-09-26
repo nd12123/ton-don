@@ -1,0 +1,17 @@
+{
+  "common": { "cancel": "Отмена" },
+  "stake": {
+    "title": "Подтвердите стейк",
+    "question": "Застейкать {amount} TON у {validator}?",
+    "confirm": "Подтвердить",
+    "sending": "Отправляем…"
+  },
+  "withdraw": {
+    "title": "Вывод из {validator}",
+    "yourStake": "Ваш стейк",
+    "profit": "Доступный доход",
+    "withdrawProfit": "Вывести прибыль ({amount} TON)",
+    "withdrawFull": "Вывести всё ({amount} TON)",
+    "noProfit": "Прибыли пока нет"
+  }
+}
