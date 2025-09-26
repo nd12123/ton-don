@@ -1,8 +1,7 @@
 "use client";
 
 import { create } from "zustand";
-import { getSupabase } from "@/lib/supabase/browser"; // ← вернуть
-const supabase = getSupabase();                      // ← вернуть
+import { getSupabaseBrowser } from "@/lib/supabase/browser";
 
 export interface StakeRecord {
   id: string;
@@ -35,6 +34,9 @@ interface StakeStore {
   withdrawStake: (id: string, amount: number) => Promise<void>;
 }
 
+// ВСПОМОГАТЕЛЬНОЕ: лениво получаем клиент В МОМЕНТ вызова
+const sb = () => getSupabaseBrowser();
+
 async function api<T = any>(url: string, init?: RequestInit): Promise<T> {
   const res = await fetch(url, {
     ...init,
@@ -51,28 +53,38 @@ export const useStakeStore = create<StakeStore>((set, get) => ({
   loading: false,
   error: undefined,
 
-  // ← ВОЗВРАТИЛИ старое чтение (anon) — история снова поедет
+  // ЧТЕНИЕ ИСТОРИИ (anon): теперь через ленивый клиент + try/catch/finally
   fetchHistory: async (wallet) => {
     set({ loading: true, error: undefined });
-    const { data, error } = await supabase
-      .from("stakes")
-      .select("*")
-      .eq("wallet", wallet)
-      .order("created_at", { ascending: false });
+    try {
+      const { data, error } = await sb()
+        .from("stakes")
+        .select("*")
+        .eq("wallet", wallet)
+        .order("created_at", { ascending: false });
 
-    if (error) set({ error: error.message, loading: false });
-    else set({ history: (data as StakeRecord[]) ?? [], loading: false });
+      if (error) throw error;
+      set({ history: (data as StakeRecord[]) ?? [] });
+    } catch (e: any) {
+      set({ error: e?.message || "Failed to load history", history: [] });
+    } finally {
+      set({ loading: false });
+    }
   },
 
-  // Вставка — через серверный роут (service-role)
+  // ВСТАВКА: через серверный роут (service-role)
   addStake: async ({ wallet, validator, amount, apr, duration, txHash }) => {
     set({ loading: true, error: undefined });
     try {
       const payload = {
-        wallet, validator, amount, apr, duration,
+        wallet,
+        validator,
+        amount,
+        apr,
+        duration,
         txHash: txHash ?? null,
-        //network: process.env.NEXT_PUBLIC_TON_NETWORK ?? "mainnet",
       };
+
       const data = await api<{ ok: boolean; record?: StakeRecord; id?: string }>(
         "/api/stake",
         { method: "POST", body: JSON.stringify(payload) }
@@ -82,51 +94,74 @@ export const useStakeStore = create<StakeStore>((set, get) => ({
         data.record ??
         ({
           id: String(data.id ?? crypto.randomUUID()),
-          wallet, validator, amount, apr, duration,
+          wallet,
+          validator,
+          amount,
+          apr,
+          duration,
           status: "active",
           txHash: txHash ?? "pending",
           created_at: new Date().toISOString(),
         } as StakeRecord);
 
-      set((s) => ({ history: [newRec, ...s.history], loading: false }));
+      set((s) => ({ history: [newRec, ...s.history] }));
       return newRec;
     } catch (e: any) {
-      set({ error: e.message || "addStake failed", loading: false });
+      set({ error: e?.message || "addStake failed" });
       throw e;
+    } finally {
+      set({ loading: false });
     }
   },
 
-  // Остальное — как было (если начнёт упираться в RLS — позже вынесем в /api)
+  // ЗАВЕРШЕНИЕ: прямой апдейт (если RLS позволит; иначе вынесем в /api)
   completeStake: async (id, txHash) => {
     set({ loading: true, error: undefined });
-    const patch: Partial<StakeRecord> = { status: "completed" };
-    if (txHash) patch.txHash = txHash;
-    const res = await supabase.from("stakes").update(patch).eq("id", id).select("*");
-    if (res.error) set({ error: res.error.message, loading: false });
-    else {
+    try {
+      const patch: Partial<StakeRecord> = { status: "completed" };
+      if (txHash) patch.txHash = txHash;
+
+      const res = await sb().from("stakes").update(patch).eq("id", id).select("*");
+      if (res.error) throw res.error;
+
       const upd = (res.data as StakeRecord[])[0];
       set((s) => ({
         history: s.history.map((r) => (r.id === id ? upd : r)),
-        loading: false,
       }));
+    } catch (e: any) {
+      set({ error: e?.message || "completeStake failed" });
+    } finally {
+      set({ loading: false });
     }
   },
 
+  // ВЫВОД СУММЫ: простой пересчёт amount + апдейт
   withdrawStake: async (id, amountToWithdraw) => {
     set({ loading: true, error: undefined });
-    const rec = get().history.find((r) => r.id === id);
-    if (!rec) return set({ error: "Запись не найдена", loading: false });
+    try {
+      const rec = get().history.find((r) => r.id === id);
+      if (!rec) throw new Error("Запись не найдена");
 
-    const newAmount = rec.amount - amountToWithdraw;
-    if (newAmount < 0) return set({ error: "Нельзя вывести больше, чем застейкано", loading: false });
+      const newAmount = rec.amount - amountToWithdraw;
+      if (newAmount < 0) throw new Error("Нельзя вывести больше, чем застейкано");
 
-    const { data, error } = await supabase.from("stakes").update({ amount: newAmount }).eq("id", id).select();
-    if (error) set({ error: error.message, loading: false });
-    else if (data && data[0]) {
-      set((s) => ({
-        history: s.history.map((r) => (r.id === id ? { ...r, amount: data[0].amount } : r)),
-        loading: false,
-      }));
+      const { data, error } = await sb()
+        .from("stakes")
+        .update({ amount: newAmount })
+        .eq("id", id)
+        .select();
+
+      if (error) throw error;
+
+      if (data && data[0]) {
+        set((s) => ({
+          history: s.history.map((r) => (r.id === id ? { ...r, amount: data[0].amount } : r)),
+        }));
+      }
+    } catch (e: any) {
+      set({ error: e?.message || "withdrawStake failed" });
+    } finally {
+      set({ loading: false });
     }
   },
 }));

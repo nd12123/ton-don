@@ -25,14 +25,14 @@ import { useTonPrice } from "@/lib/hooks/useTonPrice";
 import { PLANS } from "@/components/Plans";
 import { WithdrawModal } from "@/components/WithdrawModal";
 import { useStakeContract } from "@/lib/ton/useContract";
-import { getSupabase } from "@/lib/supabase/browser";
+import { getSupabaseBrowser } from "@/lib/supabase/browser";
 import { useTonAddress } from "@tonconnect/ui-react";
 import { dailyIncomeActive, totalEarnedSoFar, balanceActive } from "@/lib/earnings";
 import { motion } from "framer-motion";
 import { useT } from "@/i18n/react";
 
 export default function ClientProfilePage() {
-  const supabase = getSupabase();
+  const supabase = getSupabaseBrowser();
   const t = useT("profile");
 
   const { withdrawAmount } = useStakeContract();

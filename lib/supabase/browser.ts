@@ -1,29 +1,29 @@
-'use client';
+// lib/supabase/browser.ts
+"use client";
 
-import { createClient, type SupabaseClient } from '@supabase/supabase-js';
+import { createClient, type SupabaseClient } from "@supabase/supabase-js";
 
 let _supa: SupabaseClient | null = null;
 
 /**
- * Возвращает singleton Supabase-клиента для браузера.
- * – Используем только публичные переменные.
- * – НИЧЕГО не делаем на верхнем уровне, чтобы не ронять билд/SSR.
- * – Бросаем ошибку только в браузере, если env не заданы.
+ * Возвращает singleton Supabase-клиента для БРАУЗЕРА.
+ * - Использует ТОЛЬКО публичные переменные NEXT_PUBLIC_*
+ * - Не создаётся на верхнем уровне (чтобы не рушить билд/SSR)
+ * - Если env не заданы — бросаем ошибку в браузере (а не при билде)
  */
-export function getSupabase(): SupabaseClient {
+export function getSupabaseBrowser(): SupabaseClient {
   if (_supa) return _supa;
 
   const url  = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const anon = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY; // ← ПУБЛИЧНЫЙ, не service!
+  const anon = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
   if (!url || !anon) {
-    // В браузере покажем понятную ошибку
-    if (typeof window !== 'undefined') {
-      throw new Error('Missing NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY');
+    // в браузере покажем понятную ошибку
+    if (typeof window !== "undefined") {
+      throw new Error("Missing NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY");
     }
-    // На сервере (во время билда/SSR) просто кидаем "мягкую" ошибку:
-    // это защищает от случайного импорта client-модуля в серверный код.
-    throw new Error('Client Supabase imported on the server without NEXT_PUBLIC_* env set');
+    // если внезапно импортнули на сервере — пусть не валит билд
+    throw new Error("Client supabase imported on server without NEXT_PUBLIC_* env");
   }
 
   _supa = createClient(url, anon, { auth: { persistSession: true } });

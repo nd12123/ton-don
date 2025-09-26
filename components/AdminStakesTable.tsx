@@ -3,10 +3,10 @@
 import { useEffect, useMemo, useState } from "react";
 import { Dialog } from "@headlessui/react";
 import { Plus, Pencil, Trash2, X } from "lucide-react";
-import { supabase } from "@/lib/supabase";
-import { StakeRecord } from "@/lib/store"; // если тип другой — см. StakeRow ниже
-import { useTonAddress } from "@tonconnect/ui-react"; // <-- добавили
-
+import { getSupabaseBrowser } from "@/lib/supabase/browser"; // ← верный импорт
+import { StakeRecord } from "@/lib/store";
+import { useTonAddress } from "@tonconnect/ui-react";
+import { formatUTC } from "@/lib/format";
 type StakeRow = StakeRecord & {
   id: string | number;
   created_at?: string | null;
@@ -15,7 +15,7 @@ type StakeRow = StakeRecord & {
 type FormState = {
   id?: string | number;
   validator: string;
-  owner?: string; // если в БД поле называется иначе — подправь name в inputs и в upsert маппинг
+  owner?: string;
   wallet?: string;
   amount: number;
   apr: number;
@@ -45,24 +45,32 @@ export default function AdminStakesTable() {
   const [saving, setSaving] = useState(false);
   const [deletingId, setDeletingId] = useState<string | number | null>(null);
 
+  // адрес подключённого кошелька (админ)
+  const adminWallet = useTonAddress(); // "" если не подключен
 
-   // адрес подключённого кошелька (админ)
-  const adminWallet = useTonAddress(); // пустая строка если не подключен
-  
-  // загрузка
+  // --- Загрузка таблицы через браузерный клиент Supabase
   const fetchRows = async () => {
     setLoading(true);
     setErr(null);
-    const { data, error } = await supabase
-      .from("stakes")
-      .select("*")
-      .order("created_at", { ascending: false });
-    if (error) setErr(error.message);
-    setRows((data as StakeRow[]) || []);
-    setLoading(false);
+    try {
+      const sb = getSupabaseBrowser(); // ← создаём клиента только здесь
+      const { data, error } = await sb
+        .from("stakes")
+        .select("*")
+        .order("created_at", { ascending: false });
+
+      if (error) throw error;
+      setRows((data as StakeRow[]) || []);
+    } catch (e: any) {
+      setErr(e?.message || "Failed to load stakes");
+      setRows([]);
+    } finally {
+      setLoading(false);
+    }
   };
 
   useEffect(() => {
+    // компонент клиентский, можно грузить
     fetchRows();
   }, []);
 
@@ -95,29 +103,33 @@ export default function AdminStakesTable() {
   };
 
   const canSave = useMemo(() => {
+    const hasOwnerOrWallet =
+      (form.owner && form.owner.trim().length > 0) ||
+      (form.wallet && form.wallet.trim().length > 0);
+
     return (
       form.validator.trim().length > 0 &&
-      (form.owner?.trim()?.length || form.wallet?.trim()?.length) &&
+      hasOwnerOrWallet &&
       form.amount > 0 &&
       form.apr >= 0 &&
       form.duration >= 0 &&
       (form.status === "active" || form.status === "completed")
     );
   }, [form]);
-  
-  // --- НОВОЕ: тонкая обёртка для вызова нашего серверного API
+
+  // --- Обёртка: CRUD только через наш серверный API (админка)
   const adminFetch = async (body: any) => {
+    // Идеально — httpOnly cookie. Если нужно по-быстрому — localStorage/ENV.
     const token =
-      // 1) лучше хранить как httpOnly cookie, тогда заголовок не нужен
-      // 2) если совсем просто — можно класть в localStorage (понимаем риск)
       (typeof window !== "undefined" && localStorage.getItem("ADMIN_TOKEN")) ||
-      process.env.NEXT_PUBLIC_ADMIN_UI_TOKEN || "";
+      process.env.NEXT_PUBLIC_ADMIN_UI_TOKEN ||
+      "";
 
     return fetch("/api/admin/stakes", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "x-admin-token": token, // сервер проверит
+        "x-admin-token": token,
       },
       body: JSON.stringify({ ...body, walletAddress: adminWallet }),
     });
@@ -125,9 +137,13 @@ export default function AdminStakesTable() {
 
   const save = async () => {
     if (!canSave) return;
-    if (!adminWallet) { setErr("Connect admin wallet first"); return; }
+    if (!adminWallet) {
+      setErr("Connect admin wallet first");
+      return;
+    }
 
-    setSaving(true); setErr(null);
+    setSaving(true);
+    setErr(null);
 
     const payload: any = {
       validator: form.validator.trim(),
@@ -140,82 +156,47 @@ export default function AdminStakesTable() {
       txHash: form.txHash?.trim() || null,
     };
 
-    // вместо прямого supabase.update/insert — идём на сервер
-    const res = await adminFetch(
-      form.id
- ? { op: "update", id: String(form.id), data: payload }
-        : { op: "create", data: payload }
-    );
+    try {
+      const res = await adminFetch(
+        form.id
+          ? { op: "update", id: String(form.id), data: payload }
+          : { op: "create", data: payload }
+      );
 
-    if (!res.ok) {
-      const j = await res.json().catch(() => null);
-      setErr(j?.error || `Save failed (${res.status})`);
+      if (!res.ok) {
+        const j = await res.json().catch(() => null);
+        throw new Error(j?.error || `Save failed (${res.status})`);
+      }
+
+      setIsOpen(false);
+      await fetchRows();
+    } catch (e: any) {
+      setErr(e?.message || "Save failed");
+    } finally {
       setSaving(false);
+    }
+  };
+
+  const remove = async (id: string | number) => {
+    if (!adminWallet) {
+      setErr("Connect admin wallet first");
       return;
     }
-
-    setSaving(false);
-    setIsOpen(false);
-    fetchRows();
-  };
-
-  const remove = async (id: string | number) => {
-    if (!adminWallet) { setErr("Connect admin wallet first"); return; }
     setDeletingId(id);
-
-    // безопасность: DELETE тоже через сервер
- const res = await adminFetch({ op: "delete", id: String(id) });
-     if (!res.ok) {
-      const j = await res.json().catch(() => null);
-      setErr(j?.error || `Delete failed (${res.status})`);
-    }
-
-    setDeletingId(null);
-    fetchRows();
-  };
-/*
-  const save = async () => {
-    if (!canSave) return;
-    setSaving(true);
-    setErr(null);
-
-    // сопоставь поля под свою схему
-    const payload: any = {
-      validator: form.validator.trim(),
-      owner: form.owner?.trim() || null, // если в БД поле wallet — поменяй
-      wallet: form.wallet?.trim() || null,
-      amount: Number(form.amount),
-      apr: Number(form.apr),
-      duration: Number(form.duration),
-      status: form.status,
-      txHash: form.txHash?.trim() || null,
-    };
-
-    let error;
-    if (form.id) {
-      const resp = await supabase.from("stakes").update(payload).eq("id", form.id);
-      error = resp.error || null;
-    } else {
-      const resp = await supabase.from("stakes").insert([payload]);
-      error = resp.error || null;
-    }
-
-    if (error) setErr(error.message);
-    setSaving(false);
-    if (!error) {
-      setIsOpen(false);
-      fetchRows();
+    try {
+      const res = await adminFetch({ op: "delete", id: String(id) });
+      if (!res.ok) {
+        const j = await res.json().catch(() => null);
+        throw new Error(j?.error || `Delete failed (${res.status})`);
+      }
+      await fetchRows();
+    } catch (e: any) {
+      setErr(e?.message || "Delete failed");
+    } finally {
+      setDeletingId(null);
     }
   };
 
-  const remove = async (id: string | number) => {
-    setDeletingId(id);
-    const { error } = await supabase.from("stakes").delete().eq("id", id);
-    if (error) setErr(error.message);
-    setDeletingId(null);
-    fetchRows();
-  };
-*/
   return (
     <div className="w-full">
       {/* header */}
@@ -289,8 +270,10 @@ export default function AdminStakesTable() {
                     </span>
                   </td>
                   <td className="px-3 py-2 align-top text-gray-400">
-                    {r.created_at ? new Date(r.created_at).toLocaleString() : "-"}
-                  </td>
+  <time dateTime={r.created_at ?? undefined} suppressHydrationWarning>
+    {formatUTC(r.created_at)}
+  </time>
+</td>
                   <td className="px-3 py-2 align-top">
                     <div className="flex items-center gap-2">
                       <button

@@ -7,7 +7,7 @@ import {
   RealtimePostgresChangesPayload,
   RealtimeChannel,
 } from "@supabase/supabase-js";
-import { supabase } from "@/lib/supabase";
+import { getSupabaseBrowser } from "@/lib/supabase/browser"; // ✅ браузерная фабрика
 import { useStakeStore, StakeRecord } from "@/lib/store";
 import Skeleton from "@/components/ui/Skeleton";
 import { plannedProfit } from "@/lib/earnings";
@@ -16,8 +16,8 @@ import { useTonAddress, useIsConnectionRestored } from "@tonconnect/ui-react";
 type Filter = "all" | "active" | "completed";
 
 export default function HistoryClient() {
-  const restored = useIsConnectionRestored();        // ← ждём восстановление TC
-  const address = useTonAddress();                   // EQ... | undefined | ''
+  const restored = useIsConnectionRestored(); // ждём восстановление TC
+  const address  = useTonAddress();            // EQ... | '' | undefined
 
   const history      = useStakeStore((s) => s.history);
   const loading      = useStakeStore((s) => s.loading);
@@ -31,19 +31,19 @@ export default function HistoryClient() {
     if (!restored) return;
     if (!address) return;
 
-    // очистим прошлые данные (чтобы не мигало «ничего не найдено» на чужих данных)
+    // очистим прошлые данные (чтобы не мигало на смене кошелька)
     useStakeStore.setState({ history: [], loading: true });
 
     // 1) первичная загрузка
     fetchHistory(address);
 
-    // 2) realtime только по этому адресу
-    // ВАЖНО: замените 'owner' на реальное поле в вашей таблице (например wallet, user, account и т.п.)
-    const channel: RealtimeChannel = supabase
+    // 2) realtime: подписываемся ТОЛЬКО на записи этого кошелька
+    const sb = getSupabaseBrowser(); // ✅ создаём клиента здесь, не наверху
+    const channel: RealtimeChannel = sb
       .channel(`public:stakes:${address}`)
       .on<StakeRecord>(
         "postgres_changes",
-        { event: "INSERT", schema: "public", table: "stakes", filter: `owner=eq.${address}` },
+        { event: "INSERT", schema: "public", table: "stakes", filter: `wallet=eq.${address}` }, // ✅ wallet
         (payload: RealtimePostgresChangesPayload<StakeRecord>) => {
           const rec = payload.new as StakeRecord;
           useStakeStore.setState((state) => ({ history: [rec, ...state.history] }));
@@ -51,7 +51,7 @@ export default function HistoryClient() {
       )
       .on<StakeRecord>(
         "postgres_changes",
-        { event: "UPDATE", schema: "public", table: "stakes", filter: `owner=eq.${address}` },
+        { event: "UPDATE", schema: "public", table: "stakes", filter: `wallet=eq.${address}` }, // ✅ wallet
         (payload: RealtimePostgresChangesPayload<StakeRecord>) => {
           const rec = payload.new as StakeRecord;
           useStakeStore.setState((state) => ({
@@ -63,14 +63,13 @@ export default function HistoryClient() {
 
     return () => {
       // корректно отписываемся при смене адреса/размонте
-      supabase.removeChannel(channel);
-      // альтернативно: channel.unsubscribe();
+      sb.removeChannel(channel);
+      // или: channel.unsubscribe();
     };
   }, [restored, address, fetchHistory]);
 
   // ====== Рендер с правильными состояниями ======
 
-  // пока TonConnect восстанавливается — просто скелетон (или ваш лоадер)
   if (!restored) {
     return (
       <div className="max-w-4xl mx-auto px-4 py-10 space-y-4">
@@ -79,12 +78,10 @@ export default function HistoryClient() {
     );
   }
 
-  // TonConnect восстановился, но кошелёк не подключён
   if (!address) {
     return <p className="text-gray-500 text-sm px-4 py-10">Подключите кошелёк в шапке.</p>;
   }
 
-  // первая загрузка именно для ТЕКУЩЕГО адреса
   if (loading && history.length === 0) {
     return (
       <div className="max-w-4xl mx-auto px-4 py-10 space-y-4">
@@ -94,7 +91,10 @@ export default function HistoryClient() {
   }
 
   const filtered = history
-    .filter((r) => (filter === "active" ? r.status === "active" : filter === "completed" ? r.status === "completed" : true))
+    .filter((r) =>
+      filter === "active" ? r.status === "active" :
+      filter === "completed" ? r.status === "completed" : true
+    )
     .filter((r) => r.validator?.toLowerCase().includes(search.trim().toLowerCase()));
 
   return (
