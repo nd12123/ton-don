@@ -7,6 +7,9 @@ import { createClient } from '@supabase/supabase-js';
 
 // ── ВАЖНО: WebSocket-полифилл для Node → иначе Realtime = TIMED_OUT
 import WS from 'ws';
+
+import fs from 'fs';
+
 globalThis.WebSocket = WS;
 globalThis.self = globalThis; // на случай либ, ожидающих window/self
 
@@ -14,10 +17,22 @@ globalThis.self = globalThis; // на случай либ, ожидающих wi
 
  const __dirname = dirname(fileURLToPath(import.meta.url));
  dotenv.config({ path: join(__dirname, '.env') }); // грузим bot/.env рядом со скриптом
- 
+
 // сразу после dotenv.config(...)
 const envPath = join(__dirname, '.env');
 console.log('[bot] dotenv path:', envPath);
+
+console.log('[bot] dotenv path:', envPath, 'exists:', fs.existsSync(envPath));
+
+const mask = (s) => (s ? s.slice(0,6) + '…' + s.slice(-4) : '(empty)');
+console.log('[env]', {
+  SUPABASE_URL: process.env.SUPABASE_URL || '(empty)',
+  SUPABASE_SERVICE_ROLE_KEY: mask(process.env.SUPABASE_SERVICE_ROLE_KEY),
+  BOT_TOKEN: mask(process.env.BOT_TOKEN),
+  ADMIN_IDS: process.env.ADMIN_IDS || '(empty)',
+  NODE_OPTIONS: process.env.NODE_OPTIONS || '(empty)',
+});
+
 
 const REQ = ['SUPABASE_URL','SUPABASE_SERVICE_ROLE_KEY','BOT_TOKEN','ADMIN_IDS'];
 for (const k of REQ) {
