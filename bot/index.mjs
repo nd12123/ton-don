@@ -10,14 +10,13 @@ const TG_TOKEN      = process.env.TELEGRAM_BOT_TOKEN;
 const TG_CHAT_ID    = process.env.TELEGRAM_CHAT_ID;     // число или @username
 const TG_THREAD_ID  = process.env.TELEGRAM_THREAD_ID;   // опционально, для topics
 // ENV
-const ADMIN_IDS = process.env.ADMIN_IDS || ''; // "-100...,@user,-100...:123"
+const ADMIN_IDS = process.env.ADMIN_IDS || '';
 
-
-
-if (!SUPABASE_URL || !SERVICE_KEY || !TG_TOKEN || !TG_CHAT_ID) {
-  console.error('[bot] Missing env: SUPABASE_URL | SUPABASE_SERVICE_ROLE_KEY | TELEGRAM_BOT_TOKEN | TELEGRAM_CHAT_ID');
+if (!SUPABASE_URL || !SERVICE_KEY || !TG_TOKEN || !ADMIN_IDS) {
+  console.error('[bot] Missing env: SUPABASE_URL | SUPABASE_SERVICE_ROLE_KEY | TELEGRAM_BOT_TOKEN | ADMIN_IDS');
   process.exit(1);
 }
+
 
 const supa = createClient(SUPABASE_URL, SERVICE_KEY, {
   auth: { persistSession: false },
@@ -32,20 +31,24 @@ function fmt(n) {
   return Number.isFinite(x) ? x.toString() : String(n ?? '');
 }
 
-
-// парсим ADMIN_IDS в [{chatId, threadId?}]
 function parseAdminIds(s) {
+  const isNumericId = (x) => /^-?\d+$/.test(x);  // только целое, допускаем -100...
   return s.split(',')
     .map(x => x.trim())
     .filter(Boolean)
     .map(x => {
       const [idPart, threadPart] = x.split(':');
-      const chatId = /^\d|^-/.test(idPart) ? Number(idPart) : idPart; // число или @username
-      const threadId = threadPart ? Number(threadPart) : undefined;
+      const chatId = isNumericId(idPart) ? Number(idPart) : idPart; // число или @username
+      const threadId = threadPart && /^-?\d+$/.test(threadPart) ? Number(threadPart) : undefined;
       return { chatId, threadId };
     });
 }
 const RECIPIENTS = parseAdminIds(ADMIN_IDS);
+if (!RECIPIENTS.length) {
+  console.error('[bot] ADMIN_IDS parsed empty');
+  process.exit(1);
+}
+console.log('[bot] recipients:', RECIPIENTS);
 
 // отправка одному получателю с бэкоффом
 async function sendOne(chatId, threadId, text) {
