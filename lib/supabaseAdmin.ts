@@ -6,7 +6,7 @@ type AnySupa = SupabaseClient<any, any, any>;
 
 export function getSupabaseAdmin(schema?: string): AnySupa | null {
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const key = process.env.NEXT_PUBLIC_SUPABASE_SERVICE_ROLE_KEY;
+  const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
   if (!url || !key) return null;
 
   // Не создаём клиента на уровне модуля — только здесь (лениво)
