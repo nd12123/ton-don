@@ -5,7 +5,8 @@ import { useTonAddress, useTonConnectUI, useIsConnectionRestored } from "@toncon
 import { useStakeStore } from "@/lib/store";
 import DashboardStats from "@/components/DashboardStats";
 import { PLANS, type Plan } from "@/components/Plans";
-import { StakeModal } from "@/components/StakeModal";
+//import { StakeModal } from "@/components/StakeModal";
+import { StakeContractModal as StakeModal } from "@/components/StakeContractModal";
 import Image from "next/image";
 import { balanceActive, dailyIncomeActive, totalEarnedSoFar } from "@/lib/earnings";
 import { useT } from "@/i18n/react";

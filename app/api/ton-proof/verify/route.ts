@@ -7,7 +7,7 @@ function norm(a: string) {
 }
 
 function adminList() {
-  const raw = process.env.ADMIN_ADDRESSES || process.env.NEXT_PUBLIC_ADMIN_ADDRESSES || "";
+  const raw = process.env.ADMIN_AWALLETS || process.env.NEXT_PUBLIC_ADMIN_WALLETS || "";
   return raw.split(",").map(s => s.trim()).filter(Boolean).map(norm);
 }
 

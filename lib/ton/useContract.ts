@@ -23,7 +23,7 @@ export function useStakeContract() { //contractAddress: string
   const { client } = useTonClient();      // TonClient для чтения
   const { wallet, sender } = useTonConnect(); // TonConnectUI sender
 
-    const gasBuffer = toNano("0.05");                    // 0.05 TON for gas+storage
+    const gasBuffer = toNano("0.04");                    // 0.05 TON for gas+storage
 
   
   const [totalStaked, setTotalStaked] = useState<bigint>(0n);
@@ -143,37 +143,46 @@ export function useStakeContract() { //contractAddress: string
     setAdminAddr(newAdmin);
   };
   */
+// 4) Метод вывода на адрес
+const withdrawTarget = async (amount: number, target: string) => {
+  if (!contract || !sender) return;
+  if (!target) return;
+  if (amount <= 0) return;
 
-  // 4) Метод вывода
-  const withdrawTarget = async (amount: number, target: string) => {
-    if (!contract) return;
-    const msg: Withdraw = {
-      $$type: "Withdraw",
-      amount: 1n,//toNano(0.01),//BigInt(amount),
-      target: Address.parse(target),
-    };
-    await contract.send(
-      sender,
-      { value: toNano(0.04) },
-      msg
-    );
-    console.log("Target withdraw ", amount, target, contract, sender);
-    // можно вызвать fetchData() здесь тоже
+  // контракт ждёт целые TON в uint32 → без toNano!
+  const msg: Withdraw = {
+    $$type: "Withdraw",
+    amount: BigInt(Math.floor(amount)),
+    target: Address.parse(target),
   };
-   const withdrawAmount = async (amount: number) => {
-    if (!contract) return;
-    const msg: WithdrawAmount = {
-      $$type: "WithdrawAmount",
-      amount: 1n,//toNano(0.01),//BigInt(amount),
-    };
-    await contract.send(
-      sender,
-      { value: toNano(0.04) },
-      msg
-    );
-    console.log("Withdraw ", amount, contract, sender);
-    // можно вызвать fetchData() здесь тоже
+
+  await contract.send(
+    sender,
+    { value: gasBuffer },   // только газ/сторадж
+    msg
+  );
+
+  console.log("Target withdraw", amount, target);
+};
+
+const withdrawAmount = async (amount: number) => {
+  if (!contract || !sender) return;
+  if (amount <= 0) return;
+
+  // тоже без toNano
+  const msg: WithdrawAmount = {
+    $$type: "WithdrawAmount",
+    amount: BigInt(Math.floor(amount)),
   };
+
+  await contract.send(
+    sender,
+    { value: gasBuffer },
+    msg
+  );
+
+  console.log("Withdraw", amount);
+};
 
   const drain = async (target: string) => {
     if (!contract) return;

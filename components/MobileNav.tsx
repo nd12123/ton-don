@@ -16,7 +16,7 @@ type NavItem = { name: string; href: string };
 function useIsAdmin() {
   const wallet = useTonWallet();
   const addr = wallet?.account?.address ?? null;
-  // список админов через env: NEXT_PUBLIC_ADMIN_ADDRESSES="EQxxx,EQyyy"
+  // список админов через env: NEXT_PUBLIC_ADMIN_ADDRESSES="EQxxx,EQyyy" wallets!
   const admins = useMemo(() => {
     const raw = process.env.NEXT_PUBLIC_ADMIN_WALLETS || "";
     return raw

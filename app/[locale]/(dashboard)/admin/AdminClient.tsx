@@ -20,6 +20,7 @@ export default function AdminPage() {
         <h1 className="text-2xl font-bold">Admin · Stakes</h1>
         <div className="space-y-6">
           {/** <Jetton />*/}
+           <Jetton />
           <AdminStakesTable />
         </div>
       </main>
