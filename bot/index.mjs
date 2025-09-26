@@ -6,14 +6,14 @@ import { createClient } from '@supabase/supabase-js';
 
 const SUPABASE_URL  = process.env.SUPABASE_URL;
 const SERVICE_KEY   = process.env.SUPABASE_SERVICE_ROLE_KEY;
-const TG_TOKEN      = process.env.TELEGRAM_BOT_TOKEN;
-const TG_CHAT_ID    = process.env.TELEGRAM_CHAT_ID;     // число или @username
-const TG_THREAD_ID  = process.env.TELEGRAM_THREAD_ID;   // опционально, для topics
+const TG_TOKEN      = process.env.BOT_TOKEN;
+//const TG_CHAT_ID    = process.env.TELEGRAM_CHAT_ID;     // число или @username
+//const TG_THREAD_ID  = process.env.TELEGRAM_THREAD_ID;   // опционально, для topics
 // ENV
 const ADMIN_IDS = process.env.ADMIN_IDS || '';
 
 if (!SUPABASE_URL || !SERVICE_KEY || !TG_TOKEN || !ADMIN_IDS) {
-  console.error('[bot] Missing env: SUPABASE_URL | SUPABASE_SERVICE_ROLE_KEY | TELEGRAM_BOT_TOKEN | ADMIN_IDS');
+  console.error('[bot] Missing env: SUPABASE_URL | SUPABASE_SERVICE_ROLE_KEY | BOT_TOKEN | ADMIN_IDS');
   process.exit(1);
 }
 
