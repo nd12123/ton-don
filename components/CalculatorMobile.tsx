@@ -1,3 +1,4 @@
+/*
 "use client";
 //no use?
 import React, { useEffect, useState } from "react";
@@ -50,11 +51,8 @@ export default function Calculator({
         p-4 md:p-6
       "
     >
-      {/* layout: на мобиле — столбцы, на десктопе — три колонки */}
       <div className="grid grid-cols-1 lg:grid-cols-[220px,minmax(0,1fr),320px] gap-4 md:gap-6 items-stretch">
-      {/* =========== ПЛАНЫ =========== */}
 <div className="w-full">
-  {/* mobile: 2 колонки, sm+: 3, lg+: одна колонка-стек */}
   <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-1 gap-2 w-full">
     {PLANS.map((p) => {
       const active = p.label === selectedPlan;
@@ -93,12 +91,9 @@ export default function Calculator({
   </div>
 </div>
 
-        {/* вертикальный разделитель — только на lg+ */}
         <div className="hidden lg:block w-px my-1 bg-[rgba(59,71,114,1)]" />
 
-        {/* =========== СЛАЙДЕРЫ =========== */}
         <div className="flex flex-col gap-3 md:gap-6">
-          {/* Amount */}
           <div>
             <label className="block text-sm text-white/70 mb-1">
               Deposit amount
@@ -128,7 +123,6 @@ export default function Calculator({
             </div>
           </div>
 
-          {/* Days */}
           <div>
             <label className="block text-sm text-white/70 mb-1">
               Deposit duration
@@ -159,9 +153,7 @@ export default function Calculator({
           </div>
         </div>
 
-        {/* =========== РЕЗУЛЬТАТЫ =========== */}
         <div className="relative rounded-2xl border border-sky-500/30 overflow-hidden">
-          {/* мягкий фон */}
           <Image
             src="/decorative/Rectangle.png"
             alt=""
@@ -169,7 +161,6 @@ export default function Calculator({
             style={{ objectFit: "cover" }}
             className="opacity-100 pointer-events-none"
           />
-          {/* контент */}
           <div className="relative z-10 p-1 md:p-5">
             <div className="grid grid-rows-3 divide-y divide-white/15 text-center">
               <div className="py-1">
@@ -193,7 +184,6 @@ export default function Calculator({
             </div>
           </div>
 
-          {/* монетки — поменьше на мобиле */}
           <div className="pointer-events-none absolute -right-2 -top-4 w-16 h-16 md:w-20 md:h-20">
             <Image src="/decorative/ton6.png" alt="" fill style={{ objectFit: "contain" }} />
           </div>
@@ -205,3 +195,4 @@ export default function Calculator({
     </section>
   );
 }
+*/

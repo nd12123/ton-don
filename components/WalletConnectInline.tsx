@@ -71,11 +71,39 @@ export default function WalletConnectInline({ className = "" }: Props) {
   );
 }
 
-function TonIcon({ className = "" }: { className?: string }) {
+function TonIcon({
+  className = "",
+  strokeWidth = 1.6,
+}: {
+  className?: string;
+  strokeWidth?: number;
+}) {
   return (
-    <svg className={className} viewBox="0 0 24 24" fill="none" aria-hidden>
-      <path d="M4 5.5C4 4.12 5.12 3 6.5 3h11c1.38 0 2.5 1.12 2.5 2.5 0 .45-.12.89-.36 1.27L13.5 18.9a2 2 0 0 1-3 0L4.36 6.77A2.5 2.5 0 0 1 4 5.5Z" stroke="currentColor" strokeWidth="1.6" />
-      <path d="M12 18.6V7.2" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
+    <svg
+      className={className}
+      viewBox="0 0 24 24"
+      fill="none"
+      aria-hidden
+      focusable="false"
+    >
+      {/* ВНЕШНИЙ «треугольник»-щит — оставлен из твоей версии, чтобы совпало по стилю */}
+      <path
+        d="M4 5.5C4 4.12 5.12 3 6.5 3h11c1.38 0 2.5 1.12 2.5 2.5 0 .45-.12.89-.36 1.27L13.5 18.9a2 2 0 0 1-3 0L4.36 6.77A2.5 2.5 0 0 1 4 5.5Z"
+        stroke="currentColor"
+        strokeWidth={strokeWidth}
+        strokeLinejoin="round"
+      />
+      {/* ВЕРТИКАЛЬ — растянута до границ контура:
+          ─ верх: ~5.5 (там начинается «шапка»/верхняя граница щита)
+          ─ низ:  18.9 (нижняя вершина внешнего контура)
+      */}
+      <path
+        d="M12 18.9V5.5"
+        stroke="currentColor"
+        strokeWidth={strokeWidth}
+        strokeLinecap="round"
+      />
     </svg>
   );
 }
+

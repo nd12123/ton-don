@@ -24,6 +24,7 @@ export default function Providers({
       language={tonUILang}           // <- корректный проп; не в uiPreferences
       // uiPreferences={{ theme: 'SYSTEM' }} // опционально
       //restoreConnection={false} //true on production
+      //mainnet?
     >
       {children}
     </TonConnectUIProvider>

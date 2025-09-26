@@ -62,6 +62,19 @@ export default function InteractivePage() {
       <SectionWrapper>
       </SectionWrapper> */}
       <MainSection/>  {/**className="main" */}
+        <TotalValue  />
+  
+      <WhyUs />
+      <StepsToInvest />
+      <CalculateAndPlans /> 
+{/***/}
+
+      <FAQSection />
+      <Footer />
+    </>
+  );
+}
+
         {/*topCloud={{
           leftSrc: '/decorative/ellipse6.png',
           rightSrc: '/decorative/ellipse5.png',
@@ -82,19 +95,6 @@ export default function InteractivePage() {
 
       >*/}
       
-        <TotalValue  />
-  
-      <WhyUs />
-      <StepsToInvest />
-      <CalculateAndPlans /> 
-{/***/}
-
-      <FAQSection />
-      <Footer />
-    </>
-  );
-}
-
 /* 
 
 

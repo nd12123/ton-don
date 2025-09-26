@@ -1,4 +1,6 @@
 // components/HistoryClient.tsx
+/*
+No use, just in case
 "use client";
 
 import { useEffect, useState } from "react";
@@ -160,3 +162,4 @@ export default function HistoryClient() {
     </motion.main>
   );
 }
+*/
