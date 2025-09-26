@@ -1,17 +1,33 @@
 // app/api/stake/route.ts
 import { NextRequest, NextResponse } from "next/server";
-import { createClient } from "@supabase/supabase-js";
+import { createClient, type SupabaseClient } from "@supabase/supabase-js";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
+export const revalidate = 0;
 
-// Создаем server-side клиент с service_role (RLS обходится корректно)
-const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL!;
-const SERVICE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY!;
+// НИЧЕГО не делаем на верхнем уровне: ни чтения env, ни createClient.
+// Ленивая инициализация клиента — только в рантайме запроса.
+let _supa: SupabaseClient | null = null;
 
-const supa = createClient(SUPABASE_URL, SERVICE_KEY, {
-  auth: { persistSession: false },
-});
+function getSupa(): SupabaseClient {
+  if (_supa) return _supa;
+
+  // Разрешаем URL из двух вариантов переменных (на сервере лучше без NEXT_PUBLIC)
+  const url =
+    process.env.SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL || "";
+
+  const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY || "";
+
+  if (!url || !serviceKey) {
+    // Бросаем только в момент РАНТАЙМА (когда реально пришёл запрос),
+    // а не на этапе импорта/сборки.
+    throw new Error("Supabase env missing: SUPABASE_URL and/or SUPABASE_SERVICE_ROLE_KEY");
+  }
+
+  _supa = createClient(url, serviceKey, { auth: { persistSession: false } });
+  return _supa;
+}
 
 function toNumber(x: unknown): number {
   const n = Number(x);
@@ -22,15 +38,15 @@ export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
 
-    // Поддержим и walletAddress на всякий, но в базу пишем в колонку wallet
+    // Поддержим оба поля кошелька
     const walletRaw: unknown = body?.wallet ?? body?.walletAddress;
     const validator: unknown = body?.validator ?? null;
     const amountRaw: unknown = body?.amount;
     const aprRaw: unknown = body?.apr;
     const durationRaw: unknown = body?.duration;
-    const txHashRaw: unknown = body?.txHash ?? null; // В БД колонка именно txHash (camelCase)
+    const txHashRaw: unknown = body?.txHash ?? null;
 
-    // Базовая валидация обязательных полей
+    // Базовая валидация
     if (!walletRaw || amountRaw == null || aprRaw == null || durationRaw == null) {
       return NextResponse.json(
         { ok: false, error: "wallet, amount, apr, duration required" },
@@ -38,10 +54,9 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // Приводим численные поля к корректным типам
     const amount = toNumber(amountRaw);
     const apr = toNumber(aprRaw);
-    const duration = Math.trunc(toNumber(durationRaw)); // всегда number
+    const duration = Math.trunc(toNumber(durationRaw));
 
     if (!(Number.isFinite(amount) && amount > 0)) {
       return NextResponse.json({ ok: false, error: "amount>0 required" }, { status: 400 });
@@ -50,15 +65,14 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ ok: false, error: "apr>=0 required" }, { status: 400 });
     }
     if (!(Number.isInteger(duration) && duration >= 0)) {
-      return NextResponse.json({ ok: false, error: "duration>=0 integer required" }, { status: 400 });
+      return NextResponse.json(
+        { ok: false, error: "duration>=0 integer required" },
+        { status: 400 }
+      );
     }
-
-    // Validator — опционален, но если пришел, требуем строку
     if (validator != null && typeof validator !== "string") {
       return NextResponse.json({ ok: false, error: "validator must be string" }, { status: 400 });
     }
-
-    // txHash — опционален, но если пришел, требуем строку (и оставляем camelCase)
     if (txHashRaw != null && typeof txHashRaw !== "string") {
       return NextResponse.json({ ok: false, error: "txHash must be string" }, { status: 400 });
     }
@@ -68,17 +82,17 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ ok: false, error: "wallet required" }, { status: 400 });
     }
 
-    // Формируем ровно тот payload, что ожидает схема public.stakes
     const payload = {
-      wallet,                // text NOT NULL
-      validator: validator as string | null, // text NULL
-      amount,                // numeric NOT NULL
-      apr,                   // numeric NOT NULL
-      duration,              // integer NOT NULL
-      status: "active",      // text DEFAULT 'active'
+      wallet,                                   // text NOT NULL
+      validator: (validator as string) ?? null, // text NULL
+      amount,                                   // numeric NOT NULL
+      apr,                                      // numeric NOT NULL
+      duration,                                 // integer NOT NULL
+      status: "active",                         // text DEFAULT 'active'
       txHash: (txHashRaw as string | null) ?? null, // text (camelCase в БД)
     };
 
+    const supa = getSupa(); // ← создаём клиента здесь, в рантайме
     const { data, error } = await supa
       .from("stakes")
       .insert([payload])
@@ -86,15 +100,20 @@ export async function POST(req: NextRequest) {
       .single();
 
     if (error) {
-      // Прокинем подробности ошибки из Supabase (удобно для дебага)
       return NextResponse.json(
-        { ok: false, error: error.message, details: (error as any)?.details ?? null, hint: (error as any)?.hint ?? null },
+        {
+          ok: false,
+          error: error.message,
+          details: (error as any)?.details ?? null,
+          hint: (error as any)?.hint ?? null,
+        },
         { status: 500 }
       );
     }
 
     return NextResponse.json({ ok: true, record: data });
   } catch (e: any) {
+    // Если упадём из-за отсутствующих env — это тоже попадёт сюда.
     console.error("POST /api/stake error:", e);
     return NextResponse.json({ ok: false, error: e?.message ?? "unknown" }, { status: 500 });
   }

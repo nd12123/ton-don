@@ -1,12 +1,30 @@
-import { createClient } from '@supabase/supabase-js';
+// lib/supabase/server.ts
+import { createClient, SupabaseClient } from '@supabase/supabase-js';
 
-/** Админ-клиент для серверного кода (роуты, крон и т.п.). */
-export function getAdminSupabase() {
-  const url = process.env.SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const key = process.env.SUPABASE_SERVICE_ROLE_KEY; // ← секретный, только на сервере
+let _client: SupabaseClient | null = null;
+
+/**
+ * Возвращает singleton Supabase-клиента.
+ * Инициализируем только при первом вызове (в рантайме), а не на уровне модуля.
+ */
+export function getSupabaseServer(): SupabaseClient {
+  if (_client) return _client;
+
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  // На сервере предпочтительно SERVICE_ROLE (если он реально нужен),
+  // иначе можно падать обратно на ANON.
+  const key =
+    process.env.SUPABASE_SERVICE_ROLE_KEY ||
+    process.env.SUPABASE_ANON_KEY;
 
   if (!url || !key) {
-    throw new Error('Missing SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY on the server');
+    // ВАЖНО: не бросаем это при импорте модуля.
+    // Бросаем только когда реально вызвали в рантайме (запрос пришёл).
+    throw new Error('Supabase env vars missing at runtime');
   }
-  return createClient(url, key, { auth: { persistSession: false } });
+
+  _client = createClient(url, key, {
+    auth: { persistSession: false },
+  });
+  return _client;
 }
