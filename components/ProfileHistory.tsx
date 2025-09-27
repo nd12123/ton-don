@@ -94,7 +94,7 @@ export default function ProfileHistory({ history, onWithdrawClick }: ProfileHist
                 className="rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/70 p-4 shadow-sm"
               >
                 <div className="flex items-center justify-between gap-3">
-                  <div className="text-sm font-medium dark:text-gray-100">
+                  <div className="text-sm font-medium dark:text-gray-500">
                     {r.validator || "—"}
                   </div>
                   <span className={`px-2 py-1 text-xs rounded-full ${chip(r.status)}`}>
@@ -111,17 +111,17 @@ export default function ProfileHistory({ history, onWithdrawClick }: ProfileHist
                   )}
                 </div>
 
-                <div className="mt-3 grid grid-cols-1 sm:grid-cols-3 gap-2 text-sm">
+                <div className="mt-3 grid grid-cols-1 sm:grid-cols-3 gap-2 text-sm text-gray-500">
                   <div className="rounded-lg border border-white/10 bg-white/30 dark:bg-white/5 px-3 py-2">
-                    <div className="text-[11px] text-gray-600 dark:text-gray-400">{tf("labels.plannedIncome", "Planned income")}</div>
+                    <div className="text-[11px] text-gray-600 dark:text-gray-600">{tf("labels.plannedIncome", "Planned income")}</div>
                     <div className="font-semibold">{planned.toFixed(2)} TON</div>
                   </div>
                   <div className="rounded-lg border border-white/10 bg-white/30 dark:bg-white/5 px-3 py-2">
-                    <div className="text-[11px] text-gray-600 dark:text-gray-400">{tf("labels.earned", "Earned")}</div>
+                    <div className="text-[11px] text-gray-600 dark:text-gray-600">{tf("labels.earned", "Earned")}</div>
                     <div className="font-semibold">{earned.toFixed(2)} TON</div>
                   </div>
                   <div className="rounded-lg border border-white/10 bg-white/30 dark:bg-white/5 px-3 py-2">
-                    <div className="text-[11px] text-gray-600 dark:text-gray-400">{tf("labels.status", "Status")}</div>
+                    <div className="text-[11px] text-gray-600 dark:text-gray-600">{tf("labels.status", "Status")}</div>
                     <div className="font-semibold">
                       {STATUS_LABELS[r.status as "active" | "completed"] ?? r.status}
                     </div>
