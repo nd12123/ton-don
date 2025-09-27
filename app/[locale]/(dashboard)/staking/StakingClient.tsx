@@ -69,7 +69,7 @@ export default function StakingPage() {
 
   const previewBalanceTon = baseBalanceTon + amount;
   const previewDailyIncomeTon = baseDailyIncomeTon + dailyTon;
-  const previewTotalIncomeTon = baseTotalIncomeTon + dailyTon * duration;
+  const previewTotalIncomeTon =  dailyTon * duration; //baseTotalIncomeTon +
   const previewDeposit = baseDeposit + amount;
 
   const handleStakeClick = () => {
