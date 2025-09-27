@@ -73,6 +73,6 @@ export async function generateMetadata({
     : DEFAULT_LOCALE;
 
   return {
-    title: safe === "ru" ? "TON Stake — Главная" : "TON Stake — Home",
+    title: safe === "ru" ? "TON Staker — Главная" : "TON Staker — Home",
   };
 }

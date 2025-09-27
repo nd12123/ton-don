@@ -78,7 +78,7 @@ export default function MobileNav() {
             <Menu className="w-6 h-6 text-white" />
           </button>
 <LocaleLink href="/" className="flex items-center gap-2 text-white font-bold text-lg">
-  <Image src="/favicon.svg" alt="TON Stake" width={20} height={20} className="rounded-md" />
+  <Image src="/favicon.svg" alt="TON Staker" width={20} height={20} className="rounded-md" />
   <span>{t("common.brand")}</span>
 </LocaleLink>
           {/* Кнопка кошелька справа, как в десктопе */}

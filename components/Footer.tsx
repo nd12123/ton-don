@@ -30,7 +30,7 @@ export default function Footer({ className = "" }: { className?: string }) {
   const t = useT("common");
   const tf = <T extends string>(key: string, fb: T) => t<T>(key, undefined, fb);
 
-  const brand = tf("brand", "TON Stake");
+  const brand = tf("brand", "TON Staker");
   const navHome = tf("nav.home", "Home");
   const navStaking = tf("nav.staking", "Staking");
   const navProfile = tf("nav.profile", "Profile");

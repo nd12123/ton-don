@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "Security Audit | TON Stake",
+  title: "Security Audit | TON Staker",
   description: "Certik audit (PDF)",
   robots: { index: false, follow: false },
 };

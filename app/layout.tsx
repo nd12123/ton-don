@@ -12,8 +12,8 @@ import type { Metadata, Viewport } from "next";
 export const metadata: Metadata = {
   metadataBase: new URL("https://your-domain.tld"), // поменяй
   title: {
-    default: "TON Stake",
-    template: "%s · TON Stake",
+    default: "TON Staker",
+    template: "%s · TON Staker",
   },
   description: "Stake TON easily & securely. Earn passive income with TON.",
   keywords: ["TON", "staking", "crypto", "DeFi", "Toncoin"],
@@ -27,10 +27,10 @@ export const metadata: Metadata = {
   openGraph: { //noIdea
     type: "website",
     url: "https://your-domain.tld",
-    siteName: "TON Stake",
+    siteName: "TON Staker",
     title: "Stake TON easily & securely",
     description: "Our AI finds the most profitable nodes for staking.",
-    images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "TON Stake" }],
+    images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "TON Staker" }],
   },
   manifest: "/site.webmanifest",
   //themeColor: "#0B1028", //unsupported&
