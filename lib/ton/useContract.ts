@@ -9,9 +9,9 @@ import type {
   Withdraw,
   Drain
   //SetAdmin noneed
-} from "../../build/LastContract/LastContract_LastContract"; //... /StakeContract/StakeContract_StakeContract
+} from "../../build/MainContract/MainContract_MainContract"; //... /StakeContract/StakeContract_StakeContract
 //import {StakeContract} from "../../build/StakeContract/StakeContract_StakeContract"
-import { LastContract }     from "../../build/LastContract/LastContract_LastContract"; //... /StakeContract/StakeContract_StakeContract
+import { MainContract }     from "../../build/MainContract/MainContract_MainContract"; //... /StakeContract/StakeContract_StakeContract
 
 import { useAsyncInitialize } from "./useAsyncInitialize";
 import { useTonClient }       from "./useTonClient";
@@ -31,14 +31,14 @@ export function useStakeContract() { //contractAddress: string
   const [owner,      setOwner]    = useState<string | null>(null); //
 
   // 1) Открываем контракт
-  const contract = useAsyncInitialize<OpenedContract<LastContract> | null>(
+  const contract = useAsyncInitialize<OpenedContract<MainContract> | null>(
     async () => {
       if (!client || !wallet) return null;
-      console.log("Contract opening, wallet ", Address.parse(wallet as string).toString(), " contract ", "kQCaADFW83YrbuXUg6OCN1zvt77rEe-ZMCToJqv2sxhB-Kh0") //Address.parse() //kQB3u_BlKZsMEHsz9GFwJfUY7lG7xlzKdil8yUwqEIFFstNz
-      const desc = LastContract.fromAddress(
-        Address.parse("kQCaADFW83YrbuXUg6OCN1zvt77rEe-ZMCToJqv2sxhB-Kh0")//") // EQB3u_BlKZsMEHsz9GFwJfUY7lG7xlzKdil8yUwqEIFFsmj5 //contractAddress //"kQB3u_BlKZsMEHsz9GFwJfUY7lG7xlzKdil8yUwqEIFFstNz")//"0QAmQUOW2aGZb8uGmDd8fhhcs7u5NpzzmybooQo46PzGleIL")//"EQB8akzBYXBpATjJiWG1vRwo2FG2JoA9czy3yNno-qhMnlMo") //process.env.NEXT_PUBLIC_ADMIN_WALLETS ? can be a string? maybe log
+      //console.log("Contract opening, wallet ", Address.parse(wallet as string).toString(), " contract ", "kQCaADFW83YrbuXUg6OCN1zvt77rEe-ZMCToJqv2sxhB-Kh0") //Address.parse() //kQB3u_BlKZsMEHsz9GFwJfUY7lG7xlzKdil8yUwqEIFFstNz
+      const desc = MainContract.fromAddress(
+        Address.parse("EQC5Gws2Em4zQ8ywwFDktfUHz7mXOe7b_Br5d_jjeJW-_wQ7")//") //kQCaADFW83YrbuXUg6OCN1zvt77rEe-ZMCToJqv2sxhB-Kh0 EQB3u_BlKZsMEHsz9GFwJfUY7lG7xlzKdil8yUwqEIFFsmj5 //contractAddress //"kQB3u_BlKZsMEHsz9GFwJfUY7lG7xlzKdil8yUwqEIFFstNz")//"0QAmQUOW2aGZb8uGmDd8fhhcs7u5NpzzmybooQo46PzGleIL")//"EQB8akzBYXBpATjJiWG1vRwo2FG2JoA9czy3yNno-qhMnlMo") //process.env.NEXT_PUBLIC_ADMIN_WALLETS ? can be a string? maybe log
       );
-      return client.open(desc) as OpenedContract<LastContract>;
+      return client.open(desc) as OpenedContract<MainContract>;
     },
     [client, wallet] //contractAddress c209edecebfe1050d45bb01b898c1f518df5f7448cf6345c00811822db4c5dca ?
   );
@@ -81,21 +81,16 @@ export function useStakeContract() { //contractAddress: string
 
   useEffect(() => {
     if (!contract || !client) return;
-
-    /*
-*/
     (async () => {
-  const desc = LastContract.fromAddress(
-    Address.parse("kQCaADFW83YrbuXUg6OCN1zvt77rEe-ZMCToJqv2sxhB-Kh0")//"kQB3u_BlKZsMEHsz9GFwJfUY7lG7xlzKdil8yUwqEIFFstNz") kQCaADFW83YrbuXUg6OCN1zvt77rEe-ZMCToJqv2sxhB-Kh0 kQDexuQg5a-vyelfStMMax7ODr8Yc-l_epdqiKuBVNH1p1DP
+  const desc = MainContract.fromAddress(
+    Address.parse("UQDYE_8_ESdxLvbAKV2Y08LStu1CYaAMfhBNrreEHtUbbTtp")//"kQB3u_BlKZsMEHsz9GFwJfUY7lG7xlzKdil8yUwqEIFFstNz") kQCaADFW83YrbuXUg6OCN1zvt77rEe-ZMCToJqv2sxhB-Kh0 kQDexuQg5a-vyelfStMMax7ODr8Yc-l_epdqiKuBVNH1p1DP
   );
   const opened = client.open(desc);
   //console.log("Contract keys by address:", Object.keys(opened));
   //console.log("Contract keys by object", Object.keys(contract));
-  const owner = await opened.getAdmin();
-  console.log("Admin is:", owner.toString());
+  //const owner = await opened.getAdmin();
+  //console.log("Admin is:", owner.toString());
 })();
-
-
     (async () => {
       const a = await contract.getOwner();//getContractAdmin(); (provider:  ContractProvider)
       setOwner(a.toString());

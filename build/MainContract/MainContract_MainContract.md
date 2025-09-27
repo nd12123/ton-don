@@ -1,6 +1,6 @@
 # Tact compilation report
-Contract: LastContract
-BoC Size: 1419 bytes
+Contract: MainContract
+BoC Size: 1489 bytes
 
 ## Structures (Structs and Messages)
 Total structures: 21
@@ -85,12 +85,15 @@ Signature: `WithdrawAmount{amount:uint128}`
 TL-B: `drain#50262060 target:address = Drain`
 Signature: `Drain{target:address}`
 
-### LastContract$Data
-TL-B: `_ totalStaked:int257 admin:address balance:int257 owner:address mapStakes:dict<address, int> = LastContract`
-Signature: `LastContract{totalStaked:int257,admin:address,balance:int257,owner:address,mapStakes:dict<address, int>}`
+### MainContract$Data
+TL-B: `_ totalStaked:int257 admin:address balance:int257 owner:address mapStakes:dict<address, int> = MainContract`
+Signature: `MainContract{totalStaked:int257,admin:address,balance:int257,owner:address,mapStakes:dict<address, int>}`
 
 ## Get methods
-Total get methods: 6
+Total get methods: 7
+
+## __build_salt
+No arguments
 
 ## admin
 No arguments
@@ -159,11 +162,11 @@ No arguments
 
 ```mermaid
 graph TD
-LastContract
-LastContract --> BaseTrait
-LastContract --> Deployable
+MainContract
+MainContract --> BaseTrait
+MainContract --> Deployable
 Deployable --> BaseTrait
-LastContract --> Ownable
+MainContract --> Ownable
 Ownable --> BaseTrait
 ```
 
@@ -171,5 +174,5 @@ Ownable --> BaseTrait
 
 ```mermaid
 graph TD
-LastContract
+MainContract
 ```

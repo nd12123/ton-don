@@ -1,4 +1,4 @@
-// automatically generated from `@stdlib/std/stdlib.fc` `C:/Users/s21b1/CryptoFlex/ton-stake/build/LastContract/LastContract_LastContract.fc` 
+// automatically generated from `@stdlib/std/stdlib.fc` `C:/Users/s21b1/smartContractPlayGr/MainNet/Main/build/MainContract/MainContract_MainContract.fc` 
 PROGRAM{
   DECLPROC __tact_not_null
   DECLPROC __tact_context_get
@@ -7,24 +7,26 @@ PROGRAM{
   DECLPROC __tact_dict_set_slice_int
   DECLPROC $DeployOk$_store
   DECLPROC $DeployOk$_store_cell
-  DECLPROC $LastContract$_store
-  DECLPROC $LastContract$_load
+  DECLPROC $MainContract$_store
+  DECLPROC $MainContract$_load
   DECLPROC $Context$_get_value
-  DECLPROC $LastContract$_contract_init
-  DECLPROC $LastContract$_contract_load
-  DECLPROC $LastContract$_contract_store
-  DECLPROC $LastContract$_fun_admin
-  DECLPROC $LastContract$_fun_userStake
-  DECLPROC $LastContract$_fun_allStakes
-  DECLPROC $LastContract$_fun_totalStaked
-  DECLPROC $LastContract$_fun_balance
+  DECLPROC $MainContract$_contract_init
+  DECLPROC $MainContract$_contract_load
+  DECLPROC $MainContract$_contract_store
+  DECLPROC $MainContract$_fun___build_salt
+  DECLPROC $MainContract$_fun_admin
+  DECLPROC $MainContract$_fun_userStake
+  DECLPROC $MainContract$_fun_allStakes
+  DECLPROC $MainContract$_fun_totalStaked
+  DECLPROC $MainContract$_fun_balance
   DECLPROC $MessageParameters$_constructor_bounce_to_value_mode_body
-  DECLPROC $LastContract$_fun_reply
-  DECLPROC $LastContract$_fun_notify
-  DECLPROC $LastContract$_fun_owner
+  DECLPROC $MainContract$_fun_reply
+  DECLPROC $MainContract$_fun_notify
+  DECLPROC $MainContract$_fun_owner
   DECLPROC $SendParameters$_constructor_to_bounce_value_mode
   DECLPROC $SendParameters$_constructor_to_value_bounce_mode
   DECLPROC $DeployOk$_constructor_queryId
+  78774 DECLMETHOD %__build_salt
   116046 DECLMETHOD %admin
   103651 DECLMETHOD %userStake
   113243 DECLMETHOD %allStakes
@@ -88,7 +90,7 @@ PROGRAM{
     $DeployOk$_store INLINECALLDICT
     ENDC
   }>
-  $LastContract$_store PROCINLINE:<{
+  $MainContract$_store PROCINLINE:<{
     s4 s5 XCHG2
     257 PUSHINT
     STIX
@@ -103,7 +105,7 @@ PROGRAM{
     STDICT
     STBREFR
   }>
-  $LastContract$_load PROCINLINE:<{
+  $MainContract$_load PROCINLINE:<{
     257 PUSHINT
     LDIX
     LDMSGADDR
@@ -123,7 +125,7 @@ PROGRAM{
     s1 s3 XCHG
     3 BLKDROP
   }>
-  $LastContract$_contract_init PROCINLINE:<{
+  $MainContract$_contract_init PROCINLINE:<{
     0 PUSHINT
     DUP
     PUSHNULL
@@ -131,53 +133,56 @@ PROGRAM{
     __tact_context_get_sender INLINECALLDICT
     s3 s0 s3 XCHG3
   }>
-  $LastContract$_contract_load PROCINLINE:<{
+  $MainContract$_contract_load PROCINLINE:<{
     c4 PUSH
     CTOS
     1 LDI
     SWAP
     IF:<{
-      $LastContract$_load INLINECALLDICT
+      $MainContract$_load INLINECALLDICT
       1 5 BLKDROP2
     }>ELSE<{
       DROP
-      $LastContract$_contract_init INLINECALLDICT
+      $MainContract$_contract_init INLINECALLDICT
     }>
   }>
-  $LastContract$_contract_store PROCINLINE:<{
+  $MainContract$_contract_store PROCINLINE:<{
     NEWC
     TRUE
     SWAP
     1 STI
     5 -ROLL
-    $LastContract$_store INLINECALLDICT
+    $MainContract$_store INLINECALLDICT
     ENDC
     c4 POP
   }>
-  $LastContract$_fun_admin PROCREF:<{
+  $MainContract$_fun___build_salt PROCREF:<{
+    20250927 PUSHINT
+  }>
+  $MainContract$_fun_admin PROCREF:<{
     s3 PUSH
   }>
-  $LastContract$_fun_userStake PROCREF:<{
+  $MainContract$_fun_userStake PROCREF:<{
     267 PUSHINT
     s2 PUSH
     s0 s2 XCHG
     257 PUSHINT
     __tact_dict_get_slice_int INLINECALLDICT
   }>
-  $LastContract$_fun_allStakes PROCREF:<{
+  $MainContract$_fun_allStakes PROCREF:<{
     DUP
   }>
-  $LastContract$_fun_totalStaked PROCREF:<{
+  $MainContract$_fun_totalStaked PROCREF:<{
     s4 PUSH
   }>
-  $LastContract$_fun_balance PROCREF:<{
+  $MainContract$_fun_balance PROCREF:<{
     s2 PUSH
   }>
   $MessageParameters$_constructor_bounce_to_value_mode_body PROCINLINE:<{
     s3 s3 XCHG2
     s0 s4 XCHG
   }>
-  $LastContract$_fun_reply PROCINLINE:<{
+  $MainContract$_fun_reply PROCINLINE:<{
     __tact_context_get_sender INLINECALLDICT
     TRUE
     0 PUSHINT
@@ -203,7 +208,7 @@ PROGRAM{
         SWAP
         SENDRAWMSG
   }>
-  $LastContract$_fun_notify PROCINLINE:<{
+  $MainContract$_fun_notify PROCINLINE:<{
     __tact_context_get_sender INLINECALLDICT
     FALSE
     0 PUSHINT
@@ -229,7 +234,7 @@ PROGRAM{
         SWAP
         SENDRAWMSG
   }>
-  $LastContract$_fun_owner PROCREF:<{
+  $MainContract$_fun_owner PROCREF:<{
     OVER
   }>
   $SendParameters$_constructor_to_bounce_value_mode PROCINLINE:<{
@@ -250,35 +255,40 @@ PROGRAM{
   }>
   $DeployOk$_constructor_queryId PROCINLINE:<{
   }>
+  %__build_salt PROC:<{
+    $MainContract$_contract_load INLINECALLDICT
+    $MainContract$_fun___build_salt INLINECALLDICT
+    5 1 BLKDROP2
+  }>
   %admin PROC:<{
-    $LastContract$_contract_load INLINECALLDICT
-    $LastContract$_fun_admin INLINECALLDICT
+    $MainContract$_contract_load INLINECALLDICT
+    $MainContract$_fun_admin INLINECALLDICT
     5 1 BLKDROP2
   }>
   %userStake PROC:<{
-    $LastContract$_contract_load INLINECALLDICT
+    $MainContract$_contract_load INLINECALLDICT
     5 ROLL
-    $LastContract$_fun_userStake INLINECALLDICT
+    $MainContract$_fun_userStake INLINECALLDICT
     5 1 BLKDROP2
   }>
   %allStakes PROC:<{
-    $LastContract$_contract_load INLINECALLDICT
-    $LastContract$_fun_allStakes INLINECALLDICT
+    $MainContract$_contract_load INLINECALLDICT
+    $MainContract$_fun_allStakes INLINECALLDICT
     5 1 BLKDROP2
   }>
   %totalStaked PROC:<{
-    $LastContract$_contract_load INLINECALLDICT
-    $LastContract$_fun_totalStaked INLINECALLDICT
+    $MainContract$_contract_load INLINECALLDICT
+    $MainContract$_fun_totalStaked INLINECALLDICT
     5 1 BLKDROP2
   }>
   %balance PROC:<{
-    $LastContract$_contract_load INLINECALLDICT
-    $LastContract$_fun_balance INLINECALLDICT
+    $MainContract$_contract_load INLINECALLDICT
+    $MainContract$_fun_balance INLINECALLDICT
     5 1 BLKDROP2
   }>
   %owner PROC:<{
-    $LastContract$_contract_load INLINECALLDICT
-    $LastContract$_fun_owner INLINECALLDICT
+    $MainContract$_contract_load INLINECALLDICT
+    $MainContract$_fun_owner INLINECALLDICT
     5 1 BLKDROP2
   }>
   recv_internal PROC:<{
@@ -296,7 +306,7 @@ PROGRAM{
     __tact_context SETGLOB
     s0 s2 XCHG
     __tact_context_sender SETGLOB
-    $LastContract$_contract_load INLINECALLDICT
+    $MainContract$_contract_load INLINECALLDICT
     s0 s6 XCHG
     IFJMP:<{
       6 BLKDROP
@@ -348,7 +358,7 @@ PROGRAM{
       s0 s5 XCHG
       ADD
       2SWAP
-      $LastContract$_contract_store INLINECALLDICT
+      $MainContract$_contract_store INLINECALLDICT
     }>
     OVER
     728460677 PUSHINT
@@ -457,7 +467,7 @@ PROGRAM{
           SWAP
           SENDRAWMSG // https://github.com/tact-lang/tact/issues/1558
       s0 s3 s4 XCHG3
-      $LastContract$_contract_store INLINECALLDICT
+      $MainContract$_contract_store INLINECALLDICT
     }>
     OVER
     1344675936 PUSHINT
@@ -544,8 +554,8 @@ PROGRAM{
           B{b5ee9c7241010101000d00001600000000647261696e65640b6d6669} B>boc PUSHREF
       s3 s5 XCHG
       s4 s3 s0 XCHG3
-      $LastContract$_fun_reply INLINECALLDICT
-      $LastContract$_contract_store INLINECALLDICT
+      $MainContract$_fun_reply INLINECALLDICT
+      $MainContract$_contract_store INLINECALLDICT
     }>
     OVER
     1308374593 PUSHINT
@@ -655,8 +665,8 @@ PROGRAM{
           B{b5ee9c7241010101000f00001a0000000077697468647261776e2bc1b77e} B>boc PUSHREF
       s3 s5 XCHG
       s4 s3 s0 XCHG3
-      $LastContract$_fun_reply INLINECALLDICT
-      $LastContract$_contract_store INLINECALLDICT
+      $MainContract$_fun_reply INLINECALLDICT
+      $MainContract$_contract_store INLINECALLDICT
     }>
     OVER
     2713466466 PUSHINT
@@ -679,7 +689,7 @@ PROGRAM{
       s1 s3 XCHG
       THROWANYIFNOT
       s0 s3 s4 XCHG3
-      $LastContract$_contract_store INLINECALLDICT
+      $MainContract$_contract_store INLINECALLDICT
     }>
     SWAP
     2490013878 PUSHINT
@@ -692,8 +702,8 @@ PROGRAM{
       $DeployOk$_store_cell INLINECALLDICT
       s3 s5 XCHG
       s4 s3 s0 XCHG3
-      $LastContract$_fun_notify INLINECALLDICT
-      $LastContract$_contract_store INLINECALLDICT
+      $MainContract$_fun_notify INLINECALLDICT
+      $MainContract$_contract_store INLINECALLDICT
     }>
     6 BLKDROP
     130 THROW

@@ -1103,8 +1103,8 @@ export function dictValueParserDrain(): DictionaryValue<Drain> {
     }
 }
 
-export type LastContract$Data = {
-    $$type: 'LastContract$Data';
+export type MainContract$Data = {
+    $$type: 'MainContract$Data';
     totalStaked: bigint;
     admin: Address;
     balance: bigint;
@@ -1112,7 +1112,7 @@ export type LastContract$Data = {
     mapStakes: Dictionary<Address, bigint>;
 }
 
-export function storeLastContract$Data(src: LastContract$Data) {
+export function storeMainContract$Data(src: MainContract$Data) {
     return (builder: Builder) => {
         const b_0 = builder;
         b_0.storeInt(src.totalStaked, 257);
@@ -1125,7 +1125,7 @@ export function storeLastContract$Data(src: LastContract$Data) {
     };
 }
 
-export function loadLastContract$Data(slice: Slice) {
+export function loadMainContract$Data(slice: Slice) {
     const sc_0 = slice;
     const _totalStaked = sc_0.loadIntBig(257);
     const _admin = sc_0.loadAddress();
@@ -1133,28 +1133,28 @@ export function loadLastContract$Data(slice: Slice) {
     const sc_1 = sc_0.loadRef().beginParse();
     const _owner = sc_1.loadAddress();
     const _mapStakes = Dictionary.load(Dictionary.Keys.Address(), Dictionary.Values.BigInt(257), sc_1);
-    return { $$type: 'LastContract$Data' as const, totalStaked: _totalStaked, admin: _admin, balance: _balance, owner: _owner, mapStakes: _mapStakes };
+    return { $$type: 'MainContract$Data' as const, totalStaked: _totalStaked, admin: _admin, balance: _balance, owner: _owner, mapStakes: _mapStakes };
 }
 
-export function loadTupleLastContract$Data(source: TupleReader) {
+export function loadTupleMainContract$Data(source: TupleReader) {
     const _totalStaked = source.readBigNumber();
     const _admin = source.readAddress();
     const _balance = source.readBigNumber();
     const _owner = source.readAddress();
     const _mapStakes = Dictionary.loadDirect(Dictionary.Keys.Address(), Dictionary.Values.BigInt(257), source.readCellOpt());
-    return { $$type: 'LastContract$Data' as const, totalStaked: _totalStaked, admin: _admin, balance: _balance, owner: _owner, mapStakes: _mapStakes };
+    return { $$type: 'MainContract$Data' as const, totalStaked: _totalStaked, admin: _admin, balance: _balance, owner: _owner, mapStakes: _mapStakes };
 }
 
-export function loadGetterTupleLastContract$Data(source: TupleReader) {
+export function loadGetterTupleMainContract$Data(source: TupleReader) {
     const _totalStaked = source.readBigNumber();
     const _admin = source.readAddress();
     const _balance = source.readBigNumber();
     const _owner = source.readAddress();
     const _mapStakes = Dictionary.loadDirect(Dictionary.Keys.Address(), Dictionary.Values.BigInt(257), source.readCellOpt());
-    return { $$type: 'LastContract$Data' as const, totalStaked: _totalStaked, admin: _admin, balance: _balance, owner: _owner, mapStakes: _mapStakes };
+    return { $$type: 'MainContract$Data' as const, totalStaked: _totalStaked, admin: _admin, balance: _balance, owner: _owner, mapStakes: _mapStakes };
 }
 
-export function storeTupleLastContract$Data(source: LastContract$Data) {
+export function storeTupleMainContract$Data(source: MainContract$Data) {
     const builder = new TupleBuilder();
     builder.writeNumber(source.totalStaked);
     builder.writeAddress(source.admin);
@@ -1164,37 +1164,37 @@ export function storeTupleLastContract$Data(source: LastContract$Data) {
     return builder.build();
 }
 
-export function dictValueParserLastContract$Data(): DictionaryValue<LastContract$Data> {
+export function dictValueParserMainContract$Data(): DictionaryValue<MainContract$Data> {
     return {
         serialize: (src, builder) => {
-            builder.storeRef(beginCell().store(storeLastContract$Data(src)).endCell());
+            builder.storeRef(beginCell().store(storeMainContract$Data(src)).endCell());
         },
         parse: (src) => {
-            return loadLastContract$Data(src.loadRef().beginParse());
+            return loadMainContract$Data(src.loadRef().beginParse());
         }
     }
 }
 
- type LastContract_init_args = {
-    $$type: 'LastContract_init_args';
+ type MainContract_init_args = {
+    $$type: 'MainContract_init_args';
 }
 
-function initLastContract_init_args(src: LastContract_init_args) {
+function initMainContract_init_args(src: MainContract_init_args) {
     return (builder: Builder) => {
         const b_0 = builder;
     };
 }
 
-async function LastContract_init() {
-    const __code = Cell.fromHex('b5ee9c7241021e0100057f00022cff008e88f4a413f4bcf2c80bed53208e8130e1ed43d90112020271020702016a0305016db1477b5134348000638720404075c03e9020404075c03500743e903d010c040944090408db05668c1c081b7e10be1090c0f8b6cf1b146004000221016db36a3b5134348000638720404075c03e9020404075c03500743e903d010c040944090408db05668c1c081b7e10be1090c0f8b6cf1b1460060002240201200810020120090e0202750a0c016fa5c7da89a1a400031c39020203ae01f481020203ae01a803a1f481e80860204a20482046d82b3460e040dbf085f0848607c4aa09b678d8a30b002e81010b22028101014133f40a6fa19401d70030925b6de2016ba581da89a1a400031c39020203ae01f481020203ae01a803a1f481e80860204a20482046d82b3460e040dbf085f0848607c5b678d8a30d000222016db74b7da89a1a400031c39020203ae01f481020203ae01a803a1f481e80860204a20482046d82b3460e040dbf085f0848607c5b678d8a300f000220016db854eed44d0d200018e1c810101d700fa40810101d700d401d0fa40f404301025102410236c159a3070206df842f8424303e2db3c6c5181100022304f201d072d721d200d200fa4021103450666f04f86102f862ed44d0d200018e1c810101d700fa40810101d700d401d0fa40f404301025102410236c159a3070206df842f8424303e206925f06e004d70d1ff2e082218210bfd60d84bae3022182102b6b6d85bae30221821050262060bae3022182104dfc3641ba1314161901d631d31f30f8428200b75c22c200f2f4813f51f8416f24135f032382103b9aca00a8bef2f42681010b228101014133f40a6fa19401d70030925b6de2206e92307095206ef2d080e281010b5113a0103812810101216e955b59f4593098c801cf004133f441e25135a005a05a1801fc31d31ffa403081404df84225c705f2f48209312d00f8276f1001a182103b9aca00a90470b60912b6088148375331bef2f48200d55721c200f2f45122a17f0382103b9aca00a81370036d6d50436d4133c8cf8580ca00cf8440ce01fa028069cf40025c6e016eb0935bcf819d58cf8680cf8480f400f400cf81e2f400c901150046fb004034c87f01ca0055405045810101cf0012ce810101cf0001c8ce12f400cdc9ed5402ea5f0382008aabf84224c705f2f4f842707f810082036d6d50436d5033c8cf8580ca00cf8440ce01fa028069cf40025c6e016eb0935bcf819d58cf8680cf8480f400f400cf81e2f400c901fb00708810354430f8427f705003804201503304c8cf8580ca00cf8440ce01fa02806acf40f400c901fb001718001600000000647261696e6564003ec87f01ca0055405045810101cf0012ce810101cf0001c8ce12f400cdc9ed5402ace302218210a1bc3662ba8e3a31fa403081471cf8425004c705917f95f84225c705e213f2f44034c87f01ca0055405045810101cf0012ce810101cf0001c8ce12f400cdc9ed54e0018210946a98b6bae3025f06f2c0821a1d01fe31d37f3081404df84224c705f2f48209312d00f8276f1001a182103b9aca00a90470b609b6088200d55721c200f2f48148375321bef2f466a1f8427f0382103b9aca00a8413070036d6d50436d4133c8cf8580ca00cf8440ce01fa028069cf40025c6e016eb0935bcf819d58cf8680cf8480f400f400cf81e2f400c901fb001b018e8810354430f8427f705003804201503304c8cf8580ca00cf8440ce01fa02806acf40f400c901fb00c87f01ca0055405045810101cf0012ce810101cf0001c8ce12f400cdc9ed541c001a0000000077697468647261776e00aed33f30c8018210aff90f5758cb1fcb3fc910354430f84270705003804201503304c8cf8580ca00cf8440ce01fa02806acf40f400c901fb00c87f01ca0055405045810101cf0012ce810101cf0001c8ce12f400cdc9ed543161bbb3');
+async function MainContract_init() {
+    const __code = Cell.fromHex('b5ee9c72410221010005c500022cff008e88f4a413f4bcf2c80bed53208e8130e1ed43d90115020271020a0201200305016dbb3b6ed44d0d200018e1c810101d700fa40810101d700d401d0fa40f404301025102410236c159a3070206df842f8424303e2db3c6c51804000a820935012f0201480608016db1477b5134348000638720404075c03e9020404075c03500743e903d010c040944090408db05668c1c081b7e10be1090c0f8b6cf1b146007000221016db36a3b5134348000638720404075c03e9020404075c03500743e903d010c040944090408db05668c1c081b7e10be1090c0f8b6cf1b1460090002240201200b130201200c110202750d0f016fa5c7da89a1a400031c39020203ae01f481020203ae01a803a1f481e80860204a20482046d82b3460e040dbf085f0848607c4aa09b678d8a30e002e81010b22028101014133f40a6fa19401d70030925b6de2016ba581da89a1a400031c39020203ae01f481020203ae01a803a1f481e80860204a20482046d82b3460e040dbf085f0848607c5b678d8a310000222016db74b7da89a1a400031c39020203ae01f481020203ae01a803a1f481e80860204a20482046d82b3460e040dbf085f0848607c5b678d8a3012000220016db854eed44d0d200018e1c810101d700fa40810101d700d401d0fa40f404301025102410236c159a3070206df842f8424303e2db3c6c5181400022304f201d072d721d200d200fa4021103450666f04f86102f862ed44d0d200018e1c810101d700fa40810101d700d401d0fa40f404301025102410236c159a3070206df842f8424303e206925f06e004d70d1ff2e082218210bfd60d84bae3022182102b6b6d85bae30221821050262060bae3022182104dfc3641ba1617191c01d631d31f30f8428200b75c22c200f2f4813f51f8416f24135f032382103b9aca00a8bef2f42681010b228101014133f40a6fa19401d70030925b6de2206e92307095206ef2d080e281010b5113a0103812810101216e955b59f4593098c801cf004133f441e25135a005a05a1b01fc31d31ffa403081404df84225c705f2f48209312d00f8276f1001a182103b9aca00a90470b60912b6088148375331bef2f48200d55721c200f2f45122a17f0382103b9aca00a81370036d6d50436d4133c8cf8580ca00cf8440ce01fa028069cf40025c6e016eb0935bcf819d58cf8680cf8480f400f400cf81e2f400c901180046fb004034c87f01ca0055405045810101cf0012ce810101cf0001c8ce12f400cdc9ed5402ea5f0382008aabf84224c705f2f4f842707f810082036d6d50436d5033c8cf8580ca00cf8440ce01fa028069cf40025c6e016eb0935bcf819d58cf8680cf8480f400f400cf81e2f400c901fb00708810354430f8427f705003804201503304c8cf8580ca00cf8440ce01fa02806acf40f400c901fb001a1b001600000000647261696e6564003ec87f01ca0055405045810101cf0012ce810101cf0001c8ce12f400cdc9ed5402ace302218210a1bc3662ba8e3a31fa403081471cf8425004c705917f95f84225c705e213f2f44034c87f01ca0055405045810101cf0012ce810101cf0001c8ce12f400cdc9ed54e0018210946a98b6bae3025f06f2c0821d2001fe31d37f3081404df84224c705f2f48209312d00f8276f1001a182103b9aca00a90470b609b6088200d55721c200f2f48148375321bef2f466a1f8427f0382103b9aca00a8413070036d6d50436d4133c8cf8580ca00cf8440ce01fa028069cf40025c6e016eb0935bcf819d58cf8680cf8480f400f400cf81e2f400c901fb001e018e8810354430f8427f705003804201503304c8cf8580ca00cf8440ce01fa02806acf40f400c901fb00c87f01ca0055405045810101cf0012ce810101cf0001c8ce12f400cdc9ed541f001a0000000077697468647261776e00aed33f30c8018210aff90f5758cb1fcb3fc910354430f84270705003804201503304c8cf8580ca00cf8440ce01fa02806acf40f400c901fb00c87f01ca0055405045810101cf0012ce810101cf0001c8ce12f400cdc9ed544e43169b');
     const builder = beginCell();
     builder.storeUint(0, 1);
-    initLastContract_init_args({ $$type: 'LastContract_init_args' })(builder);
+    initMainContract_init_args({ $$type: 'MainContract_init_args' })(builder);
     const __data = builder.endCell();
     return { code: __code, data: __data };
 }
 
-export const LastContract_errors = {
+export const MainContract_errors = {
     2: { message: "Stack underflow" },
     3: { message: "Stack overflow" },
     4: { message: "Integer overflow" },
@@ -1240,7 +1240,7 @@ export const LastContract_errors = {
     54615: { message: "Insufficient balance" },
 } as const
 
-export const LastContract_errors_backward = {
+export const MainContract_errors_backward = {
     "Stack underflow": 2,
     "Stack overflow": 3,
     "Integer overflow": 4,
@@ -1286,7 +1286,7 @@ export const LastContract_errors_backward = {
     "Insufficient balance": 54615,
 } as const
 
-const LastContract_types: ABIType[] = [
+const MainContract_types: ABIType[] = [
     {"name":"DataSize","header":null,"fields":[{"name":"cells","type":{"kind":"simple","type":"int","optional":false,"format":257}},{"name":"bits","type":{"kind":"simple","type":"int","optional":false,"format":257}},{"name":"refs","type":{"kind":"simple","type":"int","optional":false,"format":257}}]},
     {"name":"SignedBundle","header":null,"fields":[{"name":"signature","type":{"kind":"simple","type":"fixed-bytes","optional":false,"format":64}},{"name":"signedData","type":{"kind":"simple","type":"slice","optional":false,"format":"remainder"}}]},
     {"name":"StateInit","header":null,"fields":[{"name":"code","type":{"kind":"simple","type":"cell","optional":false}},{"name":"data","type":{"kind":"simple","type":"cell","optional":false}}]},
@@ -1307,10 +1307,10 @@ const LastContract_types: ABIType[] = [
     {"name":"SetAdmin","header":2713466466,"fields":[{"name":"newAdmin","type":{"kind":"simple","type":"address","optional":false}}]},
     {"name":"WithdrawAmount","header":1308374593,"fields":[{"name":"amount","type":{"kind":"simple","type":"uint","optional":false,"format":128}}]},
     {"name":"Drain","header":1344675936,"fields":[{"name":"target","type":{"kind":"simple","type":"address","optional":false}}]},
-    {"name":"LastContract$Data","header":null,"fields":[{"name":"totalStaked","type":{"kind":"simple","type":"int","optional":false,"format":257}},{"name":"admin","type":{"kind":"simple","type":"address","optional":false}},{"name":"balance","type":{"kind":"simple","type":"int","optional":false,"format":257}},{"name":"owner","type":{"kind":"simple","type":"address","optional":false}},{"name":"mapStakes","type":{"kind":"dict","key":"address","value":"int"}}]},
+    {"name":"MainContract$Data","header":null,"fields":[{"name":"totalStaked","type":{"kind":"simple","type":"int","optional":false,"format":257}},{"name":"admin","type":{"kind":"simple","type":"address","optional":false}},{"name":"balance","type":{"kind":"simple","type":"int","optional":false,"format":257}},{"name":"owner","type":{"kind":"simple","type":"address","optional":false}},{"name":"mapStakes","type":{"kind":"dict","key":"address","value":"int"}}]},
 ]
 
-const LastContract_opcodes = {
+const MainContract_opcodes = {
     "Deploy": 2490013878,
     "DeployOk": 2952335191,
     "FactoryDeploy": 1829761339,
@@ -1323,7 +1323,8 @@ const LastContract_opcodes = {
     "Drain": 1344675936,
 }
 
-const LastContract_getters: ABIGetter[] = [
+const MainContract_getters: ABIGetter[] = [
+    {"name":"__build_salt","methodId":78774,"arguments":[],"returnType":{"kind":"simple","type":"int","optional":false,"format":257}},
     {"name":"admin","methodId":116046,"arguments":[],"returnType":{"kind":"simple","type":"address","optional":false}},
     {"name":"userStake","methodId":103651,"arguments":[{"name":"key","type":{"kind":"simple","type":"address","optional":false}}],"returnType":{"kind":"simple","type":"int","optional":true,"format":257}},
     {"name":"allStakes","methodId":113243,"arguments":[],"returnType":{"kind":"dict","key":"address","value":"int"}},
@@ -1332,7 +1333,8 @@ const LastContract_getters: ABIGetter[] = [
     {"name":"owner","methodId":83229,"arguments":[],"returnType":{"kind":"simple","type":"address","optional":false}},
 ]
 
-export const LastContract_getterMapping: { [key: string]: string } = {
+export const MainContract_getterMapping: { [key: string]: string } = {
+    '__build_salt': 'getBuildSalt',
     'admin': 'getAdmin',
     'userStake': 'getUserStake',
     'allStakes': 'getAllStakes',
@@ -1341,7 +1343,7 @@ export const LastContract_getterMapping: { [key: string]: string } = {
     'owner': 'getOwner',
 }
 
-const LastContract_receivers: ABIReceiver[] = [
+const MainContract_receivers: ABIReceiver[] = [
     {"receiver":"internal","message":{"kind":"typed","type":"AddStake"}},
     {"receiver":"internal","message":{"kind":"typed","type":"Withdraw"}},
     {"receiver":"internal","message":{"kind":"typed","type":"Drain"}},
@@ -1351,33 +1353,33 @@ const LastContract_receivers: ABIReceiver[] = [
 ]
 
 
-export class LastContract implements Contract {
+export class MainContract implements Contract {
     
     public static readonly storageReserve = 0n;
-    public static readonly errors = LastContract_errors_backward;
-    public static readonly opcodes = LastContract_opcodes;
+    public static readonly errors = MainContract_errors_backward;
+    public static readonly opcodes = MainContract_opcodes;
     
     static async init() {
-        return await LastContract_init();
+        return await MainContract_init();
     }
     
     static async fromInit() {
-        const __gen_init = await LastContract_init();
+        const __gen_init = await MainContract_init();
         const address = contractAddress(0, __gen_init);
-        return new LastContract(address, __gen_init);
+        return new MainContract(address, __gen_init);
     }
     
     static fromAddress(address: Address) {
-        return new LastContract(address);
+        return new MainContract(address);
     }
     
     readonly address: Address; 
     readonly init?: { code: Cell, data: Cell };
     readonly abi: ContractABI = {
-        types:  LastContract_types,
-        getters: LastContract_getters,
-        receivers: LastContract_receivers,
-        errors: LastContract_errors,
+        types:  MainContract_types,
+        getters: MainContract_getters,
+        receivers: MainContract_receivers,
+        errors: MainContract_errors,
     };
     
     constructor(address: Address, init?: { code: Cell, data: Cell }) {
@@ -1410,6 +1412,13 @@ export class LastContract implements Contract {
         
         await provider.internal(via, { ...args, body: body });
         
+    }
+    
+    async getBuildSalt(provider: ContractProvider) {
+        const builder = new TupleBuilder();
+        const source = (await provider.get('__build_salt', builder.build())).stack;
+        const result = source.readBigNumber();
+        return result;
     }
     
     async getAdmin(provider: ContractProvider) {
