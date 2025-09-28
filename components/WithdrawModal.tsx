@@ -23,7 +23,8 @@ export function WithdrawModal({ open, onClose, stake, onConfirm }: Props) {
   
   // профит к выводу (не больше депозита и не меньше 0)
   const profitTon = useMemo(() => {
-    const profit =fullTon * stake.apr + fullTon
+    const profit = fullTon * (stake.apr / 100) * stake.duration + fullTon
+    console.log(fullTon, stake.apr, stake.duration)
     //const p = Number(actualProfit(stake)) || 0;
     return Math.max(0, profit); //
   }, [stake]);
