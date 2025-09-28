@@ -134,7 +134,49 @@ export const useStakeStore = create<StakeStore>((set, get) => ({
       set({ loading: false });
     }
   },
+  // lib/store.ts — фрагмент: обновлённый withdrawStake
+withdrawStake: async (id, amountToWithdraw) => {
+  set({ loading: true, error: undefined });
+  try {
+    const rec = get().history.find((r) => r.id === id);
+    if (!rec) throw new Error("Запись не найдена");
 
+    // кламп суммы [0; rec.amount]
+    const w = Math.min(Math.max(amountToWithdraw, 0), rec.amount);
+    if (w <= 0) return;
+
+    const newAmount = rec.amount - w;
+
+    if (newAmount === 0) {
+      // ПОЛНЫЙ вывод — удаляем запись из БД и из локального history
+      const { error } = await sb().from("stakes").delete().eq("id", id);
+      if (error) throw error;
+
+      set((s) => ({ history: s.history.filter((r) => r.id !== id) }));
+    } else {
+      // ЧАСТИЧНЫЙ вывод — обновляем amount
+      const { data, error } = await sb()
+        .from("stakes")
+        .update({ amount: newAmount, status: "active" })
+        .eq("id", id)
+        .select("*");
+
+      if (error) throw error;
+
+      const updated = (data as StakeRecord[])[0] ?? { ...rec, amount: newAmount, status: "active" };
+      set((s) => ({
+        history: s.history.map((r) => (r.id === id ? updated : r)),
+      }));
+    }
+  } catch (e: any) {
+    set({ error: e?.message || "withdrawStake failed" });
+    throw e;
+  } finally {
+    set({ loading: false });
+  }
+},
+
+/*
   // ВЫВОД СУММЫ: простой пересчёт amount + апдейт
   withdrawStake: async (id, amountToWithdraw) => {
     set({ loading: true, error: undefined });
@@ -164,4 +206,5 @@ export const useStakeStore = create<StakeStore>((set, get) => ({
       set({ loading: false });
     }
   },
+  */
 }));

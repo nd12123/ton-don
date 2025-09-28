@@ -63,7 +63,7 @@ export default function ClientProfilePage() {
         }
       );
       // при желании — подтянуть свежую историю с сервера
-      if (address) await fetchHistory(address);
+      //if (address) await fetchHistory(address);
     } finally {
       setModalOpen(false);
       setSelectedStake(null);
