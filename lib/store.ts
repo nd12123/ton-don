@@ -134,7 +134,9 @@ export const useStakeStore = create<StakeStore>((set, get) => ({
       set({ loading: false });
     }
   },
-  // lib/store.ts — фрагмент: обновлённый withdrawStake
+
+
+  
 withdrawStake: async (id, amountToWithdraw) => {
   set({ loading: true, error: undefined });
   try {
@@ -145,27 +147,38 @@ withdrawStake: async (id, amountToWithdraw) => {
     const w = Math.min(Math.max(amountToWithdraw, 0), rec.amount);
     if (w <= 0) return;
 
-    const newAmount = rec.amount - w;
+    const prev = get().history;
 
-    if (newAmount === 0) {
-      // ПОЛНЫЙ вывод — удаляем запись из БД и из локального history
-      const { error } = await sb().from("stakes").delete().eq("id", id);
-      if (error) throw error;
-
-      set((s) => ({ history: s.history.filter((r) => r.id !== id) }));
+    // 🔸 Оптимистичное обновление UI
+    if (rec.amount - w <= 0) {
+      set({ history: prev.filter((r) => r.id !== id) });
     } else {
-      // ЧАСТИЧНЫЙ вывод — обновляем amount
-      const { data, error } = await sb()
-        .from("stakes")
-        .update({ amount: newAmount, status: "active" })
-        .eq("id", id)
-        .select("*");
+      set({
+        history: prev.map((r) =>
+          r.id === id ? { ...r, amount: rec.amount - w, status: "active" } : r
+        ),
+      });
+    }
 
-      if (error) throw error;
+    // 🔸 Пишем через серверный API (service-role)
+    const res = await fetch(`/api/stakes/${id}/withdraw`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      cache: "no-store",
+      body: JSON.stringify({ amount: w, wallet: rec.wallet }),
+    });
 
-      const updated = (data as StakeRecord[])[0] ?? { ...rec, amount: newAmount, status: "active" };
+    const data = await res.json().catch(() => ({}));
+    if (!res.ok) {
+      // откат при ошибке
+      set({ history: prev, error: data?.error || "withdraw failed" });
+      throw new Error(data?.error || res.statusText);
+    }
+
+    // если нужен точный серверный снэпшот после UPDATE:
+    if (data?.record) {
       set((s) => ({
-        history: s.history.map((r) => (r.id === id ? updated : r)),
+        history: s.history.map((r) => (r.id === id ? data.record : r)),
       }));
     }
   } catch (e: any) {
