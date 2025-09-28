@@ -362,7 +362,7 @@ export default function StakingPage() {
           </div>
         </div>
         </div>
-{process.env.NEXT_PUBLIC_STAKING_WALLET && (
+        {/**{process.env.NEXT_PUBLIC_STAKING_WALLET && (
   <div className="mt-3 md:mt-4">
     <div className="text-xs text-sky-300/80 mb-2">
       Нет TonConnect? Попробуйте оплату из Trust Wallet:
@@ -373,7 +373,8 @@ export default function StakingPage() {
       comment={`Stake ${amount} TON • ${duration}d`} // опционально
     />
   </div>
-)}
+)} */}
+
       </section>
 
       <StakeModal

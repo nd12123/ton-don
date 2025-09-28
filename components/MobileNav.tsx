@@ -1,40 +1,68 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-//import Link from "next/link";
 import LocaleLink from "@/components/LocaleLink";
-
 import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
-import { useTonWallet } from "@tonconnect/ui-react";
+import { useTonWallet, useTonAddress } from "@tonconnect/ui-react";
 import ConnectWalletButton from "@/components/ConnectWalletButton";
 import Image from "next/image";
 import LanguageSwitcher from "./LanguageSwitcher";
-import { useT } from '@/i18n/react';
-type NavItem = { name: string; href: string };
+import { Address } from "@ton/core";
+import { useT } from "@/i18n/react";
 
-function useIsAdmin() {
+// ── helpers: такие же, как в десктопном HeaderClient ───────────────────────
+function stripQuotes(s: string) {
+  return s.replace(/^['"]+|['"]+$/g, "");
+}
+function toRaw(addr: string): string | null {
+  try {
+    // если уже raw 0:… — нормализуем к нижнему регистру
+    if (addr.includes(":")) return addr.toLowerCase();
+    // иначе это friendly EQ… — парсим и берём raw
+    return Address.parseFriendly(addr).address.toString().toLowerCase();
+  } catch {
+    return null;
+  }
+}
+function buildAdminSet(csv: string | undefined) {
+  const raws = (csv ?? "")
+    .split(",")
+    .map((s) => stripQuotes(s.trim()))
+    .filter(Boolean)
+    .map((a) => toRaw(a))
+    .filter((x): x is string => Boolean(x));
+  return new Set(raws);
+}
+// ───────────────────────────────────────────────────────────────────────────
+
+function useIsAdmin(): boolean {
   const wallet = useTonWallet();
-  const addr = wallet?.account?.address ?? null;
-  // список админов через env: NEXT_PUBLIC_ADMIN_ADDRESSES="EQxxx,EQyyy" wallets!
-  const admins = useMemo(() => {
-    const raw = process.env.NEXT_PUBLIC_ADMIN_WALLETS || "";
-    return raw
-      .split(",")
-      .map(s => s.trim())
-      .filter(Boolean)
-      .map(s => s.toLowerCase());
-  }, []);
+  const friendly = useTonAddress(); // может прийти EQ…
+  // userRaw: сначала пытаемся нормализовать friendly, затем fallback на wallet.account.address
+  const userRaw =
+    toRaw(friendly) ?? (wallet?.account?.address ? toRaw(wallet.account.address) : null);
 
-  if (!addr) return false;
-  return admins.includes(addr.toLowerCase());
+  const adminSet = useMemo(
+    () => buildAdminSet(process.env.NEXT_PUBLIC_ADMIN_WALLETS),
+    []
+  );
+
+  if (!userRaw) return false;
+  return adminSet.has(userRaw);
 }
 
 export default function MobileNav() {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
   const isAdmin = useIsAdmin();
-  const t = useT();
+const t = useT();
+
+  // ✅ helper: если ключ не найден — показываем запасной текст
+  const tf = (key: string, fallback: string, params?: Record<string, any>) => {
+    const v = t(key, params as any);
+    return v === key ? fallback : (v as string);
+  };
 
   // Блокируем скролл фона при открытом меню
   useEffect(() => {
@@ -49,27 +77,26 @@ export default function MobileNav() {
     setOpen(false);
   }, [pathname]);
 
- // формируем пункты меню; пересчитываем при смене языка и прав администратора
+  // пункты меню: +Admin, если админ
   const links = useMemo(() => {
     const base = [
       { name: t("common.nav.home"), href: "/" },
       { name: t("common.nav.staking"), href: "/staking" },
-      //{ name: t("common.nav.history"), href: "/history" },
       { name: t("common.nav.profile"), href: "/profile" },
-      { name: t("common.nav.support"), href: "/support" }
+      { name: t("common.nav.support"), href: "/support" },
     ];
     return isAdmin ? [...base, { name: "Admin", href: "/admin" }] : base;
   }, [isAdmin, t]);
 
   return (
     <>
-      {/* верхняя мобильная панель sticky */}
-      {/*"md:hidden fixed top-0 z-40 bg-black/40 backdrop-blur border-b border-white/10" */}
-    <div className="md:hidden
-    fixed top-0 left-0 right-0 z-50
-    bg-[#0B1128]/90 backdrop-blur border-b border-white/10" //    pt-[env(safe-area-inset-top)]">
->
-            <div className="flex items-center justify-between px-2 py-3">
+      {/* верхняя мобильная панель */}
+      <div
+        className="md:hidden
+                   fixed top-0 left-0 right-0 z-50
+                   bg-[#0B1128]/90 backdrop-blur border-b border-white/10"
+      >
+        <div className="flex items-center justify-between px-2 py-3">
           <button
             aria-label="Open menu"
             className="inline-flex items-center gap-2"
@@ -77,32 +104,36 @@ export default function MobileNav() {
           >
             <Menu className="w-6 h-6 text-white" />
           </button>
-<LocaleLink href="/" className="flex items-center gap-2 text-white font-bold text-lg">
-  <Image src="/favicon.svg" alt="TON Staker" width={20} height={20} className="rounded-md" />
-  <span>{t("common.brand")}</span>
-</LocaleLink>
-          {/* Кнопка кошелька справа, как в десктопе */}
-          {/* Кнопка кошелька справа (мобайл компактная) */}
-<div
-  className="
-    shrink-0
-    [&_button]:!h-8 [&_a]:!h-8                      /* ниже ~в 2 раза */
-    [&_button]:!px-3 [&_a]:!px-3                    /* уже */
-    [&_button]:!text-sm [&_a]:!text-sm
-    [&_button]:!rounded-lg [&_a]:!rounded-lg
-    [&_button]:!min-w-0 [&_a]:!min-w-0
-    [&_button]:!w-auto [&_a]:!w-auto
-    [&_svg]:!w-4 [&_svg]:!h-4
-    md:[&_button]:h-10 md:[&_a]:h-10                /* десктоп как было */
-    md:[&_button]:px-5 md:[&_a]:px-5
-    md:[&_button]:text-base md:[&_a]:text-base
-    md:[&_button]:rounded-xl md:[&_a]:rounded-xl
-    md:[&_svg]:w-5 md:[&_svg]:h-5
-  "
->
-  <ConnectWalletButton />
-</div>
 
+          <LocaleLink
+            href="/"
+            className="flex items-center gap-2 text-white font-bold text-lg"
+          >
+            <Image
+              src="/favicon.svg"
+              alt={t("common.brand")}
+              width={20}
+              height={20}
+              className="rounded-md"
+            />
+            <span>{t("common.brand")}</span>
+          </LocaleLink>
+
+          {/* Кнопка кошелька справа (компакт) */}
+          <div
+            className="
+              shrink-0
+              [&_button]:!h-8 [&_a]:!h-8
+              [&_button]:!px-3 [&_a]:!px-3
+              [&_button]:!text-sm [&_a]:!text-sm
+              [&_button]:!rounded-lg [&_a]:!rounded-lg
+              [&_button]:!min-w-0 [&_a]:!min-w-0
+              [&_button]:!w-auto [&_a]:!w-auto
+              [&_svg]:!w-4 [&_svg]:!h-4
+            "
+          >
+            <ConnectWalletButton />
+          </div>
         </div>
       </div>
 
@@ -120,14 +151,15 @@ export default function MobileNav() {
       {/* Сайд-меню */}
       <nav
         className={`fixed top-0 left-0 h-full w-72 z-50 md:hidden
-        bg-gray-900 text-white border-r border-white/10
-        transition-transform duration-300
-        ${open ? "translate-x-0" : "-translate-x-full"}`}
+                    bg-gray-900 text-white border-r border-white/10
+                    transition-transform duration-300
+                    ${open ? "translate-x-0" : "-translate-x-full"}`}
         role="dialog"
         aria-modal="true"
       >
         <div className="flex items-center justify-between px-4 h-14 border-b border-white/10">
-          <span className="font-semibold">Menu</span>
+          {/* ⬇️ вот тут была ошибка t("common.menu", "Menu") */}
+          <span className="font-semibold">{tf("common.menu", "Menu")}</span>
           <button
             aria-label="Close menu"
             className="p-2 -m-2"
@@ -154,7 +186,10 @@ export default function MobileNav() {
               </li>
             );
           })}
-          <LanguageSwitcher />
+
+          <div className="pt-2">
+            <LanguageSwitcher />
+          </div>
         </ul>
 
         <div className="mt-auto p-3 border-t border-white/10">

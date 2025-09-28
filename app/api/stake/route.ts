@@ -6,47 +6,49 @@ export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
-// НИЧЕГО не делаем на верхнем уровне: ни чтения env, ни createClient.
-// Ленивая инициализация клиента — только в рантайме запроса.
 let _supa: SupabaseClient | null = null;
 
 function getSupa(): SupabaseClient {
   if (_supa) return _supa;
-
-  // Разрешаем URL из двух вариантов переменных (на сервере лучше без NEXT_PUBLIC)
-  const url =
-    process.env.SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL || "";
-
+  const url = process.env.SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL || "";
   const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY || "";
-
   if (!url || !serviceKey) {
-    // Бросаем только в момент РАНТАЙМА (когда реально пришёл запрос),
-    // а не на этапе импорта/сборки.
     throw new Error("Supabase env missing: SUPABASE_URL and/or SUPABASE_SERVICE_ROLE_KEY");
   }
-
   _supa = createClient(url, serviceKey, { auth: { persistSession: false } });
   return _supa;
 }
 
 function toNumber(x: unknown): number {
-  const n = Number(x);
+  const s = typeof x === "string" ? x.replace(",", ".") : x;
+  const n = Number(s);
   return Number.isFinite(n) ? n : NaN;
+}
+
+// читаем хэш под разными именами, но требуем непустую строку
+function requireTxHash(body: any): string {
+  const cand =
+    body?.txHash ?? body?.txhash ?? body?.tx_hash ??
+    body?.transactionHash ?? body?.messageHash ?? body?.hash ?? null;
+  if (typeof cand === "string" && cand.trim().length >= 8) {
+    return cand.trim().replace(/^0x/, "");
+  }
+  throw new Error("txHash required (must be a non-empty string)");
 }
 
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
 
-    // Поддержим оба поля кошелька
-    const walletRaw: unknown = body?.wallet ?? body?.walletAddress;
-    const validator: unknown = body?.validator ?? null;
-    const amountRaw: unknown = body?.amount;
-    const aprRaw: unknown = body?.apr;
+    const walletRaw: unknown   = body?.wallet ?? body?.walletAddress;
+    const validator: unknown   = body?.validator ?? null;
+    const amountRaw: unknown   = body?.amount;
+    const aprRaw: unknown      = body?.apr;
     const durationRaw: unknown = body?.duration;
-    const txHashRaw: unknown = body?.txHash ?? null;
 
-    // Базовая валидация
+    // ОБЯЗАТЕЛЬНО ждём и требуем хэш
+    const txHash = requireTxHash(body);
+
     if (!walletRaw || amountRaw == null || aprRaw == null || durationRaw == null) {
       return NextResponse.json(
         { ok: false, error: "wallet, amount, apr, duration required" },
@@ -54,8 +56,8 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const amount = toNumber(amountRaw);
-    const apr = toNumber(aprRaw);
+    const amount   = toNumber(amountRaw);
+    const apr      = toNumber(aprRaw);
     const duration = Math.trunc(toNumber(durationRaw));
 
     if (!(Number.isFinite(amount) && amount > 0)) {
@@ -65,16 +67,10 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ ok: false, error: "apr>=0 required" }, { status: 400 });
     }
     if (!(Number.isInteger(duration) && duration >= 0)) {
-      return NextResponse.json(
-        { ok: false, error: "duration>=0 integer required" },
-        { status: 400 }
-      );
+      return NextResponse.json({ ok: false, error: "duration>=0 integer required" }, { status: 400 });
     }
     if (validator != null && typeof validator !== "string") {
       return NextResponse.json({ ok: false, error: "validator must be string" }, { status: 400 });
-    }
-    if (txHashRaw != null && typeof txHashRaw !== "string") {
-      return NextResponse.json({ ok: false, error: "txHash must be string" }, { status: 400 });
     }
 
     const wallet = String(walletRaw).trim();
@@ -82,17 +78,30 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ ok: false, error: "wallet required" }, { status: 400 });
     }
 
-    const payload = {
-      wallet,                                   // text NOT NULL
-      validator: (validator as string) ?? null, // text NULL
-      amount,                                   // numeric NOT NULL
-      apr,                                      // numeric NOT NULL
-      duration,                                 // integer NOT NULL
-      status: "active",                         // text DEFAULT 'active'
-      txHash: (txHashRaw as string | null) ?? null, // text (camelCase в БД)
-    };
+    const supa = getSupa();
 
-    const supa = getSupa(); // ← создаём клиента здесь, в рантайме
+    // Идемпотентность по txHash: если уже писали — просто вернём
+    const { data: existing } = await supa
+      .from("stakes")
+      .select("*")
+      .eq("txHash", txHash)
+      .limit(1)
+      .maybeSingle();
+
+    if (existing) {
+      return NextResponse.json({ ok: true, record: existing });
+    }
+
+    const payload = {
+      wallet,
+      validator: (validator as string) ?? null,
+      amount,
+      apr,
+      duration,
+      status: "active",  // сразу активный (по вашей модели)
+      txHash,
+    } as const;
+
     const { data, error } = await supa
       .from("stakes")
       .insert([payload])
@@ -101,20 +110,13 @@ export async function POST(req: NextRequest) {
 
     if (error) {
       return NextResponse.json(
-        {
-          ok: false,
-          error: error.message,
-          details: (error as any)?.details ?? null,
-          hint: (error as any)?.hint ?? null,
-        },
+        { ok: false, error: error.message, details: (error as any)?.details ?? null, hint: (error as any)?.hint ?? null },
         { status: 500 }
       );
     }
 
     return NextResponse.json({ ok: true, record: data });
   } catch (e: any) {
-    // Если упадём из-за отсутствующих env — это тоже попадёт сюда.
-    console.error("POST /api/stake error:", e);
-    return NextResponse.json({ ok: false, error: e?.message ?? "unknown" }, { status: 500 });
+    return NextResponse.json({ ok: false, error: e?.message ?? "unknown" }, { status: 400 });
   }
 }

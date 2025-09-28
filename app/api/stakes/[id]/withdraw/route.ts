@@ -12,11 +12,10 @@ export async function POST(
 
   try {
     const body = await req.json().catch(() => ({}));
-    const amount = Number(body?.amount);
-    const wallet = typeof body?.wallet === "string" ? body.wallet : "";
+    const wallet = typeof body?.wallet === "string" ? body.wallet.trim() : "";
 
-    if (!id || !Number.isFinite(amount) || amount <= 0) {
-      return NextResponse.json({ error: "Bad request" }, { status: 400 });
+    if (!id) {
+      return NextResponse.json({ ok: false, error: "Bad request" }, { status: 400 });
     }
 
     const sb = getSupabaseServer();
@@ -28,47 +27,43 @@ export async function POST(
       .eq("id", id)
       .limit(1);
 
-    if (e1) return NextResponse.json({ error: e1.message }, { status: 500 });
+    if (e1) return NextResponse.json({ ok: false, error: e1.message }, { status: 500 });
 
     const rec = rows?.[0];
-    if (!rec) return NextResponse.json({ error: "Not found" }, { status: 404 });
+    if (!rec) return NextResponse.json({ ok: false, error: "Not found" }, { status: 404 });
 
-    // 2) (опц) валидация владельца
+    // 2) (опц) валидируем владельца
     if (wallet && wallet !== rec.wallet) {
-      return NextResponse.json({ error: "Wallet mismatch" }, { status: 403 });
+      return NextResponse.json({ ok: false, error: "Wallet mismatch" }, { status: 403 });
     }
 
-    // 3) считаем остаток
-    const w = Math.min(Math.max(amount, 0), Number(rec.amount));
-    const newAmount = Number(rec.amount) - w;
-
-    // 4) апдейт: если полный — ставим 0 и completed, иначе уменьшаем
-    if (newAmount <= 0) {
-      const { data, error } = await sb
-        .from("stakes")
-        .update({
-          amount: 0,
-          status: "completed",
-          // completed_at: new Date().toISOString(), // если есть такая колонка
-        })
-        .eq("id", id)
-        .select("*")
-        .single();
-
-      if (error) return NextResponse.json({ error: error.message }, { status: 500 });
-      return NextResponse.json({ ok: true, record: data, completed: true });
-    } else {
-      const { data, error } = await sb
-        .from("stakes")
-        .update({ amount: newAmount, status: "active" })
-        .eq("id", id)
-        .select("*")
-        .single();
-
-      if (error) return NextResponse.json({ error: error.message }, { status: 500 });
-      return NextResponse.json({ ok: true, record: data, completed: false });
+    // 3) идемпотентность: уже выведен
+    if (rec.status === "withdrawn") {
+      return NextResponse.json({ ok: true, record: rec });
     }
+
+    // 4) разрешаем только из completed
+    if (rec.status !== "completed") {
+      return NextResponse.json(
+        { ok: false, error: "Stake is not ready to withdraw (status must be 'completed')" },
+        { status: 409 }
+      );
+    }
+
+    // 5) апдейт статуса
+    const { data, error } = await sb
+      .from("stakes")
+      .update({ status: "withdrawn" })
+      .eq("id", id)
+      .select("*")
+      .single();
+
+    if (error) {
+      return NextResponse.json({ ok: false, error: error.message }, { status: 500 });
+    }
+
+    return NextResponse.json({ ok: true, record: data });
   } catch (e: any) {
-    return NextResponse.json({ error: e?.message || "Server error" }, { status: 500 });
+    return NextResponse.json({ ok: false, error: e?.message || "Server error" }, { status: 500 });
   }
 }

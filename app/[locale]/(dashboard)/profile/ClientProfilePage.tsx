@@ -13,6 +13,7 @@ import { PLANS } from "@/components/Plans";
 import { WithdrawModal } from "@/components/WithdrawModal";
 import { dailyIncomeActive, totalEarnedSoFar, balanceActive } from "@/lib/earnings";
 import { useT } from "@/i18n/react";
+//import { txHashFromSendResult, useStakeStore } from "@/store/store"; // путь под себя
 
 // рендерим тяжёлые компоненты только на клиенте
 const DashboardStats = dynamic(() => import("@/components/DashboardStats"), {

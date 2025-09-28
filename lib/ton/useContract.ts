@@ -36,7 +36,7 @@ export function useStakeContract() { //contractAddress: string
       if (!client || !wallet) return null;
       //console.log("Contract opening, wallet ", Address.parse(wallet as string).toString(), " contract ", "kQCaADFW83YrbuXUg6OCN1zvt77rEe-ZMCToJqv2sxhB-Kh0") //Address.parse() //kQB3u_BlKZsMEHsz9GFwJfUY7lG7xlzKdil8yUwqEIFFstNz
       const desc = MainContract.fromAddress(
-        Address.parse("EQC5Gws2Em4zQ8ywwFDktfUHz7mXOe7b_Br5d_jjeJW-_wQ7")//") //kQCaADFW83YrbuXUg6OCN1zvt77rEe-ZMCToJqv2sxhB-Kh0 EQB3u_BlKZsMEHsz9GFwJfUY7lG7xlzKdil8yUwqEIFFsmj5 //contractAddress //"kQB3u_BlKZsMEHsz9GFwJfUY7lG7xlzKdil8yUwqEIFFstNz")//"0QAmQUOW2aGZb8uGmDd8fhhcs7u5NpzzmybooQo46PzGleIL")//"EQB8akzBYXBpATjJiWG1vRwo2FG2JoA9czy3yNno-qhMnlMo") //process.env.NEXT_PUBLIC_ADMIN_WALLETS ? can be a string? maybe log
+        Address.parse("kQCaADFW83YrbuXUg6OCN1zvt77rEe-ZMCToJqv2sxhB-Kh0")//") //EQC5Gws2Em4zQ8ywwFDktfUHz7mXOe7b_Br5d_jjeJW-_wQ7 EQB3u_BlKZsMEHsz9GFwJfUY7lG7xlzKdil8yUwqEIFFsmj5 //contractAddress //"kQB3u_BlKZsMEHsz9GFwJfUY7lG7xlzKdil8yUwqEIFFstNz")//"0QAmQUOW2aGZb8uGmDd8fhhcs7u5NpzzmybooQo46PzGleIL")//"EQB8akzBYXBpATjJiWG1vRwo2FG2JoA9czy3yNno-qhMnlMo") //process.env.NEXT_PUBLIC_ADMIN_WALLETS ? can be a string? maybe log
       );
       return client.open(desc) as OpenedContract<MainContract>;
     },
@@ -47,7 +47,7 @@ export function useStakeContract() { //contractAddress: string
   useEffect(() => {
     async function fetchData() {
       if (!contract || !sender.address) return;
-      const total = await contract.getTotalStaked();
+      //const total = await contract.getTotalStaked();
       //const admin = await contract.getUserStake(sender.address)//getContractAdmin(); //!!
 
       
@@ -67,10 +67,10 @@ export function useStakeContract() { //contractAddress: string
       //console.log("Contract keys:", Object.keys(contract));
 
       //setAdminAddr(admin.toString())
-      setTotalStaked(total);
+      //setTotalStaked(total);
       //console.log('Total ',total)
-      const stake = await contract.getUserStake(sender.address);
-      setUserStake(stake ?? 0n);
+      //const stake = await contract.getUserStake(sender.address);
+      //setUserStake(stake ?? 0n);
     }
     fetchData();
   }, [contract, sender.address]);
@@ -91,7 +91,7 @@ export function useStakeContract() { //contractAddress: string
   //const owner = await opened.getAdmin();
   //console.log("Admin is:", owner.toString());
 })();
-    (async () => {
+    (async () => { //Contract owner
       const a = await contract.getOwner();//getContractAdmin(); (provider:  ContractProvider)
       setOwner(a.toString());
       console.log("!Owner ", a.toString())
@@ -100,7 +100,60 @@ export function useStakeContract() { //contractAddress: string
   }, [contract]);
 
   // 3) Метод стейка
-  
+  // 3) Метод стейка — подтверждение через await contract.send(...)
+const stakeTon = async (amount: number): Promise<string> => {
+  console.log("preparing to stake", amount);
+
+  if (!contract) {
+    console.log("Contract not deployed");
+    throw new Error("CONTRACT_NOT_READY");
+  }
+
+  // сообщение для контракта
+  const msg: AddStake = {
+    $$type: "AddStake",
+    amount: BigInt(amount),
+  };
+
+  // сколько реально уходит (стейк + буфер на газ/сторадж)
+  const value = toNano(amount.toString()) + gasBuffer;
+
+  console.log(
+    "Amount in msg",
+    BigInt(amount),
+    " Value sent ",
+    value
+  );
+
+  try {
+    // ВАЖНО: эта строка резолвится ТОЛЬКО если пользователь подтвердил транзакцию
+    // и TonConnect-сендер успешно её отдал кошельку.
+    await contract.send(
+      sender,
+      { value }, // можно добавить bounce/sendMode при необходимости
+      msg
+    );
+
+    console.log("staking", fromNano(value), "TON", msg);
+
+    // Возвращаем маркер успешного подтверждения.
+    // (Если тебе нужно строго строковое значение для onConfirm(txHash:string),
+    //  можно вернуть, например, "confirmed".)
+    return "confirmed";
+  } catch (e: any) {
+    // Пользователь отменил или кошелёк/сендер вернул ошибку.
+    // Логика: кидаем дальше, чтобы модалка показала ошибку и НЕ писала запись.
+    const msg = typeof e?.message === "string" ? e.message : String(e);
+    console.error("🔴 [stakeTon] send cancelled/failed:", msg);
+    // Можешь пробросить "USER_REJECTED" для удобной обработки в UI:
+    if (/reject|cancel/i.test(msg)) {
+      throw new Error("USER_REJECTED");
+    }
+    throw e;
+  }
+};
+
+  /*
   const stakeTon = async (amount: number) => {
     console.log('preparing to stake ', amount)
 
@@ -125,7 +178,7 @@ export function useStakeContract() { //contractAddress: string
     console.log('staking ', fromNano(toNano(amount.toString()) + gasBuffer) , ' TON', msg)
     // можно вызвать fetchData(), если нужно сразу обновить UI
   };
-  
+  */
   // 5) setAdmin — only callable by current admin
   /*
   const setAdmin = async (newAdmin: string) => {

@@ -1,4 +1,3 @@
-// components/ProfileHistory.tsx
 "use client";
 
 import { useMemo, useState } from "react";
@@ -13,10 +12,20 @@ interface ProfileHistoryProps {
   onWithdrawClick?: (stake: StakeRecord) => void;
 }
 
+// ── helpers: completed-by-time + derived status ─────────────────────────────
+function isCompletedByTime(r: StakeRecord, now = Date.now()): boolean {
+  const started = new Date(r.created_at).getTime();
+  const endAt = started + r.duration * 86400000;
+  return now >= endAt;
+}
+function derivedStatus(r: StakeRecord): "active" | "completed" | "withdrawn" {
+  if (r.status === "withdrawn") return "withdrawn";
+  return isCompletedByTime(r) ? "completed" : "active";
+}
+// ───────────────────────────────────────────────────────────────────────────
+
 export default function ProfileHistory({ history, onWithdrawClick }: ProfileHistoryProps) {
   const t = useT("profile");
-
-  // безопасный фолбэк: если ключ не найден — показать запасной текст
   const tf = (key: string, fallback: string) => {
     const v = t(key);
     return v === key ? fallback : v;
@@ -31,49 +40,58 @@ export default function ProfileHistory({ history, onWithdrawClick }: ProfileHist
     completed: tf("filters.completed", "Completed"),
   };
 
-  const STATUS_LABELS: Record<"active" | "completed", string> = {
+  const STATUS_LABELS: Record<"active" | "completed" | "withdrawn", string> = {
     active:    tf("status.active", "Active"),
     completed: tf("status.completed", "Completed"),
+    withdrawn: tf("status.withdrawn", "Withdrawn"),
   };
 
   const filtered = useMemo(() => {
     const q = search.trim().toLowerCase();
     return history
+      .map((r) => ({ ...r, _ds: derivedStatus(r) }))
       .filter((r) =>
-        filter === "active" ? r.status === "active"
-        : filter === "completed" ? r.status === "completed"
+        filter === "active" ? r._ds === "active"
+        : filter === "completed" ? r._ds === "completed"
         : true
       )
       .filter((r) => (r.validator || "").toLowerCase().includes(q));
   }, [history, filter, search]);
 
-  const chip = (status: StakeRecord["status"]) =>
-    status === "active"
-      ? "bg-green-100 text-green-700 dark:bg-green-900/60 dark:text-green-300"
-      : "bg-gray-200 text-gray-600 dark:bg-gray-700/60 dark:text-gray-300";
+  // → dark-only chips
+  const chip = (s: "active" | "completed" | "withdrawn") =>
+    s === "active"
+      ? "bg-emerald-900/40 text-emerald-300"
+      : s === "completed"
+      ? "bg-amber-900/40 text-amber-300"
+      : "bg-slate-800/70 text-slate-300";
 
   const fmtDate = (iso: string) => new Date(iso).toLocaleDateString();
 
   return (
-    <section className="space-y-4">
+    // ✅ тёмный контейнер вне зависимости от темы
+    <section className="space-y-4 text-sky-50">
       <div className="flex flex-col sm:flex-row sm:items-center gap-3">
         <input
           type="text"
           placeholder={tf("search.placeholder", "Search validator…")}
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          className="w-full sm:max-w-xs px-4 py-2 rounded-md border border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-sky-400/60"
+          className="w-full sm:max-w-xs px-4 py-2 rounded-md
+                     border border-[#1f2e4a] bg-[#0F1B2E] text-sky-50
+                     placeholder:text-sky-200/40
+                     focus:outline-none focus:ring-2 focus:ring-sky-500/50"
         />
+
         <div className="flex gap-2">
           {(Object.keys(FILTER_LABELS) as Filter[]).map((key) => (
             <button
               key={key}
               onClick={() => setFilter(key)}
-              className={`px-3 py-1 rounded-md border text-sm transition ${
-                filter === key
-                  ? "bg-sky-500 text-white border-sky-500"
-                  : "bg-gray-50 dark:bg-gray-800 text-gray-700 dark:text-gray-300 border-gray-300 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700"
-              }`}
+              className={`px-3 py-1 rounded-md border text-sm transition
+                ${filter === key
+                  ? "bg-sky-600 text-white border-sky-600"
+                  : "bg-[#0F1B2E] text-sky-200 border-[#1f2e4a] hover:bg-[#12203a]"}`}
             >
               {FILTER_LABELS[key]}
             </button>
@@ -82,27 +100,29 @@ export default function ProfileHistory({ history, onWithdrawClick }: ProfileHist
       </div>
 
       {filtered.length === 0 ? (
-        <p className="text-gray-500 text-sm">{tf("empty", "Nothing found.")}</p>
+        <p className="text-sky-200/70 text-sm">{tf("empty", "Nothing found.")}</p>
       ) : (
         <div className="grid grid-cols-1 gap-4">
           {filtered.map((r) => {
             const planned = plannedProfit(r);
             const earned  = actualProfit(r);
+            const s = derivedStatus(r);
+
             return (
               <div
                 key={r.id}
-                className="rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/70 p-4 shadow-sm"
+                className="rounded-xl border border-[#1f2e4a] bg-[#0F1B2E] p-4 shadow-[0_14px_40px_rgba(0,174,255,0.08)]"
               >
                 <div className="flex items-center justify-between gap-3">
-                  <div className="text-sm font-medium dark:text-gray-500">
+                  <div className="text-sm font-medium text-sky-300">
                     {r.validator || "—"}
                   </div>
-                  <span className={`px-2 py-1 text-xs rounded-full ${chip(r.status)}`}>
-                    {STATUS_LABELS[r.status as "active" | "completed"] ?? r.status}
+                  <span className={`px-2 py-1 text-xs rounded-full ${chip(s)}`}>
+                    {STATUS_LABELS[s]}
                   </span>
                 </div>
 
-                <div className="mt-1 text-sm text-gray-600 dark:text-gray-400">
+                <div className="mt-1 text-sm text-sky-200/90">
                   {r.amount} TON • {fmtDate(r.created_at)}
                   {r.apr != null && r.duration != null && (
                     <span className="ml-2 opacity-80">
@@ -111,24 +131,22 @@ export default function ProfileHistory({ history, onWithdrawClick }: ProfileHist
                   )}
                 </div>
 
-                <div className="mt-3 grid grid-cols-1 sm:grid-cols-3 gap-2 text-sm text-gray-500">
-                  <div className="rounded-lg border border-white/10 bg-white/30 dark:bg-white/5 px-3 py-2">
-                    <div className="text-[11px] text-gray-600 dark:text-gray-600">{tf("labels.plannedIncome", "Planned income")}</div>
-                    <div className="font-semibold">{planned.toFixed(2)} TON</div>
+                <div className="mt-3 grid grid-cols-1 sm:grid-cols-3 gap-2 text-sm">
+                  <div className="rounded-lg border border-white/10 bg-white/5 px-3 py-2">
+                    <div className="text-[11px] text-sky-300/70">{tf("labels.plannedIncome", "Planned income")}</div>
+                    <div className="font-semibold text-sky-50">{planned.toFixed(2)} TON</div>
                   </div>
-                  <div className="rounded-lg border border-white/10 bg-white/30 dark:bg-white/5 px-3 py-2">
-                    <div className="text-[11px] text-gray-600 dark:text-gray-600">{tf("labels.earned", "Earned")}</div>
-                    <div className="font-semibold">{earned.toFixed(2)} TON</div>
+                  <div className="rounded-lg border border-white/10 bg-white/5 px-3 py-2">
+                    <div className="text-[11px] text-sky-300/70">{tf("labels.earned", "Earned")}</div>
+                    <div className="font-semibold text-sky-50">{earned.toFixed(2)} TON</div>
                   </div>
-                  <div className="rounded-lg border border-white/10 bg-white/30 dark:bg-white/5 px-3 py-2">
-                    <div className="text-[11px] text-gray-600 dark:text-gray-600">{tf("labels.status", "Status")}</div>
-                    <div className="font-semibold">
-                      {STATUS_LABELS[r.status as "active" | "completed"] ?? r.status}
-                    </div>
+                  <div className="rounded-lg border border-white/10 bg-white/5 px-3 py-2">
+                    <div className="text-[11px] text-sky-300/70">{tf("labels.status", "Status")}</div>
+                    <div className="font-semibold text-sky-50">{STATUS_LABELS[s]}</div>
                   </div>
                 </div>
 
-                {r.status === "active" && onWithdrawClick && (
+                {s === "completed" && onWithdrawClick && (
                   <div className="mt-3">
                     <button
                       onClick={() => onWithdrawClick(r)}

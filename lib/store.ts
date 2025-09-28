@@ -2,39 +2,79 @@
 
 import { create } from "zustand";
 import { getSupabaseBrowser } from "@/lib/supabase/browser";
+// ↓ понадобится только на клиенте, чтобы посчитать хэш из BOC
+import { Cell } from "@ton/core";
+
+/* ──────────────────────────────────────────────────────────────────────────
+   ВСПОМОГАТЕЛЬНОЕ: извлекаем txHash из ответа TonConnect
+   Использование (в StakingClient.tsx):
+     const sendRes = await tonConnectUI.sendTransaction(tx);
+     const txHash  = txHashFromSendResult(sendRes); // ← получим 64-hex
+     await useStakeStore.getState().addStake({ ..., txHash });
+   Если кошелёк вернул чистый BOC (base64) — тоже прокатит:
+     const txHash = txHashFromSendResult(bocBase64String);
+────────────────────────────────────────────────────────────────────────── */
+export function txHashFromSendResult(resOrBoc: unknown): string {
+  // Уже готовый 0x-hex/hex?
+  if (typeof resOrBoc === "string") {
+    const s = resOrBoc.trim();
+    if (/^0x?[0-9a-fA-F]{64}$/.test(s)) return s.replace(/^0x/, "");
+    // Иначе считаем, что это base64 BOC
+    const cell = Cell.fromBase64(s);
+    return cell.hash().toString("hex");
+  }
+
+  // Объект с возможными местами для BOC
+  if (resOrBoc && typeof resOrBoc === "object") {
+    // @ts-expect-error — берём популярные места, где кошельки кладут BOC
+    const boc: unknown = resOrBoc.boc ?? resOrBoc.result?.boc ?? resOrBoc.payload?.boc;
+    if (typeof boc === "string" && boc.length > 0) {
+      const cell = Cell.fromBase64(boc);
+      return cell.hash().toString("hex");
+    }
+  }
+
+  throw new Error("Wallet did not return BOC / tx hash");
+}
+
+/* ────────────────────────────────────────────────────────────────────────── */
 
 export interface StakeRecord {
   id: string;
   wallet: string;
-  validator: string;
+  validator: string | null;
   amount: number;
   apr: number;
   duration: number;
-  status: "active" | "completed";
-  txHash: string;
+  // Добавил 'withdrawn' — у тебя логика баланса и UI как раз на нём
+  status: "active" | "completed" | "withdrawn";
+  txHash: string | null;
   created_at: string;
 }
 
 interface AddStakeParams {
   wallet: string;
-  validator: string;
+  validator?: string | null;
   amount: number;
   apr: number;
   duration: number;
-  txHash?: string;
+  // ТЕПЕРЬ ОБЯЗАТЕЛЕН: сначала добываем через txHashFromSendResult(...)
+  txHash: string;
 }
 
 interface StakeStore {
   history: StakeRecord[];
   loading: boolean;
   error?: string;
+
   fetchHistory: (wallet: string) => Promise<void>;
   addStake: (params: AddStakeParams) => Promise<StakeRecord>;
   completeStake: (id: string, txHash?: string) => Promise<void>;
-  withdrawStake: (id: string, amount: number) => Promise<void>;
+  // сигнатуру не ломаю: второй аргумент игнорируем
+  withdrawStake: (id: string, _amount?: number) => Promise<void>;
 }
 
-// ВСПОМОГАТЕЛЬНОЕ: лениво получаем клиент В МОМЕНТ вызова
+// Ленивый браузерный клиент
 const sb = () => getSupabaseBrowser();
 
 async function api<T = any>(url: string, init?: RequestInit): Promise<T> {
@@ -53,7 +93,7 @@ export const useStakeStore = create<StakeStore>((set, get) => ({
   loading: false,
   error: undefined,
 
-  // ЧТЕНИЕ ИСТОРИИ (anon): теперь через ленивый клиент + try/catch/finally
+  // ИСТОРИЯ: читаем только свои записи
   fetchHistory: async (wallet) => {
     set({ loading: true, error: undefined });
     try {
@@ -72,40 +112,25 @@ export const useStakeStore = create<StakeStore>((set, get) => ({
     }
   },
 
-  // ВСТАВКА: через серверный роут (service-role)
-  addStake: async ({ wallet, validator, amount, apr, duration, txHash }) => {
+  // ВСТАВКА: только через серверный роут и ТОЛЬКО с txHash
+  addStake: async ({ wallet, validator = null, amount, apr, duration, txHash }) => {
     set({ loading: true, error: undefined });
     try {
-      const payload = {
-        wallet,
-        validator,
-        amount,
-        apr,
-        duration,
-        txHash: txHash ?? null,
-      };
+      if (!txHash || typeof txHash !== "string" || txHash.trim().length < 8) {
+        throw new Error("txHash required: call txHashFromSendResult() first");
+      }
 
-      const data = await api<{ ok: boolean; record?: StakeRecord; id?: string }>(
+      const payload = { wallet, validator, amount, apr, duration, txHash };
+
+      const data = await api<{ ok: boolean; record: StakeRecord }>(
         "/api/stake",
         { method: "POST", body: JSON.stringify(payload) }
       );
 
-      const newRec: StakeRecord =
-        data.record ??
-        ({
-          id: String(data.id ?? crypto.randomUUID()),
-          wallet,
-          validator,
-          amount,
-          apr,
-          duration,
-          status: "active",
-          txHash: txHash ?? "pending",
-          created_at: new Date().toISOString(),
-        } as StakeRecord);
-
-      set((s) => ({ history: [newRec, ...s.history] }));
-      return newRec;
+      const rec = data.record;
+      // Подстрахуем локальную историю
+      set((s) => ({ history: [rec, ...s.history] }));
+      return rec;
     } catch (e: any) {
       set({ error: e?.message || "addStake failed" });
       throw e;
@@ -114,110 +139,69 @@ export const useStakeStore = create<StakeStore>((set, get) => ({
     }
   },
 
-  // ЗАВЕРШЕНИЕ: прямой апдейт (если RLS позволит; иначе вынесем в /api)
+  // ЗАВЕРШЕНИЕ: если тебе это ещё нужно делать с клиента (иначе — через воркер/сервер)
   completeStake: async (id, txHash) => {
     set({ loading: true, error: undefined });
     try {
       const patch: Partial<StakeRecord> = { status: "completed" };
       if (txHash) patch.txHash = txHash;
 
-      const res = await sb().from("stakes").update(patch).eq("id", id).select("*");
+      const res = await sb()
+        .from("stakes")
+        .update(patch)
+        .eq("id", id)
+        .select("*");
+
       if (res.error) throw res.error;
 
       const upd = (res.data as StakeRecord[])[0];
-      set((s) => ({
-        history: s.history.map((r) => (r.id === id ? upd : r)),
-      }));
-    } catch (e: any) {
-      set({ error: e?.message || "completeStake failed" });
-    } finally {
-      set({ loading: false });
-    }
-  },
-
-
-  
-withdrawStake: async (id, amountToWithdraw) => {
-  set({ loading: true, error: undefined });
-  try {
-    const rec = get().history.find((r) => r.id === id);
-    if (!rec) throw new Error("Запись не найдена");
-
-    // кламп суммы [0; rec.amount]
-    const w = Math.min(Math.max(amountToWithdraw, 0), rec.amount);
-    if (w <= 0) return;
-
-    const prev = get().history;
-
-    // 🔸 Оптимистичное обновление UI
-    if (rec.amount - w <= 0) {
-      set({ history: prev.filter((r) => r.id !== id) });
-    } else {
-      set({
-        history: prev.map((r) =>
-          r.id === id ? { ...r, amount: rec.amount - w, status: "active" } : r
-        ),
-      });
-    }
-
-    // 🔸 Пишем через серверный API (service-role)
-    const res = await fetch(`/api/stakes/${id}/withdraw`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      cache: "no-store",
-      body: JSON.stringify({ amount: w, wallet: rec.wallet }),
-    });
-
-    const data = await res.json().catch(() => ({}));
-    if (!res.ok) {
-      // откат при ошибке
-      set({ history: prev, error: data?.error || "withdraw failed" });
-      throw new Error(data?.error || res.statusText);
-    }
-
-    // если нужен точный серверный снэпшот после UPDATE:
-    if (data?.record) {
-      set((s) => ({
-        history: s.history.map((r) => (r.id === id ? data.record : r)),
-      }));
-    }
-  } catch (e: any) {
-    set({ error: e?.message || "withdrawStake failed" });
-    throw e;
-  } finally {
-    set({ loading: false });
-  }
-},
-
-/*
-  // ВЫВОД СУММЫ: простой пересчёт amount + апдейт
-  withdrawStake: async (id, amountToWithdraw) => {
-    set({ loading: true, error: undefined });
-    try {
-      const rec = get().history.find((r) => r.id === id);
-      if (!rec) throw new Error("Запись не найдена");
-
-      const newAmount = rec.amount - amountToWithdraw;
-      if (newAmount < 0) throw new Error("Нельзя вывести больше, чем застейкано");
-
-      const { data, error } = await sb()
-        .from("stakes")
-        .update({ amount: newAmount })
-        .eq("id", id)
-        .select();
-
-      if (error) throw error;
-
-      if (data && data[0]) {
+      if (upd) {
         set((s) => ({
-          history: s.history.map((r) => (r.id === id ? { ...r, amount: data[0].amount } : r)),
+          history: s.history.map((r) => (r.id === id ? upd : r)),
         }));
       }
     } catch (e: any) {
-      set({ error: e?.message || "withdrawStake failed" });
+      set({ error: e?.message || "completeStake failed" });
+      throw e;
     } finally {
       set({ loading: false });
     }
   },
-  */
+
+  // WITHDRAW: больше не режем amount — просто меняем статус на "withdrawn" через сервер
+  withdrawStake: async (id, _amountIgnored) => {
+    set({ loading: true, error: undefined });
+    const prev = get().history;
+    try {
+      const rec = prev.find((r) => r.id === id);
+      if (!rec) throw new Error("Запись не найдена");
+      if (rec.status !== "completed") throw new Error("Stake is not ready to withdraw");
+
+      // Оптимистично пометим как withdrawn (UI мгновенно обновится)
+      set({
+        history: prev.map((r) => (r.id === id ? { ...r, status: "withdrawn" } : r)),
+      });
+
+      const res = await api<{ ok: boolean; record: StakeRecord }>(
+        `/api/stakes/${id}/withdraw`,
+        {
+          method: "POST",
+          body: JSON.stringify({ wallet: rec.wallet }), // amount не требуется
+        }
+      );
+
+      // Сверим с сервером (идеально — записать серверный снапшот)
+      if (res?.record) {
+        set((s) => ({
+          history: s.history.map((r) => (r.id === id ? res.record : r)),
+        }));
+      }
+    } catch (e: any) {
+      // Откат оптимистичного апдейта
+      set({ history: prev, error: e?.message || "withdrawStake failed" });
+      throw e;
+    } finally {
+      set({ loading: false });
+    }
+  },
 }));

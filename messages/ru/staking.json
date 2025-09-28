@@ -6,8 +6,8 @@
   "stats": {
     "balance": "Баланс",
     "dailyIncome": "Доход в день",
-    "totalIncome": "Суммарный доход",
-    "assetValue": "Стоимость актива (обновляется каждый час)"
+    "totalIncome": "Всего заработано",
+    "assetValue": "Стоимость активов (обновляется каждый час)"
   },
   "status": {
     "connected": "Connected",
