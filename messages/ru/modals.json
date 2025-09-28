@@ -10,7 +10,7 @@
     "title": "Вывод из {validator}",
     "yourStake": "Ваш стейк",
     "profit": "Доступный доход",
-    "withdrawProfit": "Вывести прибыль ({amount} TON)",
+    "withdrawProfit": "Вывести депозит ({amount} TON)",
     "withdrawFull": "Вывести всё ({amount} TON)",
     "noProfit": "Прибыли пока нет"
   }

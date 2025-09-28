@@ -80,7 +80,7 @@ export function WithdrawModal({ open, onClose, stake, onConfirm }: Props) {
               }`}
               title={profitTon > 0 ? "" : t("withdraw.noProfit")}
             >
-              {t("withdraw.withdrawProfit", { amount: fmt(profitTon) })}
+              {t("withdraw.withdrawFull", { amount: fmt(profitTon) })}
             </button>
 
             <button
@@ -90,7 +90,7 @@ export function WithdrawModal({ open, onClose, stake, onConfirm }: Props) {
                 fullTon > 0 ? "bg-blue-600 hover:bg-blue-700" : "bg-blue-600/50 cursor-not-allowed"
               }`}
             >
-              {t("withdraw.withdrawFull", { amount: fmt(fullTon) })}
+              {t("withdraw.withdrawProfit", { amount: fmt(fullTon) })}
             </button>
           </div>
         </Dialog.Panel>
