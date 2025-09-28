@@ -17,14 +17,17 @@ interface Props {
 export function WithdrawModal({ open, onClose, stake, onConfirm }: Props) {
   const t = useT("modals");
   const [submitting, setSubmitting] = useState(false);
+  const fullTon = stake.amount;
 
+  
   // профит к выводу (не больше депозита и не меньше 0)
   const profitTon = useMemo(() => {
-    const p = Number(actualProfit(stake)) || 0;
-    return Math.max(0, Math.min(p, stake.amount));
+    const profit = stake.amount * stake.duration + fullTon
+    //const p = Number(actualProfit(stake)) || 0;
+    return Math.max(0, profit); //
   }, [stake]);
 
-  const fullTon = stake.amount;
+
   const fmt = (n: number) => n.toLocaleString(undefined, { maximumFractionDigits: 6 });
 
   const handle = async (amount: number) => {
