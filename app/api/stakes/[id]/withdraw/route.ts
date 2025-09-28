@@ -2,12 +2,10 @@
 import { NextResponse } from "next/server";
 import { getSupabaseServer } from "@/lib/supabase/server";
 
-// (опционально, чтобы выключить кеш/SSG)
 export const dynamic = "force-dynamic";
 
 export async function POST(
   req: Request,
-  // ВАЖНО: params — это Promise<{ id: string }>
   { params }: { params: Promise<{ id: string }> }
 ) {
   const { id } = await params;
@@ -23,7 +21,7 @@ export async function POST(
 
     const sb = getSupabaseServer();
 
-    // 1) достаём запись
+    // 1) читаем запись
     const { data: rows, error: e1 } = await sb
       .from("stakes")
       .select("*")
@@ -35,33 +33,40 @@ export async function POST(
     const rec = rows?.[0];
     if (!rec) return NextResponse.json({ error: "Not found" }, { status: 404 });
 
-    // 2) простая валидация владельца (опционально)
+    // 2) (опц) валидация владельца
     if (wallet && wallet !== rec.wallet) {
       return NextResponse.json({ error: "Wallet mismatch" }, { status: 403 });
     }
 
-    // 3) считаем новый остаток
+    // 3) считаем остаток
     const w = Math.min(Math.max(amount, 0), Number(rec.amount));
     const newAmount = Number(rec.amount) - w;
 
+    // 4) апдейт: если полный — ставим 0 и completed, иначе уменьшаем
     if (newAmount <= 0) {
-      // полный вывод — удаляем строку
-      const { error: eDel } = await sb.from("stakes").delete().eq("id", id);
-      if (eDel) return NextResponse.json({ error: eDel.message }, { status: 500 });
+      const { data, error } = await sb
+        .from("stakes")
+        .update({
+          amount: 0,
+          status: "completed",
+          // completed_at: new Date().toISOString(), // если есть такая колонка
+        })
+        .eq("id", id)
+        .select("*")
+        .single();
 
-      return NextResponse.json({ ok: true, deleted: true, id });
+      if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+      return NextResponse.json({ ok: true, record: data, completed: true });
     } else {
-      // частичный — обновляем amount
-      const { data, error: eUpd } = await sb
+      const { data, error } = await sb
         .from("stakes")
         .update({ amount: newAmount, status: "active" })
         .eq("id", id)
         .select("*")
         .single();
 
-      if (eUpd) return NextResponse.json({ error: eUpd.message }, { status: 500 });
-
-      return NextResponse.json({ ok: true, record: data });
+      if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+      return NextResponse.json({ ok: true, record: data, completed: false });
     }
   } catch (e: any) {
     return NextResponse.json({ error: e?.message || "Server error" }, { status: 500 });
