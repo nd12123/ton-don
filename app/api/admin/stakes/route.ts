@@ -1,19 +1,55 @@
 // app/api/admin/stakes/route.ts
-export const runtime = 'nodejs';
-export const dynamic = 'force-dynamic';
+export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
 
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
+import { Address } from "@ton/core";
 
+// ─── utils ───────────────────────────────────────────────────────────────────
 const DEV = process.env.NODE_ENV !== "production";
 const dbg = (...a: any[]) => DEV && console.log("[admin/stakes]", ...a);
 
-const normTon = (s: string) => s?.toLowerCase().replace(/[^a-z0-9:_-]/g, "") ?? "";
-const isUUID = (s: string) =>
-  /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(s);
+function toRawAddr(x?: string | null): string | null {
+  if (!x) return null;
+  try {
+    if (x.includes(":")) return x.toLowerCase();
+    return Address.parseFriendly(x).address.toString().toLowerCase();
+  } catch {
+    return x.toLowerCase();
+  }
+}
+function buildAdminSet() {
+  const csv =
+    process.env.ADMIN_WALLETS ||
+    process.env.NEXT_PUBLIC_ADMIN_WALLETS ||
+    "";
+  const raws = csv
+    .split(",")
+    .map((s) => s.trim())
+    .filter(Boolean)
+    .map((s) => toRawAddr(s))
+    .filter((s): s is string => Boolean(s));
+  return new Set(raws);
+}
+function getAdminToken(): string {
+  return (
+    process.env.ADMIN_API_TOKEN ||
+    process.env.ADMIN_UI_TOKEN ||
+    process.env.NEXT_PUBLIC_ADMIN_UI_TOKEN ||
+    ""
+  );
+}
 
-// Разрешённые в твоей таблице поля
 const ALLOWED_COLS = new Set([
-  "validator", "wallet", "amount", "duration", "apr", "status", "txHash"
+  "validator",
+  "owner",
+  "wallet",
+  "amount",
+  "duration",
+  "apr",
+  "status",     // active | completed | withdrawn
+  "txHash",
+  "created_at", // можно редактировать
 ]);
 
 function sanitizePayload(input: any, walletFallback: string) {
@@ -23,127 +59,127 @@ function sanitizePayload(input: any, walletFallback: string) {
     if (!ALLOWED_COLS.has(k)) continue;
     data[k] = v;
   }
+
   if (!data.wallet) data.wallet = walletFallback;
-  // минимальная валидация типов/обязательных полей
-  if (!data.validator || typeof data.validator !== 'string') throw new Error('validator required');
-  if (!data.wallet || typeof data.wallet !== 'string') throw new Error('wallet required');
-  if (!(Number.isFinite(Number(data.amount)) && Number(data.amount) > 0)) throw new Error('amount>0 required');
-  if (!(Number.isFinite(Number(data.apr)) && Number(data.apr) >= 0)) throw new Error('apr>=0 required');
-  if (!(Number.isFinite(Number(data.duration)) && Number(data.duration) >= 0)) throw new Error('duration>=0 required');
-  if (!data.status) data.status = 'active';
+
+  if (data.validator != null) data.validator = String(data.validator);
+  if (data.owner !== undefined) data.owner = data.owner ? String(data.owner) : null;
+  if (data.wallet != null) data.wallet = String(data.wallet);
+  if (data.amount != null) data.amount = Number(data.amount);
+  if (data.apr != null) data.apr = Number(data.apr);
+  if (data.duration != null) data.duration = Math.trunc(Number(data.duration));
+  if (data.status != null) data.status = String(data.status);
+  if (data.txHash !== undefined) data.txHash = data.txHash ? String(data.txHash) : null;
+
+  if (data.created_at) {
+    const d = new Date(data.created_at);
+    if (!Number.isNaN(d.getTime())) data.created_at = d.toISOString();
+    else delete data.created_at;
+  }
+
+  // минимальные проверки
+  if (!data.validator || typeof data.validator !== "string") throw new Error("validator required");
+  if (!data.wallet || typeof data.wallet !== "string") throw new Error("wallet required");
+  if (!(Number.isFinite(Number(data.amount)) && Number(data.amount) > 0)) throw new Error("amount>0 required");
+  if (!(Number.isFinite(Number(data.apr)) && Number(data.apr) >= 0)) throw new Error("apr>=0 required");
+  if (!(Number.isFinite(Number(data.duration)) && Number(data.duration) >= 0)) throw new Error("duration>=0 required");
+  if (!data.status) data.status = "active";
+
   return data;
 }
 
 async function restInsert(url: string, serviceKey: string, payload: any) {
   const res = await fetch(`${url}/rest/v1/stakes`, {
-    method: 'POST',
+    method: "POST",
     headers: {
-      'content-type': 'application/json',
-      'apikey': serviceKey,
-      'Authorization': `Bearer ${serviceKey}`,
-      'Prefer': 'return=representation'
+      "content-type": "application/json",
+      apikey: serviceKey,
+      Authorization: `Bearer ${serviceKey}`,
+      Prefer: "return=representation",
     },
-    body: JSON.stringify(payload)
+    body: JSON.stringify(payload),
   });
   const text = await res.text();
-  if (!res.ok) {
-    // пробуем распарсить json ошибки ради деталей
-    let err: any = text;
-    try { err = JSON.parse(text); } catch {}
-    throw new Error(`[REST insert ${res.status}] ${typeof err === 'string' ? err : JSON.stringify(err)}`);
-  }
+  if (!res.ok) throw new Error(`[REST insert ${res.status}] ${text}`);
   return text ? JSON.parse(text) : null;
 }
-
 async function restUpdate(url: string, serviceKey: string, id: string, payload: any) {
   const res = await fetch(`${url}/rest/v1/stakes?id=eq.${encodeURIComponent(id)}`, {
-    method: 'PATCH',
+    method: "PATCH",
     headers: {
-      'content-type': 'application/json',
-      'apikey': serviceKey,
-      'Authorization': `Bearer ${serviceKey}`,
-      'Prefer': 'return=representation'
+      "content-type": "application/json",
+      apikey: serviceKey,
+      Authorization: `Bearer ${serviceKey}`,
+      Prefer: "return=representation",
     },
-    body: JSON.stringify(payload)
+    body: JSON.stringify(payload),
   });
   const text = await res.text();
-  if (!res.ok) {
-    let err: any = text;
-    try { err = JSON.parse(text); } catch {}
-    throw new Error(`[REST update ${res.status}] ${typeof err === 'string' ? err : JSON.stringify(err)}`);
-  }
+  if (!res.ok) throw new Error(`[REST update ${res.status}] ${text}`);
   return text ? JSON.parse(text) : null;
 }
-
 async function restDelete(url: string, serviceKey: string, id: string) {
   const res = await fetch(`${url}/rest/v1/stakes?id=eq.${encodeURIComponent(id)}`, {
-    method: 'DELETE',
+    method: "DELETE",
     headers: {
-      'apikey': serviceKey,
-      'Authorization': `Bearer ${serviceKey}`,
-      'Prefer': 'return=minimal'
-    }
+      apikey: serviceKey,
+      Authorization: `Bearer ${serviceKey}`,
+      Prefer: "return=minimal",
+    },
   });
-  if (!res.ok) {
-    const text = await res.text();
-    let err: any = text;
-    try { err = JSON.parse(text); } catch {}
-    throw new Error(`[REST delete ${res.status}] ${typeof err === 'string' ? err : JSON.stringify(err)}`);
-  }
+  if (!res.ok) throw new Error(`[REST delete ${res.status}] ${await res.text()}`);
 }
 
-export async function POST(req: Request) {
+// ─── handler ─────────────────────────────────────────────────────────────────
+export async function POST(req: NextRequest) {
   const url = process.env.SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL || "";
   const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY || "";
-  dbg("NODE_ENV=", process.env.NODE_ENV);
-  dbg("SUPABASE_URL?", Boolean(url), "SERVICE_ROLE_KEY len=", serviceKey.length);
-
   if (!url || !serviceKey) {
     return NextResponse.json({ error: "server misconfigured: missing SUPABASE_URL or SERVICE_ROLE" }, { status: 500 });
   }
 
-  const adminWallets = (process.env.ADMIN_WALLETS || "")
-    .split(",").map(normTon).filter(Boolean);
-  dbg("ADMIN_WALLETS=", adminWallets);
-
-  const tokenHeader = req.headers.get("x-admin-token") || "";
-  const tokenEnv = process.env.ADMIN_API_TOKEN || "";
-  dbg("got token?", Boolean(tokenHeader), "ADMIN_TOKEN set?", Boolean(tokenEnv));
+  const adminSet = buildAdminSet();
+  const tokenEnv = getAdminToken();
 
   let body: any;
   try { body = await req.json(); } catch { return NextResponse.json({ error: "bad json" }, { status: 400 }); }
 
-  const rawAddr = normTon(body?.walletAddress);
-  const isAdminWallet = rawAddr && adminWallets.includes(rawAddr);
-  const tokenOk = tokenEnv && tokenHeader === tokenEnv;
+  const headerToken = req.headers.get("x-admin-token") || "";
+  const bodyToken = typeof body?.adminToken === "string" ? body.adminToken : "";
+  const rawFromClient = toRawAddr(String(body?.walletAddress || "")) || "";
+  const isAdminWallet = rawFromClient && adminSet.has(rawFromClient);
+  const tokenOk = !!tokenEnv && (headerToken === tokenEnv || bodyToken === tokenEnv);
 
+  dbg("wallet:", rawFromClient, "isAdmin:", isAdminWallet, "tokenOk:", tokenOk);
+
+  // ⬇ dev: достаточно кошелька ИЛИ токена; prod: требуется и то, и другое
   if (DEV) {
-    if (!isAdminWallet) return NextResponse.json({ error: "forbidden (wallet)" }, { status: 403 });
-    dbg("[DEV] admin wallet ok:", rawAddr);
+    if (!isAdminWallet && !tokenOk) {
+      return NextResponse.json({ error: "forbidden (dev: need admin wallet OR token)" }, { status: 403 });
+    }
   } else {
-    if (!isAdminWallet || !tokenOk) return NextResponse.json({ error: "forbidden" }, { status: 403 });
+    if (!isAdminWallet || !tokenOk) {
+      return NextResponse.json({ error: "forbidden" }, { status: 403 });
+    }
   }
 
-  const op = body?.op;
+  const op = String(body?.op || "");
   try {
     if (op === "create") {
-      const payload = sanitizePayload(body?.data, rawAddr);
-      dbg("CREATE payload=", payload);
+      const payload = sanitizePayload(body?.data, rawFromClient);
       const row = await restInsert(url, serviceKey, payload);
       return NextResponse.json({ ok: true, row });
     }
     if (op === "update") {
       const id = String(body?.id || "");
-      if (!isUUID(id)) return NextResponse.json({ error: "bad id" }, { status: 400 });
-      const payload = sanitizePayload(body?.data, rawAddr);
-      dbg("UPDATE id=", id, "payload=", payload);
+      if (!id) return NextResponse.json({ error: "id required" }, { status: 400 });
+      const payload = sanitizePayload(body?.data, rawFromClient);
       const row = await restUpdate(url, serviceKey, id, payload);
       return NextResponse.json({ ok: true, row });
     }
     if (op === "delete") {
       const id = String(body?.id || "");
-      if (!isUUID(id)) return NextResponse.json({ error: "bad id" }, { status: 400 });
-      dbg("DELETE id=", id);
+      if (!id) return NextResponse.json({ error: "id required" }, { status: 400 });
       await restDelete(url, serviceKey, id);
       return NextResponse.json({ ok: true });
     }
