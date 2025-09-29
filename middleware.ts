@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from 'next/server';
 
 // Поддерживаемые локали
 const SUPPORTED_LOCALES = ['en', 'ru', 'es', 'fr', 'zh', 'uk', 'hi'] as const;
-const DEFAULT_LOCALE = 'en';
+const DEFAULT_LOCALE = 'ru'; //'en'
 
 function hasLocale(pathname: string) {
   // берем первый сегмент /xx
