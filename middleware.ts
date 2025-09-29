@@ -1,123 +1,73 @@
 // middleware.ts
-import { NextRequest, NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from "next/server";
 
-// Поддерживаемые локали
-const SUPPORTED_LOCALES = ['en', 'ru', 'es', 'fr', 'zh', 'uk', 'hi'] as const;
-const DEFAULT_LOCALE = 'ru'; //'en'
+const SUPPORTED_LOCALES = ["en","ru","es","fr","zh","uk","hi"] as const;
+const DEFAULT_LOCALE = "ru"; // <-- фиксируем RU по умолчанию
 
-function hasLocale(pathname: string) {
-  // берем первый сегмент /xx
-  const first = pathname.split('/')[1];
-  return (SUPPORTED_LOCALES as readonly string[]).includes(first);
+const LOCALE_RE = /^\/([a-z]{2}(?:-[A-Z]{2})?)(?:\/|$)/;
+
+function hasSupportedLocale(pathname: string) {
+  const m = LOCALE_RE.exec(pathname);
+  return !!(m && SUPPORTED_LOCALES.includes(m[1] as any));
 }
 
-function isPublic(req: NextRequest) {
-  const p = req.nextUrl.pathname;
-
-  // /tonconnect-manifest.json — пропускаем
-if (req.nextUrl.pathname === '/tonconnect-manifest.json') {
-  return NextResponse.next();
-}
-// /xx/tonconnect-manifest.json -> /tonconnect-manifest.json
-if (/^\/[a-z]{2}(?:-[A-Z]{2})?\/tonconnect-manifest\.json$/.test(req.nextUrl.pathname)) {
-  const url = req.nextUrl.clone();
-  url.pathname = '/tonconnect-manifest.json';
-  return NextResponse.rewrite(url);
-}
-
-
-// /terms и /privacy: без редиректа, внутренний rewrite на английскую версию
-if (req.nextUrl.pathname === '/terms') {
-  const url = req.nextUrl.clone();
-  url.pathname = '/en/terms';
-  return NextResponse.rewrite(url);
-}
-if (req.nextUrl.pathname === '/privacy') {
-  const url = req.nextUrl.clone();
-  url.pathname = '/en/privacy';
-  return NextResponse.rewrite(url);
-}
-
-
-  // серверные/тех пути
-  if (p.startsWith('/api')) return true;
-  if (p.startsWith('/_next')) return true;
-
-  // одиночные файлы в корне
-  if (
-    p === '/favicon.ico' ||
-    p === '/robots.txt' ||
-    p === '/sitemap.xml' ||
-    p === '/site.webmanifest' ||
-    p === '/manifest.webmanifest' ||
-    p === '/manifest.json' ||
-    p === '/tonconnect-manifest.json' ||
-    p === '/terms' ||           // ← добавь
-    p === '/privacy'            // ← добавь
-  ) {
-    return true;
-  }
-
-  // статические каталоги
-  if (
-    p.startsWith('/decorative') ||
-    p.startsWith('/assets') ||
-    p.startsWith('/images') ||
-    p.startsWith('/icons') ||
-    p.startsWith('/favicon') ||
-    p.startsWith('/fonts') ||
-    p.startsWith('/docs') ||
-    p.startsWith('/audit')
-  ) {
-    return true;
-  }
-
-  // расширения статических ассетов
-  if (/\.(?:png|jpg|jpeg|gif|svg|ico|webp|avif|css|js|map|txt|ttf|otf|woff2?|mp4|webm)$/i.test(p)) {
-    return true;
-  }
-
-  return false;
+function isStatic(pathname: string) {
+  return (
+    pathname.startsWith("/api") ||
+    pathname.startsWith("/_next") ||
+    pathname === "/favicon.ico" ||
+    pathname === "/robots.txt" ||
+    pathname === "/sitemap.xml" ||
+    pathname === "/site.webmanifest" ||
+    pathname === "/manifest.webmanifest" ||
+    pathname === "/manifest.json" ||
+    pathname.startsWith("/decorative") ||
+    pathname.startsWith("/assets") ||
+    pathname.startsWith("/images") ||
+    pathname.startsWith("/icons") ||
+    pathname.startsWith("/favicon") ||
+    pathname.startsWith("/fonts") ||
+    pathname.startsWith("/docs") ||
+    pathname.startsWith("/audit") ||
+    /\.(?:png|jpg|jpeg|gif|svg|ico|webp|avif|css|js|map|txt|ttf|otf|woff2?|mp4|webm)$/i.test(pathname)
+  );
 }
 
 export function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
 
-  // 1) Корневой манифест никогда не трогаем (он и так исключен matcher'ом, но на всякий)
-  if (pathname === '/tonconnect-manifest.json') {
-    return NextResponse.next();
-  }
+  // пропускаем статику/апи
+  if (isStatic(pathname)) return NextResponse.next();
 
-  // 2) Локализованный путь /xx/tonconnect-manifest.json переписываем на корень
-  //    Поддержка двухсегментных локалей типа pt-BR: /pt-BR/tonconnect-manifest.json
+  // корневой манифест пропускаем
+  if (pathname === "/tonconnect-manifest.json") return NextResponse.next();
+
+  // локализованный манифест -> корневой
   if (/^\/[a-z]{2}(?:-[A-Z]{2})?\/tonconnect-manifest\.json$/.test(pathname)) {
     const url = req.nextUrl.clone();
-    url.pathname = '/tonconnect-manifest.json';
-    // query/hash у clone сохраняются автоматически, но можно явно:
-    url.search = req.nextUrl.search;
+    url.pathname = "/tonconnect-manifest.json";
     return NextResponse.rewrite(url);
   }
 
-  // 3) Публичные пути не трогаем
-  if (isPublic(req)) return NextResponse.next();
-
-  // 4) Если локали нет — редиректим на дефолтную, сохраняя query/hash
-  if (!hasLocale(pathname)) {
+  // terms/privacy -> английская версия (rewrite, без смены урла в адресной строке)
+  if (pathname === "/terms" || pathname === "/privacy") {
     const url = req.nextUrl.clone();
-    url.pathname = `/${DEFAULT_LOCALE}${pathname}`;
-    return NextResponse.redirect(url);
+    url.pathname = `/en${pathname}`;
+    return NextResponse.rewrite(url);
   }
 
-  return NextResponse.next();
+  // если уже есть поддерживаемая локаль — пропускаем
+  if (hasSupportedLocale(pathname)) return NextResponse.next();
+
+  // иначе — редирект на дефолтную локаль, сохраняя путь и query
+  const url = req.nextUrl.clone();
+  url.pathname = `/${DEFAULT_LOCALE}${pathname}`;
+  return NextResponse.redirect(url);
 }
 
-// ВАЖНО: matcher — только литеральные строки/регексп-строки.
-// Здесь мы исключаем системные и статику (включая корневой tonconnect-manifest.json),
-// а все остальное пускаем через middleware. Локализованный /xx/tonconnect-manifest.json
-// сюда попадет и будет переписан на корень в коде выше.
 export const config = {
   matcher: [
-    '/',
-    '/((?!api|_next/static|_next/image|favicon.ico|robots.txt|sitemap.xml|site.webmanifest|manifest.webmanifest|manifest.json|tonconnect-manifest.json|decorative|assets|images|icons|favicon|fonts|docs/|audit/|.*\\.(?:png|jpg|jpeg|gif|svg|ico|webp|avif|css|js|map|txt|ttf|otf|woff2?|mp4|webm)).*)',
+    "/",
+    "/((?!api|_next/static|_next/image|favicon.ico|robots.txt|sitemap.xml|site.webmanifest|manifest.webmanifest|manifest.json|tonconnect-manifest.json|decorative|assets|images|icons|favicon|fonts|docs/|audit/|.*\\.(?:png|jpg|jpeg|gif|svg|ico|webp|avif|css|js|map|txt|ttf|otf|woff2?|mp4|webm)).*)",
   ],
 };

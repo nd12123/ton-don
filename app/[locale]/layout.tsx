@@ -59,7 +59,7 @@ const messages = await loadAllMessages([
 }
 
 export function generateStaticParams() {
-  return [{ locale: "ru" }, { locale: "en" }, { locale: "es" }]; //locale change
+  return [{ locale: "ru" }, { locale: "en" }, { locale: "es" },{ locale: "zh" },{ locale: "uk" },{ locale: "fr" },{ locale: "hi" },]; //locale change
 }
 
 export async function generateMetadata({
