@@ -3,13 +3,23 @@ import { NextResponse } from 'next/server';
 
 export const dynamic = 'force-static';
 export const revalidate = 600;
-
+/*
+MANIFEST FOR DOMEN TONSTAKER.IO
 const manifest = {
   url: 'https://tonstaker.io',
   name: 'TON Staker',
   iconUrl: 'https://tonstaker.io/favicon.svg',
   termsOfUseUrl: 'https://tonstaker.io/terms',
   privacyPolicyUrl: 'https://tonstaker.io/privacy',
+};
+*/
+//VERCEL MANIFEST
+const manifest = {
+  url: 'https://staking-mocha-iota.vercel.app',
+  name: 'TON Staker',
+  iconUrl: 'https://staking-mocha-iota.vercel.app/favicon.svg',
+  termsOfUseUrl: 'https://staking-mocha-iota.vercel.app/terms',
+  privacyPolicyUrl: 'https://staking-mocha-iota.vercel.app/privacy',
 };
 
 const headers = {
