@@ -20,7 +20,9 @@ export default function Providers({
 
   return (
     <TonConnectUIProvider
-      manifestUrl="https://tonstaker.io/tonconnect-manifest.json?v=3"
+    //MANIFEST CHANGED FROM SERVER TO VERCEL
+      //manifestUrl="https://tonstaker.io/tonconnect-manifest.json?v=3"
+      manifestUrl="https://staking-mocha-iota.vercel.app/tonconnect-manifest.json?v=3"
       language={tonUILang}           // <- корректный проп; не в uiPreferences
       // uiPreferences={{ theme: 'SYSTEM' }} // опционально
       //restoreConnection={false} //true on production
