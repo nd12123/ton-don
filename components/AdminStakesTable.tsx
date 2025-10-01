@@ -3,25 +3,28 @@
 import { useEffect, useMemo, useState } from "react";
 import { Dialog } from "@headlessui/react";
 import { Plus, Pencil, Trash2, X } from "lucide-react";
-import { getSupabaseBrowser } from "@/lib/supabase/browser"; // ← верный импорт
+import { getSupabaseBrowser } from "@/lib/supabase/browser";
 import { StakeRecord } from "@/lib/store";
 import { useTonAddress } from "@tonconnect/ui-react";
 import { formatUTC } from "@/lib/format";
+
 type StakeRow = StakeRecord & {
-  id: string | number;
+  id: string;             // uuid
   created_at?: string | null;
+  // в БД НЕТ owner — показываем в UI только для удобства
 };
 
 type FormState = {
-  id?: string | number;
-  validator: string;
-  owner?: string;
-  wallet?: string;
+  id?: string;
+  validator: string;      // nullable в БД — не требуем
+  owner?: string;         // только в UI
+  wallet?: string;        // в БД NOT NULL при create
   amount: number;
   apr: number;
   duration: number;
-  status: "active" | "completed";
+  status: "active" | "completed" | "withdrawn";
   txHash?: string | null;
+  createdAtLocal?: string;
 };
 
 const emptyForm: FormState = {
@@ -33,7 +36,22 @@ const emptyForm: FormState = {
   duration: 0,
   status: "active",
   txHash: "",
+  createdAtLocal: "",
 };
+
+function toLocalInputValue(iso?: string | null) {
+  if (!iso) return "";
+  const d = new Date(iso);
+  if (Number.isNaN(d.getTime())) return "";
+  const pad = (n: number) => String(n).padStart(2, "0");
+  return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
+}
+function localToISO(localStr?: string) {
+  if (!localStr) return undefined;
+  const d = new Date(localStr);
+  if (Number.isNaN(d.getTime())) return undefined;
+  return d.toISOString();
+}
 
 export default function AdminStakesTable() {
   const [rows, setRows] = useState<StakeRow[]>([]);
@@ -43,22 +61,20 @@ export default function AdminStakesTable() {
   const [isOpen, setIsOpen] = useState(false);
   const [form, setForm] = useState<FormState>(emptyForm);
   const [saving, setSaving] = useState(false);
-  const [deletingId, setDeletingId] = useState<string | number | null>(null);
+  const [deletingId, setDeletingId] = useState<string | null>(null);
 
-  // адрес подключённого кошелька (админ)
-  const adminWallet = useTonAddress(); // "" если не подключен
+  // используем только как возможный fallback для create
+  const adminWallet = useTonAddress();
 
-  // --- Загрузка таблицы через браузерный клиент Supabase
   const fetchRows = async () => {
     setLoading(true);
     setErr(null);
     try {
-      const sb = getSupabaseBrowser(); // ← создаём клиента только здесь
+      const sb = getSupabaseBrowser();
       const { data, error } = await sb
         .from("stakes")
         .select("*")
         .order("created_at", { ascending: false });
-
       if (error) throw error;
       setRows((data as StakeRow[]) || []);
     } catch (e: any) {
@@ -68,93 +84,82 @@ export default function AdminStakesTable() {
       setLoading(false);
     }
   };
+  useEffect(() => { fetchRows(); }, []);
 
-  useEffect(() => {
-    // компонент клиентский, можно грузить
-    fetchRows();
-  }, []);
-
-  const openCreate = () => {
-    setForm(emptyForm);
-    setIsOpen(true);
-  };
-
+  const openCreate = () => { setForm(emptyForm); setIsOpen(true); };
   const openEdit = (r: StakeRow) => {
     setForm({
       id: r.id,
       validator: r.validator || "",
-      owner: (r as any).owner ?? (r as any).wallet ?? "",
-      wallet: (r as any).wallet ?? "",
+      owner: (r as any).owner ?? r.wallet ?? "",
+      wallet: r.wallet ?? "",
       amount: Number(r.amount) || 0,
       apr: Number(r.apr) || 0,
       duration: Number(r.duration) || 0,
-      status: (r.status as "active" | "completed") ?? "active",
+      status: (r.status as any) ?? "active",
       txHash: (r as any).txHash ?? "",
+      createdAtLocal: toLocalInputValue(r.created_at ?? null),
     });
     setIsOpen(true);
   };
 
-  const closeModal = () => {
-    if (!saving) setIsOpen(false);
-  };
-
-  const onChange = (k: keyof FormState, v: string | number) => {
-    setForm((prev) => ({ ...prev, [k]: v as any }));
-  };
+  const closeModal = () => { if (!saving) setIsOpen(false); };
+  const onChange = (k: keyof FormState, v: string | number) => setForm((prev) => ({ ...prev, [k]: v as any }));
 
   const canSave = useMemo(() => {
     const hasOwnerOrWallet =
       (form.owner && form.owner.trim().length > 0) ||
       (form.wallet && form.wallet.trim().length > 0);
-
+    // для create обязателен wallet/amount/apr/duration;
+    // для update мы всё равно шлём все поля — оставим ту же проверку,
+    // чтобы не сохранять пустое
     return (
-      form.validator.trim().length > 0 &&
       hasOwnerOrWallet &&
-      form.amount > 0 &&
-      form.apr >= 0 &&
-      form.duration >= 0 &&
-      (form.status === "active" || form.status === "completed")
+      (form.amount ?? 0) > 0 &&
+      (form.apr ?? 0) >= 0 &&
+      (form.duration ?? 0) >= 0 &&
+      ["active","completed","withdrawn"].includes(form.status) &&
+      true
     );
   }, [form]);
 
-  // --- Обёртка: CRUD только через наш серверный API (админка)
+  // дергаем наш API с токеном
   const adminFetch = async (body: any) => {
-    // Идеально — httpOnly cookie. Если нужно по-быстрому — localStorage/ENV.
-    const token =
-      (typeof window !== "undefined" && localStorage.getItem("ADMIN_TOKEN")) ||
-      process.env.NEXT_PUBLIC_ADMIN_UI_TOKEN ||
-      "";
+    const token = typeof window !== "undefined" ? localStorage.getItem("ADMIN_TOKEN") : null;
+    const headers: Record<string, string> = { "Content-Type": "application/json" };
+    if (token) headers["x-admin-token"] = token;
 
     return fetch("/api/admin/stakes", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "x-admin-token": token,
-      },
-      body: JSON.stringify({ ...body, walletAddress: adminWallet }),
+      headers,
+      credentials: "include",
+      body: JSON.stringify({
+        ...body,
+        adminToken: token || undefined, // дубль
+        walletAddress: adminWallet || undefined,
+      }),
     });
   };
 
   const save = async () => {
     if (!canSave) return;
-    if (!adminWallet) {
-      setErr("Connect admin wallet first");
-      return;
-    }
-
     setSaving(true);
     setErr(null);
 
+    // !!! В payload НЕТ owner; wallet берём из wallet || owner
+    const walletField = (form.wallet?.trim() || form.owner?.trim() || undefined);
+
     const payload: any = {
-      validator: form.validator.trim(),
-      owner: form.owner?.trim() || null,
-      wallet: form.wallet?.trim() || null,
+      validator: form.validator?.trim() || undefined, // необязательно
+      wallet: walletField,
       amount: Number(form.amount),
       apr: Number(form.apr),
       duration: Number(form.duration),
       status: form.status,
-      txHash: form.txHash?.trim() || null,
+      txHash: form.txHash?.trim() || undefined,
     };
+    const iso = localToISO(form.createdAtLocal);
+    if (iso) payload.created_at = iso;
 
     try {
       const res = await adminFetch(
@@ -162,12 +167,10 @@ export default function AdminStakesTable() {
           ? { op: "update", id: String(form.id), data: payload }
           : { op: "create", data: payload }
       );
-
       if (!res.ok) {
         const j = await res.json().catch(() => null);
         throw new Error(j?.error || `Save failed (${res.status})`);
       }
-
       setIsOpen(false);
       await fetchRows();
     } catch (e: any) {
@@ -177,14 +180,10 @@ export default function AdminStakesTable() {
     }
   };
 
-  const remove = async (id: string | number) => {
-    if (!adminWallet) {
-      setErr("Connect admin wallet first");
-      return;
-    }
+  const remove = async (id: string) => {
     setDeletingId(id);
     try {
-      const res = await adminFetch({ op: "delete", id: String(id) });
+      const res = await adminFetch({ op: "delete", id });
       if (!res.ok) {
         const j = await res.json().catch(() => null);
         throw new Error(j?.error || `Delete failed (${res.status})`);
@@ -238,49 +237,37 @@ export default function AdminStakesTable() {
           <tbody className="divide-y divide-white/10">
             {loading ? (
               <tr>
-                <td colSpan={10} className="px-3 py-6 text-center text-gray-400">
-                  Loading…
-                </td>
+                <td colSpan={10} className="px-3 py-6 text-center text-gray-400">Loading…</td>
               </tr>
             ) : rows.length === 0 ? (
               <tr>
-                <td colSpan={10} className="px-3 py-6 text-center text-gray-400">
-                  No data
-                </td>
+                <td colSpan={10} className="px-3 py-6 text-center text-gray-400">No data</td>
               </tr>
             ) : (
               rows.map((r) => (
                 <tr key={r.id}>
                   <td className="px-3 py-2 align-top text-gray-400">{String(r.id).slice(0, 8)}</td>
-                  <td className="px-3 py-2 align-top">{r.validator}</td>
+                  <td className="px-3 py-2 align-top">{r.validator ?? ""}</td>
                   <td className="px-3 py-2 align-top">{(r as any).owner ?? ""}</td>
-                  <td className="px-3 py-2 align-top">{(r as any).wallet ?? ""}</td>
+                  <td className="px-3 py-2 align-top">{r.wallet ?? ""}</td>
                   <td className="px-3 py-2 align-top">{Number(r.amount).toFixed(2)} TON</td>
                   <td className="px-3 py-2 align-top">{Number(r.apr)}%</td>
                   <td className="px-3 py-2 align-top">{Number(r.duration)} d</td>
                   <td className="px-3 py-2 align-top">
-                    <span
-                      className={`rounded-md px-2 py-0.5 text-xs ${
-                        r.status === "active"
-                          ? "bg-emerald-500/15 text-emerald-300"
-                          : "bg-gray-500/15 text-gray-300"
-                      }`}
-                    >
+                    <span className={`rounded-md px-2 py-0.5 text-xs ${
+                      r.status === "active" ? "bg-emerald-500/15 text-emerald-300" : "bg-gray-500/15 text-gray-300"
+                    }`}>
                       {r.status}
                     </span>
                   </td>
                   <td className="px-3 py-2 align-top text-gray-400">
-  <time dateTime={r.created_at ?? undefined} suppressHydrationWarning>
-    {formatUTC(r.created_at)}
-  </time>
-</td>
+                    <time dateTime={r.created_at ?? undefined} suppressHydrationWarning>
+                      {formatUTC(r.created_at)}
+                    </time>
+                  </td>
                   <td className="px-3 py-2 align-top">
                     <div className="flex items-center gap-2">
-                      <button
-                        onClick={() => openEdit(r)}
-                        className="rounded-md border border-white/10 p-1 hover:bg-white/10"
-                        title="Edit"
-                      >
+                      <button onClick={() => openEdit(r)} className="rounded-md border border-white/10 p-1 hover:bg-white/10" title="Edit">
                         <Pencil className="h-4 w-4" />
                       </button>
                       <button
@@ -289,11 +276,7 @@ export default function AdminStakesTable() {
                         title="Delete"
                         disabled={deletingId === r.id}
                       >
-                        {deletingId === r.id ? (
-                          <span className="text-xs">…</span>
-                        ) : (
-                          <Trash2 className="h-4 w-4" />
-                        )}
+                        {deletingId === r.id ? <span className="text-xs">…</span> : <Trash2 className="h-4 w-4" />}
                       </button>
                     </div>
                   </td>
@@ -320,96 +303,49 @@ export default function AdminStakesTable() {
 
             <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
               <Field label="Validator">
-                <input
-                  value={form.validator}
-                  onChange={(e) => onChange("validator", e.target.value)}
-                  className="w-full rounded-lg border border-white/10 bg-white/5 px-3 py-2 outline-none"
-                />
+                <input value={form.validator} onChange={(e) => onChange("validator", e.target.value)} className="w-full rounded-lg border border-white/10 bg-white/5 px-3 py-2 outline-none" />
               </Field>
 
-              <Field label="Owner (or Wallet)">
-                <input
-                  value={form.owner}
-                  onChange={(e) => onChange("owner", e.target.value)}
-                  className="w-full rounded-lg border border-white/10 bg-white/5 px-3 py-2 outline-none"
-                />
+              <Field label="Owner (UI only)">
+                <input value={form.owner ?? ""} onChange={(e) => onChange("owner", e.target.value)} className="w-full rounded-lg border border-white/10 bg-white/5 px-3 py-2 outline-none" />
               </Field>
 
-              <Field label="Wallet (optional)">
-                <input
-                  value={form.wallet}
-                  onChange={(e) => onChange("wallet", e.target.value)}
-                  className="w-full rounded-lg border border-white/10 bg-white/5 px-3 py-2 outline-none"
-                />
+              <Field label="Wallet (DB)">
+                <input value={form.wallet ?? ""} onChange={(e) => onChange("wallet", e.target.value)} className="w-full rounded-lg border border-white/10 bg-white/5 px-3 py-2 outline-none" />
               </Field>
 
               <Field label="Amount (TON)">
-                <input
-                  type="number"
-                  step="0.000000001"
-                  value={form.amount}
-                  onChange={(e) => onChange("amount", parseFloat(e.target.value || "0"))}
-                  className="w-full rounded-lg border border-white/10 bg-white/5 px-3 py-2 outline-none"
-                />
+                <input type="number" step="0.000000001" value={form.amount} onChange={(e) => onChange("amount", parseFloat(e.target.value || "0"))} className="w-full rounded-lg border border-white/10 bg-white/5 px-3 py-2 outline-none" />
               </Field>
 
               <Field label="APR (%)">
-                <input
-                  type="number"
-                  step="0.01"
-                  value={form.apr}
-                  onChange={(e) => onChange("apr", parseFloat(e.target.value || "0"))}
-                  className="w-full rounded-lg border border-white/10 bg-white/5 px-3 py-2 outline-none"
-                />
+                <input type="number" step="0.01" value={form.apr} onChange={(e) => onChange("apr", parseFloat(e.target.value || "0"))} className="w-full rounded-lg border border-white/10 bg-white/5 px-3 py-2 outline-none" />
               </Field>
 
               <Field label="Duration (days)">
-                <input
-                  type="number"
-                  step="1"
-                  value={form.duration}
-                  onChange={(e) => onChange("duration", parseInt(e.target.value || "0"))}
-                  className="w-full rounded-lg border border-white/10 bg-white/5 px-3 py-2 outline-none"
-                />
+                <input type="number" step="1" value={form.duration} onChange={(e) => onChange("duration", parseInt(e.target.value || "0"))} className="w-full rounded-lg border border-white/10 bg-white/5 px-3 py-2 outline-none" />
               </Field>
 
               <Field label="Status">
-                <select
-                  value={form.status}
-                  onChange={(e) => onChange("status", e.target.value)}
-                  className="w-full rounded-lg border border-white/10 bg-white/5 px-3 py-2 outline-none"
-                >
+                <select value={form.status} onChange={(e) => onChange("status", e.target.value as any)} className="w-full rounded-lg border border-white/10 bg-white/5 px-3 py-2 outline-none">
                   <option value="active">active</option>
                   <option value="completed">completed</option>
+                  <option value="withdrawn">withdrawn</option>
                 </select>
               </Field>
 
               <Field label="txHash (optional)">
-                <input
-                  value={form.txHash ?? ""}
-                  onChange={(e) => onChange("txHash", e.target.value)}
-                  className="w-full rounded-lg border border-white/10 bg-white/5 px-3 py-2 outline-none"
-                />
+                <input value={form.txHash ?? ""} onChange={(e) => onChange("txHash", e.target.value)} className="w-full rounded-lg border border-white/10 bg-white/5 px-3 py-2 outline-none" />
+              </Field>
+
+              <Field label="Created at">
+                <input type="datetime-local" value={form.createdAtLocal || ""} onChange={(e) => onChange("createdAtLocal", e.target.value)} className="w-full rounded-lg border border-white/10 bg-white/5 px-3 py-2 outline-none" />
               </Field>
             </div>
 
             <div className="mt-4 flex items-center justify-end gap-2">
-              <button
-                onClick={closeModal}
-                className="rounded-lg border border-white/10 px-3 py-2 text-sm text-gray-200 hover:bg-white/10"
-                disabled={saving}
-              >
-                Cancel
-              </button>
-              <button
-                onClick={save}
-                disabled={!canSave || saving}
-                className={`rounded-lg px-3 py-2 text-sm font-medium ${
-                  canSave
-                    ? "bg-sky-600 text-white hover:bg-sky-700"
-                    : "bg-sky-900 text-sky-300/60"
-                }`}
-              >
+              <button onClick={closeModal} className="rounded-lg border border-white/10 px-3 py-2 text-sm text-gray-200 hover:bg-white/10" disabled={saving}>Cancel</button>
+              <button onClick={save} disabled={!canSave || saving} className={`rounded-lg px-3 py-2 text-sm font-medium ${canSave ? "bg-sky-600 text-white hover:bg-sky-700" : "bg-sky-900 text-sky-300/60"}`}>
                 {saving ? "Saving…" : form.id ? "Save" : "Create"}
               </button>
             </div>

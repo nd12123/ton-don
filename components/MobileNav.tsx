@@ -20,7 +20,6 @@ export default function MobileNav({
 }: Props) {
   const [open, setOpen] = useState(false);
 
-  // Фолбэк ссылки — без i18n/навигационных хуков
   const items = useMemo<LinkItem[]>(
     () =>
       links?.length
@@ -36,7 +35,7 @@ export default function MobileNav({
 
   return (
     <>
-      {/* Верхняя панель */}
+      {/* Top bar */}
       <div className="md:hidden fixed top-0 left-0 right-0 z-50 bg-[#0B1128]/90 backdrop-blur border-b border-white/10">
         <div className="flex items-center justify-between px-2 py-3">
           <button
@@ -52,7 +51,6 @@ export default function MobileNav({
             <span suppressHydrationWarning>{brand}</span>
           </LocaleLink>
 
-          {/* Кнопка кошелька (компакт) */}
           <div
             className="
               shrink-0
@@ -70,7 +68,7 @@ export default function MobileNav({
         </div>
       </div>
 
-      {/* Оверлей */}
+      {/* Overlay */}
       {open && (
         <div
           className="fixed inset-0 z-40 bg-black/60 md:hidden"
@@ -79,7 +77,7 @@ export default function MobileNav({
         />
       )}
 
-      {/* Сайд-меню */}
+      {/* Side menu */}
       <nav
         className={`fixed top-0 left-0 h-full w-72 z-50 md:hidden
                     bg-gray-900 text-white border-r border-white/10
@@ -92,7 +90,11 @@ export default function MobileNav({
           <span className="font-semibold" suppressHydrationWarning>
             {menuLabel}
           </span>
-          <button aria-label="Close menu" className="p-2 -m-2" onClick={() => setOpen(false)}>
+          <button
+            aria-label="Close menu"
+            className="p-2 -m-2"
+            onClick={() => setOpen(false)}
+          >
             <X className="w-6 h-6" />
           </button>
         </div>
@@ -109,8 +111,6 @@ export default function MobileNav({
               </LocaleLink>
             </li>
           ))}
-
-          {/* Языковый переключатель можно вставить здесь через пропсы/портал при необходимости */}
         </ul>
 
         <div className="mt-auto p-3 border-t border-white/10">
