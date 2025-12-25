@@ -24,7 +24,7 @@ export async function POST(req: NextRequest) {
   try {
     await transporter.sendMail({
       from: `"TON Staker Support" <${process.env.SMTP_USER}>`,
-      to: '', //SUPPORT_TO support@tonstake.app
+      to: process.env.SUPPORT_EMAIL || 'support@tonstake.app',
       subject: `New message from ${email}`,
       text: message,
     });

@@ -31,9 +31,52 @@ function requireTxHash(body: any): string {
     body?.txHash ?? body?.txhash ?? body?.tx_hash ??
     body?.transactionHash ?? body?.messageHash ?? body?.hash ?? null;
   if (typeof cand === "string" && cand.trim().length >= 8) {
-    return cand.trim().replace(/^0x/, "");
+    const cleaned = cand.trim().replace(/^0x/, "");
+    // Validate it's a valid hex string (base64 or hex)
+    if (!/^[a-fA-F0-9]{64}$/.test(cleaned) && !/^[A-Za-z0-9+/=]{40,}$/.test(cleaned)) {
+      throw new Error("txHash must be valid hex (64 chars) or base64 format");
+    }
+    return cleaned;
   }
   throw new Error("txHash required (must be a non-empty string)");
+}
+
+// Validate wallet address format
+function validateWallet(wallet: string): boolean {
+  const trimmed = wallet.trim();
+  // TON addresses can be in different formats:
+  // - Raw: "0:..." (workchain:hash)
+  // - Friendly: base64 encoded (48 chars typically)
+  // Basic validation - should start with 0: or - or be base64-like
+  if (trimmed.startsWith("0:") || trimmed.startsWith("-1:")) {
+    // Raw format: workchain:hash (hash should be 64 hex chars)
+    const parts = trimmed.split(":");
+    return parts.length === 2 && /^[a-fA-F0-9]{64}$/.test(parts[1]);
+  }
+  // Friendly format (base64, typically 48 chars)
+  if (/^[A-Za-z0-9_-]{48}$/.test(trimmed)) {
+    return true;
+  }
+  return false;
+}
+
+// Validate APR is one of the allowed tiers
+function validateAPR(apr: number): boolean {
+  const allowedAPRs = [4, 7, 10]; // Based on your plan tiers
+  return allowedAPRs.includes(apr);
+}
+
+// Validate duration bounds
+function validateDuration(duration: number): boolean {
+  // Reasonable bounds: between 1 day and 365 days
+  return duration >= 1 && duration <= 365;
+}
+
+// Validate amount bounds
+function validateAmount(amount: number): boolean {
+  const MIN_AMOUNT = 10;
+  const MAX_AMOUNT = 100000; // Set reasonable max
+  return amount >= MIN_AMOUNT && amount <= MAX_AMOUNT;
 }
 
 export async function POST(req: NextRequest) {
@@ -60,22 +103,45 @@ export async function POST(req: NextRequest) {
     const apr      = toNumber(aprRaw);
     const duration = Math.trunc(toNumber(durationRaw));
 
-    if (!(Number.isFinite(amount) && amount > 0)) {
-      return NextResponse.json({ ok: false, error: "amount>0 required" }, { status: 400 });
+    // Validate amount
+    if (!Number.isFinite(amount) || !validateAmount(amount)) {
+      return NextResponse.json(
+        { ok: false, error: "amount must be between 10 and 100000 TON" },
+        { status: 400 }
+      );
     }
-    if (!(Number.isFinite(apr) && apr >= 0)) {
-      return NextResponse.json({ ok: false, error: "apr>=0 required" }, { status: 400 });
+
+    // Validate APR
+    if (!Number.isFinite(apr) || !validateAPR(apr)) {
+      return NextResponse.json(
+        { ok: false, error: "apr must be one of: 4, 7, 10" },
+        { status: 400 }
+      );
     }
-    if (!(Number.isInteger(duration) && duration >= 0)) {
-      return NextResponse.json({ ok: false, error: "duration>=0 integer required" }, { status: 400 });
+
+    // Validate duration
+    if (!Number.isInteger(duration) || !validateDuration(duration)) {
+      return NextResponse.json(
+        { ok: false, error: "duration must be between 1 and 365 days" },
+        { status: 400 }
+      );
     }
+
+    // Validate validator if provided
     if (validator != null && typeof validator !== "string") {
       return NextResponse.json({ ok: false, error: "validator must be string" }, { status: 400 });
     }
 
+    // Validate wallet
     const wallet = String(walletRaw).trim();
     if (!wallet) {
       return NextResponse.json({ ok: false, error: "wallet required" }, { status: 400 });
+    }
+    if (!validateWallet(wallet)) {
+      return NextResponse.json(
+        { ok: false, error: "wallet address format invalid" },
+        { status: 400 }
+      );
     }
 
     const supa = getSupa();

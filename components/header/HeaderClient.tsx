@@ -4,7 +4,6 @@ import LocaleLink from "@/components/LocaleLink";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useMemo, Suspense, useState } from "react"; // ⬅️ useState
-import ClientOnly from "@/components/ClientOnly";
 import { useTonWallet, useTonAddress } from "@tonconnect/ui-react";
 import { Address } from "@ton/core";
 import { useT } from "@/i18n/react";
@@ -104,9 +103,7 @@ export default function HeaderClient() {
           </nav>
 
           <div className="justify-self-end flex items-center gap-2 md:gap-3">
-            <ClientOnly>
-              <WalletConnect />
-            </ClientOnly>
+            <WalletConnect />
             <Suspense fallback={null}>
               <LanguageSwitcher />
             </Suspense>

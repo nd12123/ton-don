@@ -13,7 +13,7 @@ function adminList() {
 
 export async function POST(req: Request) {
   const c = await cookies();
-  const cookieNonce = c.get("tp_nonce")?.value || "";
+  const cookieNonce = c.get("tonproof_nonce")?.value || "";
 
   let body: any;
   try {
@@ -55,8 +55,8 @@ export async function POST(req: Request) {
   }
 
   // 3) ставим куки с отметкой, кого впустили
-  c.set("admin_ok", "1", { httpOnly: true, sameSite: "lax", secure: false, maxAge: 3600, path: "/" });
-  c.set("admin_addr", addrRaw, { httpOnly: true, sameSite: "lax", secure: false, maxAge: 3600, path: "/" });
+  c.set("admin_ok", "1", { httpOnly: true, sameSite: "lax", secure: process.env.NODE_ENV === "production", maxAge: 3600, path: "/" });
+  c.set("admin_addr", addrRaw, { httpOnly: true, sameSite: "lax", secure: process.env.NODE_ENV === "production", maxAge: 3600, path: "/" });
 
   return Response.json({ ok: true, admin: true }, { status: 200 });
 }

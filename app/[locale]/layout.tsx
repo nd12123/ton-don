@@ -51,6 +51,7 @@ const messages = await loadAllMessages([
   return (
     <I18nProvider locale={locale as Supported} messages={messages as Messages}>
       <ClientProviders locale={locale as Supported}>
+        <TonConnectWarmup />
         <Header />
         {children}
       </ClientProviders>

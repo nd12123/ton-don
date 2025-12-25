@@ -34,13 +34,16 @@ export function useStakeContract() { //contractAddress: string
   const contract = useAsyncInitialize<OpenedContract<MainContract> | null>(
     async () => {
       if (!client || !wallet) return null;
-      //console.log("Contract opening, wallet ", Address.parse(wallet as string).toString(), " contract ", "kQCaADFW83YrbuXUg6OCN1zvt77rEe-ZMCToJqv2sxhB-Kh0") //Address.parse() //kQB3u_BlKZsMEHsz9GFwJfUY7lG7xlzKdil8yUwqEIFFstNz
-      const desc = MainContract.fromAddress(
-        Address.parse("kQCaADFW83YrbuXUg6OCN1zvt77rEe-ZMCToJqv2sxhB-Kh0")//") //EQC5Gws2Em4zQ8ywwFDktfUHz7mXOe7b_Br5d_jjeJW-_wQ7 EQB3u_BlKZsMEHsz9GFwJfUY7lG7xlzKdil8yUwqEIFFsmj5 //contractAddress //"kQB3u_BlKZsMEHsz9GFwJfUY7lG7xlzKdil8yUwqEIFFstNz")//"0QAmQUOW2aGZb8uGmDd8fhhcs7u5NpzzmybooQo46PzGleIL")//"EQB8akzBYXBpATjJiWG1vRwo2FG2JoA9czy3yNno-qhMnlMo") //process.env.NEXT_PUBLIC_ADMIN_WALLETS ? can be a string? maybe log
-      );
+      // OLD HARDCODED: "kQCaADFW83YrbuXUg6OCN1zvt77rEe-ZMCToJqv2sxhB-Kh0"
+      const contractAddr = process.env.NEXT_PUBLIC_CONTRACT_ADDRESS;
+      if (!contractAddr) {
+        console.error("NEXT_PUBLIC_CONTRACT_ADDRESS not set");
+        return null;
+      }
+      const desc = MainContract.fromAddress(Address.parse(contractAddr));
       return client.open(desc) as OpenedContract<MainContract>;
     },
-    [client, wallet] //contractAddress c209edecebfe1050d45bb01b898c1f518df5f7448cf6345c00811822db4c5dca ?
+    [client, wallet]
   );
 
   // 2) Загружаем данные один раз при монтировании
@@ -81,16 +84,7 @@ export function useStakeContract() { //contractAddress: string
 
   useEffect(() => {
     if (!contract || !client) return;
-    (async () => {
-  const desc = MainContract.fromAddress(
-    Address.parse("UQDYE_8_ESdxLvbAKV2Y08LStu1CYaAMfhBNrreEHtUbbTtp")//"kQB3u_BlKZsMEHsz9GFwJfUY7lG7xlzKdil8yUwqEIFFstNz") kQCaADFW83YrbuXUg6OCN1zvt77rEe-ZMCToJqv2sxhB-Kh0 kQDexuQg5a-vyelfStMMax7ODr8Yc-l_epdqiKuBVNH1p1DP
-  );
-  const opened = client.open(desc);
-  //console.log("Contract keys by address:", Object.keys(opened));
-  //console.log("Contract keys by object", Object.keys(contract));
-  //const owner = await opened.getAdmin();
-  //console.log("Admin is:", owner.toString());
-})();
+    // OLD SECOND ADDRESS (commented out): "UQDYE_8_ESdxLvbAKV2Y08LStu1CYaAMfhBNrreEHtUbbTtp"
     (async () => { //Contract owner
       const a = await contract.getOwner();//getContractAdmin(); (provider:  ContractProvider)
       setOwner(a.toString());
